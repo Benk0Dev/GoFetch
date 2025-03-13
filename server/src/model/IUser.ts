@@ -7,16 +7,19 @@ export default interface IUser {
     password: string;
     role: string;
     description: string;
+    petIds: number[];
     pets: IPet[];
-    address: {
-        street: string;
-        city: string;
-        state: string;
-        zip: string;
-    };
+    address: IAddress;
     createdAt: Date;
     updatedAt: Date;
     banned: boolean;
     banReason: string;
     banEndsAt: Date;
+}
+
+export interface IAddress {
+    street: string;
+    city: string;
+    state: string;
+    zip: string;
 }
