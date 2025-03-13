@@ -1,1 +1,35 @@
-{}
+{
+    "users": [
+        {
+            "id": 1,
+            "name": "John Doe",
+            "email": "johndoe@gmail.com",
+            "password": "123456",
+            "role": "petwoner",
+            "description": "I am a pet owner",
+            "pets": [
+                {
+                    "id": 1,
+                    "name": "Fluffy",
+                    "type": "dog",
+                    "breed": "Golden Retriever",
+                    "age": 3,
+                    "weight": 30,
+                    "description": "Fluffy is a very friendly dog. He loves to play with other dogs and go for long walks.",
+                    "createdAt": "2021-01-01T00:00:00.000Z",
+                    "updatedAt": "2022-01-01T00:00:00.000Z"
+                }],
+            "address": {
+                "street": "123 Main St",
+                "city": "San Francisco",
+                "state": "CA",
+                "zip": "94101"
+            },
+            "createdAt": "2021-01-01T00:00:00.000Z",
+            "updatedAt": "2022-01-01T00:00:00.000Z",
+            "banned": false,
+            "banReason": null,
+            "bandEndsAt": null
+        }
+    ]
+}
