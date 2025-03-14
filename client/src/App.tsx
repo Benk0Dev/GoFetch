@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import NavBar from "./components/Navbar";
+import ScrollToTop from "./components/ScrollToTop";
+import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
@@ -10,7 +11,8 @@ import DashboardPage from "./pages/DashboardPage/DashboardPage";
 function App() {
   return (
     <Router>
-      <NavBar />
+      <ScrollToTop />
+      <Navbar />
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
