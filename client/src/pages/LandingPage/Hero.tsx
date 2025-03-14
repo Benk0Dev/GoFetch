@@ -3,7 +3,6 @@ import '../../global.css';
 import pageStyles from './LandingPage.module.css';
 import { Link } from "react-router-dom";
 
-
 function Hero() {
   const navBarHeight: number = document.getElementById('navbar')?.offsetHeight || 0;
 
