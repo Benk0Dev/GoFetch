@@ -1,17 +1,15 @@
 import { useState } from "react";
 import styles from "./LoginPage.module.css";
-import { useEffect } from 'react';
 
 async function fetchUsers() {
     try {
         const response = await fetch('http://localhost:3001/users');
-        if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
+        if (response.ok) {
+            const users = await response.json();
+            return users;
         }
-        const users = await response.json();
-        return users;
-    } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
+    } catch (e) {
+        console.error(e);
         return [];
     }
 }
@@ -24,13 +22,6 @@ async function validateLogin(email: string, password: string): Promise<boolean> 
 function LoginForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
-    // to test the fetchUsers function
-    useEffect(() => {
-        fetchUsers().then(users => {
-            console.log(users);
-        });
-    }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
