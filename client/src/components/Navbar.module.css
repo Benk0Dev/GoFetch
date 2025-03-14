@@ -1,0 +1,14 @@
+/* Navbar Styling */
+.navbar {
+    background-color: var(--primary-color);
+    padding: 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+.navLinks {
+    display: flex;
+    column-gap: 10px;
+}
