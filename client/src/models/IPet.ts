@@ -1,0 +1,1 @@
+export type { IPet, IGender } from '../../../server/src/models/IPet';

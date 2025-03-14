@@ -1,48 +1,176 @@
 [
   {
-    "id": 1,
-    "name": "John Doe",
-    "email": "johndoe@gmail.com",
-    "password": "123456",
-    "role": "petwoner",
-    "description": "I am a pet owner",
-    "pets": [
-      1,
-      3
-    ],
-    "address": {
-      "street": "123 Main St",
-      "city": "San Francisco",
-      "state": "CA",
-      "zip": "94101"
+    "userDetails": {
+      "id": 1,
+      "fname": "Alice",
+      "lname": "Smith",
+      "loginDetails": {
+        "email": "alice@example.com",
+        "username": "alice123",
+        "password": "securePass1"
+      }
     },
-    "createdAt": "2021-01-01T00:00:00.000Z",
-    "updatedAt": "2022-01-01T00:00:00.000Z",
-    "banned": false,
-    "banReason": null,
-    "bandEndsAt": null
+    "roles": ["petowner"],
+    "primaryUserInfo": {
+      "profilePic": "alice.jpg",
+      "dob": "1990-06-15",
+      "location": {
+        "name": "New York",
+        "longitude": -74.006,
+        "latitude": 40.7128
+      },
+      "suspended": false,
+      "suspendReason": null,
+      "suspendEndsAt": null
+    },
+    "ownerRoleInfo": {
+      "petIDs": [1, 2]
+    }
   },
   {
-    "id": 2,
-    "name": "Jane Doe",
-    "email": "johndoe@gmail.com",
-    "password": "123456",
-    "role": "petwoner",
-    "description": "I am a pet owner",
-    "pets": [
-      2,
-      4
-    ],
-    "address": {
-      "street": "123 Main St",
-      "city": "San Francisco",
-      "state": "CA",
-      "zip": "94101"
+    "userDetails": {
+      "id": 2,
+      "fname": "Bob",
+      "lname": "Johnson",
+      "loginDetails": {
+        "email": "bob@example.com",
+        "username": "bobbyJ",
+        "password": "securePass2"
+      }
     },
-    "createdAt": "2021-01-01T00:00:00.000Z",
-    "updatedAt": "2022-01-01T00:00:00.000Z",
-    "banned": false,
-    "banReason": null,
-    "bandEndsAt": null
+    "roles": ["petowner"],
+    "primaryUserInfo": {
+      "profilePic": "bob.jpg",
+      "dob": "1985-09-20",
+      "location": {
+        "name": "Los Angeles",
+        "longitude": -118.2437,
+        "latitude": 34.0522
+      },
+      "suspended": false,
+      "suspendReason": null,
+      "suspendEndsAt": null
+    },
+    "ownerRoleInfo": {
+      "petIDs": [3]
+    }
+  },
+  {
+    "userDetails": {
+      "id": 3,
+      "fname": "Charlie",
+      "lname": "Davis",
+      "loginDetails": {
+        "email": "charlie@example.com",
+        "username": "charlieD",
+        "password": "securePass3"
+      }
+    },
+    "roles": ["petminder"],
+    "primaryUserInfo": {
+      "profilePic": "charlie.jpg",
+      "dob": "1992-04-10",
+      "location": {
+        "name": "Chicago",
+        "longitude": -87.6298,
+        "latitude": 41.8781
+      },
+      "suspended": false,
+      "suspendReason": null,
+      "suspendEndsAt": null
+    },
+    "minderRoleInfo": {
+      "serviceIDs": [1, 2],
+      "rating": 4.8,
+      "bio": "Experienced pet sitter with 5 years of experience.",
+      "pictures": ["charlie1.jpg", "charlie2.jpg"],
+      "availability": "Weekdays",
+      "distanceRange": 10,
+      "verified": true
+    }
+  },
+  {
+    "userDetails": {
+      "id": 4,
+      "fname": "Diana",
+      "lname": "Evans",
+      "loginDetails": {
+        "email": "diana@example.com",
+        "username": "dianaE",
+        "password": "securePass4"
+      }
+    },
+    "roles": ["petminder"],
+    "primaryUserInfo": {
+      "profilePic": "diana.jpg",
+      "dob": "1988-12-05",
+      "location": {
+        "name": "Houston",
+        "longitude": -95.3698,
+        "latitude": 29.7604
+      },
+      "suspended": false,
+      "suspendReason": null,
+      "suspendEndsAt": null
+    },
+    "minderRoleInfo": {
+      "serviceIDs": [3, 4],
+      "rating": 4.6,
+      "bio": "Lifelong pet lover and certified dog trainer.",
+      "pictures": ["diana1.jpg", "diana2.jpg"],
+      "availability": "Weekends",
+      "distanceRange": 15,
+      "verified": true
+    }
+  },
+  {
+    "userDetails": {
+      "id": 5,
+      "fname": "Eve",
+      "lname": "White",
+      "loginDetails": {
+        "email": "eve@example.com",
+        "username": "eveW",
+        "password": "securePass5"
+      }
+    },
+    "roles": ["petowner", "petminder"],
+    "primaryUserInfo": {
+      "profilePic": "eve.jpg",
+      "dob": "1995-08-25",
+      "location": {
+        "name": "Phoenix",
+        "longitude": -112.074,
+        "latitude": 33.4484
+      },
+      "suspended": false,
+      "suspendReason": null,
+      "suspendEndsAt": null
+    },
+    "ownerRoleInfo": {
+      "petIDs": [4]
+    },
+    "minderRoleInfo": {
+      "serviceIDs": [5, 6],
+      "rating": 4.9,
+      "bio": "Pet owner and minder with a passion for animals.",
+      "pictures": ["eve1.jpg", "eve2.jpg"],
+      "availability": "Flexible",
+      "distanceRange": 20,
+      "verified": true
+    }
+  },
+  {
+    "userDetails": {
+      "id": 6,
+      "fname": "Frank",
+      "lname": "Miller",
+      "loginDetails": {
+        "email": "frank@example.com",
+        "username": "frankM",
+        "password": "securePass6"
+      }
+    },
+    "roles": ["admin"]
   }
 ]

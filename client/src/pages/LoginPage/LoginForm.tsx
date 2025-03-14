@@ -1,37 +1,24 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./LoginPage.module.css";
-
-async function fetchUsers() {
-    try {
-        const response = await fetch('http://localhost:3001/users');
-        if (response.ok) {
-            const users = await response.json();
-            return users;
-        }
-    } catch (e) {
-        console.error(e);
-        return [];
-    }
-}
-
-async function validateLogin(email: string, password: string): Promise<boolean> {
-    const users = await fetchUsers();
-    return users.some((user: { email: string; password: string }) => user.email === email && user.password === password);
-}
+import { login } from "../../services/AuthService";
 
 function LoginForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         console.log("Logging in with:", { email, password });
 
-        const result = await validateLogin(email, password);
-        if (result) {
-            console.log("Login successful");
+        const user = await login(email, password);
+        if (user) {
+            console.log("Login successful:", user);
+            navigate("/dashboard");
         } else {
-            console.log("Login failed");
+            setError("Invalid email or password");
         }
     };
 
@@ -59,8 +46,9 @@ function LoginForm() {
                 />
             </div>
 
-            <button type="submit" className={styles.loginButton} style={{width: "100%"}}>Login</button>
+            {error && <p className={styles.error}>{error}</p>} {}
 
+            <button type="submit" className={styles.loginButton} style={{width: "100%"}}>Login</button>
         </form>
     );
 }

@@ -1,46 +1,50 @@
 [
   {
     "id": 1,
-    "name": "Fluffy",
-    "type": "dog",
+    "name": "Buddy",
+    "dob": "2020-03-10",
+    "gender": "male",
     "breed": "Golden Retriever",
-    "age": 3,
     "weight": 30,
-    "description": "Fluffy is a very friendly dog. He loves to play with other dogs and go for long walks.",
-    "createdAt": "2021-01-01T00:00:00.000Z",
-    "updatedAt": "2022-01-01T00:00:00.000Z"
+    "neutered": true,
+    "behaviour": "Friendly and playful",
+    "allergies": [],
+    "pictures": ["buddy1.jpg", "buddy2.jpg"]
   },
   {
     "id": 2,
-    "name": "Whiskers",
-    "type": "cat",
-    "breed": "Siamese",
-    "age": 2,
-    "weight": 10,
-    "description": "Whiskers is a very independent cat. She loves to play with toys and take long naps.",
-    "createdAt": "2021-01-01T00:00:00.000Z",
-    "updatedAt": "2022-01-01T00:00:00.000Z"
+    "name": "Bella",
+    "dob": "2018-07-21",
+    "gender": "female",
+    "breed": "Labrador Retriever",
+    "weight": 28,
+    "neutered": false,
+    "behaviour": "Loyal and energetic",
+    "allergies": ["Chicken"],
+    "pictures": ["bella1.jpg"]
   },
   {
     "id": 3,
-    "name": "Buddy",
-    "type": "dog",
-    "breed": "Labrador Retriever",
-    "age": 4,
-    "weight": 40,
-    "description": "Buddy is a very energetic dog. He loves to play fetch and go for runs.",
-    "createdAt": "2021-01-01T00:00:00.000Z",
-    "updatedAt": "2022-01-01T00:00:00.000Z"
+    "name": "Rex",
+    "dob": "2019-05-30",
+    "gender": "male",
+    "breed": "German Shepherd",
+    "weight": 35,
+    "neutered": true,
+    "behaviour": "Protective and intelligent",
+    "allergies": [],
+    "pictures": ["rex1.jpg"]
   },
   {
     "id": 4,
-    "name": "Mittens",
-    "type": "cat",
-    "breed": "Persian",
-    "age": 3,
-    "weight": 15,
-    "description": "Mittens is a very playful cat. She loves to chase laser pointers and cuddle.",
-    "createdAt": "2021-01-01T00:00:00.000Z",
-    "updatedAt": "2022-01-01T00:00:00.000Z"
+    "name": "Luna",
+    "dob": "2021-02-14",
+    "gender": "female",
+    "breed": "Siberian Husky",
+    "weight": 25,
+    "neutered": false,
+    "behaviour": "Energetic and vocal",
+    "allergies": [],
+    "pictures": ["luna1.jpg", "luna2.jpg"]
   }
 ]

@@ -1,5 +1,5 @@
 import { getCachedUsersWithPets, getCachedUserWithPets, RegisterUserCache } from '../utils/DbCache';
-import { IRegisterUser } from '../model/IUser';
+import { ILoginDetails } from '../models/IUser';
 
 export function AllUsersData() {
   return getCachedUsersWithPets();
@@ -12,6 +12,6 @@ export function UserData(id: string | undefined) {
   return getCachedUserWithPets(Number(id)) || 'User not found';
 }
 
-export function RegisterUser(user: IRegisterUser) {
+export function RegisterUser(user: ILoginDetails) {
   return RegisterUserCache(user);
 }

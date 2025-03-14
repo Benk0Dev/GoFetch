@@ -1,0 +1,1 @@
+export type { IService, IType } from '../../../server/src/models/IService';

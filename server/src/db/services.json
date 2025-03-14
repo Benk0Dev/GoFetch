@@ -1,0 +1,39 @@
+[
+    {
+      "id": 1,
+      "type": "walk",
+      "duration": 30,
+      "price": 15
+    },
+    {
+      "id": 2,
+      "type": "sit",
+      "duration": 60,
+      "price": 25
+    },
+    {
+      "id": 3,
+      "type": "board",
+      "duration": 24,
+      "price": 50
+    },
+    {
+      "id": 4,
+      "type": "groom",
+      "duration": 90,
+      "price": 40
+    },
+    {
+      "id": 5,
+      "type": "train",
+      "duration": 45,
+      "price": 35
+    },
+    {
+      "id": 6,
+      "type": "other",
+      "duration": 120,
+      "price": 60
+    }
+  ]
+  
