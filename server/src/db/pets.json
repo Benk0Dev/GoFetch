@@ -1,46 +1,46 @@
 [
-    {
-        "id": 1,
-        "name": "Fluffy",
-        "type": "dog",
-        "breed": "Golden Retriever",
-        "age": 3,
-        "weight": 30,
-        "description": "Fluffy is a very friendly dog. He loves to play with other dogs and go for long walks.",
-        "createdAt": "2021-01-01T00:00:00.000Z",
-        "updatedAt": "2022-01-01T00:00:00.000Z"
-    },
-    {
-        "id": 2,
-        "name": "Whiskers",
-        "type": "cat",
-        "breed": "Siamese",
-        "age": 2,
-        "weight": 10,
-        "description": "Whiskers is a very independent cat. She loves to play with toys and take long naps.",
-        "createdAt": "2021-01-01T00:00:00.000Z",
-        "updatedAt": "2022-01-01T00:00:00.000Z"
-    },
-    {
-        "id": 3,
-        "name": "Buddy",
-        "type": "dog",
-        "breed": "Labrador Retriever",
-        "age": 4,
-        "weight": 40,
-        "description": "Buddy is a very energetic dog. He loves to play fetch and go for runs.",
-        "createdAt": "2021-01-01T00:00:00.000Z",
-        "updatedAt": "2022-01-01T00:00:00.000Z"
-    },
-    {
-        "id": 4,
-        "name": "Mittens",
-        "type": "cat",
-        "breed": "Persian",
-        "age": 3,
-        "weight": 15,
-        "description": "Mittens is a very playful cat. She loves to chase laser pointers and cuddle.",
-        "createdAt": "2021-01-01T00:00:00.000Z",
-        "updatedAt": "2022-01-01T00:00:00.000Z"
-    }
+  {
+    "id": 1,
+    "name": "Fluffy",
+    "type": "dog",
+    "breed": "Golden Retriever",
+    "age": 3,
+    "weight": 30,
+    "description": "Fluffy is a very friendly dog. He loves to play with other dogs and go for long walks.",
+    "createdAt": "2021-01-01T00:00:00.000Z",
+    "updatedAt": "2022-01-01T00:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "name": "Whiskers",
+    "type": "cat",
+    "breed": "Siamese",
+    "age": 2,
+    "weight": 10,
+    "description": "Whiskers is a very independent cat. She loves to play with toys and take long naps.",
+    "createdAt": "2021-01-01T00:00:00.000Z",
+    "updatedAt": "2022-01-01T00:00:00.000Z"
+  },
+  {
+    "id": 3,
+    "name": "Buddy",
+    "type": "dog",
+    "breed": "Labrador Retriever",
+    "age": 4,
+    "weight": 40,
+    "description": "Buddy is a very energetic dog. He loves to play fetch and go for runs.",
+    "createdAt": "2021-01-01T00:00:00.000Z",
+    "updatedAt": "2022-01-01T00:00:00.000Z"
+  },
+  {
+    "id": 4,
+    "name": "Mittens",
+    "type": "cat",
+    "breed": "Persian",
+    "age": 3,
+    "weight": 15,
+    "description": "Mittens is a very playful cat. She loves to chase laser pointers and cuddle.",
+    "createdAt": "2021-01-01T00:00:00.000Z",
+    "updatedAt": "2022-01-01T00:00:00.000Z"
+  }
 ]
