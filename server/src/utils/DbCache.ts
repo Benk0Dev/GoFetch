@@ -79,7 +79,6 @@ export function RegisterUserCache(user: IRegisterUser): { success: boolean; mess
     // Validate required fields
     if (!user.email || !user.password) {
       return { success: false, message: 'Email, and password are required' };
-    }
 
     // Check if email already exists
     const existingUser = cache.users.find(u => u.email === user.email);
