@@ -1,0 +1,164 @@
+/* Root Variables for Consistent Styling */
+:root {
+    --primary-color: #149acb;
+    --primary-color-dark: #1088b0;
+    --secondary-color: #6c757d;
+    --secondary-color-dark: #5a6268;
+    --background-color: #f8f9fa;
+    --text-color: #333;
+    --font-family: 'Inter', sans-serif;
+    --border-radius: 10px;
+}
+  
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+  
+body {
+    font-family: var(--font-family);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+  
+/* Layout */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Headers */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-family);
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+h3 {
+    font-size: 1.75rem;
+}
+
+h4 {
+    font-size: 1.5rem;
+}
+
+h5 {
+    font-size: 1.25rem;
+}
+
+h6 {
+    font-size: 1rem;
+}
+
+/* Paragraphs */
+p {
+    font-size: 1.125rem;
+    margin-bottom: 18px;
+    line-height: 1.6;
+}
+  
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 10px 16px;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 18px;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.1s ease-in-out, transform 0.1s ease-in-out;
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+  
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+  
+.btn-primary:hover {
+    background-color: var(--primary-color-dark);
+}
+  
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: white;
+}
+  
+.btn-secondary:hover {
+    background-color: var(--secondary-color-dark);
+}
+
+.btn-background {
+    background-color: var(--background-color);
+    color: var(--primary-color);
+}
+
+.btn-background:hover {
+    background-color: rgba(255, 255, 255, 0.75);
+}
+
+.btn-transparent {
+    background-color: transparent;
+    color: var(--highlight-color);
+}
+
+.btn-transparent:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+  
+/* Form Elements */
+input, textarea, select {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: var(--border-radius);
+    font-size: 16px;
+}
+  
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+  
+/* Card Layout */
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+  
+/* Flex Utilities */
+.flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+  
