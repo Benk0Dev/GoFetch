@@ -1,23 +1,17 @@
-// import Interfaces
-import IUser from '../model/IUser';
-import IPet from '../model/IPet';
-
-import { getUsersData, getPetsData } from '../utils/data';
+import { getCachedUsersWithPets, getCachedUserWithPets, RegisterUserCache } from '../utils/DbCache';
+import { IRegisterUser } from '../model/IUser';
 
 export function AllUsersData() {
-    const usersFileContent = getUsersData();
-    const usersData = JSON.parse(usersFileContent);
-    const users = usersData as IUser[];
+  return getCachedUsersWithPets();
+}
 
-    const petsFileContent = getPetsData();
-    const petsData = JSON.parse(petsFileContent);
-    const pets = petsData as IPet[];
+export function UserData(id: string | undefined) {
+  if (!id || isNaN(Number(id))) {
+      return 'User not found';
+  }
+  return getCachedUserWithPets(Number(id)) || 'User not found';
+}
 
-    users.forEach(user => {
-        const petIds = (user as any).pets || [];
-        const userPets = pets.filter(pet => petIds.includes(pet.id));
-        user.pets = userPets;
-    });
-
-    return users;
+export function RegisterUser(user: IRegisterUser) {
+  return RegisterUserCache(user);
 }

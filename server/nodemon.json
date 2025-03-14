@@ -1,0 +1,4 @@
+{
+  "watch": ["./src/index.ts"],
+  "ignore": ["*.json", "*.md"]
+}

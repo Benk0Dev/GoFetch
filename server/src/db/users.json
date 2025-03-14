@@ -1,42 +1,48 @@
 [
-    {
-        "id": 1,
-        "name": "John Doe",
-        "email": "johndoe@gmail.com",
-        "password": "123456",
-        "role": "petwoner",
-        "description": "I am a pet owner",
-        "pets": [1, 3],
-        "address": {
-            "street": "123 Main St",
-            "city": "San Francisco",
-            "state": "CA",
-            "zip": "94101"
-        },
-        "createdAt": "2021-01-01T00:00:00.000Z",
-        "updatedAt": "2022-01-01T00:00:00.000Z",
-        "banned": false,
-        "banReason": null,
-        "bandEndsAt": null
+  {
+    "id": 1,
+    "name": "John Doe",
+    "email": "johndoe@gmail.com",
+    "password": "123456",
+    "role": "petwoner",
+    "description": "I am a pet owner",
+    "pets": [
+      1,
+      3
+    ],
+    "address": {
+      "street": "123 Main St",
+      "city": "San Francisco",
+      "state": "CA",
+      "zip": "94101"
     },
-    {
-        "id": 2,
-        "name": "Jane Doe",
-        "email": "johndoe@gmail.com",
-        "password": "123456",
-        "role": "petwoner",
-        "description": "I am a pet owner",
-        "pets": [2, 4],
-        "address": {
-            "street": "123 Main St",
-            "city": "San Francisco",
-            "state": "CA",
-            "zip": "94101"
-        },
-        "createdAt": "2021-01-01T00:00:00.000Z",
-        "updatedAt": "2022-01-01T00:00:00.000Z",
-        "banned": false,
-        "banReason": null,
-        "bandEndsAt": null
-    }
+    "createdAt": "2021-01-01T00:00:00.000Z",
+    "updatedAt": "2022-01-01T00:00:00.000Z",
+    "banned": false,
+    "banReason": null,
+    "bandEndsAt": null
+  },
+  {
+    "id": 2,
+    "name": "Jane Doe",
+    "email": "johndoe@gmail.com",
+    "password": "123456",
+    "role": "petwoner",
+    "description": "I am a pet owner",
+    "pets": [
+      2,
+      4
+    ],
+    "address": {
+      "street": "123 Main St",
+      "city": "San Francisco",
+      "state": "CA",
+      "zip": "94101"
+    },
+    "createdAt": "2021-01-01T00:00:00.000Z",
+    "updatedAt": "2022-01-01T00:00:00.000Z",
+    "banned": false,
+    "banReason": null,
+    "bandEndsAt": null
+  }
 ]
