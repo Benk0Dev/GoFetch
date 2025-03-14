@@ -77,9 +77,8 @@ export function RegisterUserCache(user: IRegisterUser): { success: boolean; mess
 
   try {
     // Validate required fields
-    if (!user.name || !user.email || !user.password) {
-      return { success: false, message: 'Name, email, and password are required' };
-    }
+    if (!user.email || !user.password) {
+      return { success: false, message: 'Email, and password are required' };
 
     // Check if email already exists
     const existingUser = cache.users.find(u => u.email === user.email);
@@ -93,7 +92,7 @@ export function RegisterUserCache(user: IRegisterUser): { success: boolean; mess
     // Create new user object
     const newUser: IUser = {
       id: newId,
-      name: user.name,
+      name: user.email,
       email: user.email,
       password: user.password, // Note: In a real app, we should hash passwords(idc for now)
       role: 'petowner' as Role,
