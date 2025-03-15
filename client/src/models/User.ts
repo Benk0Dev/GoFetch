@@ -64,6 +64,7 @@ abstract class UserRole {
 
     switchRole() {
         if (this.prevRole === null) {
+            this.prevRole = this.currentRole;
             if (this.currentRole instanceof PetOwner) {
                 this.currentRole = new PetMinder();
             }

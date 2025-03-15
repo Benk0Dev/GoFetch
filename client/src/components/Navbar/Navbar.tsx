@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import styles from "./Navbar.module.css";
-import "../global.css";
-import { getCurrentUserID, logout } from "../services/AuthService";
-import { fetchUser } from "../services/Registry";
-import User from "../models/User";
+import "../../global.css";
+import { getCurrentUserID, logout } from "../../services/AuthService";
+import { fetchUser } from "../../services/Registry";
+import User from "../../models/User";
+import ProfileIcon from "./ProfileIcon/ProfileIcon";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ function Navbar() {
   useEffect(() => {
     if (userID) {
       fetchUser(userID).then(setUser);
-    }
+    } 
   }, [userID]); // Runs when userID changes
 
   let homeLink = userID ? "/dashboard" : "/";
@@ -28,15 +29,14 @@ function Navbar() {
 
   return (
     <nav className={styles.navbar} id="navbar">
-      <div className="container flex">
+      <div className="container flex" style={{ padding: "10px 20px"}}>
         <Link to={homeLink}><h2>GoFetch</h2></Link>
 
         <div className={styles.navLinks}>
           {user ? (
             <>
-              <span className={styles.username}>👤 {user.userDetails.fname}</span>
               <Link to="/dashboard" className="btn btn-transparent">Dashboard</Link>
-              <button onClick={handleLogout} className="btn btn-background">Logout</button>
+              <ProfileIcon user={user} onLogout={handleLogout} />
             </>
           ) : (
             !["/login", "/register"].includes(location.pathname) && (

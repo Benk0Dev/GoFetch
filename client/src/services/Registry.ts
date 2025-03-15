@@ -38,7 +38,7 @@ export async function fetchUsers(): Promise<User[]> {
         primaryInfo.suspended
       );
 
-      const userRole = primaryUser.role;
+      const userRole = primaryUser.role.currentRole;
       if (userRole instanceof PetOwner) {
         // Make fetched pets rather than indexes.
         userRole.pets = primaryInfo.petIDs;
@@ -61,7 +61,6 @@ export async function fetchUsers(): Promise<User[]> {
             userRole.switchRole();
         }
       }
-
       return new User(userDetails, primaryUser);
     }
     return null;

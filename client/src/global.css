@@ -1,15 +1,15 @@
 /* Root Variables for Consistent Styling */
 :root {
-    --primary-color: #149acb;
-    --primary-color-dark: #1088b0;
-    --secondary-color: #6c757d;
-    --secondary-color-dark: #5a6268;
+    --primary-color: #c03383;
+    --primary-color-dark: #af3078;
+    --secondary-color: #7c7c7c;
+    --secondary-color-dark: #6e6e6e;
     --background-color: #f8f9fa;
     --text-color: #333;
     --font-family: 'Inter', sans-serif;
     --border-radius: 10px;
 }
-  
+
 /* Global Reset */
 * {
     margin: 0;
