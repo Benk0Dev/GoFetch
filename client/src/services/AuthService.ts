@@ -1,10 +1,15 @@
-import User, { Role, PrimaryUser, PetOwner } from "../models/User";
-import { saveUser, getUserID, clearUser, changeUserType } from "../utils/StorageManager";
-import { fetchUsers, fetchUser } from "./Registry";
+import User, { PrimaryUser, Role } from "../models/User";
+import { IUserDetails, saveUser, getUserID, clearUser, changeUserType, getUserType, getDetails } from "../utils/StorageManager";
+import registry from "./Registry";
+
+function notifyUserUpdate() {
+    window.dispatchEvent(new Event("userUpdate")); // Notify all listeners
+}
 
 export async function login(email: string, password: string): Promise<User | null> {
     try {
-        const users = await fetchUsers();
+        // Get users directly from the registry (no API call)
+        const users = registry.getUsers();
 
         const foundUser = users.find((user) =>
             user.userDetails.loginDetails.email === email &&
@@ -13,7 +18,10 @@ export async function login(email: string, password: string): Promise<User | nul
 
         if (!foundUser) return null;
 
+        // Store logged-in user in Registry & Local Storage
+        registry.setCurrentUser(foundUser);
         saveUser(foundUser);
+        notifyUserUpdate(); // Trigger global update event
 
         return foundUser;
     } catch (error) {
@@ -22,48 +30,47 @@ export async function login(email: string, password: string): Promise<User | nul
     }
 }
 
-// Returns the current logged-in user's ID
+// Assign the current logged-in user to the registry (used on page load)
+export function assignCurrentUser(): void {
+    const users = registry.getUsers();
+    const currentUser = users.find((user) => user.userDetails.id === getCurrentUserID());
+    if (currentUser) {
+        registry.setCurrentUser(currentUser);
+    }
+}
+
+// Returns the current logged-in user's ID (from storage)
 export function getCurrentUserID(): number | null {
     return getUserID();
 }
 
-// Get the current logged-in user
-export async function getCurrentUser(): Promise<User | null> {
-    const userID = getUserID();
-    if (!userID) return null;
+// Get user role (Admin, PetOwner, or PetMinder)
+export function getCurrentUserType(): Role | null {
+    return getUserType() as Role;
+}
 
-    const user = await fetchUser(userID);
-    return user;
+// Get all user roles (Admin, PetOwner, and PetMinder)
+export function getAllCurrentUserDetails(): IUserDetails | null {
+    return getDetails();
+}
+
+// Get the current logged-in user
+export function getCurrentUser(): User | null {
+    return registry.getCurrentUser();
 }
 
 // Logout function - clears stored user session
 export function logout(): void {
+    registry.clearCurrentUser();
     clearUser();
+    notifyUserUpdate(); // Trigger global update event
 }
 
-// Checks if a user is logged in
-export function isAuthenticated(): boolean {
-    return getUserID() !== null;
-}
-
-// Get user role (Admin, PetOwner, or PetMinder)
-export function getUserRole(): Role | null {
-    return sessionStorage.getItem("userType") as Role;
-}
-
-export async function switchCurrentUserRole(): Promise<void> {
-    const userID = getCurrentUserID();
-    if (!userID) return;
-    const user = await fetchUser(userID);
-    if (user?.userClass instanceof PrimaryUser) {
-        user?.userClass.role.switchRole();
-    }
-    getUserRole() === Role.OWNER ? changeUserType(Role.MINDER) : changeUserType(Role.OWNER);
-}
-
-export function switchUserRole(user: User): void {
-    if (user.userClass instanceof PrimaryUser) {
-        changeUserType(user.userClass.role.currentRole instanceof PetOwner ? Role.MINDER : Role.OWNER);
-        user.userClass.role.switchRole();
-    }
+// Switch the current user's role
+export function switchUserRole(): void {
+    const user = registry.getCurrentUser();
+    if (!user || !(user.userClass instanceof PrimaryUser)) return;
+    user.userClass.role.switchRole();
+    changeUserType(getCurrentUserType() === Role.OWNER ? Role.MINDER : Role.OWNER);
+    notifyUserUpdate(); // Trigger global update event
 }

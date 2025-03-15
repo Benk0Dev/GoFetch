@@ -2,28 +2,37 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import "../../global.css";
-import { getCurrentUserID, logout } from "../../services/AuthService";
-import { fetchUser } from "../../services/Registry";
-import User from "../../models/User";
+import { logout, getCurrentUserType, getAllCurrentUserDetails } from "../../services/AuthService";
+import { IUserDetails } from "../../utils/StorageManager";
+import { Role } from "../../models/User";
 import ProfileIcon from "./ProfileIcon/ProfileIcon";
 
 function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
-  const userID = getCurrentUserID();
-  const [user, setUser] = useState<User | null>(null);
+  const [userType, setUserType] = useState<Role | null>(getCurrentUserType());
+  const [userDetails, setUserDetails] = useState<IUserDetails | null>(getAllCurrentUserDetails());
+
+  const [forceUpdate, setForceUpdate] = useState<number>(0);
 
   useEffect(() => {
-    if (userID) {
-      fetchUser(userID).then(setUser);
-    } 
-  }, [userID]); // Runs when userID changes
+    const updateUser = () => {
+      // Update when event fires
+      setUserType(getCurrentUserType()); 
+      setUserDetails(getAllCurrentUserDetails());
+      setForceUpdate(prev => prev + 1);
+    };
 
-  let homeLink = userID ? "/dashboard" : "/";
+    window.addEventListener("userUpdate", updateUser); // Listen for user changes
+    return () => window.removeEventListener("userUpdate", updateUser); // Cleanup
+  }, []);
+
+  let homeLink = userType ? "/dashboard" : "/";
 
   const handleLogout = () => {
     logout();
-    setUser(null);
+    setUserType(null);
+    setUserDetails(null);
     navigate("/");
   };
 
@@ -31,12 +40,14 @@ function Navbar() {
     <nav className={styles.navbar} id="navbar">
       <div className="container flex" style={{ padding: "10px 20px"}}>
         <Link to={homeLink}><h2>GoFetch</h2></Link>
-
         <div className={styles.navLinks}>
-          {user ? (
+          {userType ? (
             <>
+              <Link to="/browse" className="btn btn-transparent">Browse</Link>
               <Link to="/dashboard" className="btn btn-transparent">Dashboard</Link>
-              <ProfileIcon user={user} onLogout={handleLogout} />
+              <Link to="/notifications" className="btn btn-transparent"><i className="fa-regular fa-bell"></i></Link>
+              <Link to="/messages" className="btn btn-transparent"><i className="fa-regular fa-envelope"></i></Link>
+              <ProfileIcon key={forceUpdate} userType={userType} userDetails={userDetails} onLogout={handleLogout} />
             </>
           ) : (
             !["/login", "/register"].includes(location.pathname) && (

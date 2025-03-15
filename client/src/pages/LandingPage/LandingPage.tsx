@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { isAuthenticated } from "../../services/AuthService";
+import { getCurrentUserType } from "../../services/AuthService";
 import Hero from "./Hero";
 import HowItWorks from "./HowItWorks";
 import LoginRegister from "./LoginRegister";
@@ -10,7 +10,7 @@ function LandingPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isAuthenticated()) {
+    if (getCurrentUserType()) {
       navigate("/dashboard");
     }
   }, []);

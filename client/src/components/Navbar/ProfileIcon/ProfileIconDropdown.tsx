@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { PrimaryUser, PetOwner } from "../../../models/User";
 import DropdownMenu from "../../Dropdown/DropdownMenu";
 import DropdownItem from "../../Dropdown/DropdownItem";
 import { ProfileIconProps } from "./ProfileIcon";
 import { switchUserRole } from "../../../services/AuthService";
+import { Role } from "../../../models/User";
 
 interface ProfileIconDropDownProps extends ProfileIconProps {
     isOpen: boolean;
@@ -12,25 +12,24 @@ interface ProfileIconDropDownProps extends ProfileIconProps {
     onClose: () => void;
 }
 
-function ProfileIconDropDown({ user, onLogout, isOpen, menuRef, onClose }: ProfileIconDropDownProps) {
-    if (!user) return null;
+function ProfileIconDropDown({ key, userType, userDetails, onLogout, isOpen, menuRef, onClose }: ProfileIconDropDownProps) {
+    if (!userDetails) return null;
 
     const getOtherAccountOption = () => {
-        
         let text = "";
-        if (user.userClass instanceof PrimaryUser) {
-            if (user.userClass.role.prevRole !== null) {
-                text += "Switch to ";
-            } else {
-                text += "Become a ";
-            }
-            text += user.userClass.role.currentRole instanceof PetOwner ? "Pet Minder" : "Pet Owner";
+        if (userType === Role.ADMIN) return text;
+        if (userDetails.allRoles.includes(Role.OWNER) && userDetails.allRoles.includes(Role.MINDER)) {
+            text += "Switch to ";
+        } else {
+            text += "Become a ";
         }
+        text += userType === Role.OWNER ? "Pet Minder" : "Pet Owner";
         return text;
-    }
+    };
 
     const navigate = useNavigate();
     const [otherAccountOption, setOtherAccountOption] = useState<string>(() => getOtherAccountOption());
+
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
             if (menuRef?.current && !menuRef.current.contains(event.target as Node)) {
@@ -46,30 +45,26 @@ function ProfileIconDropDown({ user, onLogout, isOpen, menuRef, onClose }: Profi
         setOtherAccountOption(getOtherAccountOption());
     };
 
+    useEffect(() => {
+        updateOtherAccountOption();
+    }, [key]);
+
     return (
         <DropdownMenu isOpen={isOpen} onClose={onClose}>
             <DropdownItem text="Profile" onClick={() => {
                 navigate("/profile")
                 onClose();
                 }} />
-            <DropdownItem text="Dashboard" onClick={() => {
-                navigate("/dashboard")
-                onClose();
-                }} />
-            <hr />
             {otherAccountOption !== "" && (
                 <DropdownItem
                     text={otherAccountOption}
                     onClick={() => {
-                        if (user.userClass instanceof PrimaryUser) {
-                            if (user.userClass.role.prevRole !== null) {
-                                switchUserRole(user);
-                                navigate("/dashboard");
-                            } else {
-                                navigate(user.userClass.role.currentRole instanceof PetOwner ? "/register/petminder" : "/register/petowner");
-                            }
+                        if (otherAccountOption.startsWith("Switch")) {
+                            switchUserRole();
+                            navigate("/dashboard");
+                        } else {
+                            navigate(userType === Role.OWNER ? "/register/petminder" : "/register/petowner");
                         }
-                        updateOtherAccountOption();
                         onClose();
                     }}
                 />

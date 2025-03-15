@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { isAuthenticated } from "../../services/AuthService";
+import { getCurrentUserType } from "../../services/AuthService";
 
 function DashboardPage() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!isAuthenticated()) {
+        if (!getCurrentUserType()) {
             navigate("/");
         }
     }, []);

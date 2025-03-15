@@ -2,81 +2,104 @@ import User, { IUserDetails, Admin, PrimaryUser, Role, PetOwner, PetMinder } fro
 import { IPet } from "../models/IPet";
 import { IService } from "../models/IService";
 import { get } from "./FetchService";
+import { getCurrentUserID } from "./AuthService";
 
-export async function fetchUsers(): Promise<User[]> {
-  const users = await get("/users");
+class Registry {
+  private users: User[] = [];
+  private currentUser: User | null = null; // Stores logged-in user
+  private pets: IPet[] = [];
+  private services: IService[] = [];
+  private loaded: boolean = false; // Prevent redundant fetching
 
-  return users.map((user: any) => {
-    const userDetails: IUserDetails = {
-      id: user.userDetails.id,
-      fname: user.userDetails.fname,
-      lname: user.userDetails.lname,
-      loginDetails: {
-        email: user.userDetails.loginDetails.email,
-        username: user.userDetails.loginDetails.username,
-        password: user.userDetails.loginDetails.password
-      }
-    };
+  // Constructor to initialize registry
+  constructor() {
+    this.initialize();
+  }
 
-    // If the user is an admin
-    if (user.roles.includes(Role.ADMIN)) {
-      return new User(userDetails, new Admin());
+  // Fetch all users, pets, and services once
+  async initialize() {
+    if (this.loaded) return; // Avoid re-fetching
+
+    this.users = await this.fetchUsersFromAPI();
+    // this.pets = await this.fetchPetsFromAPI();
+    // this.services = await this.fetchServicesFromAPI();
+    this.loaded = true;
+
+    // Try loading the current user from local storage
+    const storedUserId = Number(getCurrentUserID);
+    if (storedUserId) {
+      this.currentUser = this.getUserById(storedUserId);
     }
-    // For owner, minder, or both, we assume the user has primary user info.
-    if (user.roles.includes(Role.OWNER) || user.roles.includes(Role.MINDER)) {
-      const primaryInfo = user.primaryUserInfo;
-      // Instantiate a PrimaryUser with the role based on a simple rule:
-      // if the user has both roles, default to MINDER.
-      const role = user.roles.includes(Role.MINDER) ? Role.MINDER : Role.OWNER;
+  }
 
-      // Create a PrimaryUser using the provided primary info.
-      const primaryUser = new PrimaryUser(
-        role,
-        primaryInfo.profilePic,
-        primaryInfo.dob,
-        primaryInfo.location,
-        primaryInfo.suspended
-      );
+  // Check if registry is loaded
+  isLoaded(): boolean {
+    return this.loaded;
+  }
 
-      const userRole = primaryUser.role.currentRole;
-      if (userRole instanceof PetOwner) {
-        // Make fetched pets rather than indexes.
-        userRole.pets = primaryInfo.petIDs;
-      } else if (userRole instanceof PetMinder) {
-        // Make fetched services rather than indexes.
-        userRole.services = primaryInfo.serviceIDs;
-        userRole.rating = primaryInfo.rating;
-        userRole.bio = primaryInfo.bio;
-        userRole.pictures = primaryInfo.pictures;
-        userRole.availability = primaryInfo.availability;
-        userRole.distanceRange = primaryInfo.distanceRange;
-        userRole.verified = primaryInfo.verified;
+  // Fetch users from API & map them correctly
+  private async fetchUsersFromAPI(): Promise<User[]> {
+    const usersData = await get("/users");
 
-        if (user.roles.includes(Role.OWNER)) {
-            userRole.switchRole();
-            if (userRole instanceof PetOwner) {
-                // Make fetched pets rather than indexes.
-                userRole.pets = primaryInfo.petIDs;  
-            }
-            userRole.switchRole();
+    return usersData.map((user: any) => {
+      const userDetails: IUserDetails = {
+        id: user.userDetails.id,
+        fname: user.userDetails.fname,
+        lname: user.userDetails.lname,
+        loginDetails: {
+          email: user.userDetails.loginDetails.email,
+          username: user.userDetails.loginDetails.username,
+          password: user.userDetails.loginDetails.password
         }
+      };
+
+      if (user.roles.includes(Role.ADMIN)) {
+        return new User(userDetails, new Admin());
       }
-      return new User(userDetails, primaryUser);
-    }
-    return null;
-  });
-}
 
-export async function fetchUser(id: number): Promise<User | null> {
-    const users = await fetchUsers();
-    return users.find((user) => user.userDetails.id === id) || null;
-}
+      if (user.roles.includes(Role.OWNER) || user.roles.includes(Role.MINDER)) {
+        const primaryInfo = user.primaryUserInfo;
+        const role = user.roles.includes(Role.MINDER) ? Role.MINDER : Role.OWNER;
 
-export async function fetchPets(): Promise<IPet[]> {
-  const pets = await get("/pets");
+        const primaryUser = new PrimaryUser(
+          role,
+          primaryInfo.profilePic,
+          primaryInfo.dob,
+          primaryInfo.location,
+          primaryInfo.suspended
+        );
 
-  return pets.map((pet: any) => {
-    const petObj: IPet = {
+        const userRole = primaryUser.role.currentRole;
+        if (userRole instanceof PetOwner) {
+          userRole.pets = primaryInfo.petIDs;
+        } else if (userRole instanceof PetMinder) {
+          userRole.services = primaryInfo.serviceIDs;
+          userRole.rating = primaryInfo.rating;
+          userRole.bio = primaryInfo.bio;
+          userRole.pictures = primaryInfo.pictures;
+          userRole.availability = primaryInfo.availability;
+          userRole.distanceRange = primaryInfo.distanceRange;
+          userRole.verified = primaryInfo.verified;
+
+          if (user.roles.includes(Role.OWNER)) {
+            primaryUser.role.switchRole();
+            if (userRole instanceof PetOwner) {
+              userRole.pets = primaryInfo.petIDs;
+            }
+            primaryUser.role.switchRole();
+          }
+        }
+        return new User(userDetails, primaryUser);
+      }
+
+      return null;
+    }).filter((user: any) => user !== null); // Remove null values
+  }
+
+  // Fetch pets from API
+  private async fetchPetsFromAPI(): Promise<IPet[]> {
+    const petsData = await get("/pets");
+    return petsData.map((pet: any) => ({
       id: pet.id,
       name: pet.name,
       dob: pet.dob,
@@ -87,21 +110,56 @@ export async function fetchPets(): Promise<IPet[]> {
       behaviour: pet.behaviour,
       allergies: pet.allergies,
       pictures: pet.pictures,
-    }
-    return petObj;
-  });
+    }));
+  }
+
+  // Fetch services from API
+  private async fetchServicesFromAPI(): Promise<IService[]> {
+    const servicesData = await get("/services");
+    return servicesData.map((service: any) => ({
+      id: service.id,
+      type: service.type,
+      duration: service.duration,
+      price: service.price,
+    }));
+  }
+
+  // Get all users (from memory, no API call)
+  getUsers(): User[] {
+    return this.users;
+  }
+
+  // Get user by ID
+  getUserById(id: number): User | null {
+    return this.users.find(user => user.userDetails.id === id) || null;
+  }
+
+  // Get current logged-in user
+  getCurrentUser(): User | null {
+    return this.currentUser;
+  }
+
+  // Set current user (when logging in)
+  setCurrentUser(user: User) {
+    this.currentUser = user;
+  }
+
+  // Clear current user (when logging out)
+  clearCurrentUser() {
+    this.currentUser = null;
+  }
+
+  // Get all pets
+  getPets(): IPet[] {
+    return this.pets;
+  }
+
+  // Get all services
+  getServices(): IService[] {
+    return this.services;
+  }
 }
 
-export async function fetchServices(): Promise<IService[]> {
-    const services = await get("/services");
-  
-    return services.map((service: any) => {
-      const serviceObj: IService = {
-        id: service.id,
-        type: service.type,
-        duration: service.duration,
-        price: service.price,
-      }
-      return serviceObj;
-    });
-  }
+// Export a single instance (Singleton)
+const registry = new Registry();
+export default registry;
