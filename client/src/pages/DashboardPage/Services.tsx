@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styles from "./Services.module.css";
+import dashboardStyles from "./DashboardPage.module.css";
 
 interface Service {
     id: number;
@@ -19,7 +20,7 @@ function Services() {
     };
 
     return (
-        <div className={styles.services}>
+        <div className={`${dashboardStyles.dashboardSection} ${styles.services}`}>
             <h2>Manage Services</h2>
             <button onClick={addService}>Add New Service</button>
             <ul>

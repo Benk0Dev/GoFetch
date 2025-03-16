@@ -1,11 +1,12 @@
 import styles from "./DashboardHome.module.css";
+import dashboardStyles from "./DashboardPage.module.css";
 import { getAllCurrentUserDetails } from "../../services/AuthService";
 
 function DashboardHome() {
     const userFirstName = getAllCurrentUserDetails()?.fname;
 
     return (
-        <div className={styles.dashboardHome}>
+        <div className={dashboardStyles.dashboardSection}>
             <h2>Welcome Back, {userFirstName}!</h2>
             <div className={styles.stats}>
                 <div>

@@ -76,7 +76,10 @@ function ProfileIconDropDown({ key, userType, userDetails, onLogout, isOpen, men
                     onClick={() => {
                         if (otherAccountOption.startsWith("Switch")) {
                             switchUserRole();
-                            navigate("/dashboard");
+                            if (userType === Role.OWNER) navigate("/dashboard");
+                            else {
+                                navigate("/browse");
+                            }
                         } else {
                             navigate(userType === Role.OWNER ? "/register-minder" : "/register-owner");
                         }

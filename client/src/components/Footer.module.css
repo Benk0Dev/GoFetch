@@ -4,6 +4,7 @@
     padding: 20px;
     background: var(--secondary-color);
     color: white;
+    margin-top: 20px;
   }
 
   .footer p {

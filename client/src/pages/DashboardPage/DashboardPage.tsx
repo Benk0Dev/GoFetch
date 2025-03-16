@@ -2,7 +2,7 @@ import { useState } from "react";
 import Sidebar from "./Sidebar";
 import DashboardHome from "./DashboardHome";
 import Services from "./Services";
-import Profile from "./Profile";
+import Profile from "./Profile/Profile";
 import Bookings from "./Bookings";
 import styles from "./DashboardPage.module.css";
 

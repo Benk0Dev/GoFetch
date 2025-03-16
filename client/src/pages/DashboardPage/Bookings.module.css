@@ -1,14 +1,3 @@
-.bookings {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.bookings h2 {
-    margin-bottom: 15px;
-}
-
 .bookings ul {
     list-style: none;
     padding: 0;

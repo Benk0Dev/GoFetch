@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styles from "./Bookings.module.css";
+import dashboardStyles from "./DashboardPage.module.css";
 
 interface Booking {
     id: number;
@@ -19,7 +20,7 @@ function Bookings() {
     };
 
     return (
-        <div className={styles.bookings}>
+        <div className={`${dashboardStyles.dashboardSection} ${styles.bookings}`}>
             <h2>Manage Bookings</h2>
             <ul>
                 {bookings.map((booking) => (

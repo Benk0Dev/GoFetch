@@ -152,7 +152,13 @@ input, textarea, select {
     border-radius: var(--border-radius);
     font-size: 16px;
 }
-  
+
+input[type="range"] {
+    padding: 0;
+    border: none;
+    border-radius: 0;
+}
+
 input:focus, textarea:focus, select:focus {
     outline: none;
     border-color: var(--primary-color);
@@ -179,4 +185,3 @@ input:focus, textarea:focus, select:focus {
     align-items: center;
     justify-content: center;
 }
-  
