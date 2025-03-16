@@ -6,17 +6,22 @@
     text-align: center;
 }
 
-.landingPageSection h1 {
+.container h1 {
+    font-size: 5rem;
+    margin-bottom: 1rem;
+}
+
+.container h2 {
     font-size: 3rem;
     margin-bottom: 1rem;
 }
 
-.landingPageSection p {
+.container p {
     font-size: 1.5rem;
     margin-bottom: 1rem;
 }
 
-.landing{
+.container{
     background:var(--primary-color);
     display: flex;
     align-items: center;
