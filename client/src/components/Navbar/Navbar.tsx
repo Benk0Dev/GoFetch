@@ -6,6 +6,7 @@ import { logout, getCurrentUserType, getAllCurrentUserDetails } from "../../serv
 import { IUserDetails } from "../../utils/StorageManager";
 import { Role } from "../../models/User";
 import ProfileIcon from "./ProfileIcon/ProfileIcon";
+import logo from "../../assets/images/logo.svg";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -39,21 +40,21 @@ function Navbar() {
   return (
     <nav className={styles.navbar} id="navbar">
       <div className="container flex" style={{ padding: "10px 20px"}}>
-        <Link to={homeLink}><h2>GoFetch</h2></Link>
+        <Link className={styles.logo} to={homeLink}><img src={logo}></img><h2>GoFetch</h2></Link>
         <div className={styles.navLinks}>
           {userType ? (
             <>
-              <Link to="/browse" className="btn btn-transparent">Browse</Link>
-              <Link to="/dashboard" className="btn btn-transparent">Dashboard</Link>
-              <Link to="/notifications" className="btn btn-transparent"><i className="fa-regular fa-bell"></i></Link>
-              <Link to="/messages" className="btn btn-transparent"><i className="fa-regular fa-envelope"></i></Link>
+              <Link to="/browse" className="btn-link">Explore Minders</Link>
+              <Link to="/notifications" className="btn-round btn-transparent"><i className="fa-regular fa-bell"></i></Link>
+              <Link to="/messages" className="btn-round btn-transparent"><i className="fa-regular fa-envelope"></i></Link>
               <ProfileIcon key={forceUpdate} userType={userType} userDetails={userDetails} onLogout={handleLogout} />
             </>
           ) : (
-            !["/login", "/register"].includes(location.pathname) && (
+            !["/login", "/register-owner", "/register-minder"].includes(location.pathname) && (
               <>
                 <Link to="/login" className="btn btn-transparent">Login</Link>
-                <Link to="/register" className="btn btn-background">Sign Up</Link>
+                <Link to="/register-owner" className="btn btn-transparent">Sign Up</Link>
+                <Link to="/register-minder" className="btn btn-background">Become a Minder</Link>
               </>
             )
           )}

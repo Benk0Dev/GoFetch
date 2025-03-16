@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import BrowsePage from "./pages/BrowsePage/BrowsePage";
 import DashboardPage from "./pages/DashboardPage/DashboardPage";
 import { assignCurrentUser } from "./services/AuthService";
@@ -36,9 +37,11 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/register-owner" element={<RegisterPage />} />
+        <Route path="/register-minder" element={<RegisterPage />} />
         <Route path="/browse" element={<BrowsePage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
       <Footer />
     </Router>

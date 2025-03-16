@@ -54,7 +54,22 @@ function ProfileIconDropDown({ key, userType, userDetails, onLogout, isOpen, men
             <DropdownItem text="Profile" onClick={() => {
                 navigate("/profile")
                 onClose();
+            }} />
+            {userType === Role.OWNER && (
+                <DropdownItem text="Manage Pets" onClick={() => {
+                    navigate("/manage-pets")
+                    onClose();
                 }} />
+            )}
+            {userType === Role.MINDER && (
+                <DropdownItem text="Dashboard" onClick={() => {
+                    navigate("/dashboard")
+                    onClose();
+                }} />
+            )}
+            {(userType === Role.OWNER || userType === Role.MINDER) && (
+                <hr />
+            )}
             {otherAccountOption !== "" && (
                 <DropdownItem
                     text={otherAccountOption}

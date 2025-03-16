@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./LoginPage.module.css";
-import { login } from "../../services/AuthService";
+import { getCurrentUserType, login } from "../../services/AuthService";
+import { Role } from "../../models/User";
 
 function LoginForm() {
     const [email, setEmail] = useState("");
@@ -16,7 +17,11 @@ function LoginForm() {
         const user = await login(email, password);
         if (user) {
             console.log("Login successful:", user);
-            navigate("/dashboard");
+            if (getCurrentUserType() === Role.OWNER) {
+                navigate("/browse");
+            } else {
+                navigate("/dashboard");
+            }
         } else {
             setError("Invalid email or password");
         }

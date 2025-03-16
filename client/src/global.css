@@ -74,15 +74,33 @@ p {
 }
   
 /* Buttons */
-.btn {
+.btn, .btn-round, .btn-link {
     display: inline-block;
-    padding: 10px 16px;
     border: none;
-    border-radius: var(--border-radius);
     font-size: 18px;
+    font-weight: 500;
     cursor: pointer;
     text-align: center;
-    transition: background 0.1s ease-in-out, transform 0.1s ease-in-out;
+    transition: background 0.1s ease-in-out, opacity 0.1s ease-in-out;
+}
+
+.btn {
+    padding: 10px 16px;
+    border-radius: var(--border-radius);
+}
+
+.btn-round {
+    padding: 10px;
+    border-radius: 100px;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-link {
+    padding: 10px;
 }
   
 .btn-primary {
@@ -119,6 +137,10 @@ p {
 
 .btn-transparent:hover {
     background-color: rgba(255, 255, 255, 0.15);
+}
+
+.btn-link:hover {
+    opacity: 0.75;
 }
   
 /* Form Elements */
