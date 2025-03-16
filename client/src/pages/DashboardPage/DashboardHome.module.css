@@ -1,0 +1,35 @@
+.dashboardHome {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dashboardHome h2 {
+    margin-bottom: 15px;
+}
+
+.stats {
+    display: flex;
+    gap: 15px;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.stats div {
+    background: #1abc9c;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    width: 100px;
+}
+
+.stats h3 {
+    font-size: 22px;
+    margin: 0;
+}
+
+.stats p {
+    font-size: 14px;
+}

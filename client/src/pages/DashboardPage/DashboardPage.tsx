@@ -1,23 +1,37 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { getCurrentUserType } from "../../services/AuthService";
+import { useState } from "react";
+import Sidebar from "./Sidebar";
+import DashboardHome from "./DashboardHome";
+import Services from "./Services";
+import Profile from "./Profile";
+import Bookings from "./Bookings";
+import styles from "./DashboardPage.module.css";
 
-function DashboardPage() {
-    const navigate = useNavigate();
+function Dashboard() {
+    const [activeTab, setActiveTab] = useState("home");
 
-    useEffect(() => {
-        if (!getCurrentUserType()) {
-            navigate("/");
+    const renderTab = () => {
+        switch (activeTab) {
+            case "services":
+                return <Services />;
+            case "profile":
+                return <Profile />;
+            case "bookings":
+                return <Bookings />;
+            default:
+                return <DashboardHome />;
         }
-    }, []);
+    };
+
+    const navBarHeight: number = document.getElementById("navbar")?.offsetHeight || 0;
 
     return (
-        <>
-            <div className="container">
-                <h1>Dashboard</h1>
+        <div className={`container ${styles.dashboardContainer}`} style={{ minHeight: `calc(100vh - ${navBarHeight}px)`}}>
+            <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+            <div className={styles.dashboardContent}>
+                {renderTab()}
             </div>
-        </>
+        </div>
     );
 }
 
-export default DashboardPage;
+export default Dashboard;

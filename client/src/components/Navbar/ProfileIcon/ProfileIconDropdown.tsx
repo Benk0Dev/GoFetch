@@ -78,7 +78,7 @@ function ProfileIconDropDown({ key, userType, userDetails, onLogout, isOpen, men
                             switchUserRole();
                             navigate("/dashboard");
                         } else {
-                            navigate(userType === Role.OWNER ? "/register/petminder" : "/register/petowner");
+                            navigate(userType === Role.OWNER ? "/register-minder" : "/register-owner");
                         }
                         onClose();
                     }}
