@@ -14,10 +14,9 @@ class Registry {
   // Fetch all users, pets, and services once
   async initialize() {
     if (this.loaded) return; // Avoid re-fetching
-
+    this.pets = await this.fetchPetsFromAPI();
+    this.services = await this.fetchServicesFromAPI();
     this.users = await this.fetchUsersFromAPI();
-    // this.pets = await this.fetchPetsFromAPI();
-    // this.services = await this.fetchServicesFromAPI();
     this.loaded = true;
 
     // Try loading the current user from local storage
@@ -66,11 +65,9 @@ class Registry {
 
         const userRole = primaryUser.role.currentRole;
         if (userRole instanceof PetOwner) { 
-          // fetch pets in future
-          // userRole.pets = user.ownerRoleInfo.petIDs.map((petID: number) => this.pets.find(pet => pet.id === petID));
+          userRole.pets = user.ownerRoleInfo.petIDs.map((petID: number) => this.pets.find(pet => pet.id === petID));
         } else if (userRole instanceof PetMinder) {
-          // fetch services in future
-          // userRole.services = user.minderRoleInfo.serviceIDs.map((serviceID: number) => this.services.find(service => service.id === serviceID));
+          userRole.services = user.minderRoleInfo.serviceIDs.map((serviceID: number) => this.services.find(service => service.id === serviceID));
           userRole.rating = user.minderRoleInfo.rating;
           userRole.bio = user.minderRoleInfo.bio;
           userRole.pictures = user.minderRoleInfo.pictures;
@@ -81,12 +78,12 @@ class Registry {
           if (user.roles.includes(Role.OWNER)) {
             primaryUser.role.switchRole();
             if (userRole instanceof PetOwner) {
-              // fetch pets in future
-              // userRole.pets = user.ownerRoleInfo.petIDs.map((petID: number) => this.pets.find(pet => pet.id === petID));
+              userRole.pets = user.ownerRoleInfo.petIDs.map((petID: number) => this.pets.find(pet => pet.id === petID));
             }
             primaryUser.role.switchRole();
           }
         }
+
         return new User(userDetails, primaryUser);
       }
 
