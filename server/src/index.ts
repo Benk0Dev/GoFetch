@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 dotenv.config();
 
-import { AllUsersData, UserData, RegisterUser } from './router/UserStatic';
+import { AllUsersData, UserData, RegisterUser, AllPets, AllServices } from './router/UserStatic';
 import { log } from './utils/utils';
 import { initCache } from './utils/DbCache';
 
@@ -50,6 +50,14 @@ app.post('/registerUser', (req: Request, res: Response) => {
     return;
   }
   res.status(201).send(result);
+});
+
+app.get('/pets', (req: Request, res: Response) => {
+  res.send(AllPets());
+});
+
+app.get('/services', (req: Request, res: Response) => {
+  res.send(AllServices());
 });
 
 // Error handling middleware

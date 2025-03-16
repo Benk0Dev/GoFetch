@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { IUser, ILoginDetails, Role } from '../models/IUser';
 import { IPet } from '../models/IPet';
+import { IService } from '../models/IService';
 
 // DB path
 const DB_PATH = path.join(__dirname, './../db');
@@ -10,12 +11,14 @@ const DB_PATH = path.join(__dirname, './../db');
 interface DbCache {
   users: IUser[];
   pets: IPet[];
+  sevices: IService[];
 }
 
 // Initialize empty cache
 const cache: DbCache = {
   users: [],
   pets: [],
+  sevices: [],
 };
 
 // Initialize cache by loading data from files
@@ -24,9 +27,11 @@ export function initCache(): void {
   try {
     const usersData = fs.readFileSync(`${DB_PATH}/users.json`, 'utf8'); // Load users
     const petsData = fs.readFileSync(`${DB_PATH}/pets.json`, 'utf8');   // Load pets
+    const servicesData = fs.readFileSync(`${DB_PATH}/services.json`, 'utf8');   // Load services
 
     cache.users = JSON.parse(usersData);
     cache.pets = JSON.parse(petsData);
+    cache.sevices = JSON.parse(servicesData);
 
     console.log('Database cache initialized successfully');
   } catch (error) {
@@ -43,6 +48,11 @@ export function getCachedUsers(): IUser[] {
 // Get cached pets
 export function getCachedPets(): IPet[] {
   return cache.pets;
+}
+
+// Get cached services
+export function getCachedServices(): IService[] {
+  return cache.sevices;
 }
 
 // Get a specific user with their pets populated
