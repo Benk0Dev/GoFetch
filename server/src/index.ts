@@ -4,9 +4,11 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 dotenv.config();
 
-import { AllUsersData, UserData, RegisterUser, AllPets, AllServices } from './router/UserStatic';
+import { AllUsersData, UserData, RegisterUser } from './routers/UserStatic';
+import { AllPets } from './routers/PetStatic';
+import { AllServices } from './routers/ServiceStatic';
 import { log } from './utils/utils';
-import { initCache } from './utils/DbCache';
+import { initCache } from './services/DbCache';
 
 const app: Express = express();
 const port = process.env.PORT || 3001;

@@ -1,4 +1,6 @@
-import { getCachedUsersWithPets, getCachedUserWithPets, RegisterUserCache, getCachedPets, getCachedServices } from '../utils/DbCache';
+import { getCachedUsersWithPets, getCachedUserWithPets, RegisterUserCache } from '../services/UserCached';
+import { getCachedPets } from '../services/PetCached';
+import { getCachedServices } from '../services/ServiceCached';
 import { ILoginDetails } from '../models/IUser';
 
 export function AllUsersData() {
@@ -14,12 +16,4 @@ export function UserData(id: string | undefined) {
 
 export function RegisterUser(user: ILoginDetails) {
   return RegisterUserCache(user);
-}
-
-export function AllPets() {
-  return getCachedPets();
-}
-
-export function AllServices() {
-  return getCachedServices();
 }
