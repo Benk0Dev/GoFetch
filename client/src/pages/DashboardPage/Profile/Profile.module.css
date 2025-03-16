@@ -123,9 +123,9 @@ Label.addImage {
 
 .slider-container {
     display: grid;
-    grid-template-columns: 1fr 65px;
+    grid-template-columns: 1fr 55px;
     align-items: center;
-    padding: 20px;
+    padding: 20px 30px;
     margin: 8px 0;
     border-radius: 8px;
     column-gap: 20px;
@@ -134,9 +134,10 @@ Label.addImage {
 }
 
 .slider-value {
+    justify-self: center;
     display: block;
     font-weight: 500;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .buttonGroup {
