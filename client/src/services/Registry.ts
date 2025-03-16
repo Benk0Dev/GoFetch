@@ -11,11 +11,6 @@ class Registry {
   private services: IService[] = [];
   private loaded: boolean = false; // Prevent redundant fetching
 
-  // Constructor to initialize registry
-  constructor() {
-    this.initialize();
-  }
-
   // Fetch all users, pets, and services once
   async initialize() {
     if (this.loaded) return; // Avoid re-fetching
@@ -70,21 +65,24 @@ class Registry {
         );
 
         const userRole = primaryUser.role.currentRole;
-        if (userRole instanceof PetOwner) {
-          userRole.pets = primaryInfo.petIDs;
+        if (userRole instanceof PetOwner) { 
+          // fetch pets in future
+          // userRole.pets = user.ownerRoleInfo.petIDs.map((petID: number) => this.pets.find(pet => pet.id === petID));
         } else if (userRole instanceof PetMinder) {
-          userRole.services = primaryInfo.serviceIDs;
-          userRole.rating = primaryInfo.rating;
-          userRole.bio = primaryInfo.bio;
-          userRole.pictures = primaryInfo.pictures;
-          userRole.availability = primaryInfo.availability;
-          userRole.distanceRange = primaryInfo.distanceRange;
-          userRole.verified = primaryInfo.verified;
+          // fetch services in future
+          // userRole.services = user.minderRoleInfo.serviceIDs.map((serviceID: number) => this.services.find(service => service.id === serviceID));
+          userRole.rating = user.minderRoleInfo.rating;
+          userRole.bio = user.minderRoleInfo.bio;
+          userRole.pictures = user.minderRoleInfo.pictures;
+          userRole.availability = user.minderRoleInfo.availability;
+          userRole.distanceRange = user.minderRoleInfo.distanceRange;
+          userRole.verified = user.minderRoleInfo.verified;
 
           if (user.roles.includes(Role.OWNER)) {
             primaryUser.role.switchRole();
             if (userRole instanceof PetOwner) {
-              userRole.pets = primaryInfo.petIDs;
+              // fetch pets in future
+              // userRole.pets = user.ownerRoleInfo.petIDs.map((petID: number) => this.pets.find(pet => pet.id === petID));
             }
             primaryUser.role.switchRole();
           }

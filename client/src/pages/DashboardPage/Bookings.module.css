@@ -1,0 +1,28 @@
+.bookings ul {
+    list-style: none;
+    padding: 0;
+}
+
+.bookings li {
+    background: #ecf0f1;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bookings button {
+    background: #1abc9c;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+.bookings button:last-child {
+    background: #e74c3c;
+}

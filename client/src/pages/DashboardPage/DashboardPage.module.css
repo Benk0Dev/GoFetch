@@ -1,0 +1,22 @@
+.dashboardContainer {
+    display: grid;
+    grid-template-columns: 215px 1fr;
+    height: 100%;
+    padding: 20px 0;
+}
+
+.dashboardContent {
+    padding-left: 20px;
+    background-color: var(--background-color);
+}
+
+.dashboardSection {
+    background: white;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dashboardSection h2 {
+    margin-bottom: 15px;
+}
