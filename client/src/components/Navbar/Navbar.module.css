@@ -10,5 +10,17 @@
 
 .navLinks {
     display: flex;
-    column-gap: 10px;
+    column-gap: 15px;
+    align-items: center;
+}
+
+.logo {
+    position: relative;
+    display: flex;
+    align-items: center;
+    column-gap: 3px;
+}
+
+.logo img {
+    width: 35px;
 }

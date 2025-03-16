@@ -32,13 +32,7 @@ export class PrimaryUser implements IPrimaryUserInfo {
     suspendEndsAt: Date | null;
 
     constructor(role: Role, profilePic: string, dob: Date, location: ILocation, suspended: boolean, suspendReason?: string | null, suspendEndsAt?: Date | null) {
-        if (role === Role.OWNER) {
-            this.role = new PetOwner();
-        } else if (role === Role.MINDER) {
-            this.role = new PetMinder();
-        } else {
-            throw new Error("Invalid role");
-        }
+        this.role = new UserRole(role);
         this.profilePic = profilePic;
         this.dob = dob;
         this.location = location;
@@ -53,17 +47,24 @@ export class PrimaryUser implements IPrimaryUserInfo {
     }
 }
 
-abstract class UserRole {
-    currentRole: UserRole;
-    prevRole: UserRole | null;
+class UserRole {
+    currentRole: PetOwner | PetMinder;
+    prevRole: PetOwner | PetMinder | null;
 
-    constructor() {
-        this.currentRole = this;
+    constructor(role: Role) {
+        if (role === Role.OWNER) {
+            this.currentRole = new PetOwner();
+        } else if (role === Role.MINDER) {
+            this.currentRole = new PetMinder();
+        } else {
+            throw new Error("Invalid role");
+        }
         this.prevRole = null;
     }
 
     switchRole() {
         if (this.prevRole === null) {
+            this.prevRole = this.currentRole;
             if (this.currentRole instanceof PetOwner) {
                 this.currentRole = new PetMinder();
             }
@@ -78,11 +79,10 @@ abstract class UserRole {
     };
 }
 
-export class PetOwner extends UserRole {
+export class PetOwner {
     pets: IPet[];
 
     constructor(pets?: IPet[]) {
-        super();
         this.pets = pets || [];
     }
 
@@ -95,7 +95,7 @@ export class PetOwner extends UserRole {
     }
 }
 
-export class PetMinder extends UserRole implements IMinderRoleInfoWithoutServiceIDs {
+export class PetMinder implements IMinderRoleInfoWithoutServiceIDs {
     services: IService[];
     rating: number;
     bio: string;
@@ -105,7 +105,6 @@ export class PetMinder extends UserRole implements IMinderRoleInfoWithoutService
     verified: boolean;
 
     constructor(services?: IService[], rating?: number, bio?: string, pictures?: string[], availability?: string, distanceRange?: number, verified?: boolean) {
-        super();
         this.services = services || [];
         this.rating = rating || 0;
         this.bio = bio || "";

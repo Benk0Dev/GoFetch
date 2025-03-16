@@ -4,7 +4,7 @@ import pageStyles from './LandingPage.module.css';
 import { Link } from "react-router-dom";
 
 function Hero() {
-  const navBarHeight: number = document.getElementById('navbar')?.offsetHeight || 0;
+  const navBarHeight: number = document.getElementById("navbar")?.offsetHeight || 0;
 
   return (
     <section className={`${styles.hero} ${pageStyles.landingPageSection}`} style={{ height: `calc(100vh - ${navBarHeight}px)` }}>

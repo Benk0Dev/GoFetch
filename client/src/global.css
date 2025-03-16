@@ -1,15 +1,15 @@
 /* Root Variables for Consistent Styling */
 :root {
-    --primary-color: #149acb;
-    --primary-color-dark: #1088b0;
-    --secondary-color: #6c757d;
-    --secondary-color-dark: #5a6268;
+    --primary-color: #c03383;
+    --primary-color-dark: #af3078;
+    --secondary-color: #7c7c7c;
+    --secondary-color-dark: #6e6e6e;
     --background-color: #f8f9fa;
     --text-color: #333;
     --font-family: 'Inter', sans-serif;
     --border-radius: 10px;
 }
-  
+
 /* Global Reset */
 * {
     margin: 0;
@@ -74,19 +74,33 @@ p {
 }
   
 /* Buttons */
-.btn {
+.btn, .btn-round, .btn-link {
     display: inline-block;
-    padding: 10px 16px;
     border: none;
-    border-radius: var(--border-radius);
     font-size: 18px;
+    font-weight: 500;
     cursor: pointer;
     text-align: center;
-    transition: background 0.1s ease-in-out, transform 0.1s ease-in-out;
+    transition: background 0.1s ease-in-out, opacity 0.1s ease-in-out;
 }
 
-.btn:active {
-    transform: scale(0.95);
+.btn {
+    padding: 10px 16px;
+    border-radius: var(--border-radius);
+}
+
+.btn-round {
+    padding: 10px;
+    border-radius: 100px;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-link {
+    padding: 10px;
 }
   
 .btn-primary {
@@ -123,6 +137,10 @@ p {
 
 .btn-transparent:hover {
     background-color: rgba(255, 255, 255, 0.15);
+}
+
+.btn-link:hover {
+    opacity: 0.75;
 }
   
 /* Form Elements */
