@@ -5,3 +5,18 @@
     height: 100vh;
     text-align: center;
 }
+
+.landingPageSection h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.landingPageSection p {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.landing{
+    background:color(--primary-color);
+    
+}
