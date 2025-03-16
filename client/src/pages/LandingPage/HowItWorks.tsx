@@ -1,4 +1,5 @@
 import pageStyles from './LandingPage.module.css';
+import '../../global.css'; 
 
 function HowItWorks() {
   return (

@@ -17,6 +17,7 @@
 }
 
 .landing{
-    background:color(--primary-color);
-    
+    background:var(--primary-color);
+    display: flex;
+    align-items: center;
 }

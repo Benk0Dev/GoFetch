@@ -6,6 +6,7 @@ import HowItWorks from "./HowItWorks";
 import LoginRegister from "./LoginRegister";
 
 
+
 function LandingPage() {
   const navigate = useNavigate();
 
