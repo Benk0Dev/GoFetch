@@ -25,4 +25,5 @@
     background:var(--primary-color);
     display: flex;
     align-items: center;
+    color: white;
 }
