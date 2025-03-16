@@ -6,17 +6,17 @@
     text-align: center;
 }
 
-.container h1 {
+.container h2 {
     font-size: 5rem;
     margin-bottom: 1rem;
 }
 
-.container h2 {
+.steps h3 {
     font-size: 3rem;
     margin-bottom: 1rem;
 }
 
-.container p {
+.steps p {
     font-size: 1.5rem;
     margin-bottom: 1rem;
 }
