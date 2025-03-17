@@ -3,8 +3,8 @@ import '../../global.css';
 
 function HowItWorks() {
   return (
-    <section className={pageStyles.landingPageSection}>
-      <div className="container">
+    <section className={`${pageStyles.landingPageSection} ${pageStyles.HowItWorks}`}>
+      <div className={pageStyles.container}>
         <h2>How It Works</h2>
         <div className="steps">
           <div className="step">

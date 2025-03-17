@@ -3,13 +3,14 @@ import pageStyles from './LandingPage.module.css';
 
 function LoginRegister() {
   return (
-    <section className={pageStyles.landingPageSection}>
-      <div className="container">
+    <section className={`${pageStyles.landingPageSection} ${pageStyles.LoginRegister}`}>
+      <div className={pageStyles.container}>
         <h2>Get Started</h2>
         <p>Login or register to find pet minders near you.</p>
-        <div>
-          <Link to="/login" className="btn btn-primary">Login</Link>
-          <Link to="/register" className="btn btn-secondary">Sign Up</Link>
+        <div className={pageStyles.buttons}>
+          <Link to="/login" className="btn btn-background">Login</Link>
+          <Link to="/register" className="btn btn-background">Sign Up</Link>
+          <Link to="/register-minder" className="btn btn-primary">Become a Minder</Link>
         </div>
       </div>
     </section>

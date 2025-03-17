@@ -4,26 +4,75 @@
     align-items: center;
     height: 100vh;
     text-align: center;
-}
-
-.container h2 {
-    font-size: 5rem;
-    margin-bottom: 1rem;
-}
-
-.steps h3 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-}
-
-.steps p {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-}
-
-.container{
-    background:var(--primary-color);
-    display: flex;
-    align-items: center;
     color: white;
+    position: relative;
 }
+
+
+.container {
+    padding: .5rem 0.5rem;
+    text-align: center;
+    /* border: double 6px var(--primary-color); */
+    border-radius: 25px;
+    padding-left: 5rem;
+    padding-right: 5rem;
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+}
+
+.HowItWorks h2, .LoginRegister h2 {
+    font-size: 3rem;
+    margin-bottom: 0.2rem;
+    /* border-top: dashed 4px var(--primary-color); */
+}
+
+.HowItWorks h2{
+    border-bottom: dashed 4px var(--primary-color);
+}
+
+.HowItWorks h3 {
+    font-size: 2rem;
+    margin-bottom: 0.2rem;
+}
+
+.HowItWorks p, .LoginRegister p {
+    font-size: 1.5rem;
+    margin-bottom: 0.2rem;
+    color: var(--text-color);
+}
+
+.HowItWorks p{
+    border-bottom:solid 2px var(--primary-color);
+}
+
+.HowItWorks div, .LoginRegister div {
+    /* background:var(--primary-color); */
+    align-items: center;
+    color: var(--primary-color);
+    justify-content: center;
+    text-align: center;
+    /* opacity: 60%; */
+}
+
+.HowItWorks div:hover {
+    padding: .2rem;
+    transform: scale(1rem);
+}
+
+.buttons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    /* padding: 4%; */
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
+
+.LoginRegister{
+    background: url('.../.../assets/dogwalk.jpg') center/cover no-repeat;
+}
+
+
+
