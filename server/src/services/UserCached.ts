@@ -1,73 +1,10 @@
 import fs from 'fs';
-import path from 'path';
 import { IUser, ILoginDetails, Role } from '../models/IUser';
-import { IPet } from '../models/IPet';
-import { IService } from '../models/IService';
-
-// DB path
-const DB_PATH = path.join(__dirname, './../db');
-
-// Cache structure
-interface DbCache {
-  users: IUser[];
-  pets: IPet[];
-  sevices: IService[];
-}
-
-// Initialize empty cache
-const cache: DbCache = {
-  users: [],
-  pets: [],
-  sevices: [],
-};
-
-// Initialize cache by loading data from files
-export function initCache(): void {
-  console.log('Initializing database cache...');
-  try {
-    const usersData = fs.readFileSync(`${DB_PATH}/users.json`, 'utf8'); // Load users
-    const petsData = fs.readFileSync(`${DB_PATH}/pets.json`, 'utf8');   // Load pets
-    const servicesData = fs.readFileSync(`${DB_PATH}/services.json`, 'utf8');   // Load services
-
-    cache.users = JSON.parse(usersData);
-    cache.pets = JSON.parse(petsData);
-    cache.sevices = JSON.parse(servicesData);
-
-    console.log('Database cache initialized successfully');
-  } catch (error) {
-    console.error('Error initializing database cache:', error);
-    process.exit(1);    // Exit the app if cache initialization fails
-  }
-}
+import { cache, DB_PATH } from './DbCache';
 
 // Get cached users
 export function getCachedUsers(): IUser[] {
   return cache.users;
-}
-
-// Get cached pets
-export function getCachedPets(): IPet[] {
-  return cache.pets;
-}
-
-// Get cached services
-export function getCachedServices(): IService[] {
-  return cache.sevices;
-}
-
-// Get a specific user with their pets populated
-export function getCachedUserWithPets(id: number): IUser | null {
-  const user = cache.users.find(user => user.userDetails.id === id);
-  if (!user) return null;
-
-  const userWithPets = { ...user };   // Clone the user to avoid modifying the cache directly
-  const petIds = user.ownerRoleInfo?.petIDs || [];    // Get the pet IDs (handle the structure mismatch in your data)
-  const userPets = cache.pets.filter(pet => petIds.includes(pet.id)); // Populate pets
-  if (userWithPets.ownerRoleInfo) {
-    userWithPets.ownerRoleInfo.pets = userPets;
-  }
-
-  return userWithPets;
 }
 
 // Get all users with their pets populated
@@ -142,10 +79,9 @@ export function RegisterUserCache(user: ILoginDetails): { success: boolean; mess
     cache.users.push(newUser);
 
     // Write back to the database file
-    fs.writeFileSync(`${DB_PATH}/users.json`, JSON.stringify(cache.users, null, 2) ,'utf8');
+    fs.writeFileSync(`${DB_PATH}/users.json`, JSON.stringify(cache.users, null, 2), 'utf8');
 
     // Return success without password
-    // const { userDetails.loginDetails.password, ...userWithoutPassword } = newUser
     const { userDetails: { loginDetails: { password, ...loginDetails }, ...userDetails }, ...userWithoutPassword } = newUser;
     return {
       success: true,
@@ -156,9 +92,4 @@ export function RegisterUserCache(user: ILoginDetails): { success: boolean; mess
     console.error('Error registering user:', error);
     return { success: false, message: `Registration failed: ${error instanceof Error ? error.message : 'Unknown error'}` };
   }
-}
-
-// Function to refresh the cache (useful for when data changes)
-export function refreshCache(): void {
-  initCache();
 }

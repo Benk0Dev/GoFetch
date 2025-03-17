@@ -32,8 +32,8 @@ export interface IPrimaryUserInfo {
   dob: Date;
   location: ILocation;
   suspended: boolean;
-  suspendReason: string | null;
-  suspendEndsAt: Date | null;
+  suspendReason?: string | null;
+  suspendEndsAt?: Date | null;
 }
 
 export interface IOwnerRoleInfo {

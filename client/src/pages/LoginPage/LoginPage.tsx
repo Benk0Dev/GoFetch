@@ -19,10 +19,8 @@ function LoginPage() {
             }
         }, []);
 
-    const navBarHeight: number = document.getElementById('navbar')?.offsetHeight || 0;
-
     return (
-        <div className="container flex-center" style={{ height: `calc(100vh - ${navBarHeight}px)` }}>
+        <div className="container flex-center">
         <div className={styles.loginBox}>
             <h2>Login</h2>
             <LoginForm />

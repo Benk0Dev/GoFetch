@@ -10,6 +10,7 @@ import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import BrowsePage from "./pages/BrowsePage/BrowsePage";
 import DashboardPage from "./pages/DashboardPage/DashboardPage";
+import MessagingPage from "./pages/MessagingPage/MessagingPage";
 import { assignCurrentUser } from "./services/AuthService";
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
         <Route path="/browse" element={<BrowsePage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/messaging" element={<MessagingPage />} />
       </Routes>
       <Footer />
     </Router>
