@@ -1,0 +1,65 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+    width: 40em;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.messageContainer {
+    flex: 1;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-radius: 0.2em;
+    padding: 1em;
+    margin-bottom: 1em;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+}
+
+.message {
+    background-color: #e1f5fe;
+    padding: 0.8em;
+    border-radius: 0.4em;
+    margin-bottom: 0.5em;
+    align-self: flex-start;
+    max-width: 70%;
+    word-wrap: break-word;
+}
+
+.messageForm {
+    display: flex;
+    gap: 1em;
+}
+
+.messageInput {
+    flex: 1;
+    padding: 0.8em;
+    border-radius: 0.4em;
+    font-size: 1.2em;
+    border: 1px solid #ccc;
+    transition: all 0.2s;
+    outline: none;
+}
+
+.messageInput:focus {
+    outline: none;
+    border-color: #4caf50;
+}
+
+.sendButton {
+    padding: 0 1em;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 0.2em;
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: all 0.2s;
+}
+
+.sendButton:hover {
+    background-color: #45a049;
+}

@@ -21,14 +21,22 @@ a {
     text-decoration: none;
     color: inherit;
 }
-  
+
 body {
     font-family: var(--font-family);
     background-color: var(--background-color);
     color: var(--text-color);
     line-height: 1.6;
+    min-height: 100vh;
 }
-  
+
+#root {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+}
+
 /* Layout */
 .container {
     width: 90%;
@@ -72,7 +80,7 @@ p {
     margin-bottom: 18px;
     line-height: 1.6;
 }
-  
+
 /* Buttons */
 .btn, .btn-round, .btn-link {
     display: inline-block;
@@ -102,21 +110,21 @@ p {
 .btn-link {
     padding: 10px;
 }
-  
+
 .btn-primary {
     background-color: var(--primary-color);
     color: white;
 }
-  
+
 .btn-primary:hover {
     background-color: var(--primary-color-dark);
 }
-  
+
 .btn-secondary {
     background-color: var(--secondary-color);
     color: white;
 }
-  
+
 .btn-secondary:hover {
     background-color: var(--secondary-color-dark);
 }
@@ -142,7 +150,7 @@ p {
 .btn-link:hover {
     opacity: 0.75;
 }
-  
+
 /* Form Elements */
 input, textarea, select {
     width: 100%;
@@ -163,7 +171,7 @@ input:focus, textarea:focus, select:focus {
     outline: none;
     border-color: var(--primary-color);
 }
-  
+
 /* Card Layout */
 .card {
     background: white;
@@ -172,7 +180,7 @@ input:focus, textarea:focus, select:focus {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
 }
-  
+
 /* Flex Utilities */
 .flex {
     display: flex;
