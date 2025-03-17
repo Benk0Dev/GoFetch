@@ -21,7 +21,6 @@ function Profile() {
     const [originalState, setOriginalState] = useState({ bio, availability, distanceRange, pictures });
     const [showImageViewer, setShowImageViewer] = useState<string | null>(null);
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
-    const navigate = useNavigate();
 
     // Check for unsaved changes
     useEffect(() => {
@@ -45,14 +44,6 @@ function Profile() {
         window.addEventListener("beforeunload", handleBeforeUnload);
         return () => window.removeEventListener("beforeunload", handleBeforeUnload);
     }, [hasUnsavedChanges]);
-
-    const handleNavigation = (e: any) => {
-        if (hasUnsavedChanges) {
-            e.preventDefault();
-            const confirmLeave = window.confirm("You have unsaved changes. Do you want to leave without saving?");
-            if (confirmLeave) navigate(e.target.href);
-        }
-    };
 
     // Add new picture
     const handleAddPicture = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,7 +73,6 @@ function Profile() {
     const handleSave = () => {
         setOriginalState({ bio, availability, distanceRange, pictures });
         setHasUnsavedChanges(false);
-        alert("Changes saved!");
     };
 
     return (
@@ -124,15 +114,10 @@ function Profile() {
 
             <div className={styles.buttonGroup}>
                 <button className={`btn btn-secondary`} onClick={handleCancel}>Cancel</button>
-                <button className={`btn btn-primary`} onClick={handleSave}>Confirm Changes</button>
+                <button className={`btn btn-primary`} onClick={handleSave}>Confirm</button>
             </div>
 
             {showImageViewer && <ImageViewer imageSrc={showImageViewer} onClose={() => setShowImageViewer(null)} />}
-
-            {/* Prevent navigation if unsaved changes exist */}
-            <nav>
-                <a href="/" onClick={handleNavigation}>Go Home</a>
-            </nav>
         </div>
     );
 }

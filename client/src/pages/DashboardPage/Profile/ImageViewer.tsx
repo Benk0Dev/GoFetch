@@ -8,7 +8,7 @@ interface ImageViewerProps {
 function ImageViewer({ imageSrc, onClose }: ImageViewerProps) {
     return (
         <div className={styles.overlay} onClick={onClose}>
-            <div className={styles.imageContainer}>
+            <div className={styles.imageContainer} onClick={(e) => e.stopPropagation()}>
                 <img src={imageSrc} alt="Full View" />
             </div>
         </div>
