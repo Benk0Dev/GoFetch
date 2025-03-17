@@ -8,8 +8,8 @@ function LoginRegister() {
         <h2>Get Started</h2>
         <p>Login or register to find pet minders near you.</p>
         <div className={pageStyles.buttons}>
-          <Link to="/login" className="btn btn-background">Login</Link>
-          <Link to="/register" className="btn btn-background">Sign Up</Link>
+          <Link to="/login" className="btn btn-secondary">Login</Link>
+          <Link to="/register" className="btn btn-secondary">Sign Up</Link>
           <Link to="/register-minder" className="btn btn-primary">Become a Minder</Link>
         </div>
       </div>

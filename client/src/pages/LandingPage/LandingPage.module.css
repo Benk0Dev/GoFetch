@@ -18,16 +18,19 @@
     padding-right: 5rem;
     padding-top: 2.5rem;
     padding-bottom: 2.5rem;
+    color: white;
 }
 
-.HowItWorks h2, .LoginRegister h2 {
+.HowItWorks h2,
+.LoginRegister h2 {
     font-size: 3rem;
     margin-bottom: 0.2rem;
     /* border-top: dashed 4px var(--primary-color); */
 }
 
-.HowItWorks h2{
-    border-bottom: dashed 4px var(--primary-color);
+.HowItWorks h2 {
+    border-bottom: dashed 4px;
+    border-color: white;
 }
 
 .HowItWorks h3 {
@@ -35,23 +38,29 @@
     margin-bottom: 0.2rem;
 }
 
-.HowItWorks p, .LoginRegister p {
-    font-size: 1.5rem;
+.HowItWorks p,
+.LoginRegister p {
+    font-size: 1.25rem;
     margin-bottom: 0.2rem;
-    color: var(--text-color);
 }
 
-.HowItWorks p{
-    border-bottom:solid 2px var(--primary-color);
+.HowItWorks p {
+    /* border-bottom: solid 2px;
+    border-color: white; */
+    /* color: var(--text-color); */
 }
 
-.HowItWorks div, .LoginRegister div {
+.HowItWorks div,
+.LoginRegister div {
     /* background:var(--primary-color); */
     align-items: center;
-    color: var(--primary-color);
     justify-content: center;
     text-align: center;
     /* opacity: 60%; */
+}
+
+.HowItWorks div {
+    /* color: var(--primary-color); */
 }
 
 .HowItWorks div:hover {
@@ -59,7 +68,7 @@
     transform: scale(1rem);
 }
 
-.buttons{
+.buttons {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -67,12 +76,44 @@
     /* padding: 4%; */
     margin-left: 2rem;
     margin-right: 2rem;
+    column-gap: 15px;
 }
 
 
-.LoginRegister{
-    background: url('.../.../assets/dogwalk.jpg') center/cover no-repeat;
+.LoginRegister {
+    background: url('../../assets/images/dogwalk.jpg') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    color: white;
+    /* opacity: 60%; */
 }
 
+.HowItWorks {
+    background: url('../../assets/images/HowitWorks.jpg') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    color: white;
+    /* opacity: 60%; */
+}
 
+.LoginRegister::before, .HowItWorks::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
 
+.LoginRegister > *, .HowItWorks > * {
+    position: relative;
+    z-index: 2;
+}
