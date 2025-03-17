@@ -7,21 +7,6 @@ export function getCachedUsers(): IUser[] {
   return cache.users;
 }
 
-// Get a specific user with their pets populated
-export function getCachedUserWithPets(id: number): IUser | null {
-  const user = cache.users.find(user => user.userDetails.id === id);
-  if (!user) return null;
-
-  const userWithPets = { ...user };   // Clone the user to avoid modifying the cache directly
-  const petIds = user.ownerRoleInfo?.petIDs || [];    // Get the pet IDs (handle the structure mismatch in your data)
-  const userPets = cache.pets.filter(pet => petIds.includes(pet.id)); // Populate pets
-  if (userWithPets.ownerRoleInfo) {
-    userWithPets.ownerRoleInfo.pets = userPets;
-  }
-
-  return userWithPets;
-}
-
 // Get all users with their pets populated
 export function getCachedUsersWithPets(): IUser[] {
   return cache.users.map(user => {

@@ -4,9 +4,9 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 dotenv.config();
 
-import { AllUsersData, UserData, RegisterUser } from './routers/UserStatic';
-import { AllPets } from './routers/PetStatic';
-import { AllServices } from './routers/ServiceStatic';
+import { AllUsersData, getUserByID, RegisterUser } from './routers/UserStatic';
+import { AllPets, PetByID } from './routers/PetStatic';
+import { AllServices, ServiceByID } from './routers/ServiceStatic';
 import { log } from './utils/utils';
 import { initCache } from './services/DbCache';
 
@@ -37,11 +37,7 @@ app.get('/users', (req: Request, res: Response) => {
 });
 
 app.get('/user/:id', (req: Request, res: Response) => {
-  const result = UserData(req.params.id);
-  if (result === 'User not found') {
-    res.status(404).send({ message: result });
-    return;
-  }
+  const result = getUserByID(parseInt(req.params.id));
   res.send(result);
 });
 
@@ -58,8 +54,18 @@ app.get('/pets', (req: Request, res: Response) => {
   res.send(AllPets());
 });
 
+app.get('/pet/:id', (req: Request, res: Response) => {
+  const result = PetByID(parseInt(req.params.id));
+  res.send(result);
+});
+
 app.get('/services', (req: Request, res: Response) => {
   res.send(AllServices());
+});
+
+app.get('/service/:id', (req: Request, res: Response) => {
+  const result = ServiceByID(parseInt(req.params.id));
+  res.send(result);
 });
 
 // Error handling middleware
