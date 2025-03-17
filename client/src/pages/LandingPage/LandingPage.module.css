@@ -44,12 +44,6 @@
     margin-bottom: 0.2rem;
 }
 
-.HowItWorks p {
-    /* border-bottom: solid 2px;
-    border-color: white; */
-    /* color: var(--text-color); */
-}
-
 .HowItWorks div,
 .LoginRegister div {
     /* background:var(--primary-color); */
@@ -59,9 +53,6 @@
     /* opacity: 60%; */
 }
 
-.HowItWorks div {
-    /* color: var(--primary-color); */
-}
 
 .HowItWorks div:hover {
     padding: .2rem;
