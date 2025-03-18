@@ -107,7 +107,6 @@ Label.addImage {
     transition: all 0.2s ease-in-out;
     background: #f9f9f9;
     margin: 0;
-    font-size: 30px;
     aspect-ratio: 1/1;
 }
 

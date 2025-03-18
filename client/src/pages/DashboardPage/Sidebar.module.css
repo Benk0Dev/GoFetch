@@ -1,7 +1,7 @@
 .sidebar {
     width: 100%;
-    background: #2c3e50;
-    color: white;
+    background: var(--menu-background-color);
+    color: var(--menu-text-color);
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -13,7 +13,7 @@
 .sidebar button {
     background: none;
     border: none;
-    color: white;
+    color: var(--menu-text-color);;
     padding: 12px;
     font-size: 18px;
     text-align: left;
@@ -24,14 +24,14 @@
 }
 
 .sidebar button:hover {
-    background: #34495e;
+    background: var(--menu-background-color-light);
 }
 
 .sidebar .active {
-    background: #1abc7e;
+    background: var(--menu-primary-color);
     font-weight: 600;
 }
 
 .sidebar .active:hover {
-    background: #1dd48e;
+    background: var(--menu-primary-color-light);
 }

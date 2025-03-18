@@ -1,12 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import DashboardHome from "./DashboardHome";
 import Services from "./Services";
 import Profile from "./Profile/Profile";
 import Bookings from "./Bookings";
 import styles from "./DashboardPage.module.css";
+import { useNavigate } from "react-router-dom";
+import { getCurrentUserType } from "../../services/AuthService";
 
 function Dashboard() {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!getCurrentUserType()) {
+        navigate("/");
+        }
+    }, []);
+
     const [activeTab, setActiveTab] = useState("home");
 
     const renderTab = () => {

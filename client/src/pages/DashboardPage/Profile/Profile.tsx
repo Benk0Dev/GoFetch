@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import styles from "./Profile.module.css";
 import dashboardStyles from "../DashboardPage.module.css";
 import { getCurrentUser } from "../../../services/AuthService";
@@ -7,6 +6,7 @@ import ImageViewer from "./ImageViewer";
 import { Admin, PetOwner } from "../../../models/User";
 import getFullFilePath from "../../../utils/FullFilePath";
 import "react-range-slider-input/dist/style.css";
+import { X, Plus } from "lucide-react";
 
 function Profile() {
     const user = getCurrentUser();
@@ -21,7 +21,6 @@ function Profile() {
     const [originalState, setOriginalState] = useState({ bio, availability, distanceRange, pictures });
     const [showImageViewer, setShowImageViewer] = useState<string | null>(null);
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
-    const navigate = useNavigate();
 
     // Check for unsaved changes
     useEffect(() => {
@@ -45,14 +44,6 @@ function Profile() {
         window.addEventListener("beforeunload", handleBeforeUnload);
         return () => window.removeEventListener("beforeunload", handleBeforeUnload);
     }, [hasUnsavedChanges]);
-
-    const handleNavigation = (e: any) => {
-        if (hasUnsavedChanges) {
-            e.preventDefault();
-            const confirmLeave = window.confirm("You have unsaved changes. Do you want to leave without saving?");
-            if (confirmLeave) navigate(e.target.href);
-        }
-    };
 
     // Add new picture
     const handleAddPicture = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,7 +73,6 @@ function Profile() {
     const handleSave = () => {
         setOriginalState({ bio, availability, distanceRange, pictures });
         setHasUnsavedChanges(false);
-        alert("Changes saved!");
     };
 
     return (
@@ -113,26 +103,21 @@ function Profile() {
                 {pictures.map((pic, index) => (
                     <div key={index} className={styles.photoItem}>
                         <img src={pic} alt="Profile" onClick={() => setShowImageViewer(pic)} />
-                        <button className={styles.removeBtn} onClick={() => handleRemovePicture(index)}><i className="fa-solid fa-xmark"></i></button>
+                        <button className={styles.removeBtn} onClick={() => handleRemovePicture(index)}><X strokeWidth={2.25} /></button>
                     </div>
                 ))}
                 <label className={styles.addImage}>
-                    <i className="fa-solid fa-plus"></i>
+                    <Plus strokeWidth={1} size={50}/>
                     <input type="file" accept="image/*" className={styles.fileInput} onChange={handleAddPicture} />
                 </label>
             </div>
 
             <div className={styles.buttonGroup}>
                 <button className={`btn btn-secondary`} onClick={handleCancel}>Cancel</button>
-                <button className={`btn btn-primary`} onClick={handleSave}>Confirm Changes</button>
+                <button className={`btn btn-primary`} onClick={handleSave}>Confirm</button>
             </div>
 
             {showImageViewer && <ImageViewer imageSrc={showImageViewer} onClose={() => setShowImageViewer(null)} />}
-
-            {/* Prevent navigation if unsaved changes exist */}
-            <nav>
-                <a href="/" onClick={handleNavigation}>Go Home</a>
-            </nav>
         </div>
     );
 }

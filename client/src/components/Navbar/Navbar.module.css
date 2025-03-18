@@ -24,3 +24,24 @@
 .logo img {
     width: 35px;
 }
+
+.dropdownContainer {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+.profileIcon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #0880f0;
+    color: white;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
