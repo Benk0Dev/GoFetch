@@ -20,6 +20,7 @@ function LoginPage() {
         }, []);
 
     return (
+        // <div className={styles.loginContainer}>
         <div className="container flex-center">
         <div className={styles.loginBox}>
             <h2>Login</h2>
@@ -29,6 +30,7 @@ function LoginPage() {
             </p>
         </div>
         </div>
+        // </div>
     );
 }
 
