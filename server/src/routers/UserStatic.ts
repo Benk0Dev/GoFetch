@@ -1,4 +1,4 @@
-import { getCachedUsersWithPets, RegisterUserCache } from '../services/UserCached';
+import { getCachedUsersWithPets, RegisterUserCache, removeUserCache } from '../services/UserCached';
 import { ILoginDetails } from '../models/IUser';
 
 export function AllUsersData() {
@@ -11,4 +11,8 @@ export function getUserByID(id: number) {
 
 export function RegisterUser(user: ILoginDetails) {
   return RegisterUserCache(user);
+}
+
+export function removeUser(id: number) {
+  return removeUserCache(id);
 }

@@ -7,3 +7,7 @@ export function AllServices() {
 export function ServiceByID(id: number) {
     return getCachedServices().find(service => service.id === id);
 }
+
+export function removeService(id: number) {
+    return removeService(id);
+}
