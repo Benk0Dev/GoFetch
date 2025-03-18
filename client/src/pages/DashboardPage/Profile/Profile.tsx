@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import styles from "./Profile.module.css";
 import dashboardStyles from "../DashboardPage.module.css";
 import { getCurrentUser } from "../../../services/AuthService";
@@ -7,6 +6,7 @@ import ImageViewer from "./ImageViewer";
 import { Admin, PetOwner } from "../../../models/User";
 import getFullFilePath from "../../../utils/FullFilePath";
 import "react-range-slider-input/dist/style.css";
+import { X, Plus } from "lucide-react";
 
 function Profile() {
     const user = getCurrentUser();
@@ -103,11 +103,11 @@ function Profile() {
                 {pictures.map((pic, index) => (
                     <div key={index} className={styles.photoItem}>
                         <img src={pic} alt="Profile" onClick={() => setShowImageViewer(pic)} />
-                        <button className={styles.removeBtn} onClick={() => handleRemovePicture(index)}><i className="fa-solid fa-xmark"></i></button>
+                        <button className={styles.removeBtn} onClick={() => handleRemovePicture(index)}><X strokeWidth={2.25} /></button>
                     </div>
                 ))}
                 <label className={styles.addImage}>
-                    <i className="fa-solid fa-plus"></i>
+                    <Plus strokeWidth={1} size={50}/>
                     <input type="file" accept="image/*" className={styles.fileInput} onChange={handleAddPicture} />
                 </label>
             </div>
