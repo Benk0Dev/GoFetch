@@ -1,6 +1,6 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
 import http from 'http';
-import { AllUsersData, getUserByID, RegisterUser, removeUser } from '../routers/UserStatic';
+import { AllUsersData, getUserByID, RegisterUser, loginUser, removeUser } from '../routers/UserStatic';
 import { AllPets, PetByID, registerPet, removePet } from '../routers/PetStatic';
 import { AllServices, ServiceByID, removeService } from '../routers/ServiceStatic';
 import { log } from '../utils/utils';
@@ -24,17 +24,21 @@ app.get('*', (req: Request, res: Response, next) => {
 
 // Routes
 app.get('/', (req: Request, res: Response) => {
-    res.send('Hello World!');
+    res.status(201).send('Hello World!');
+});
+
+app.get('/ping', (req: Request, res: Response) => {
+    res.status(201).send('pong!');
 });
 
 //#region User Routes
 app.get('/users', (req: Request, res: Response) => {
-    res.send(AllUsersData());
+    res.status(201).send(AllUsersData());
 });
 
 app.get('/user/:id', (req: Request, res: Response) => {
     const result = getUserByID(parseInt(req.params.id));
-    res.send(result);
+    res.status(201).send(result);
 });
 
 app.post('/registerUser', (req: Request, res: Response) => {
@@ -46,24 +50,35 @@ app.post('/registerUser', (req: Request, res: Response) => {
     res.status(201).send(result);
 });
 
+app.post('/login', (req: Request, res: Response) => {
+    const credentials = req.body.credentials
+    const password = req.body.password
+    const result = loginUser(credentials, password);
+    if (!result.success) {
+        res.status(400).send(result);
+        return;
+    }
+    res.status(201).send(result);
+});
+
 app.get('/removeUser/:id', (req: Request, res: Response) => {
     const result = removeUser(parseInt(req.params.id));
-    res.send(result);
+    res.status(201).send(result);
 });
 //#endregion
 
 //#region Pet Routes
 app.get('/pets', (req: Request, res: Response) => {
-    res.send(AllPets());
+    res.status(201).send(AllPets());
 });
 
 app.get('/pet/:id', (req: Request, res: Response) => {
     const result = PetByID(parseInt(req.params.id));
-    res.send(result);
+    res.status(201).send(result);
 });
 
 app.post('/registerPet', (req: Request, res: Response) => {
-    const result = RegisterUser(req.body);
+    const result = registerPet(req.body);
     if (!result.success) {
         res.status(400).send(result);
         return;
@@ -73,23 +88,23 @@ app.post('/registerPet', (req: Request, res: Response) => {
 
 app.get('removePet/:id', (req: Request, res: Response) => {
     const result = removePet(parseInt(req.params.id));
-    res.send(result);
+    res.status(201).send(result);
 });
 //#endregion
 
 //#region Service Routes
 app.get('/services', (req: Request, res: Response) => {
-    res.send(AllServices());
+    res.status(201).send(AllServices());
 });
 
 app.get('/service/:id', (req: Request, res: Response) => {
     const result = ServiceByID(parseInt(req.params.id));
-    res.send(result);
+    res.status(201).send(result);
 });
 
 app.get('/removeService/:id', (req: Request, res: Response) => {
     const result = removeService(parseInt(req.params.id));
-    res.send(result);
+    res.status(201).send(result);
 });
 //#endregion
 

@@ -8,8 +8,7 @@ export function getCachedPets(): IPet[] {
 }
 
 export function registerPet(pet: IPet) {
-    cache.pets.push(pet);
-
+    
     const newPet: IPet = {
         id: cache.pets.length + 1,
         name: pet.name,
@@ -21,7 +20,9 @@ export function registerPet(pet: IPet) {
         behaviour: pet.behaviour,
     };
 
-    fs.writeFileSync(`${DB_PATH}/paets.json`, JSON.stringify(cache.pets, null, 2), 'utf8');
+    cache.pets.push(newPet);
+
+    fs.writeFileSync(`${DB_PATH}/pets.json`, JSON.stringify(cache.pets, null, 2), 'utf8');
 
     return { success: true, message: 'Pet registered successfully!' };
 }
