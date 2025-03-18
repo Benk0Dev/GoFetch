@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import { initCache } from './services/DbCache';
-import { server, startHttpServer } from './server/httpServer';
+import { startHttpServer } from './server/httpServer';
 import { startWsServer } from './server/wsServer';
 
 // Initialize database cache when app starts

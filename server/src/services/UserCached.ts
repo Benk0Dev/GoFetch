@@ -37,13 +37,10 @@ export function RegisterUserCache(user: ILoginDetails): { success: boolean; mess
       return { success: false, message: 'Email already registered' };
     }
 
-    // Generate a new ID
-    const newId = Math.max(...cache.users.map(u => u.userDetails.id), 0) + 1;
-
     // Create new user object
     const newUser: IUser = {
       userDetails: {
-        id: newId,
+        id: cache.users.length + 1,
         fname: '',
         lname: '',
         loginDetails: {
@@ -91,5 +88,26 @@ export function RegisterUserCache(user: ILoginDetails): { success: boolean; mess
   } catch (error) {
     console.error('Error registering user:', error);
     return { success: false, message: `Registration failed: ${error instanceof Error ? error.message : 'Unknown error'}` };
+  }
+}
+
+export function removeUserCache(id: number): { success: boolean; message: string } {
+  try {
+    // Find the user
+    const userIndex = cache.users.findIndex(u => u.userDetails.id === id);
+    if (userIndex < 0) {
+      return { success: false, message: 'User not found' };
+    }
+
+    // Remove the user
+    cache.users.splice(userIndex, 1);
+
+    // Write back to the database file
+    fs.writeFileSync(`${DB_PATH}/users.json`, JSON.stringify(cache.users, null, 2), 'utf8');
+
+    return { success: true, message: 'User removed successfully' };
+  } catch (error) {
+    console.error('Error removing user:', error);
+    return { success: false, message: `Deletion failed: ${error instanceof Error ? error.message : 'Unknown error'}` };
   }
 }

@@ -51,7 +51,12 @@ function LoginForm() {
                 />
             </div>
 
-            {error && <p className={styles.error}>{error}</p>} {}
+            {/* {error && <p className={styles.error}>{error}</p>} {} */}
+
+            <div className={styles.errorContainer}>
+                {error && <p className={styles.error}>{error}</p>}
+            </div>
+
 
             <button type="submit" className={styles.loginButton} style={{width: "100%"}}>Login</button>
         </form>
