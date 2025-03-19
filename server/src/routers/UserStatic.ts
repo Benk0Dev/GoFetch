@@ -1,4 +1,5 @@
 import { getCachedUsersWithPets, RegisterUserCache, removeUserCache } from '../services/UserCached';
+import { Role } from '../models/IUser';
 import { ILoginDetails } from '../models/IUser';
 
 export function AllUsersData() {
@@ -47,4 +48,8 @@ export function getUserByUsername(username: string) {
     return { success: true, user: sanitizedUser };
   }
   return { success: false, message: 'User not found' };
+}
+
+export function getMinders() {
+  return { success: true, message: getCachedUsersWithPets().filter(user => user.roles.includes(Role.MINDER))};
 }
