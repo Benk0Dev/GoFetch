@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { IUser, ILoginDetails, Role } from '../models/IUser';
-import { cache, DB_PATH } from './DbCache';
+import { cache, DB_PATH } from './Cache';
 
 // Get cached users
 export function getCachedUsers(): IUser[] {
@@ -49,7 +49,7 @@ export function RegisterUserCache(user: ILoginDetails): { success: boolean; mess
           password: user.password, // Note: In a real app, we should hash passwords(idc for now)
         },
       },
-      roles: ['petowner' as Role],
+      roles: [Role.OWNER],
       primaryUserInfo: {
         profilePic: '',
         dob: new Date(),
@@ -76,7 +76,7 @@ export function RegisterUserCache(user: ILoginDetails): { success: boolean; mess
     cache.users.push(newUser);
 
     // Write back to the database file
-    fs.writeFileSync(`${DB_PATH}/users.json`, JSON.stringify(cache.users, null, 2), 'utf8');
+    saveUsersToFile(cache.users);
 
     // Return success without password
     const { userDetails: { loginDetails: { password, ...loginDetails }, ...userDetails }, ...userWithoutPassword } = newUser;
@@ -103,11 +103,15 @@ export function removeUserCache(id: number): { success: boolean; message: string
     cache.users.splice(userIndex, 1);
 
     // Write back to the database file
-    fs.writeFileSync(`${DB_PATH}/users.json`, JSON.stringify(cache.users, null, 2), 'utf8');
+    saveUsersToFile(cache.users);
 
     return { success: true, message: 'User removed successfully' };
   } catch (error) {
     console.error('Error removing user:', error);
     return { success: false, message: `Deletion failed: ${error instanceof Error ? error.message : 'Unknown error'}` };
   }
+}
+
+function saveUsersToFile(users: IUser[]) {
+  fs.writeFileSync(`${DB_PATH}/users.json`, JSON.stringify(users, null, 2), 'utf8');
 }

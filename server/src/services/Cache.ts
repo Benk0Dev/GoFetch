@@ -3,6 +3,7 @@ import path from 'path';
 import { IUser } from '../models/IUser';
 import { IPet } from '../models/IPet';
 import { IService } from '../models/IService';
+import { IBooking } from '../models/IBooking';
 
 // DB path
 export const DB_PATH = path.join(__dirname, './../db');
@@ -12,6 +13,7 @@ export interface DbCache {
   users: IUser[];
   pets: IPet[];
   services: IService[]; // Note: typo preserved from original
+  booking: IBooking[];
 }
 
 // Initialize empty cache
@@ -19,6 +21,7 @@ export const cache: DbCache = {
   users: [],
   pets: [],
   services: [],
+  booking: []
 };
 
 // Initialize cache by loading data from files

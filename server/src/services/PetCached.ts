@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { IPet } from '../models/IPet';
-import { cache, DB_PATH } from './DbCache';
+import { cache, DB_PATH } from './Cache';
 
 // Get cached pets
 export function getCachedPets(): IPet[] {
@@ -22,7 +22,7 @@ export function registerPet(pet: IPet) {
 
     cache.pets.push(newPet);
 
-    fs.writeFileSync(`${DB_PATH}/pets.json`, JSON.stringify(cache.pets, null, 2), 'utf8');
+    savePetsToFile(cache.pets);
 
     return { success: true, message: 'Pet registered successfully!' };
 }
@@ -34,4 +34,8 @@ export function removePetCahce(id: number) {
     }
     cache.pets.splice(index, 1);
     return { success: true, message: 'Pet removed successfully!' };
+}
+
+function savePetsToFile(pets: IPet[]) {
+    fs.writeFileSync(`${DB_PATH}/pets.json`, JSON.stringify(pets, null, 2), 'utf8');
 }

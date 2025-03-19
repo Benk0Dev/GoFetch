@@ -2,7 +2,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-import { initCache } from './services/DbCache';
+import { initCache } from './services/Cache';
 import { startHttpServer } from './server/httpServer';
 import { startWsServer } from './server/wsServer';
 

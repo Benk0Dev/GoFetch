@@ -28,3 +28,23 @@ export function loginUser(credentials: string, password: string) {
   }
   return {success: false, message: 'Email/Username or Password is incorrect'};
 }
+
+export function getUserByUsername(username: string) {
+  const user = getCachedUsersWithPets().find(user =>
+    user.userDetails.loginDetails.username === username
+  );
+
+  if (user) {
+    // Remove password from response
+    const { userDetails: { loginDetails: { password, ...loginDetailsWithoutPassword }, ...otherUserDetails }, ...restUser } = user;
+    const sanitizedUser = {
+      ...restUser,
+      userDetails: {
+        ...otherUserDetails,
+        loginDetails: loginDetailsWithoutPassword
+      }
+    };
+    return { success: true, user: sanitizedUser };
+  }
+  return { success: false, message: 'User not found' };
+}
