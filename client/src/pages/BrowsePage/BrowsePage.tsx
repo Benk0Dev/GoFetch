@@ -4,7 +4,6 @@ import MinderCard from "./MinderCard";
 import FilterBar from "./FilterBar";
 import "./Browse.css";
 
-// Correct Minder interface matching mapped structure
 interface Minder {
   id: number;
   fullName: string;
@@ -52,18 +51,24 @@ const BrowsePage: React.FC = () => {
     fetchMinders();
   }, []);
 
-  // This runs when Search button is clicked in FilterBar
   const handleFilterChange = (filters: any) => {
     console.log("Filters applied:", filters);
 
     const filtered = allMinders.filter((minder) => {
       const searchText = filters.location?.toLowerCase() || "";
+      const availabilityText = filters.availability?.toLowerCase() || "";
 
       const nameMatch = minder.fullName.toLowerCase().includes(searchText);
       const locationMatch = minder.location.toLowerCase().includes(searchText);
+      const ratingMatch = minder.rating >= (filters.rating || 0);
+      const availabilityMatch = minder.availability
+        .toLowerCase()
+        .includes(availabilityText);
 
       return (
-        (nameMatch || locationMatch) && minder.rating >= (filters.rating || 0)
+        (nameMatch || locationMatch) &&
+        ratingMatch &&
+        (availabilityText === "" || availabilityMatch)
       );
     });
 
