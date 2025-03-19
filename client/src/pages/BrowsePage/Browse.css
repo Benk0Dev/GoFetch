@@ -1,0 +1,73 @@
+/* Basic layout and font styling */
+.browse-page {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    padding: 20px;
+}
+
+/* Styling for the Minder grid */
+.Minder-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* Individual Minder card styling */
+.minder-card {
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    width: 300px;
+}
+
+.minder-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.minder-card h3 {
+    margin: 10px;
+}
+
+.minder-card p {
+    margin: 10px;
+    font-size: 14px;
+    color: #666;
+}
+
+/* Filter bar styling */
+.filter-bar {
+    background-color: #f8f8f8;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filter-bar input, .filter-bar select {
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
+
+.filter-bar button {
+    padding: 10px 20px;
+    background-color: #6200ea;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.filter-bar button:hover {
+    background-color: #3700b3;
+}
