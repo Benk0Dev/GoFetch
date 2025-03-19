@@ -5,8 +5,6 @@ import Hero from "./Hero";
 import HowItWorks from "./HowItWorks";
 import LoginRegister from "./LoginRegister";
 
-
-
 function LandingPage() {
   const navigate = useNavigate();
 
@@ -17,7 +15,6 @@ function LandingPage() {
   }, []);
 
   return (
-    
     <div>
       <Hero key="hero" />,
       <HowItWorks key="howItWorks" />,

@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import "../../global.css";
-import { logout, getCurrentUserType, getAllCurrentUserDetails } from "../../services/AuthService";
+import {
+  logout,
+  getCurrentUserType,
+  getAllCurrentUserDetails,
+} from "../../services/AuthService";
 import { IUserDetails } from "../../utils/StorageManager";
 import { Role } from "../../models/User";
 import ProfileIcon from "./ProfileIcon";
@@ -14,16 +18,18 @@ function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
   const [userType, setUserType] = useState<Role | null>(getCurrentUserType());
-  const [userDetails, setUserDetails] = useState<IUserDetails | null>(getAllCurrentUserDetails());
+  const [userDetails, setUserDetails] = useState<IUserDetails | null>(
+    getAllCurrentUserDetails()
+  );
 
   const [forceUpdate, setForceUpdate] = useState<number>(0);
 
   useEffect(() => {
     const updateUser = () => {
       // Update when event fires
-      setUserType(getCurrentUserType()); 
+      setUserType(getCurrentUserType());
       setUserDetails(getAllCurrentUserDetails());
-      setForceUpdate(prev => prev + 1);
+      setForceUpdate((prev) => prev + 1);
     };
 
     window.addEventListener("userUpdate", updateUser); // Listen for user changes
@@ -41,21 +47,39 @@ function Navbar() {
 
   return (
     <nav className={styles.navbar} id="navbar">
-      <div className="container flex" style={{ padding: "10px 20px"}}>
-        <Link className={styles.logo} to={homeLink}><img src={logo}></img><h2>GoFetch</h2></Link>
+      <div className="container flex" style={{ padding: "10px 20px" }}>
+        <Link className={styles.logo} to={homeLink}>
+          <img src={logo}></img>
+          <h2>GoFetch</h2>
+        </Link>
         <div className={styles.navLinks}>
           {userType ? (
             <>
-              <Link to="/browse" className="btn-link">Explore Minders</Link>
+              <Link to="/browse" className="btn-link">
+                Explore Minders
+              </Link>
               <NotificationIcon />
-              <Link to="/messages" className="btn-round btn-transparent"><Mail strokeWidth={2.25} /></Link>
-              <ProfileIcon key={forceUpdate} userType={userType} userDetails={userDetails} onLogout={handleLogout} />
+              <Link to="/messages" className="btn-round btn-transparent">
+                <Mail strokeWidth={2.25} />
+              </Link>
+              <ProfileIcon
+                key={forceUpdate}
+                userType={userType}
+                userDetails={userDetails}
+                onLogout={handleLogout}
+              />
             </>
           ) : (
-            !["/login", "/register-owner", "/register-minder"].includes(location.pathname) && (
+            !["/login", "/register-owner", "/register-minder"].includes(
+              location.pathname
+            ) && (
               <>
-                <Link to="/login" className="btn btn-transparent">Login</Link>
-                <Link to="/register" className="btn btn-background">Sign Up</Link>
+                <Link to="/login" className="btn btn-transparent">
+                  Login
+                </Link>
+                <Link to="/register" className="btn btn-background">
+                  Sign Up
+                </Link>
               </>
             )
           )}
