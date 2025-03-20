@@ -1,69 +1,53 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./MinderCard.css";
 
-interface Minder {
-  id: number;
-  fullName: string;
-  bio: string;
-  rating: number;
-  location: string;
-  availability: string;
-  distanceRange: number;
-  verified: boolean;
-  pictures: string[];
-}
-
-interface MinderCardProps {
-  minder: Minder;
-  currentUserId?: number;
-}
-
-const MinderCard: React.FC<MinderCardProps> = ({ minder, currentUserId }) => {
+function MinderCard({ minder }: { minder: any }) {
   const navigate = useNavigate();
 
-  const handleBookClick = () => {
-    if (currentUserId) {
-      navigate(`/booking/${currentUserId}/${minder.id}`);
-    } else {
-      navigate("/login");
-    }
-  };
+  // const handleBookClick = () => {
+  //   if (currentUserId) {
+  //     navigate(`/booking/${currentUserId}/${minder.id}`);
+  //   } else {
+  //     navigate("/login");
+  //   }
+  // };
   return (
     <div className="minder-card">
-      <h2>{minder.fullName}</h2>
-      <p>{minder.bio}</p>
+      <h2>{minder.userDetails.fname}</h2>
+      <p>{minder.minderRoleInfo.bio}</p>
       <p>
-        <strong>Rating:</strong> {minder.rating}
+        <strong>Rating:</strong> {minder.minderRoleInfo.rating}
       </p>
       <p>
-        <strong>Location:</strong> {minder.location}
+        <strong>Location:</strong> {minder.primaryUserInfo.location.name}
       </p>
       <p>
-        <strong>Availability:</strong> {minder.availability}
+        <strong>Availability:</strong> {minder.minderRoleInfo.availability}
       </p>
       <p>
-        <strong>Distance Range:</strong> {minder.distanceRange} miles
+        <strong>Distance Range:</strong> {minder.minderRoleInfo.distanceRange}{" "}
+        miles
       </p>
       <p>
-        <strong>Verified:</strong> {minder.verified ? "Yes" : "No"}
+        <strong>Verified:</strong>{" "}
+        {minder.minderRoleInfo.verified ? "Yes" : "No"}
       </p>
 
       <div className="minder-images">
-        {minder.pictures?.map((pic, index) => (
+        {minder.minderRoleInfo.pictures?.map((pic: any, index: any) => (
           <img
             key={index}
             src={`/images/user_images/${pic}`}
-            alt={`${minder.fullName} ${index}`}
+            alt={`${minder.userDetails.bio} ${index}`}
             width="150"
           />
         ))}
       </div>
 
       {/* 🔥 Book Button */}
-      <button className="book-button" onClick={handleBookClick}>Book</button>
+      <button className="book-button">Book</button>
     </div>
   );
-};
+}
 
 export default MinderCard;
