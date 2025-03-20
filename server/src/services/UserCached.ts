@@ -105,13 +105,13 @@ export function RegisterUserCache(user: IRegisterUser) {
     // Write back to the database file
     saveUsersToFile(cache.users);
     const userWithoutPassword = getUserWithoutPassword(newUser)
-    if (!userWithoutPassword.success) {
+    if (!userWithoutPassword) {
       return { success: false, message: 'User not found' };
     }
     return {
       success: true,
       message: 'User registered successfully',
-      user: userWithoutPassword.user
+      user: userWithoutPassword
     };
   } catch (error) {
     console.error('Error registering user:', error);
@@ -151,9 +151,9 @@ export function getUserWithoutPassword(user: IUser) {
         loginDetails: loginDetailsWithoutPassword
       }
     };
-    return { success: true, user: sanitizedUser };
+    return sanitizedUser;
   }
-  return { success: false, message: 'User not found' };
+  return null;
 }
 
 export function editUserCache(id: number, userEdits: IUser) {
