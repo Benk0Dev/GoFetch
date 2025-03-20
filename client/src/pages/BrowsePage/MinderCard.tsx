@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./MinderCard.css";
 
 interface Minder {
@@ -15,9 +16,19 @@ interface Minder {
 
 interface MinderCardProps {
   minder: Minder;
+  currentUserId?: number;
 }
 
-const MinderCard: React.FC<MinderCardProps> = ({ minder }) => {
+const MinderCard: React.FC<MinderCardProps> = ({ minder, currentUserId }) => {
+  const navigate = useNavigate();
+
+  const handleBookClick = () => {
+    if (currentUserId) {
+      navigate(`/booking/${currentUserId}/${minder.id}`);
+    } else {
+      navigate("/login");
+    }
+  };
   return (
     <div className="minder-card">
       <h2>{minder.fullName}</h2>
@@ -50,7 +61,7 @@ const MinderCard: React.FC<MinderCardProps> = ({ minder }) => {
       </div>
 
       {/* 🔥 Book Button */}
-      <button className="book-button">Book</button>
+      <button className="book-button" onClick={handleBookClick}>Book</button>
     </div>
   );
 };
