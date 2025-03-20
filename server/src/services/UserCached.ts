@@ -4,7 +4,12 @@ import { cache, DB_PATH } from './Cache';
 
 // Get cached users
 export function getCachedUsers(): IUser[] {
-  return cache.users;
+  try {
+    return cache.users;
+  }
+  catch (error) {
+    return [];
+  }
 }
 
 export function getCachedUsersWithPetsAndServices(): IUser[] {

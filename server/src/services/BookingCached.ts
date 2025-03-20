@@ -4,7 +4,12 @@ import { DB_PATH, cache } from './Cache';
 
 // Get all bookings
 export function getAllBookingsCached(): IBooking[] {
-  return cache.booking;
+  try {
+    return cache.booking;
+  }
+  catch (error) {
+    return [];
+  }
 }
 
 // Get bookings for a specific user (either as owner or minder)

@@ -4,7 +4,12 @@ import { cache, DB_PATH } from './Cache';
 
 // Get cached pets
 export function getCachedPets(): IPet[] {
-    return cache.pets;
+    try {
+        return cache.pets;
+    }
+    catch (error) {
+        return [];
+    }
 }
 
 export function addPetCached(pet: IPet) {

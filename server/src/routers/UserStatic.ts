@@ -2,7 +2,11 @@ import { getCachedUsersWithPetsAndServices, getUserWithoutPassword, RegisterUser
 import { IRegisterUser, IUser, Role } from '../models/IUser';
 
 export function AllUsersData() {
-  return getCachedUsersWithPetsAndServices();
+  const result = getCachedUsersWithPetsAndServices();
+  if (result.length === 0) {
+    return { success: false, message: 'No users found' };
+  }
+  return { success: true, users: result };
 }
 
 export function getUserByID(id: number) {

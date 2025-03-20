@@ -4,11 +4,15 @@ import { cache, DB_PATH } from '../services/Cache';
 import fs from 'fs';
 
 export function AllServices() {
-    return getCachedServices();
+    const result = getCachedServices();
+    if (result.length === 0) {
+        return { success: false, message: 'No services found' };
+    }
+    return { success: true, pets: result };
 }
 
 export function ServiceByID(id: number) {
-    const service = getCachedServices().find(service => service.id === id);
+    const service = cache.services.find(service => service.id === id);
     if (service) {
         return { success: true, service };
     }

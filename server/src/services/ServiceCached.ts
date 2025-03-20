@@ -4,7 +4,12 @@ import fs from 'fs';
 
 // Get cached services
 export function getCachedServices(): IService[] {
-    return cache.services;
+    try {
+        return cache.services;
+    }
+    catch (error) {
+        return [];
+    }
 }
 
 export function addServiceCached(service: IService) {
