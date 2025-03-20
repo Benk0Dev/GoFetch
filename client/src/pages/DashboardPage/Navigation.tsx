@@ -10,7 +10,7 @@ interface SidebarProps {
 function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
     return (
         <div className={styles.sidebar}>
-            <button className={activeTab === "home" ? styles.active : ""} onClick={() => setActiveTab("home")}>Dashboard</button>
+            <button className={activeTab === "home" ? styles.active : ""} onClick={() => setActiveTab("home")}>Overview</button>
             {getUserRole() === Role.MINDER ? (
                 <>
                     <button className={activeTab === "profile" ? styles.active : ""} onClick={() => setActiveTab("profile")}>Profile</button>
