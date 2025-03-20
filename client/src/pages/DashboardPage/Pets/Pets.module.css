@@ -1,0 +1,59 @@
+.pets h3 {
+    display: block;
+}
+
+.pet p, .addPet p {
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.petList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.pet, .addPet {
+    margin: 10px;
+    border: 1px solid var(--menu-card-border-color);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: var(--menu-card-background-color);
+}
+
+.pet {
+    padding: 10px;
+}
+
+.addPet {
+    align-items: center;
+    text-align: center;
+    height: fit-content;
+    padding: 40px 20px;
+}
+
+.addPetIcon {
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.pet img {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+    aspect-ratio: 1/1;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0 10px;
+}
+
+.addPet button {
+    margin-top: 10px;
+}

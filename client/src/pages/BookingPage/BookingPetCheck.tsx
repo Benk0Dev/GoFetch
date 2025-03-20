@@ -1,6 +1,6 @@
 import React from "react";
 import { IUserDetails } from "../../utils/StorageManager";
-import { Role } from "../../models/User";
+import { Role } from "../../models/IUser";
 
 interface User {
   userDetails: IUserDetails;

@@ -7,8 +7,8 @@ export interface IPet {
   weight: number;
   neutered: boolean;
   behaviour: string;
-  allergies?: string[];
-  pictures?: string[];
+  allergies?: string;
+  picture?: string;
 }
 
 export enum IGender {

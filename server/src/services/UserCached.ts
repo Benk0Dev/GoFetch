@@ -1,35 +1,47 @@
 import fs from 'fs';
-import { IUser, ILoginDetails, Role } from '../models/IUser';
-import { cache, DB_PATH } from './DbCache';
+import { IUser, IRegisterUser } from '../models/IUser';
+import { cache, DB_PATH } from './Cache';
 
 // Get cached users
 export function getCachedUsers(): IUser[] {
   return cache.users;
 }
 
-// Get all users with their pets populated
-export function getCachedUsersWithPets(): IUser[] {
+export function getCachedUsersWithPetsAndServices(): IUser[] {
   return cache.users.map(user => {
-    const userWithPets = { ...user };   // Clone the user to avoid modifying the cache directly
-    const petIds = user.ownerRoleInfo?.petIDs || [];    // Get the pet IDs (handle the structure mismatch in your data)
-    const userPets = cache.pets.filter(pet => petIds.includes(pet.id)); // Populate pets
-    if (userWithPets.ownerRoleInfo) {
-      userWithPets.ownerRoleInfo.pets = userPets;
+    const userCopy = { ...user };
+
+    if (userCopy.ownerRoleInfo) {
+      userCopy.ownerRoleInfo = {
+        ...userCopy.ownerRoleInfo,
+        pets: cache.pets.filter(pet => user.ownerRoleInfo?.petIDs?.includes(pet.id) || false),
+      };
+      delete (userCopy.ownerRoleInfo as any).petIDs;
     }
 
-    return userWithPets;
+    if (userCopy.minderRoleInfo) {
+      userCopy.minderRoleInfo = {
+        ...userCopy.minderRoleInfo,
+        services: cache.services.filter(service => user.minderRoleInfo?.serviceIDs?.includes(service.id) || false),
+      };
+      delete (userCopy.minderRoleInfo as any).serviceIDs;
+    }
+
+    return userCopy;
   });
 }
 
-export function RegisterUserCache(user: ILoginDetails): { success: boolean; message: string; user?: IUser } {
-  if (!user) {
-    return { success: false, message: 'User data is required' };
-  }
+
+
+export function RegisterUserCache(user: IRegisterUser) {
+  if (!user.fname || !user.sname || !user.email || !user.password || !user.username || !user.dob) {
+    return { success: false, message: 'All fields are required' };
+  } 
 
   try {
     // Validate required fields
     if (!user.email || !user.password) {
-      return { success: false, message: 'Email, and password are required' };
+      return { success: false, message: 'Email and password are required' };
     }
     // Check if email already exists
     const existingUser = cache.users.find(u => u.userDetails.loginDetails.email === user.email);
@@ -37,22 +49,37 @@ export function RegisterUserCache(user: ILoginDetails): { success: boolean; mess
       return { success: false, message: 'Email already registered' };
     }
 
+    // Validate age
+    const dob = new Date(user.dob);
+    const today = new Date();
+    let age = today.getFullYear() - dob.getFullYear();
+
+    // Adjust age if birthday hasn't occurred yet this year
+    if (today.getMonth() < dob.getMonth() || 
+      (today.getMonth() === dob.getMonth() && today.getDate() < dob.getDate())) {
+      age--;
+    }
+
+    if (age < 16) {
+      return { success: false, message: 'Must be at least 16 years old' };
+    }
+
     // Create new user object
     const newUser: IUser = {
       userDetails: {
         id: cache.users.length + 1,
-        fname: '',
-        lname: '',
+        fname: user.fname,
+        sname: user.sname,
         loginDetails: {
           email: user.email,
-          username: user.email,
+          username: user.username,
           password: user.password, // Note: In a real app, we should hash passwords(idc for now)
         },
       },
-      roles: ['petowner' as Role],
+      roles: [user.role],
       primaryUserInfo: {
         profilePic: '',
-        dob: new Date(),
+        dob: user.dob,
         location: { name: '', longitude: 0, latitude: 0 },
         suspended: false,
         suspendReason: null,
@@ -76,14 +103,15 @@ export function RegisterUserCache(user: ILoginDetails): { success: boolean; mess
     cache.users.push(newUser);
 
     // Write back to the database file
-    fs.writeFileSync(`${DB_PATH}/users.json`, JSON.stringify(cache.users, null, 2), 'utf8');
-
-    // Return success without password
-    const { userDetails: { loginDetails: { password, ...loginDetails }, ...userDetails }, ...userWithoutPassword } = newUser;
+    saveUsersToFile(cache.users);
+    const userWithoutPassword = getUserWithoutPassword(newUser)
+    if (!userWithoutPassword.success) {
+      return { success: false, message: 'User not found' };
+    }
     return {
       success: true,
       message: 'User registered successfully',
-      user: userWithoutPassword as IUser
+      user: userWithoutPassword.user
     };
   } catch (error) {
     console.error('Error registering user:', error);
@@ -103,11 +131,83 @@ export function removeUserCache(id: number): { success: boolean; message: string
     cache.users.splice(userIndex, 1);
 
     // Write back to the database file
-    fs.writeFileSync(`${DB_PATH}/users.json`, JSON.stringify(cache.users, null, 2), 'utf8');
+    saveUsersToFile(cache.users);
 
     return { success: true, message: 'User removed successfully' };
   } catch (error) {
     console.error('Error removing user:', error);
     return { success: false, message: `Deletion failed: ${error instanceof Error ? error.message : 'Unknown error'}` };
   }
+}
+
+export function getUserWithoutPassword(user: IUser) {
+  if (user) {
+    // Remove password from response
+    const { userDetails: { loginDetails: { password, ...loginDetailsWithoutPassword }, ...otherUserDetails }, ...restUser } = user;
+    const sanitizedUser = {
+      ...restUser,
+      userDetails: {
+        ...otherUserDetails,
+        loginDetails: loginDetailsWithoutPassword
+      }
+    };
+    return { success: true, user: sanitizedUser };
+  }
+  return { success: false, message: 'User not found' };
+}
+
+export function editUserCache(id: number, userEdits: IUser) {
+  try {
+    // Find the user
+    const user = cache.users.find(user => user.userDetails.id === id);
+    if (!user) {
+      return { success: false, message: 'User not found' };
+    }
+
+    // Update the user
+    const updatedUser = deepMerge(user, userEdits);
+
+    if (updatedUser.userDetails) {
+      updatedUser.userDetails.id = id;
+    }
+
+    // Update user
+    cache.users = cache.users.map(u => u.userDetails.id === id ? updatedUser : u);
+
+    // Write back to the database file
+    saveUsersToFile(cache.users);
+
+    return { success: true, message: 'User updated successfully' };
+  } catch (error) {
+    console.error('Error updating user:', error);
+    return { success: false, message: `Update failed: ${error instanceof Error ? error.message : 'Unknown error'}` };
+  }
+}
+
+function deepMerge(target: any, source: any): any {
+  const output = { ...target };
+
+  if (isObject(target) && isObject(source)) {
+    Object.keys(source).forEach(key => {
+      if (isObject(source[key])) {
+        if (!(key in target)) {
+          Object.assign(output, { [key]: source[key] });
+        } else {
+          output[key] = deepMerge(target[key], source[key]);
+        }
+      } else {
+        Object.assign(output, { [key]: source[key] });
+      }
+    });
+  }
+
+  return output;
+}
+
+function isObject(item: any): boolean {
+  return (item && typeof item === 'object' && !Array.isArray(item));
+}
+
+function saveUsersToFile(users: IUser[]) {
+  fs.writeFileSync(`${DB_PATH}/users.json`, JSON.stringify(users, null, 2), 'utf8');
 }

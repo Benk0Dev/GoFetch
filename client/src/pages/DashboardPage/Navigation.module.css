@@ -1,0 +1,35 @@
+.sidebar {
+    display: flex;
+    width: 100%;
+    background: var(--menu-background-color);
+    color: var(--menu-text-color);
+    padding: 5px;
+    gap: 5px;
+    border-radius: var(--border-radius);
+}
+
+.sidebar button {
+    background: none;
+    border: none;
+    color: var(--menu-text-color);;
+    padding: 10px;
+    font-size: 18px;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.2s;
+    border-radius: var(--border-radius);
+}
+
+.sidebar button:hover {
+    background: var(--menu-background-color-light);
+}
+
+.sidebar .active {
+    background: var(--menu-primary-color);
+    font-weight: 600;
+}
+
+.sidebar .active:hover {
+    background: var(--menu-primary-color-light);
+}
