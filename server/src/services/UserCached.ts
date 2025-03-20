@@ -1,7 +1,6 @@
 import fs from 'fs';
 import { IUser, IRegisterUser } from '../models/IUser';
 import { cache, DB_PATH } from './Cache';
-import { getUserWithoutPassword } from './UserWithoutPassword';
 
 // Get cached users
 export function getCachedUsers(): IUser[] {
@@ -105,11 +104,14 @@ export function RegisterUserCache(user: IRegisterUser) {
 
     // Write back to the database file
     saveUsersToFile(cache.users);
-
+    const userWithoutPassword = getUserWithoutPassword(newUser)
+    if (!userWithoutPassword.success) {
+      return { success: false, message: 'User not found' };
+    }
     return {
       success: true,
       message: 'User registered successfully',
-      user: getUserWithoutPassword(newUser),
+      user: userWithoutPassword.user
     };
   } catch (error) {
     console.error('Error registering user:', error);
@@ -136,6 +138,22 @@ export function removeUserCache(id: number): { success: boolean; message: string
     console.error('Error removing user:', error);
     return { success: false, message: `Deletion failed: ${error instanceof Error ? error.message : 'Unknown error'}` };
   }
+}
+
+export function getUserWithoutPassword(user: IUser) {
+  if (user) {
+    // Remove password from response
+    const { userDetails: { loginDetails: { password, ...loginDetailsWithoutPassword }, ...otherUserDetails }, ...restUser } = user;
+    const sanitizedUser = {
+      ...restUser,
+      userDetails: {
+        ...otherUserDetails,
+        loginDetails: loginDetailsWithoutPassword
+      }
+    };
+    return { success: true, user: sanitizedUser };
+  }
+  return { success: false, message: 'User not found' };
 }
 
 function saveUsersToFile(users: IUser[]) {
