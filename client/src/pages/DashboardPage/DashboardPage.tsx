@@ -6,13 +6,29 @@ import Profile from "./Profile/Profile";
 import Bookings from "./Bookings";
 import styles from "./DashboardPage.module.css";
 import { useNavigate } from "react-router-dom";
-import { getCurrentUserType } from "../../services/AuthService";
+import { getUserId, getUserRole } from "../../utils/StorageManager";
+import { getUserById } from "../../services/Registry";
+import { Role } from "../../models/IUser";
 
 function Dashboard() {
     const navigate = useNavigate();
 
+    const [user, setUser] = useState(null);
+
     useEffect(() => {
-        if (!getCurrentUserType()) {
+        const updateUser = async () => {
+            const id = getUserId();
+            if (id) {
+                const user = await getUserById(id);
+                setUser(user);
+            }
+        };
+        window.addEventListener("userUpdate", updateUser);
+        return () => window.removeEventListener("userUpdate", updateUser);
+    }, []);
+
+    useEffect(() => {
+        if (!getUserRole()) {
         navigate("/");
         }
     }, []);
@@ -24,7 +40,7 @@ function Dashboard() {
             case "services":
                 return <Services />;
             case "profile":
-                return <Profile />;
+                return getUserRole() === Role.MINDER ? <Profile user={user} /> : null;
             case "bookings":
                 return <Bookings />;
             default:

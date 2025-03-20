@@ -7,7 +7,7 @@ export function getCachedPets(): IPet[] {
     return cache.pets;
 }
 
-export function registerPet(pet: IPet) {
+export function addPetCached(pet: IPet) {
     
     const newPet: IPet = {
         id: cache.pets.length + 1,

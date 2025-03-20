@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getCurrentUserType } from "../../services/AuthService";
+import { getUserRole } from "../../utils/StorageManager";
 import Hero from "./Hero";
 import HowItWorks from "./HowItWorks";
 import LoginRegister from "./LoginRegister";
@@ -9,7 +9,7 @@ function LandingPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (getCurrentUserType()) {
+    if (getUserRole()) {
       navigate("/dashboard");
     }
   }, []);

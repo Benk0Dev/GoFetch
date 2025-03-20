@@ -1,35 +1,48 @@
 import fs from 'fs';
-import { IUser, ILoginDetails, Role } from '../models/IUser';
+import { IUser, IRegisterUser } from '../models/IUser';
 import { cache, DB_PATH } from './Cache';
+import { getUserWithoutPassword } from './UserWithoutPassword';
 
 // Get cached users
 export function getCachedUsers(): IUser[] {
   return cache.users;
 }
 
-// Get all users with their pets populated
-export function getCachedUsersWithPets(): IUser[] {
+export function getCachedUsersWithPetsAndServices(): IUser[] {
   return cache.users.map(user => {
-    const userWithPets = { ...user };   // Clone the user to avoid modifying the cache directly
-    const petIds = user.ownerRoleInfo?.petIDs || [];    // Get the pet IDs (handle the structure mismatch in your data)
-    const userPets = cache.pets.filter(pet => petIds.includes(pet.id)); // Populate pets
-    if (userWithPets.ownerRoleInfo) {
-      userWithPets.ownerRoleInfo.pets = userPets;
+    const userCopy = { ...user };
+
+    if (userCopy.ownerRoleInfo) {
+      userCopy.ownerRoleInfo = {
+        ...userCopy.ownerRoleInfo,
+        pets: cache.pets.filter(pet => user.ownerRoleInfo?.petIDs?.includes(pet.id) || false),
+      };
+      delete (userCopy.ownerRoleInfo as any).petIDs;
     }
 
-    return userWithPets;
+    if (userCopy.minderRoleInfo) {
+      userCopy.minderRoleInfo = {
+        ...userCopy.minderRoleInfo,
+        services: cache.services.filter(service => user.minderRoleInfo?.serviceIDs?.includes(service.id) || false),
+      };
+      delete (userCopy.minderRoleInfo as any).serviceIDs;
+    }
+
+    return userCopy;
   });
 }
 
-export function RegisterUserCache(user: ILoginDetails): { success: boolean; message: string; user?: IUser } {
-  if (!user) {
-    return { success: false, message: 'User data is required' };
-  }
+
+
+export function RegisterUserCache(user: IRegisterUser) {
+  if (!user.fname || !user.sname || !user.email || !user.password || !user.username || !user.dob) {
+    return { success: false, message: 'All fields are required' };
+  } 
 
   try {
     // Validate required fields
     if (!user.email || !user.password) {
-      return { success: false, message: 'Email, and password are required' };
+      return { success: false, message: 'Email and password are required' };
     }
     // Check if email already exists
     const existingUser = cache.users.find(u => u.userDetails.loginDetails.email === user.email);
@@ -37,22 +50,37 @@ export function RegisterUserCache(user: ILoginDetails): { success: boolean; mess
       return { success: false, message: 'Email already registered' };
     }
 
+    // Validate age
+    const dob = new Date(user.dob);
+    const today = new Date();
+    let age = today.getFullYear() - dob.getFullYear();
+
+    // Adjust age if birthday hasn't occurred yet this year
+    if (today.getMonth() < dob.getMonth() || 
+      (today.getMonth() === dob.getMonth() && today.getDate() < dob.getDate())) {
+      age--;
+    }
+
+    if (age < 16) {
+      return { success: false, message: 'Must be at least 16 years old' };
+    }
+
     // Create new user object
     const newUser: IUser = {
       userDetails: {
         id: cache.users.length + 1,
-        fname: '',
-        lname: '',
+        fname: user.fname,
+        sname: user.sname,
         loginDetails: {
           email: user.email,
-          username: user.email,
+          username: user.username,
           password: user.password, // Note: In a real app, we should hash passwords(idc for now)
         },
       },
-      roles: [Role.OWNER],
+      roles: [user.role],
       primaryUserInfo: {
         profilePic: '',
-        dob: new Date(),
+        dob: user.dob,
         location: { name: '', longitude: 0, latitude: 0 },
         suspended: false,
         suspendReason: null,
@@ -78,12 +106,10 @@ export function RegisterUserCache(user: ILoginDetails): { success: boolean; mess
     // Write back to the database file
     saveUsersToFile(cache.users);
 
-    // Return success without password
-    const { userDetails: { loginDetails: { password, ...loginDetails }, ...userDetails }, ...userWithoutPassword } = newUser;
     return {
       success: true,
       message: 'User registered successfully',
-      user: userWithoutPassword as IUser
+      user: getUserWithoutPassword(newUser),
     };
   } catch (error) {
     console.error('Error registering user:', error);

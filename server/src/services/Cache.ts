@@ -12,7 +12,7 @@ export const DB_PATH = path.join(__dirname, './../db');
 export interface DbCache {
   users: IUser[];
   pets: IPet[];
-  services: IService[]; // Note: typo preserved from original
+  services: IService[];
   booking: IBooking[];
 }
 

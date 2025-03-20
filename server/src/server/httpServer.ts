@@ -42,19 +42,19 @@ app.get('/users', (req: Request, res: Response) => {
 // Get user by ID
 app.get('/user/:id', (req: Request, res: Response) => {
     const result = getUserByID(parseInt(req.params.id));
-    res.status(result.success ? 200 : 404).send(result.message);
+    res.status(result.success ? 200 : 404).send(result);
 });
 
 // Get user by username
 app.get('/user/username/:username', (req: Request, res: Response) => {
     const result = getUserByUsername(req.params.username);
-    res.status(result.success ? 200 : 404).send(result.message);
+    res.status(result.success ? 200 : 404).send(result);
 });
 
 // Register user
 app.post('/registerUser', (req: Request, res: Response) => {
     const result = RegisterUser(req.body);
-    res.status(result.success ? 201 : 400).send(result.message);
+    res.status(result.success ? 201 : 400).send(result);
 });
 
 // Login user
@@ -62,7 +62,7 @@ app.post('/login', (req: Request, res: Response) => {
     const credentials = req.body.credentials;
     const password = req.body.password;
     const result = loginUser(credentials, password);
-    res.status(result.success ? 200 : 401).send(result.message);
+    res.status(result.success ? 200 : 401).send(result);
 });
 
 // Delete user by ID

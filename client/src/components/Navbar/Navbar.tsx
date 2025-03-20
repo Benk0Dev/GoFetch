@@ -2,46 +2,38 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import "../../global.css";
-import {
-  logout,
-  getCurrentUserType,
-  getAllCurrentUserDetails,
-} from "../../services/AuthService";
-import { IUserDetails } from "../../utils/StorageManager";
-import { Role } from "../../models/User";
 import ProfileIcon from "./ProfileIcon";
 import NotificationIcon from "./NotificationIcon";
 import logo from "../../assets/images/logo.svg";
 import { Mail } from "lucide-react";
+import { getUserId, getUserRole } from "../../utils/StorageManager";
+import { getUserById, logout } from "../../services/Registry";
 
 function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [userType, setUserType] = useState<Role | null>(getCurrentUserType());
-  const [userDetails, setUserDetails] = useState<IUserDetails | null>(
-    getAllCurrentUserDetails()
-  );
+  const [user, setUser] = useState(null);
 
   const [forceUpdate, setForceUpdate] = useState<number>(0);
 
   useEffect(() => {
-    const updateUser = () => {
-      // Update when event fires
-      setUserType(getCurrentUserType());
-      setUserDetails(getAllCurrentUserDetails());
+    const updateUser = async () => {
+      const id = getUserId();
+      if (id) {
+        const user = await getUserById(id);
+        setUser(user);
+      }
       setForceUpdate((prev) => prev + 1);
     };
-
-    window.addEventListener("userUpdate", updateUser); // Listen for user changes
-    return () => window.removeEventListener("userUpdate", updateUser); // Cleanup
+    window.addEventListener("userUpdate", updateUser);
+    return () => window.removeEventListener("userUpdate", updateUser);
   }, []);
 
-  let homeLink = userType ? "/dashboard" : "/";
+  let homeLink = getUserRole() ? "/dashboard" : "/";
 
   const handleLogout = () => {
     logout();
-    setUserType(null);
-    setUserDetails(null);
+    setUser(null);
     navigate("/");
   };
 
@@ -53,7 +45,7 @@ function Navbar() {
           <h2>GoFetch</h2>
         </Link>
         <div className={styles.navLinks}>
-          {userType ? (
+          {getUserRole() ? (
             <>
               <Link to="/browse" className="btn-link">
                 Explore Minders
@@ -64,8 +56,7 @@ function Navbar() {
               </Link>
               <ProfileIcon
                 key={forceUpdate}
-                userType={userType}
-                userDetails={userDetails}
+                user={user}
                 onLogout={handleLogout}
               />
             </>

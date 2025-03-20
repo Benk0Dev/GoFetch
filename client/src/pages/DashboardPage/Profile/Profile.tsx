@@ -1,23 +1,16 @@
 import { useState, useEffect } from "react";
 import styles from "./Profile.module.css";
 import dashboardStyles from "../DashboardPage.module.css";
-import { getCurrentUser } from "../../../services/AuthService";
 import ImageViewer from "./ImageViewer";
-import { Admin, PetOwner } from "../../../models/User";
 import getFullFilePath from "../../../utils/FullFilePath";
 import "react-range-slider-input/dist/style.css";
 import { X, Plus } from "lucide-react";
 
-function Profile() {
-    const user = getCurrentUser();
-    
-    if (user?.userClass instanceof Admin) return null;
-    if (user?.userClass.role.currentRole instanceof PetOwner) return null;
-
-    const [bio, setBio] = useState(user?.userClass.role.currentRole.bio || "");
-    const [availability, setAvailability] = useState(user?.userClass.role.currentRole.availability || "");
-    const [distanceRange, setDistanceRange] = useState(user?.userClass.role.currentRole.distanceRange || 10);
-    const [pictures, setPictures] = useState<string[]>(user?.userClass.role.currentRole.pictures.map(pic => getFullFilePath(pic)) || []);
+function Profile({ user }: { user: any }) {
+    const [bio, setBio] = useState(user.minderRoleInfo.bio);
+    const [availability, setAvailability] = useState(user.minderRoleInfo.availability);
+    const [distanceRange, setDistanceRange] = useState(user.minderRoleInfo.distanceRange);
+    const [pictures, setPictures] = useState(user.minderRoleInfo.pictures.map((pic: any) => getFullFilePath(pic)));
     const [originalState, setOriginalState] = useState({ bio, availability, distanceRange, pictures });
     const [showImageViewer, setShowImageViewer] = useState<string | null>(null);
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
@@ -55,7 +48,7 @@ function Profile() {
 
     // Remove picture
     const handleRemovePicture = (index: number) => {
-        setPictures(pictures.filter((_, i) => i !== index));
+        setPictures(pictures.filter((_: any, i: number) => i !== index));
     };
 
     // Cancel changes
@@ -100,7 +93,7 @@ function Profile() {
 
             <label>Photos</label>
             <div className={styles.photoGrid}>
-                {pictures.map((pic, index) => (
+                {pictures.map((pic: any, index: number) => (
                     <div key={index} className={styles.photoItem}>
                         <img src={pic} alt="Profile" onClick={() => setShowImageViewer(pic)} />
                         <button className={styles.removeBtn} onClick={() => handleRemovePicture(index)}><X strokeWidth={2.25} /></button>
