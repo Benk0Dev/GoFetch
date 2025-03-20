@@ -11,6 +11,7 @@ import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import BrowsePage from "./pages/BrowsePage/BrowsePage";
 import DashboardPage from "./pages/DashboardPage/DashboardPage";
 import MessagingPage from "./pages/MessagingPage/MessagingPage";
+import BookingPage from "./pages/BookingPage/BookingPage";
 import { assignCurrentUser } from "./services/AuthService";
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
         <Route path="/register-owner" element={<RegisterPage />} />
         <Route path="/register-minder" element={<RegisterPage />} />
         <Route path="/browse" element={<BrowsePage />} />
+        <Route path="/booking" element={<BookingPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/messaging" element={<MessagingPage />} />
