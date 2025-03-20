@@ -1,46 +1,21 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import MinderCard from "./MinderCard";
 import FilterBar from "./FilterBar";
 import "./Browse.css";
-
-interface Minder {
-  id: number;
-  fullName: string;
-  bio: string;
-  rating: number;
-  location: string;
-  availability: string;
-  distanceRange: number;
-  verified: boolean;
-  pictures: string[];
-}
+import { getAllMinders } from "../../services/Registry";
 
 const BrowsePage: React.FC = () => {
-  const [allMinders, setAllMinders] = useState<Minder[]>([]);
-  const [filteredMinders, setFilteredMinders] = useState<Minder[]>([]);
+  const [allMinders, setAllMinders] = useState<any[]>([]);
+  const [filteredMinders, setFilteredMinders] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchMinders = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/minders");
-        console.log("Fetched data:", response.data);
-
-        const minders: Minder[] = response.data.map((user: any) => ({
-          id: user.userDetails.id,
-          fullName: `${user.userDetails.fname} ${user.userDetails.lname}`,
-          bio: user.minderRoleInfo.bio,
-          rating: user.minderRoleInfo.rating,
-          location: user.primaryUserInfo.location.name,
-          availability: user.minderRoleInfo.availability,
-          distanceRange: user.minderRoleInfo.distanceRange,
-          verified: user.minderRoleInfo.verified,
-          pictures: user.minderRoleInfo.pictures,
-        }));
-
+        const minders = await getAllMinders(); // ✅ Should include userDetails & minderRoleInfo
+        console.log("Fetched minders:", minders);
         setAllMinders(minders);
-        setFilteredMinders(minders); // Show all by default
+        setFilteredMinders(minders);
       } catch (error) {
         console.error("Error fetching minders:", error);
       } finally {
@@ -55,15 +30,22 @@ const BrowsePage: React.FC = () => {
     console.log("Filters applied:", filters);
 
     const filtered = allMinders.filter((minder) => {
-      const searchText = filters.location?.toLowerCase() || "";
+      const searchText = filters.location.toLowerCase() || "";
       const availabilityText = filters.availability?.toLowerCase() || "";
 
-      const nameMatch = minder.fullName.toLowerCase().includes(searchText);
-      const locationMatch = minder.location.toLowerCase().includes(searchText);
-      const ratingMatch = minder.rating >= (filters.rating || 0);
-      const availabilityMatch = minder.availability
-        .toLowerCase()
-        .includes(availabilityText);
+      // ✅ Use correct nested paths
+      const fullName =
+        `${minder.userDetails.fname} ${minder.userDetails.lname}`.toLowerCase();
+      const location =
+        minder.primaryUserInfo.location.name?.toLowerCase() || "";
+      const rating = minder.minderRoleInfo.rating || 0;
+      const availability =
+        minder.minderRoleInfo.availability?.toLowerCase() || "";
+
+      const nameMatch = fullName.includes(searchText);
+      const locationMatch = location.includes(searchText);
+      const ratingMatch = rating >= (filters.rating || 0);
+      const availabilityMatch = availability.includes(availabilityText);
 
       return (
         (nameMatch || locationMatch) &&
@@ -89,8 +71,8 @@ const BrowsePage: React.FC = () => {
       ) : (
         <div className="minder-grid">
           {filteredMinders.length > 0 ? (
-            filteredMinders.map((minder) => (
-              <MinderCard key={minder.id} minder={minder} />
+            filteredMinders.map((minder, index) => (
+              <MinderCard key={index} minder={minder} />
             ))
           ) : (
             <p>No minders available.</p>
