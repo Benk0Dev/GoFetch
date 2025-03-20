@@ -36,7 +36,8 @@ const BrowsePage: React.FC = () => {
       // ✅ Use correct nested paths
       const fullName =
         `${minder.userDetails.fname} ${minder.userDetails.lname}`.toLowerCase();
-      const location = minder.primaryUserInfo.location.name.toLowerCase() || "";
+      const location =
+        minder.primaryUserInfo.location.name?.toLowerCase() || "";
       const rating = minder.minderRoleInfo.rating || 0;
       const availability =
         minder.minderRoleInfo.availability?.toLowerCase() || "";

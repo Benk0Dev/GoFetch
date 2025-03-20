@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import "./FilterBar.css";
 
 interface FilterBarProps {
-  onFilterChange: (filters: any) => void;
+  onFilterChange: (filters: {
+    location: string;
+    rating: number;
+    price: number;
+    availability: string;
+  }) => void;
 }
 
 const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
@@ -23,22 +28,28 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
         Search for trusted pet minders in your area based on your preferences.
       </p>
 
+      {/* 🔎 Location or Name */}
       <input
         className="search-input"
         type="text"
         placeholder="Search by location or name"
         value={location}
         onChange={(e) => setLocation(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && handleSearch()} // 🔥 Optional: Search on Enter
       />
 
       <div className="filter-controls">
-        <select onChange={(e) => setRating(parseInt(e.target.value))}>
+        {/* ⭐ Rating */}
+        <select
+          value={rating}
+          onChange={(e) => setRating(parseInt(e.target.value))}
+        >
           <option value={0}>Highest Rating</option>
           <option value={4}>4+ Stars</option>
           <option value={3}>3+ Stars</option>
         </select>
 
-        {/* ⚙️ Gear button to toggle advanced filters */}
+        {/* ⚙️ Toggle Advanced */}
         <button
           className="filter-button"
           onClick={() => setShowAdvanced(!showAdvanced)}
@@ -46,12 +57,13 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
           ⚙️
         </button>
 
+        {/* 🔎 Search */}
         <button className="search-button" onClick={handleSearch}>
           Search
         </button>
       </div>
 
-      {/* ✅ Advanced Filters Modal */}
+      {/* ✅ Advanced Filters */}
       {showAdvanced && (
         <div className="advanced-filters-modal">
           <label>Price Range (£): {price}</label>
