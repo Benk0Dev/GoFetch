@@ -2,14 +2,14 @@ import LoginForm from "./LoginForm";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./LoginPage.module.css";
-import { getCurrentUserType } from "../../services/AuthService";
-import { Role } from "../../models/User";
+import { getUserRole } from "../../utils/StorageManager";
+import { Role } from "../../models/IUser";
 
 function LoginPage() {
     const navigate = useNavigate();
     
         useEffect(() => {
-            const currentUserType = getCurrentUserType();
+            const currentUserType = getUserRole();
             if (currentUserType) {
                 if (currentUserType === Role.MINDER) {
                     navigate("/dashboard");

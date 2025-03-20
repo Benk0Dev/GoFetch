@@ -10,7 +10,9 @@
         "password": "securePass1"
       }
     },
-    "roles": ["petowner"],
+    "roles": [
+      "petowner"
+    ],
     "primaryUserInfo": {
       "profilePic": "alice.jpg",
       "dob": "1990-06-15",
@@ -24,7 +26,10 @@
       "suspendEndsAt": null
     },
     "ownerRoleInfo": {
-      "petIDs": [1, 2]
+      "petIDs": [
+        1,
+        2
+      ]
     }
   },
   {
@@ -38,7 +43,9 @@
         "password": "securePass2"
       }
     },
-    "roles": ["petowner"],
+    "roles": [
+      "petowner"
+    ],
     "primaryUserInfo": {
       "profilePic": "bob.jpg",
       "dob": "1985-09-20",
@@ -52,7 +59,9 @@
       "suspendEndsAt": null
     },
     "ownerRoleInfo": {
-      "petIDs": [3]
+      "petIDs": [
+        3
+      ]
     }
   },
   {
@@ -66,7 +75,9 @@
         "password": "securePass3"
       }
     },
-    "roles": ["petminder"],
+    "roles": [
+      "petminder"
+    ],
     "primaryUserInfo": {
       "profilePic": "charlie.jpg",
       "dob": "1992-04-10",
@@ -80,10 +91,16 @@
       "suspendEndsAt": null
     },
     "minderRoleInfo": {
-      "serviceIDs": [1, 2],
+      "serviceIDs": [
+        1,
+        2
+      ],
       "rating": 4.8,
       "bio": "Experienced pet sitter with 5 years of experience.",
-      "pictures": ["charlie1.jpg", "charlie2.jpg"],
+      "pictures": [
+        "charlie1.jpg",
+        "charlie2.jpg"
+      ],
       "availability": "Weekdays",
       "distanceRange": 10,
       "verified": true
@@ -100,7 +117,9 @@
         "password": "securePass4"
       }
     },
-    "roles": ["petminder"],
+    "roles": [
+      "petminder"
+    ],
     "primaryUserInfo": {
       "profilePic": "diana.jpg",
       "dob": "1988-12-05",
@@ -114,10 +133,16 @@
       "suspendEndsAt": null
     },
     "minderRoleInfo": {
-      "serviceIDs": [3, 4],
+      "serviceIDs": [
+        3,
+        4
+      ],
       "rating": 4.6,
       "bio": "Lifelong pet lover and certified dog trainer.",
-      "pictures": ["diana1.jpg", "diana2.jpg"],
+      "pictures": [
+        "diana1.jpg",
+        "diana2.jpg"
+      ],
       "availability": "Weekends",
       "distanceRange": 15,
       "verified": true
@@ -134,7 +159,10 @@
         "password": "securePass5"
       }
     },
-    "roles": ["petowner", "petminder"],
+    "roles": [
+      "petowner",
+      "petminder"
+    ],
     "primaryUserInfo": {
       "profilePic": "eve.jpg",
       "dob": "1995-08-25",
@@ -148,13 +176,21 @@
       "suspendEndsAt": null
     },
     "ownerRoleInfo": {
-      "petIDs": [4]
+      "petIDs": [
+        4
+      ]
     },
     "minderRoleInfo": {
-      "serviceIDs": [5, 6],
+      "serviceIDs": [
+        5,
+        6
+      ],
       "rating": 4.9,
       "bio": "Pet owner and minder with a passion for animals.",
-      "pictures": ["eve1.jpg", "eve2.jpg"],
+      "pictures": [
+        "eve1.jpg",
+        "eve2.jpg"
+      ],
       "availability": "Flexible",
       "distanceRange": 20,
       "verified": true
@@ -171,6 +207,8 @@
         "password": "securePass6"
       }
     },
-    "roles": ["admin"]
+    "roles": [
+      "admin"
+    ]
   }
 ]

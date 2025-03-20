@@ -7,6 +7,22 @@ export function getCachedServices(): IService[] {
     return cache.services;
 }
 
+export function addServiceCached(service: IService) {
+    
+    const newService: IService = {
+        id: cache.services.length + 1,
+        type: service.type,
+        duration: service.duration,
+        price: service.price,
+    };
+
+    cache.services.push(newService);
+
+    saveServicesToFile(cache.services);
+
+    return { success: true, message: 'Service added successfully!' };
+}
+
 export function removeServiceCached(id: number) {
     const index = cache.services.findIndex(service => service.id === id);
     if (index === -1) {

@@ -1,9 +1,9 @@
 import styles from "./DashboardHome.module.css";
 import dashboardStyles from "./DashboardPage.module.css";
-import { getAllCurrentUserDetails } from "../../services/AuthService";
 
 function DashboardHome() {
-    const userFirstName = getAllCurrentUserDetails()?.fname;
+    // const userFirstName = getAllCurrentUserDetails()?.fname;
+    const userFirstName = "John";
 
     return (
         <div className={dashboardStyles.dashboardSection}>

@@ -1,4 +1,5 @@
 import { IPet } from './IPet';
+import { IService } from './IService';
 
 export interface IUser {
   userDetails: IUserDetails;
@@ -17,7 +18,7 @@ export interface ILoginDetails {
 export interface IUserDetails {
   id: number;
   fname: string;
-  lname: string;
+  sname: string;
   loginDetails: ILoginDetails;
 }
 
@@ -41,7 +42,9 @@ export interface IOwnerRoleInfo {
   pets?: IPet[];
 }
 
-export interface IMinderRoleInfoWithoutServiceIDs {
+export interface IMinderRoleInfo {
+  serviceIDs: number[];
+  services?: IService[];
   rating: number;
   bio: string;
   pictures: string[];
@@ -50,12 +53,18 @@ export interface IMinderRoleInfoWithoutServiceIDs {
   verified: boolean;
 }
 
-export interface IMinderRoleInfo extends IMinderRoleInfoWithoutServiceIDs {
-  serviceIDs: number[];
-}
-
 export interface ILocation {
   name: string;
   longitude: number;
   latitude: number;
+}
+
+export interface IRegisterUser {
+  fname: string, 
+  sname: string, 
+  email: string, 
+  username: string, 
+  password: string, 
+  dob: Date, 
+  role: Role
 }

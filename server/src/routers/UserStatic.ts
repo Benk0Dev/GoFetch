@@ -1,20 +1,39 @@
-import { getCachedUsersWithPets, RegisterUserCache, removeUserCache } from '../services/UserCached';
-import { Role } from '../models/IUser';
-import { ILoginDetails } from '../models/IUser';
+import { getCachedUsersWithPetsAndServices, RegisterUserCache, removeUserCache } from '../services/UserCached';
+import { IRegisterUser, Role } from '../models/IUser';
+import { getUserWithoutPassword } from '../services/UserWithoutPassword';
 
 export function AllUsersData() {
-  return getCachedUsersWithPets();
+  return getCachedUsersWithPetsAndServices();
 }
 
 export function getUserByID(id: number) {
-  const user = getCachedUsersWithPets().find(user => user.userDetails.id === id);
+  const user = getCachedUsersWithPetsAndServices().find(user => user.userDetails.id === id);
   if (user) {
-    return { success: true, user};
+    return { success: true, user: getUserWithoutPassword(user) };
   }
-  return {success: false, message: 'User not found'};
+  return { success: false, message: 'User not found' };
 }
 
-export function RegisterUser(user: ILoginDetails) {
+export function getUserByUsername(username: string) {
+  const user = getCachedUsersWithPetsAndServices().find(user =>
+    user.userDetails.loginDetails.username === username
+  );
+
+  if (user) {
+    return { success: true, user: getUserWithoutPassword(user) };
+  }
+  return { success: false, message: 'User not found' };
+}
+
+export function loginUser(credentials: string, password: string) {
+  const user = getCachedUsersWithPetsAndServices().find(user => (user.userDetails.loginDetails.email === credentials || user.userDetails.loginDetails.username === credentials) && user.userDetails.loginDetails.password === password);
+  if (user) {
+    return { success: true, user: getUserWithoutPassword(user) };
+  }
+  return {success: false, message: 'Email/Username or Password is incorrect'};
+}
+
+export function RegisterUser(user: IRegisterUser) {
   return RegisterUserCache(user);
 }
 
@@ -22,34 +41,6 @@ export function removeUser(id: number) {
   return removeUserCache(id);
 }
 
-export function loginUser(credentials: string, password: string) {
-  const user = getCachedUsersWithPets().find(user => (user.userDetails.loginDetails.email === credentials || user.userDetails.loginDetails.username === credentials) && user.userDetails.loginDetails.password === password);
-  if (user) {
-    return { success: true, user};
-  }
-  return {success: false, message: 'Email/Username or Password is incorrect'};
-}
-
-export function getUserByUsername(username: string) {
-  const user = getCachedUsersWithPets().find(user =>
-    user.userDetails.loginDetails.username === username
-  );
-
-  if (user) {
-    // Remove password from response
-    const { userDetails: { loginDetails: { password, ...loginDetailsWithoutPassword }, ...otherUserDetails }, ...restUser } = user;
-    const sanitizedUser = {
-      ...restUser,
-      userDetails: {
-        ...otherUserDetails,
-        loginDetails: loginDetailsWithoutPassword
-      }
-    };
-    return { success: true, user: sanitizedUser };
-  }
-  return { success: false, message: 'User not found' };
-}
-
 export function getMinders() {
-  return { success: true, message: getCachedUsersWithPets().filter(user => user.roles.includes(Role.MINDER))};
+  return { success: true, message: getCachedUsersWithPetsAndServices().filter(user => user.roles.includes(Role.MINDER))};
 }
