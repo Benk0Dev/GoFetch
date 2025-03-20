@@ -38,8 +38,8 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/register-owner" element={<RegisterPage />} />
-        <Route path="/register-minder" element={<RegisterPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        {/* <Route path="/register-minder" element={<RegisterPage />} /> */}
         <Route path="/browse" element={<BrowsePage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/profile" element={<ProfilePage />} />

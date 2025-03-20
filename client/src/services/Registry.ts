@@ -10,6 +10,7 @@ class Registry {
   private pets: IPet[] = [];
   private services: IService[] = [];
   private loaded: boolean = false; // Prevent redundant fetching
+    register: any;
 
   // Fetch all users, pets, and services once
   async initialize() {

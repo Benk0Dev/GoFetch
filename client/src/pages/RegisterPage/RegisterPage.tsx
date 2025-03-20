@@ -1,103 +1,36 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { register } from "../../services/AuthService";
 import styles from "./RegisterPage.module.css";
+import RegisterForm from "./RegisterForm";
+import { getCurrentUserType } from "../../services/AuthService";
+import { Role } from "../../models/User";
 
 function RegisterPage() {
-    function RegisterForm() {
-        const [name, setName] = useState("");
-        const [email, setEmail] = useState("");
-        const [password, setPassword] = useState("");
-        const [userType, setCurrentUserType] = useState("");
-        const [error, setError] = useState("");
-        const navigate = useNavigate();
-    
-        const handleSubmit = async (e: React.FormEvent) => {
-            e.preventDefault();
-            setError("");
-            console.log("Registering with:", { name, email, password });
+    const navigate = useNavigate();
 
-            const newUser = await register(name, email, password);
+    useEffect(() => {
+        const currentUserType = getCurrentUserType();
 
-            if (newUser) {
-                console.log("Registration successful:", newUser);
+        if (currentUserType) {
+            if (currentUserType === Role.MINDER) {
                 navigate("/dashboard");
             } else {
-                setError("Registration failed. Try again.");
+                navigate("/browse");
             }
         }
-    
-        return (
-            <form className={styles.registerForm} onSubmit={handleSubmit}>
-                <div className={styles.inputGroup}>
-                    <label>User Name</label>
-                    <input 
-                        type="text" 
-                        value={name} 
-                        placeholder="User Name"
-                        onChange={(e) => setName(e.target.value)}
-                        required 
-                    />
-                </div>
+    }, [navigate]);
 
-                <div className={styles.inputGroup}>
-                    <label>Email</label>
-                    <input 
-                        type="email" 
-                        value={email} 
-                        placeholder="Email"
-                        onChange={(e) => setEmail(e.target.value)} 
-                        required 
-                    />
-                </div>
-
-                <div className={styles.inputGroup}>
-                    <label>Password</label>
-                    <input 
-                        type="password" 
-                        value={password} 
-                        placeholder="Password"
-                        onChange={(e) => setPassword(e.target.value)} 
-                        required 
-                    />
-                </div>
-
-                <div className={styles.inputGroup}>
-                    <label>Account Type</label>
-
-                    <div className={styles.radioGroup}>
-                        <label>
-                            <input type="radio" name="userType" value="owner"
-                                checked={userType === "owner"}
-                                onChange={(e) => setCurrentUserType(e.target.value)}
-                                required
-                            />
-                            Owner
-                        </label>
-                        <label>
-                            <input
-                                type="radio"
-                                name="role"
-                                value="minder"
-                                checked={userType === "minder"}
-                                onChange={(e) => setCurrentUserType(e.target.value)}
-                                required
-                            />
-                            Minder
-                        </label>
-                    </div>
-                </div>
-
-                <div className={styles.errorContainer}>
-                    {error && <p className={styles.error}>{error}</p>}
-                </div>
-
-                <button type="submit" className={styles.registerButton} style={{width: "100%"}}>Register</button>
-            </form>
-        );
-    }
-
-    return <RegisterForm />;
+    return (
+        <div className={"container flex-center"}>
+            <div className={styles.registerBox}>
+                <h2>Register for an account</h2>
+                <RegisterForm />
+                <p>
+                    Have an account? <a href="/login" className={styles.registerLink}>Log In</a>
+                </p>
+            </div>
+        </div>
+    );
 }
 
 export default RegisterPage;
