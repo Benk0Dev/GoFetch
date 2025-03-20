@@ -165,7 +165,13 @@ export function editUserCache(id: number, userEdits: IUser) {
     }
 
     // Update the user
-    const updatedUser = { ...user, ...userEdits };
+    const updatedUser = deepMerge(user, userEdits);
+
+    if (updatedUser.userDetails) {
+      updatedUser.userDetails.id = id;
+    }
+
+    // Update user
     cache.users = cache.users.map(u => u.userDetails.id === id ? updatedUser : u);
 
     // Write back to the database file
@@ -176,6 +182,30 @@ export function editUserCache(id: number, userEdits: IUser) {
     console.error('Error updating user:', error);
     return { success: false, message: `Update failed: ${error instanceof Error ? error.message : 'Unknown error'}` };
   }
+}
+
+function deepMerge(target: any, source: any): any {
+  const output = { ...target };
+
+  if (isObject(target) && isObject(source)) {
+    Object.keys(source).forEach(key => {
+      if (isObject(source[key])) {
+        if (!(key in target)) {
+          Object.assign(output, { [key]: source[key] });
+        } else {
+          output[key] = deepMerge(target[key], source[key]);
+        }
+      } else {
+        Object.assign(output, { [key]: source[key] });
+      }
+    });
+  }
+
+  return output;
+}
+
+function isObject(item: any): boolean {
+  return (item && typeof item === 'object' && !Array.isArray(item));
 }
 
 function saveUsersToFile(users: IUser[]) {
