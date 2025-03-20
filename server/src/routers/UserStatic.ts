@@ -1,5 +1,5 @@
-import { getCachedUsersWithPetsAndServices, getUserWithoutPassword, RegisterUserCache, removeUserCache } from '../services/UserCached';
-import { IRegisterUser, Role } from '../models/IUser';
+import { getCachedUsersWithPetsAndServices, getUserWithoutPassword, RegisterUserCache, removeUserCache, editUserCache } from '../services/UserCached';
+import { IRegisterUser, IUser, Role } from '../models/IUser';
 
 export function AllUsersData() {
   return getCachedUsersWithPetsAndServices();
@@ -42,4 +42,8 @@ export function removeUser(id: number) {
 
 export function getMinders() {
   return { success: true, message: getCachedUsersWithPetsAndServices().filter(user => user.roles.includes(Role.MINDER))};
+}
+
+export function editUser(id: number, user: IUser) {
+  return editUserCache(id, user);
 }

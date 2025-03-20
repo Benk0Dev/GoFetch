@@ -29,6 +29,12 @@
       "petIDs": [
         1
       ]
+    },
+    "ownerInfo": {
+      "petIDs": [
+        1,
+        2
+      ]
     }
   },
   {
@@ -176,7 +182,8 @@
     },
     "ownerRoleInfo": {
       "petIDs": [
-        3, 4
+        3,
+        4
       ]
     },
     "minderRoleInfo": {

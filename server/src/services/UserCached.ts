@@ -156,6 +156,28 @@ export function getUserWithoutPassword(user: IUser) {
   return { success: false, message: 'User not found' };
 }
 
+export function editUserCache(id: number, userEdits: IUser) {
+  try {
+    // Find the user
+    const user = cache.users.find(user => user.userDetails.id === id);
+    if (!user) {
+      return { success: false, message: 'User not found' };
+    }
+
+    // Update the user
+    const updatedUser = { ...user, ...userEdits };
+    cache.users = cache.users.map(u => u.userDetails.id === id ? updatedUser : u);
+
+    // Write back to the database file
+    saveUsersToFile(cache.users);
+
+    return { success: true, message: 'User updated successfully' };
+  } catch (error) {
+    console.error('Error updating user:', error);
+    return { success: false, message: `Update failed: ${error instanceof Error ? error.message : 'Unknown error'}` };
+  }
+}
+
 function saveUsersToFile(users: IUser[]) {
   fs.writeFileSync(`${DB_PATH}/users.json`, JSON.stringify(users, null, 2), 'utf8');
 }

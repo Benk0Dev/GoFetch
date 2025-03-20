@@ -1,7 +1,7 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
 import http from 'http';
 
-import { AllUsersData, getUserByID, getUserByUsername, RegisterUser, loginUser, removeUser, getMinders } from '../routers/UserStatic';
+import { AllUsersData, getUserByID, getUserByUsername, RegisterUser, loginUser, removeUser, getMinders, editUser } from '../routers/UserStatic';
 import { AllPets, PetByID, registerPet, removePet, addPetForUser, removePetFromUser } from '../routers/PetStatic';
 import { AllServices, ServiceByID, removeService, addServiceForUser, removeServiceFromUser } from '../routers/ServiceStatic';
 import { getBookingsForUser, getAllBookings } from '../routers/BookingStatic';
@@ -74,6 +74,11 @@ app.delete('/user/:id', (req: Request, res: Response) => {
 // Get minders
 app.get('/minders', (req: Request, res: Response) => {
     const result = getMinders();
+    res.status(result.success ? 200 : 404).send(result.message);
+});
+
+app.post('/editUser/:id', (req: Request, res: Response) => {
+    const result = editUser(parseInt(req.params.id), req.body);
     res.status(result.success ? 200 : 404).send(result.message);
 });
 //#endregion
