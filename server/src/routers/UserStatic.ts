@@ -1,6 +1,5 @@
-import { getCachedUsersWithPetsAndServices, RegisterUserCache, removeUserCache } from '../services/UserCached';
+import { getCachedUsersWithPetsAndServices, getUserWithoutPassword, RegisterUserCache, removeUserCache } from '../services/UserCached';
 import { IRegisterUser, Role } from '../models/IUser';
-import { getUserWithoutPassword } from '../services/UserWithoutPassword';
 
 export function AllUsersData() {
   return getCachedUsersWithPetsAndServices();
