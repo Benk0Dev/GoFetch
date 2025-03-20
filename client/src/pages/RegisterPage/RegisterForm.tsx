@@ -52,6 +52,7 @@ function RegisterPage() {
                         type="text"
                         value={userName}
                         placeholder="Username"
+                        style={{ width: "100%" }}
                         onChange={(e) => setUserName(e.target.value)}
                         required
                     />
@@ -63,6 +64,7 @@ function RegisterPage() {
                         type="text"
                         value={firstName}
                         placeholder="First Name"
+                        style={{ width: "100%" }}
                         onChange={(e) => setFirstName(e.target.value)}
                         required
                     />
@@ -74,6 +76,7 @@ function RegisterPage() {
                         type="text"
                         value={lastName}
                         placeholder="Last Name"
+                        style={{ width: "100%" }}
                         onChange={(e) => setLastName(e.target.value)}
                         required
                     />
@@ -84,6 +87,7 @@ function RegisterPage() {
                     <input
                         type="date"
                         value={dob}
+                        style={{ width: "100%" }}
                         onChange={(e) => setDob(e.target.value)}
                         required
                     />
@@ -95,6 +99,7 @@ function RegisterPage() {
                         type="email"
                         value={email}
                         placeholder="Email"
+                        style={{ width: "100%" }}
                         onChange={(e) => setEmail(e.target.value)}
                         required
                     />
@@ -107,6 +112,7 @@ function RegisterPage() {
                             type="password"
                             value={password1}
                             placeholder="Password"
+                            style={{ width: "100%" }}
                             onChange={(e) => setPassword1(e.target.value)}
                             required
                         />
@@ -120,6 +126,7 @@ function RegisterPage() {
                             type="password"
                             value={password2}
                             placeholder="Confirm Password"
+                            style={{ width: "100%" }}
                             onChange={(e) => setPassword2(e.target.value)}
                             required
                         />
@@ -128,28 +135,30 @@ function RegisterPage() {
                 <div className={styles.inputGroup}>
                     <h3>Account Type</h3>
                     <div className={styles.radioGroup}>
-                        <label className = {styles.radioLabel}>
+                        <div className = {styles.radioLabel}>
                             <label> Pet Owner</label>
-                                <input
-                                    type="radio"
-                                    name="userType" 
-                                    value="pet owner"
-                                    // checked={currentUserType === "owner"}
-                                    onChange={(e) => setCurrentUserType(e.target.value)}
-                                    required
-                                />
-                        </label>
-                        <label className = {styles.radioLabel}>
+                            <input
+                                type="radio"
+                                name="userType" 
+                                value="pet owner"
+                                style={{ width: "20%" }}
+                                // checked={currentUserType === "owner"}
+                                onChange={(e) => setCurrentUserType(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className = {styles.radioLabel}>
                             <label> Pet Minder</label>
-                                <input
-                                    type="radio"
-                                    name="userType"
-                                    value="pet minder"
-                                    // checked={currentUserType === "minder"}
-                                    onChange={(e) => setCurrentUserType(e.target.value)}
-                                    required
-                                />
-                        </label>
+                            <input
+                                type="radio"
+                                name="userType"
+                                value="pet minder"
+                                style={{ width: "20%" }}
+                                // checked={currentUserType === "minder"}
+                                onChange={(e) => setCurrentUserType(e.target.value)}
+                                required
+                            />
+                        </div>
                     </div>
                 </div>
 
