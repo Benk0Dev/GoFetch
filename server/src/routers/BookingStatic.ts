@@ -5,5 +5,9 @@ export function getBookingsForUser(id: number) {
 }
 
 export function getAllBookings() {
-    return { success: true, message: getAllBookingsCached()};
+    const result = getAllBookingsCached();
+    if (result.length === 0) {
+        return { success: false, message: 'No bookings found' };
+    }
+    return { success: true, pets: result };
 }

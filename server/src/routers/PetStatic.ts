@@ -6,11 +6,15 @@ import { DB_PATH } from '../services/Cache';
 import fs from 'fs';
 
 export function AllPets() {
-    return getCachedPets();
+    const result = getCachedPets();
+    if (result.length === 0) {
+        return { success: false, message: 'No pets found' };
+    }
+    return { success: true, pets: result };
 }
 
 export function PetByID(id: number) {
-    const pet = getCachedPets().find(pet => pet.id === id);
+    const pet = cache.pets.find(pet => pet.id === id);
     if (pet) {
         return { success: true, pet };
     }

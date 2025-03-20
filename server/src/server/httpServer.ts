@@ -36,6 +36,7 @@ app.get('/ping', (req: Request, res: Response) => {
 //#region User Routes
 // Get all users
 app.get('/users', (req: Request, res: Response) => {
+    const result = AllUsersData();
     res.status(200).send(AllUsersData());
 });
 
@@ -86,7 +87,8 @@ app.post('/editUser/:id', (req: Request, res: Response) => {
 //#region Pet Routes
 // Get all pets
 app.get('/pets', (req: Request, res: Response) => {
-    res.status(200).send(AllPets());
+    const result = AllPets();
+    res.status(result.success ? 200 : 404).send(result.message);
 });
 
 // Get pet by ID
@@ -122,7 +124,8 @@ app.delete('/user/:userId/pet/:petId', (req: Request, res: Response) => {
 
 //#region Service Routes
 app.get('/services', (req: Request, res: Response) => {
-    res.status(200).send(AllServices());
+    const result = AllServices();
+    res.status(result.success ? 200 : 404).send(result.message);
 });
 
 app.get('/service/:id', (req: Request, res: Response) => {
@@ -151,7 +154,8 @@ app.delete('/user/:userId/service/:serviceId', (req: Request, res: Response) => 
 //#region Booking Routes
 // Get all bookings
 app.get('/bookings', (req: Request, res: Response) => {
-    res.status(200).send(getAllBookings());
+    const result = getAllBookings();
+    res.status(result.success ? 200 : 404).send(result.message);
 });
 
 // Get bookings for a specific user
