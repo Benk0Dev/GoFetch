@@ -27,8 +27,7 @@
     },
     "ownerRoleInfo": {
       "petIDs": [
-        1,
-        2
+        1
       ]
     }
   },
@@ -60,7 +59,7 @@
     },
     "ownerRoleInfo": {
       "petIDs": [
-        3
+        2
       ]
     }
   },
@@ -177,7 +176,7 @@
     },
     "ownerRoleInfo": {
       "petIDs": [
-        4
+        3, 4
       ]
     },
     "minderRoleInfo": {

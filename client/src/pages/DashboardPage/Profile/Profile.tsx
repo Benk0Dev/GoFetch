@@ -10,7 +10,7 @@ function Profile({ user }: { user: any }) {
     const [bio, setBio] = useState(user.minderRoleInfo.bio);
     const [availability, setAvailability] = useState(user.minderRoleInfo.availability);
     const [distanceRange, setDistanceRange] = useState(user.minderRoleInfo.distanceRange);
-    const [pictures, setPictures] = useState(user.minderRoleInfo.pictures.map((pic: any) => getFullFilePath(pic)));
+    const [pictures, setPictures] = useState(user.minderRoleInfo.pictures.map((pic: any) => getFullFilePath(`user_images/${pic}`)));
     const [originalState, setOriginalState] = useState({ bio, availability, distanceRange, pictures });
     const [showImageViewer, setShowImageViewer] = useState<string | null>(null);
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
@@ -70,7 +70,8 @@ function Profile({ user }: { user: any }) {
 
     return (
         <div className={`${dashboardStyles.dashboardSection} ${styles.profile}`}>
-            <h2>Edit Public Profile</h2>
+            <h2>Public Profile</h2>
+            <p>Manage your public profile which others users see.</p>
 
             <label>About Me</label>
             <textarea value={bio} onChange={(e) => setBio(e.target.value)} />
@@ -106,8 +107,8 @@ function Profile({ user }: { user: any }) {
             </div>
 
             <div className={styles.buttonGroup}>
-                <button className={`btn btn-secondary`} onClick={handleCancel}>Cancel</button>
-                <button className={`btn btn-primary`} onClick={handleSave}>Confirm</button>
+                <button className={`btn2 btn-secondary`} onClick={handleCancel}>Cancel</button>
+                <button className={`btn2 btn-primary`} onClick={handleSave}>Confirm</button>
             </div>
 
             {showImageViewer && <ImageViewer imageSrc={showImageViewer} onClose={() => setShowImageViewer(null)} />}

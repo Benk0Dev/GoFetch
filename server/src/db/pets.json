@@ -8,8 +8,8 @@
     "weight": 30,
     "neutered": true,
     "behaviour": "Friendly and playful",
-    "allergies": [],
-    "pictures": ["buddy1.jpg", "buddy2.jpg"]
+    "allergies": "",
+    "picture": "buddy.jpg"
   },
   {
     "id": 2,
@@ -21,7 +21,7 @@
     "neutered": false,
     "behaviour": "Loyal and energetic",
     "allergies": ["Chicken"],
-    "pictures": ["bella1.jpg"]
+    "picture": "bella.jpg"
   },
   {
     "id": 3,
@@ -32,8 +32,8 @@
     "weight": 35,
     "neutered": true,
     "behaviour": "Protective and intelligent",
-    "allergies": [],
-    "pictures": ["rex1.jpg"]
+    "allergies": "",
+    "picture": "rex.jpg"
   },
   {
     "id": 4,
@@ -44,7 +44,7 @@
     "weight": 25,
     "neutered": false,
     "behaviour": "Energetic and vocal",
-    "allergies": [],
-    "pictures": ["luna1.jpg", "luna2.jpg"]
+    "allergies": "",
+    "picture": "luna.jpg"
   }
 ]

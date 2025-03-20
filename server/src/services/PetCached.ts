@@ -18,6 +18,8 @@ export function addPetCached(pet: IPet) {
         weight: pet.weight,
         neutered: pet.neutered,
         behaviour: pet.behaviour,
+        allergies: pet.allergies || "",
+        picture: pet.picture || ""
     };
 
     cache.pets.push(newPet);

@@ -51,8 +51,8 @@ export function addPetForUser(userId: number, pet: IPet) {
         weight: pet.weight,
         neutered: pet.neutered,
         behaviour: pet.behaviour,
-        allergies: pet.allergies || [],
-        pictures: pet.pictures || []
+        allergies: pet.allergies || "",
+        picture: pet.picture || "",
     };
 
     // Add pet to pets cache

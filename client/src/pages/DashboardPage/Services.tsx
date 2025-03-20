@@ -9,7 +9,7 @@ interface Service {
     availability: string;
 }
 
-function Services() {
+function Services({ user }: { user: any }) {
     const [services, setServices] = useState<Service[]>([
         { id: 1, type: "Dog Walking", price: 15, availability: "Weekdays 9AM - 6PM" },
         { id: 2, type: "Pet Sitting", price: 25, availability: "Weekends 8AM - 8PM" }

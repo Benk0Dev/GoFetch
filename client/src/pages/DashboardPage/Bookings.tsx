@@ -9,7 +9,7 @@ interface Booking {
     status: "Pending" | "Confirmed" | "Completed";
 }
 
-function Bookings() {
+function Bookings({ user }: { user: any }) {
     const [bookings, setBookings] = useState<Booking[]>([
         { id: 1, petName: "Bella", date: "Tomorrow 10AM", status: "Pending" },
         { id: 2, petName: "Max", date: "Friday 6PM", status: "Confirmed" }
