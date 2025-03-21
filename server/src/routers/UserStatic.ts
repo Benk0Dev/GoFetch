@@ -45,7 +45,7 @@ export function removeUser(id: number) {
 }
 
 export function getMinders() {
-  return { success: true, message: getCachedUsersWithPetsAndServices().filter(user => user.roles.includes(Role.MINDER))};
+  return { success: true, users: getCachedUsersWithPetsAndServices().filter(user => user.roles.includes(Role.MINDER))};
 }
 
 export function isUserMinder(id: number) {
