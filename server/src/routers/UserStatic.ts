@@ -48,6 +48,22 @@ export function getMinders() {
   return { success: true, message: getCachedUsersWithPetsAndServices().filter(user => user.roles.includes(Role.MINDER))};
 }
 
-export function editUser(id: number, user: IUser) {
+export function isUserMinder(id: number) {
+  const user = getCachedUsersWithPetsAndServices().find(user => user.userDetails.id === id);
+  if (user) {
+    return { success: true, isMinder: user.roles.includes(Role.MINDER) };
+  }
+  return { success: false, message: 'User not found' };
+}
+
+export function getUserImages(id: number) {
+  const user = getCachedUsersWithPetsAndServices().find(user => user.userDetails.id === id);
+  if (user) {
+    return { success: true, images: user.minderRoleInfo?.pictures };
+  }
+  return { success: false, message: 'User not found' };
+}
+
+export function editUser(id: number, user: any) {
   return editUserCache(id, user);
 }

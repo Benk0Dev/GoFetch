@@ -1,10 +1,13 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
 import http from 'http';
+import multer from 'multer';
+import path from 'path';
 
 import { AllUsersData, getUserByID, getUserByUsername, RegisterUser, loginUser, removeUser, getMinders, editUser } from '../routers/UserStatic';
 import { AllPets, PetByID, registerPet, removePet, addPetForUser, removePetFromUser } from '../routers/PetStatic';
 import { AllServices, ServiceByID, removeService, addServiceForUser, removeServiceFromUser } from '../routers/ServiceStatic';
 import { getBookingsForUser, getAllBookings } from '../routers/BookingStatic';
+import { saveUploadedImage, saveUserImage, saveUserProfileImage, getImageByFilename, getUploadDir, deleteImageByFilename } from '../routers/ImageStatic';
 
 import { log } from '../utils/utils';
 import cors from 'cors';
@@ -12,6 +15,35 @@ import cors from 'cors';
 const app: Express = express();
 const port = process.env.PORT || 3001;
 const server = http.createServer(app);
+
+// Configure multer storage for image uploads
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, getUploadDir());
+    },
+    filename: (req, file, cb) => {
+        // Create unique filename with original extension
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        const extension = path.extname(file.originalname);
+        cb(null, file.fieldname + '-' + uniqueSuffix + extension);
+    }
+});
+
+// File filter to only accept image files
+const fileFilter = (req: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
+    if (file.mimetype.startsWith('image/')) {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }
+};
+
+// Initialize upload middleware
+const upload = multer({
+    storage: storage,
+    fileFilter: fileFilter,
+    limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
+});
 
 // Middleware
 app.use(cors());
@@ -161,6 +193,45 @@ app.get('/bookings', (req: Request, res: Response) => {
 // Get bookings for a specific user
 app.get('/bookings/user/:id', (req: Request, res: Response) => {
     const result = getBookingsForUser(parseInt(req.params.id));
+    res.status(result.success ? 200 : 404).send(result.message);
+});
+//#endregion
+
+//#region Image Routes
+// Serve images statically
+app.use('/image', express.static(getUploadDir()));
+
+// Upload an image
+app.post('/upload-image', upload.single('image'), (req: Request, res: Response) => {
+    const result = saveUploadedImage(req.file);
+    res.status(result.success ? 201 : 400).send(result);
+});
+
+// Upload an image for a specific user
+app.post('/user/:userId/upload-image', upload.single('image'), (req: Request, res: Response) => {
+    const userId = parseInt(req.params.userId);
+    const result = saveUserImage(userId, req.file);
+    res.status(result.success ? 201 : 400).send(result.message);
+});
+
+// Upload an image for user profile picture
+app.post('/user/:userId/upload-profile-pic', upload.single('image'), (req: Request, res: Response) => {
+    const userId = parseInt(req.params.userId);
+    const result = saveUserProfileImage(userId, req.file);
+    res.status(result.success ? 201 : 400).send(result.message);
+});
+
+// Get a specific image by filename
+app.get('/image/:filename', (req: Request, res: Response) => {
+    const filename = req.params.filename;
+    const filePath = getImageByFilename(filename);
+    res.status(filePath.success ? 200 : 404).send(filePath.message);
+});
+
+// Delete an image by filename
+app.delete('/image/:filename', (req: Request, res: Response) => {
+    const filename = req.params.filename;
+    const result = deleteImageByFilename(filename);
     res.status(result.success ? 200 : 404).send(result.message);
 });
 //#endregion
