@@ -87,7 +87,7 @@ app.get('/user/username/:username', (req: Request, res: Response) => {
 // Register user
 app.post('/registerUser', (req: Request, res: Response) => {
     const result = RegisterUser(req.body);
-    res.status(result.success ? 201 : 400).send(result.message);
+    res.status(result.success ? 201 : 400).send(result.user);
 });
 
 // Login user
@@ -107,7 +107,7 @@ app.delete('/user/:id', (req: Request, res: Response) => {
 // Get minders
 app.get('/minders', (req: Request, res: Response) => {
     const result = getMinders();
-    res.status(result.success ? 200 : 404).send(result.message);
+    res.status(result.success ? 200 : 404).send(result.users);
 });
 
 app.post('/editUser/:id', (req: Request, res: Response) => {

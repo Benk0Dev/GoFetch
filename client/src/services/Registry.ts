@@ -14,10 +14,9 @@ export async function login(credentials: string, password: string) {
         });
         if (response.ok) {
             const data = await response.json();
-            const user = data.user;
-            setUser(user.userDetails.id, user.roles[0]);
+            setUser(data.userDetails.id, data.roles[0]);
             notifyUserUpdate();
-            return user;
+            return data;
         } else {
             const text = await response.text();
             console.error(text);
@@ -55,12 +54,9 @@ export async function registerUser(user: IRegisterUser) {
         });
         if (response.ok) {
             const data = await response.json();
-            console.log("From Regitry, data:", data);
-            const user = data.user;
-            setUser(user.userDetails.id, user.roles[0]);
+            setUser(data.userDetails.id, data.roles[0]);
             notifyUserUpdate();
-            console.log("From Regitry, register complete");
-            return data.user;
+            return data;
         } else {
             const text = await response.text();
             console.error(text);
@@ -91,7 +87,7 @@ export async function getUserById(id: number) {
         const response = await fetch(`${API_URL}/user/${id}`);
         if (response.ok) {
             const data = await response.json();
-            return data.user;
+            return data;
         } else {
             const text = await response.text();
             console.error(text);
@@ -108,7 +104,7 @@ export async function getUserByUsername(username: string) {
         const response = await fetch(`${API_URL}/user/username/${username}`);
         if (response.ok) {
             const data = await response.json();
-            return data.user;
+            return data;
         } else {
             const text = await response.text();
             console.error(text);
