@@ -110,7 +110,7 @@ p {
 
 .btn {
     padding: 10px 16px;
-    border-radius: var(--border-radius);
+    border-radius: calc(var(--border-radius) * 2.5);
 }
 
 .btn2 {
