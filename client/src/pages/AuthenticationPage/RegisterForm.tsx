@@ -15,17 +15,24 @@ function RegisterForm() {
     const [password2, setPassword2] = useState("");
     const [dob, setDob] = useState("");
     const [role, setRole] = useState(Role.OWNER);
-    const [error, setError] = useState("");
+
+    const [fnameError, setFnameError] = useState("");
+    const [snameError, setSnameError] = useState("");
+    const [emailError, setEmailError] = useState("");
+    const [usernameError, setUsernameError] = useState("");
+    const [passwordError, setPasswordError] = useState("");
+    const [password2Error, setPassword2Error] = useState("");
+    const [dobError, setDobError] = useState("");
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setError("");
-        console.log("Registering with:", { fname, sname, email, username, password, dob, role });
-
-        if (password !== password2) {
-            setError("Passwords do not match");
-            return;
-        }
+        setFnameError("");
+        setSnameError("");
+        setEmailError("");
+        setUsernameError("");
+        setPasswordError("");
+        setPassword2Error("");
+        setDobError("");
 
         const userDetails: IRegisterUser = {
             fname,
@@ -44,6 +51,7 @@ function RegisterForm() {
         } else {
             setError("Registration failed. Try again.");
         }
+
     };
 
     return (
@@ -58,6 +66,7 @@ function RegisterForm() {
                         onChange={(e) => setFname(e.target.value)}
                         required
                     />
+                    <p className={styles.error}>{fnameError}</p>
                 </div>
                 <div className={styles.input}>
                     <label>Last Name</label>
@@ -68,6 +77,7 @@ function RegisterForm() {
                         onChange={(e) => setSname(e.target.value)}
                         required
                     />
+                    <p className={styles.error}>{snameError}</p>
                 </div>
             </div>
             <div className={styles.input}>
@@ -80,6 +90,7 @@ function RegisterForm() {
                     required
                 />
                 <p>This will be your unique identifier on GoFetch.</p>
+                <p className={styles.error}>{usernameError}</p>
             </div>
             <div className={styles.input}>
                 <label>Date of Birth</label>
@@ -90,6 +101,7 @@ function RegisterForm() {
                     required
                 />
                 <p>You must be atleast 16 years old to use GoFetch.</p>
+                <p className={styles.error}>{dobError}</p>
             </div>
             <div className={styles.input}>
                 <label>Email</label>
@@ -100,6 +112,7 @@ function RegisterForm() {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                 />
+                <p className={styles.error}>{emailError}</p>
             </div>
             <div className={styles.input}>
                 <label>Password</label>
@@ -109,6 +122,7 @@ function RegisterForm() {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                 />
+                <p className={styles.error}>{passwordError}</p>
             </div>
             <div className={styles.input}>
                     <label>Confirm Password</label>
@@ -118,6 +132,7 @@ function RegisterForm() {
                         onChange={(e) => setPassword2(e.target.value)}
                         required
                     />
+                    <p className={styles.error}>{password2Error}</p>
             </div>
             <div className={styles.input}>
                 <label>Account Type</label>
@@ -147,7 +162,6 @@ function RegisterForm() {
                 </div>
                 <p>Select whether you want to find pet minders or offer pet minding services.</p>
             </div>
-            <p className={styles.error}>{error}</p>
             <button type="submit" className="btn2 btn-primary" style={{width: "100%"}}>Create Account</button>
         </form>
     );
