@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./AuthenticationPage.module.css";
-import { registerUser } from "../../services/Registry";
+import { registerUser, verifyUniqueEmailAndUsername } from "../../services/Registry";
 import { IRegisterUser, Role } from "../../models/IUser";
 
 function RegisterForm() {
@@ -34,22 +34,88 @@ function RegisterForm() {
         setPassword2Error("");
         setDobError("");
 
+        let error = false;
+
+        const nameRegex = /^[A-Za-z]+$/;
+
+        if (!nameRegex.test(fname)) {
+            setFnameError("First name should contain only letters.");
+            error = true;
+        }
+
+        if (!nameRegex.test(sname)) {
+            setSnameError("Last name should contain only letters.");
+            error = true;
+        }
+
+        if (username.length < 4 || username.length > 20) {
+            setUsernameError("Username should be between 4 and 20 characters.");
+            error = true;
+        }
+
+        if (password.length < 8) {
+            setPasswordError("Password should be atleast 8 characters long.");
+            error = true;
+        }
+
+        if (password !== password2) {
+            setPassword2Error("Passwords do not match.");
+            error = true;
+        }
+
+        const dobDate = new Date(dob);
+        const currentDate = new Date();
+
+        let age = currentDate.getFullYear() - dobDate.getFullYear();
+
+        const hasBirthdayPassed = currentDate.getMonth() > dobDate.getMonth() || (currentDate.getMonth() === dobDate.getMonth() && currentDate.getDate() >= dobDate.getDate());
+
+        if (!hasBirthdayPassed) {
+            age -= 1;
+        }
+
+        if (age < 16) {
+            setDobError("You do not meet the minimum age requirement to use GoFetch.");
+            error = true;
+        }
+
+        const notUnique = await verifyUniqueEmailAndUsername(email, username);
+
+        if (notUnique) {
+            if (notUnique.email) {
+                setEmailError("Email is already in use.");
+                error = true;
+            }
+
+            if (notUnique.username) {
+                setUsernameError("Username is already in use.");
+                error = true;
+            }
+        }
+
+        if (error) {
+            return;
+        }
+
+        const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+
         const userDetails: IRegisterUser = {
-            fname,
-            sname,
+            fname: capitalize(fname),
+            sname: capitalize(sname),
             email,
             username,
             password,
             dob: new Date(dob),
             role: role === Role.OWNER ? Role.OWNER : Role.MINDER,
         }
+
         const newUser = await registerUser(userDetails);
 
         if (newUser) {
             console.log("Registration successful:", newUser);
             navigate("/dashboard"); 
         } else {
-            setError("Registration failed. Try again.");
+            console.log("Registration failed");
         }
 
     };

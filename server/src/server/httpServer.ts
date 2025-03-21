@@ -69,7 +69,7 @@ app.get('/ping', (req: Request, res: Response) => {
 // Get all users
 app.get('/users', (req: Request, res: Response) => {
     const result = AllUsersData();
-    res.status(200).send(AllUsersData());
+    res.status(result.success ? 200 : 404).send(result.users);
 });
 
 // Get user by ID
