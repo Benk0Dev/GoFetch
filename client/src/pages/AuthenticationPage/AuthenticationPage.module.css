@@ -40,6 +40,7 @@ p.error {
     color: var(--error-color);
     font-weight: 500;
     margin-bottom: 5px;
+    text-align: left;
 }
 
 .alternateLink {
@@ -61,7 +62,7 @@ form button {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
-    align-items: center;
+    align-items: start;
 }
 
 .radioGroup {

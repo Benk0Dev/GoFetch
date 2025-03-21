@@ -216,5 +216,161 @@
     "roles": [
       "admin"
     ]
+  },
+  {
+    "userDetails": {
+      "id": 7,
+      "fname": "Benas",
+      "sname": "Kuliesis",
+      "loginDetails": {
+        "email": "bkuliesis@gmail.com",
+        "username": "Benko",
+        "password": "password"
+      }
+    },
+    "roles": [
+      "petowner"
+    ],
+    "primaryUserInfo": {
+      "profilePic": "",
+      "dob": "2002-02-06T00:00:00.000Z",
+      "location": {
+        "name": "",
+        "longitude": 0,
+        "latitude": 0
+      },
+      "suspended": false,
+      "suspendReason": null,
+      "suspendEndsAt": null
+    },
+    "ownerRoleInfo": {
+      "petIDs": []
+    },
+    "minderRoleInfo": {
+      "rating": 0,
+      "bio": "",
+      "pictures": [],
+      "availability": "",
+      "distanceRange": 0,
+      "verified": false,
+      "serviceIDs": []
+    }
+  },
+  {
+    "userDetails": {
+      "id": 8,
+      "fname": "Benas",
+      "sname": "Kuliesis",
+      "loginDetails": {
+        "email": "bkuliesis1@gmail.com",
+        "username": "Benko1",
+        "password": "password"
+      }
+    },
+    "roles": [
+      "petowner"
+    ],
+    "primaryUserInfo": {
+      "profilePic": "",
+      "dob": "2002-02-06T00:00:00.000Z",
+      "location": {
+        "name": "",
+        "longitude": 0,
+        "latitude": 0
+      },
+      "suspended": false,
+      "suspendReason": null,
+      "suspendEndsAt": null
+    },
+    "ownerRoleInfo": {
+      "petIDs": []
+    },
+    "minderRoleInfo": {
+      "rating": 0,
+      "bio": "",
+      "pictures": [],
+      "availability": "",
+      "distanceRange": 0,
+      "verified": false,
+      "serviceIDs": []
+    }
+  },
+  {
+    "userDetails": {
+      "id": 9,
+      "fname": "ff",
+      "sname": "ff",
+      "loginDetails": {
+        "email": "ff@ff.com",
+        "username": "ffff",
+        "password": "ffffffff"
+      }
+    },
+    "roles": [
+      "petowner"
+    ],
+    "primaryUserInfo": {
+      "profilePic": "",
+      "dob": "2002-02-22T00:00:00.000Z",
+      "location": {
+        "name": "",
+        "longitude": 0,
+        "latitude": 0
+      },
+      "suspended": false,
+      "suspendReason": null,
+      "suspendEndsAt": null
+    },
+    "ownerRoleInfo": {
+      "petIDs": []
+    },
+    "minderRoleInfo": {
+      "rating": 0,
+      "bio": "",
+      "pictures": [],
+      "availability": "",
+      "distanceRange": 0,
+      "verified": false,
+      "serviceIDs": []
+    }
+  },
+  {
+    "userDetails": {
+      "id": 10,
+      "fname": "ffff",
+      "sname": "ffff",
+      "loginDetails": {
+        "email": "11@11.1",
+        "username": "fffff",
+        "password": "11111111"
+      }
+    },
+    "roles": [
+      "petowner"
+    ],
+    "primaryUserInfo": {
+      "profilePic": "",
+      "dob": "2001-11-11T00:00:00.000Z",
+      "location": {
+        "name": "",
+        "longitude": 0,
+        "latitude": 0
+      },
+      "suspended": false,
+      "suspendReason": null,
+      "suspendEndsAt": null
+    },
+    "ownerRoleInfo": {
+      "petIDs": []
+    },
+    "minderRoleInfo": {
+      "rating": 0,
+      "bio": "",
+      "pictures": [],
+      "availability": "",
+      "distanceRange": 0,
+      "verified": false,
+      "serviceIDs": []
+    }
   }
 ]

@@ -34,6 +34,16 @@ export function logout() {
     notifyUserUpdate();
 }
 
+export async function verifyUniqueEmailAndUsername(email: string, username: string) {
+    const allUsers = await getAllUsers();
+    if (allUsers) {
+        const existingEmail = allUsers.find((user: any) => user.userDetails.loginDetails.email === email);
+        const existingUsername = allUsers.find((user: any) => user.userDetails.loginDetails.username === username);
+        return { email: existingEmail, username: existingUsername };
+    }
+    return null;
+}
+
 export async function registerUser(user: IRegisterUser) {
     try {
         const response = await fetch(`${API_URL}/registerUser`, { 
@@ -45,9 +55,11 @@ export async function registerUser(user: IRegisterUser) {
         });
         if (response.ok) {
             const data = await response.json();
+            console.log("From Regitry, data:", data);
             const user = data.user;
-            setUser(user.id, user.role[0]);
+            setUser(user.userDetails.id, user.roles[0]);
             notifyUserUpdate();
+            console.log("From Regitry, register complete");
             return data.user;
         } else {
             const text = await response.text();
