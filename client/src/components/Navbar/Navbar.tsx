@@ -62,7 +62,7 @@ function Navbar() {
               <ProfileIcon key={forceUpdate} user={user} onLogout={handleLogout} />
             </>
           ) : (
-            !["/login", "/register-owner", "/register-minder"].includes(location.pathname) && (
+            !["/login", "/register"].includes(location.pathname) && (
               <>
                 <Link to="/login" className="btn btn-transparent">Login</Link>
                 <Link to="/register" className="btn btn-background">Sign Up</Link>
