@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./LoginPage.module.css";
+import styles from "./AuthenticationPage.module.css";
+import "../../global.css";
 import { login } from "../../services/Registry";
 
 function LoginForm() {
@@ -18,40 +19,36 @@ function LoginForm() {
             console.log("Login successful:", user);
             navigate("/dashboard");
         } else {
-            setError("Invalid email or password");
+            setError("Invalid Email or Password");
         }
     };
 
     return (
-        <form className={styles.loginForm} onSubmit={handleSubmit}>
-            <div className={styles.inputGroup}>
+        <form onSubmit={handleSubmit}>
+            <div className={styles.input}>
                 <label>Email</label>
                 <input 
                     type="email" 
                     value={email} 
-                    placeholder="Email"
+                    placeholder="john.doe@example.com"
                     onChange={(e) => setEmail(e.target.value)} 
                     required 
                 />
             </div>
 
-            <div className={styles.inputGroup}>
+            <div className={styles.input}>
                 <label>Password</label>
                 <input 
                     type="password" 
-                    value={password} 
-                    placeholder="Password"
+                    value={password}
                     onChange={(e) => setPassword(e.target.value)} 
                     required 
                 />
             </div>
 
-            <div className={styles.errorContainer}>
-                {error && <p className={styles.error}>{error}</p>}
-            </div>
+            <p className={styles.error}>{error}</p>
 
-
-            <button type="submit" className={styles.loginButton} style={{width: "100%"}}>Login</button>
+            <button type="submit" className="btn2 btn-primary" style={{width: "100%"}}>Login</button>
         </form>
     );
 }

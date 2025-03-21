@@ -120,7 +120,7 @@ Label.addImage {
     display: none;
 }
 
-.slider-container {
+.sliderContainer {
     display: grid;
     grid-template-columns: 1fr 55px;
     align-items: center;
@@ -132,7 +132,15 @@ Label.addImage {
     border: 1px solid #d1d1d1;
 }
 
-.slider-value {
+input[type='range']::-webkit-slider-thumb {
+    width: 6px;
+    -webkit-appearance: none;
+    height: 12px;
+    background: black;
+    border-radius: 2px;
+  }
+
+.sliderValue {
     justify-self: center;
     display: block;
     font-weight: 500;

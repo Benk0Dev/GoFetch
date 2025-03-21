@@ -80,7 +80,7 @@ function Profile({ user }: { user: any }) {
             <input type="text" value={availability} onChange={(e) => setAvailability(e.target.value)} />
 
             <label>Travel Distance Range</label>
-            <div className={styles["slider-container"]}>
+            <div className={styles.sliderContainer}>
                 <input 
                     type="range" 
                     min="0" 
@@ -89,7 +89,7 @@ function Profile({ user }: { user: any }) {
                     value={distanceRange} 
                     onChange={(e) => setDistanceRange(Number(e.target.value))} 
                 />
-                <span className={styles["slider-value"]}>{distanceRange} mi</span>
+                <span className={styles.sliderValue}>{distanceRange} mi</span>
             </div>
 
             <label>Photos</label>
