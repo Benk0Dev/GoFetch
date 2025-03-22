@@ -18,6 +18,12 @@
     --menu-section-background-color: white;
     --menu-card-background-color: #f9f9f9;
     --menu-card-border-color: #d1d1d1;
+
+    /* Other */
+    --error-color: #f32222;
+    --padding: 20px;
+    --border-radius: 5px;
+    --box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 /* Global Reset */
@@ -104,15 +110,16 @@ p {
 
 .btn {
     padding: 10px 16px;
-    border-radius: var(--border-radius);
+    border-radius: calc(var(--border-radius) * 2.5);
 }
 
 .btn2 {
     padding: 10px 16px;
-    border-radius: 4px;
+    border-radius: var(--border-radius);
     border: 1px solid var(--text-color);
     color: var(--text-color);
     font-weight: 400;
+    font-size: 16px;
 }
 
 .btn2:hover {
@@ -179,13 +186,13 @@ p {
 input, textarea, select {
     width: 100%;
     padding: 10px;
-    margin: 8px 0;
-    border: 1px solid #ccc;
+    border: 1px solid var(--menu-card-border-color);
     border-radius: var(--border-radius);
     font-size: 16px;
 }
 
 input[type="range"] {
+    accent-color: var(--primary-color);
     padding: 0;
     border: none;
     border-radius: 0;
@@ -193,7 +200,7 @@ input[type="range"] {
 
 input:focus, textarea:focus, select:focus {
     outline: none;
-    border-color: var(--primary-color);
+    border-color: var(--text-color);
 }
 
 /* Card Layout */

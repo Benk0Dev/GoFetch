@@ -56,13 +56,13 @@ function Navbar() {
                 Explore Minders
               </Link>
               <NotificationIcon />
-              <Link to="/messages" className="btn-round btn-transparent">
+              <Link to="/chats" className="btn-round btn-transparent">
                 <Mail strokeWidth={2.25} />
               </Link>
               <ProfileIcon key={forceUpdate} user={user} onLogout={handleLogout} />
             </>
           ) : (
-            !["/login", "/register-owner", "/register-minder"].includes(location.pathname) && (
+            !["/login", "/register"].includes(location.pathname) && (
               <>
                 <Link to="/login" className="btn btn-transparent">Login</Link>
                 <Link to="/register" className="btn btn-background">Sign Up</Link>

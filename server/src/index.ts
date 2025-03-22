@@ -3,9 +3,18 @@ dotenv.config();
 
 import { initCache } from './services/Cache';
 import { server, startHttpServer } from './server/httpServer';
-import { startWsServer } from './server/wsServer';
 
 initCache();
 
 const httpServer = startHttpServer();
-startWsServer(httpServer);
+
+// Graceful shutdown
+process.on('SIGINT', () => {
+    console.log('Shutting down gracefully...');
+    process.exit();
+});
+
+process.on('SIGTERM', () => {
+    console.log('Shutting down gracefully...');
+    process.exit();
+});

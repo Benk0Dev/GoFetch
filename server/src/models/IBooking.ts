@@ -4,15 +4,19 @@ export interface IBooking {
     minderId: number;
     ownerId: number;
     serviceId: number;
-    date: string;
+    startDate: string;
+    endDate: string;
     status: EBookingStatus;
     notes?: string;
-    price?: number;
+    price: number;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 export enum EBookingStatus {
     Pending = "Pending",
     Confirmed = "Confirmed",
     Completed = "Completed",
-    Cancelled = "Cancelled"
+    Cancelled = "Cancelled",
+    Rejected = "Rejected"
 }

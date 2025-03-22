@@ -14,10 +14,9 @@ export async function login(credentials: string, password: string) {
         });
         if (response.ok) {
             const data = await response.json();
-            const user = data.user;
-            setUser(user.userDetails.id, user.roles[0]);
+            setUser(data.userDetails.id, data.currentRole);
             notifyUserUpdate();
-            return user;
+            return data;
         } else {
             const text = await response.text();
             console.error(text);
@@ -34,6 +33,16 @@ export function logout() {
     notifyUserUpdate();
 }
 
+export async function verifyUniqueEmailAndUsername(email: string, username: string) {
+    const allUsers = await getAllUsers();
+    if (allUsers) {
+        const existingEmail = allUsers.find((user: any) => user.userDetails.loginDetails.email === email);
+        const existingUsername = allUsers.find((user: any) => user.userDetails.loginDetails.username === username);
+        return { email: existingEmail, username: existingUsername };
+    }
+    return null;
+}
+
 export async function registerUser(user: IRegisterUser) {
     try {
         const response = await fetch(`${API_URL}/registerUser`, { 
@@ -45,14 +54,33 @@ export async function registerUser(user: IRegisterUser) {
         });
         if (response.ok) {
             const data = await response.json();
-            const user = data.user;
-            setUser(user.id, user.role[0]);
+            setUser(data.userDetails.id, data.roles[0]);
             notifyUserUpdate();
-            return data.user;
+            return data;
         } else {
             const text = await response.text();
             console.error(text);
             return null;
+        }
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+}
+
+export async function editUser(id: number, user: any) {
+    try {
+        const response = await fetch(`${API_URL}/editUser/${id}`, { 
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(user)
+        });
+        if (response.ok) {
+            return true;
+        } else {
+            return false;
         }
     } catch (e) {
         console.error(e);
@@ -67,6 +95,7 @@ export async function switchRole() {
     const user = await getUserById(Number(getUserId()));
     if (user.roles.length > 1) {
         getUserRole() === user.roles[0] ? setUserRole(user.roles[1]) : setUserRole(user.roles[0]);
+        await editUser(Number(getUserId()), { currentRole: getUserRole() });
         notifyUserUpdate();
         return true;
     } else {
@@ -79,7 +108,7 @@ export async function getUserById(id: number) {
         const response = await fetch(`${API_URL}/user/${id}`);
         if (response.ok) {
             const data = await response.json();
-            return data.user;
+            return data;
         } else {
             const text = await response.text();
             console.error(text);
@@ -96,7 +125,7 @@ export async function getUserByUsername(username: string) {
         const response = await fetch(`${API_URL}/user/username/${username}`);
         if (response.ok) {
             const data = await response.json();
-            return data.user;
+            return data;
         } else {
             const text = await response.text();
             console.error(text);
@@ -131,6 +160,138 @@ export async function getAllMinders() {
         if (response.ok) {
             const data = await response.json();
             return data;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return null;
+        }
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+}
+
+export async function getUserChats() {
+    try {
+        const userId = getUserId();
+        if (!userId) {
+            return { chats: [] };
+        }
+
+        const response = await fetch(`${API_URL}/chats/${userId}`);
+        console.log(response);
+        if (response.ok) {
+            const data = await response.json();
+            console.log(data);
+            return data;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return { chats: [] };
+        }
+    } catch (e) {
+        console.error(e);
+        return { chats: [] };
+    }
+}
+
+export async function getChatById(chatId: number) {
+    const response = await fetch(`${API_URL}/chat/${chatId}`);
+    if (response.ok) {
+        const data = await response.json();
+        return data.chat;
+    } else {
+        const text = await response.text();
+        console.error(text);
+        return null;
+    }
+}
+
+export async function sendMessage(chatId: number, message: string) {
+    try {
+        const response = await fetch(`${API_URL}/chat/message`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                chatId,
+                message: {
+                    userId: Number(getUserId()),
+                    message
+                }
+            })
+        });
+        if (response.ok) {
+            const data = await response.json();
+            return data.message;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return null;
+        }
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+}
+
+export async function createNewChat(users: number[], initialMessage: string = "") {
+    try {
+        const response = await fetch(`${API_URL}/chat/create`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                users,
+                lastMessage: initialMessage
+            })
+        });
+        if (response.ok) {
+            const data = await response.json();
+            return data.chat;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return null;
+        }
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+}
+
+export async function getUserNotifications() {
+    try {
+        const userId = getUserId();
+        if (!userId) {
+            return { notifications: [] };
+        }
+
+        const response = await fetch(`${API_URL}/notifications/${userId}`);
+        if (response.ok) {
+            const data = await response.json();
+            return data;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return { notifications: [] };
+        }
+    } catch (e) {
+        console.error(e);
+        return { notifications: [] };
+    }
+}
+
+export async function markNotificationAsRead(notificationId: number) {
+    try {
+        const response = await fetch(`${API_URL}/notifications/${notificationId}/read`, {
+            method: "PUT"
+        });
+        if (response.ok) {
+            const data = await response.json();
+            return data.notification;
         } else {
             const text = await response.text();
             console.error(text);

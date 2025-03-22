@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "userId": 5,
+    "message": "Sarah accepted your booking request for dog walking",
+    "read": false,
+    "type": "booking",
+    "linkId": 101,
+    "createdAt": "2025-03-21T08:15:00.000Z",
+    "updatedAt": "2025-03-21T08:15:00.000Z"
+  },
+  {
+    "id": 2,
+    "userId": 5,
+    "message": "Alex sent you a new message",
+    "read": false,
+    "type": "message",
+    "linkId": 2,
+    "createdAt": "2025-03-21T10:20:00.000Z",
+    "updatedAt": "2025-03-21T10:20:00.000Z"
+  },
+  {
+    "id": 3,
+    "userId": 5,
+    "message": "Your booking with Lisa has been confirmed",
+    "read": true,
+    "type": "booking",
+    "linkId": 102,
+    "createdAt": "2025-03-20T14:45:00.000Z",
+    "updatedAt": "2025-03-20T16:30:00.000Z"
+  },
+  {
+    "id": 4,
+    "userId": 5,
+    "message": "John rated your service 5 stars!",
+    "read": false,
+    "type": "review",
+    "linkId": 201,
+    "createdAt": "2025-03-19T09:10:00.000Z",
+    "updatedAt": "2025-03-19T09:10:00.000Z"
+  },
+  {
+    "id": 5,
+    "userId": 5,
+    "message": "Payment received for your pet sitting service",
+    "read": true,
+    "type": "payment",
+    "linkId": 301,
+    "createdAt": "2025-03-18T11:25:00.000Z",
+    "updatedAt": "2025-03-18T12:00:00.000Z"
+  }
+]
