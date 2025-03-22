@@ -13,6 +13,7 @@
     "roles": [
       "petowner"
     ],
+    "currentRole": "petowner",
     "primaryUserInfo": {
       "profilePic": "alice.jpg",
       "dob": "1990-06-15",
@@ -51,6 +52,7 @@
     "roles": [
       "petowner"
     ],
+    "currentRole": "petowner",
     "primaryUserInfo": {
       "profilePic": "bob.jpg",
       "dob": "1985-09-20",
@@ -83,6 +85,7 @@
     "roles": [
       "petminder"
     ],
+    "currentRole": "petminder",
     "primaryUserInfo": {
       "profilePic": "charlie.jpg",
       "dob": "1992-04-10",
@@ -125,6 +128,7 @@
     "roles": [
       "petminder"
     ],
+    "currentRole": "petminder",
     "primaryUserInfo": {
       "profilePic": "diana.jpg",
       "dob": "1988-12-05",
@@ -168,6 +172,7 @@
       "petowner",
       "petminder"
     ],
+    "currentRole": "petowner",
     "primaryUserInfo": {
       "profilePic": "eve.jpg",
       "dob": "1995-08-25",
@@ -205,16 +210,41 @@
   {
     "userDetails": {
       "id": 6,
-      "fname": "Frank",
-      "sname": "Miller",
+      "fname": "Test",
+      "sname": "Test",
       "loginDetails": {
-        "email": "frank@example.com",
-        "username": "frankM",
-        "password": "securePass6"
+        "email": "test@test.com",
+        "username": "testUser",
+        "password": "password"
       }
     },
     "roles": [
-      "admin"
-    ]
+      "petowner"
+    ],
+    "currentRole": "petowner",
+    "primaryUserInfo": {
+      "profilePic": "",
+      "dob": "2001-01-01T00:00:00.000Z",
+      "location": {
+        "name": "",
+        "longitude": 0,
+        "latitude": 0
+      },
+      "suspended": false,
+      "suspendReason": null,
+      "suspendEndsAt": null
+    },
+    "ownerRoleInfo": {
+      "petIDs": []
+    },
+    "minderRoleInfo": {
+      "rating": 0,
+      "bio": "",
+      "pictures": [],
+      "availability": "",
+      "distanceRange": 0,
+      "verified": false,
+      "serviceIDs": []
+    }
   }
 ]

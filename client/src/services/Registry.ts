@@ -14,7 +14,7 @@ export async function login(credentials: string, password: string) {
         });
         if (response.ok) {
             const data = await response.json();
-            setUser(data.userDetails.id, data.roles[0]);
+            setUser(data.userDetails.id, data.currentRole);
             notifyUserUpdate();
             return data;
         } else {
@@ -68,6 +68,26 @@ export async function registerUser(user: IRegisterUser) {
     }
 }
 
+export async function editUser(id: number, user: any) {
+    try {
+        const response = await fetch(`${API_URL}/editUser/${id}`, { 
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(user)
+        });
+        if (response.ok) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+}
+
 export async function switchRole() {
     if (getUserId() === null) {
         return;
@@ -75,6 +95,7 @@ export async function switchRole() {
     const user = await getUserById(Number(getUserId()));
     if (user.roles.length > 1) {
         getUserRole() === user.roles[0] ? setUserRole(user.roles[1]) : setUserRole(user.roles[0]);
+        await editUser(Number(getUserId()), { currentRole: getUserRole() });
         notifyUserUpdate();
         return true;
     } else {

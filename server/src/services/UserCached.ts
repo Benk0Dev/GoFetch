@@ -82,6 +82,7 @@ export function RegisterUserCache(user: IRegisterUser) {
         },
       },
       roles: [user.role],
+      currentRole: user.role,
       primaryUserInfo: {
         profilePic: '',
         dob: user.dob,
