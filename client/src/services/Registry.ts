@@ -150,6 +150,97 @@ export async function getAllMinders() {
     }
 }
 
+export async function getUserChats() {
+    try {
+        const userId = getUserId();
+        if (!userId) {
+            return { chats: [] };
+        }
+
+        const response = await fetch(`${API_URL}/chats/${userId}`);
+        console.log(response);
+        if (response.ok) {
+            const data = await response.json();
+            console.log(data);
+            return data;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return { chats: [] };
+        }
+    } catch (e) {
+        console.error(e);
+        return { chats: [] };
+    }
+}
+
+export async function getChatById(chatId: number) {
+    const response = await fetch(`${API_URL}/chat/${chatId}`);
+    if (response.ok) {
+        const data = await response.json();
+        return data.chat;
+    } else {
+        const text = await response.text();
+        console.error(text);
+        return null;
+    }
+}
+
+export async function sendMessage(chatId: number, message: string) {
+    try {
+        const response = await fetch(`${API_URL}/chat/message`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                chatId,
+                message: {
+                    userId: Number(getUserId()),
+                    message
+                }
+            })
+        });
+        if (response.ok) {
+            const data = await response.json();
+            return data.message;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return null;
+        }
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+}
+
+export async function createNewChat(users: number[], initialMessage: string = "") {
+    try {
+        const response = await fetch(`${API_URL}/chat/create`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                users,
+                lastMessage: initialMessage
+            })
+        });
+        if (response.ok) {
+            const data = await response.json();
+            return data.chat;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return null;
+        }
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+}
+
 function notifyUserUpdate() {
     window.dispatchEvent(new Event("userUpdate")); // Notify all listeners
 }
