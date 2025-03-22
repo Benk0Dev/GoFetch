@@ -4,6 +4,7 @@ import { IService } from './IService';
 export interface IUser {
   userDetails: IUserDetails;
   roles: Role[];
+  currentRole: Role;
   primaryUserInfo?: IPrimaryUserInfo;
   ownerRoleInfo?: IOwnerRoleInfo;
   minderRoleInfo?: IMinderRoleInfo;
