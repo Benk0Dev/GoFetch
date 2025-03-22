@@ -6,7 +6,7 @@ import path from 'path';
 import { AllUsersData, getUserByID, getUserByUsername, RegisterUser, loginUser, removeUser, getMinders, editUser } from '../routers/UserStatic';
 import { AllPets, PetByID, registerPet, removePet, addPetForUser, removePetFromUser } from '../routers/PetStatic';
 import { AllServices, ServiceByID, removeService, addServiceForUser, removeServiceFromUser } from '../routers/ServiceStatic';
-import { getBookingsForUser, getAllBookings } from '../routers/BookingStatic';
+import { getBookingsForUser, getAllBookings, getBookingById, getBookingsForPet, getBookingsForMinder, createBooking, updateBookingDetails, updateBookingStatus, deleteBooking } from '../routers/BookingStatic';
 import { saveUploadedImage, saveUserImage, saveUserProfileImage, getImageByFilename, getUploadDir, deleteImageByFilename } from '../routers/ImageStatic';
 import { getChatsForUser, getChatById, addMessage, createChat } from '../routers/MessageStatic';
 import { getNotificationsForUser, markNotificationAsRead, addNotification } from '../routers/NotificationStatic';
@@ -195,13 +195,55 @@ app.delete('/user/:userId/service/:serviceId', (req: Request, res: Response) => 
 // Get all bookings
 app.get('/bookings', (req: Request, res: Response) => {
     const result = getAllBookings();
-    res.status(result.success ? 200 : 404).send(result.message);
+    res.json(result);
 });
 
-// Get bookings for a specific user
+// Get booking by ID
+app.get('/booking/:id', (req: Request, res: Response) => {
+    const result = getBookingById(parseInt(req.params.id));
+    res.json(result);
+});
+
+// Get bookings for a specific user (either as owner or minder)
 app.get('/bookings/user/:id', (req: Request, res: Response) => {
     const result = getBookingsForUser(parseInt(req.params.id));
-    res.status(result.success ? 200 : 404).send(result.message);
+    res.json(result);
+});
+
+// Get bookings for a specific pet
+app.get('/bookings/pet/:id', (req: Request, res: Response) => {
+    const result = getBookingsForPet(parseInt(req.params.id));
+    res.json(result);
+});
+
+// Get bookings for a specific minder
+app.get('/bookings/minder/:id', (req: Request, res: Response) => {
+    const result = getBookingsForMinder(parseInt(req.params.id));
+    res.json(result);
+});
+
+// Create a new booking
+app.post('/booking', (req: Request, res: Response) => {
+    const result = createBooking(req.body);
+    res.json(result);
+});
+
+// Update booking status
+app.put('/booking/:id/status', (req: Request, res: Response) => {
+    const result = updateBookingStatus(parseInt(req.params.id),req.body.status);
+    res.json(result);
+});
+
+// Update booking details
+app.put('/booking/:id', (req: Request, res: Response) => {
+    const result = updateBookingDetails(parseInt(req.params.id), req.body);
+    res.json(result);
+});
+
+// Delete a booking
+app.delete('/booking/:id', (req: Request, res: Response) => {
+    const result = deleteBooking(parseInt(req.params.id));
+    res.json(result);
 });
 //#endregion
 
