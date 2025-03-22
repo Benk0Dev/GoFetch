@@ -1,66 +1,65 @@
-import React from 'react';
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { IChat } from "../../models/IMessage";
+import { getUserChats } from "../../services/Registry";
 import styles from './MessagingPage.module.css';
-import { io, Socket } from 'socket.io-client';
 
-function MessagingPage() {
-    const [socket, setSocket] = useState<Socket | null>(null);
-    const [message, setMessage] = useState('');
-    const [messages, setMessages] = useState<{msg: string}[]>([]);
+function ChatsPage() {
+    const [chats, setChats] = useState<IChat[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    async function fetchChats() {
+        setLoading(true);
+        const data = await getUserChats();
+        if (data && data.chats) {
+            setChats(data.chats);
+        }
+        setLoading(false);
+    }
 
     useEffect(() => {
-        // Connect to the WebSocket server
-        const newSocket = io('http://localhost:3001'); // Adjust URL if server runs on a different port
-        setSocket(newSocket);
-
-        // Set up event listeners
-        newSocket.on('chat message', (msg: {msg: string}) => {
-            setMessages(prevMessages => [...prevMessages, msg]);
-        });
-
-        // Error handling
-        newSocket.on('connect_error', (err) => {
-            console.error('Connection error:', err);
-        });
-
-        // Cleanup on component unmount
-        return () => {
-            newSocket.disconnect();
-        };
+        fetchChats();
+        // Set up polling to refresh chats every 5 seconds
+        // const interval = setInterval(fetchChats, 5000);
+        // return () => clearInterval(interval);
     }, []);
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (message.trim() && socket) {
-            socket.emit('chat message', { msg: message });
-            setMessage('');
-        }
-    };
+    if (loading) {
+        return <div>Loading chats...</div>;
+    }
 
     return (
-        <div className={styles.container}>
-            <div className={styles.messageContainer}>
-                {messages.map((msg, index) => (
-                    <div key={index} className={styles.message}>
-                        {msg.msg}
-                    </div>
-                ))}
-            </div>
+        <div className={styles.pageContainer}>
+            <h1>Your Conversations</h1>
             
-            <form className={styles.messageForm} onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    className={styles.messageInput}
-                    placeholder="Type a message..."
-                />
-                <button type="submit" className={styles.sendButton}>
-                    Send
-                </button>
-            </form>
+            {chats.length > 0 ? (
+                <div className={styles.chatsContainer}>
+                    {chats.map((chat: IChat) => (
+                        <Link 
+                            to={`/chats/${chat.id}`} 
+                            key={chat.id} 
+                            className={styles.chatItem}
+                        >
+                            <div className={styles.chatDetails}>
+                                <h3>Chat with {chat.users.join(", ")}</h3>
+                                <p className={styles.lastMessage}>
+                                    {chat.lastMessage || "No messages yet"}
+                                </p>
+                            </div>
+                        </Link>
+                    ))}
+                </div>
+            ) : (
+                <div className={styles.noChats}>
+                    <p>No conversations yet</p>
+                    <p>Start chatting with pet minders by browsing available services</p>
+                    <Link to="/browse" className={styles.browseButton}>
+                        Browse Pet Minders
+                    </Link>
+                </div>
+            )}
         </div>
     );
 }
 
-export default MessagingPage;
+export default ChatsPage;

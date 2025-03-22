@@ -9,6 +9,7 @@ import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import BrowsePage from "./pages/BrowsePage/BrowsePage";
 import DashboardPage from "./pages/DashboardPage/DashboardPage";
 import MessagingPage from "./pages/MessagingPage/MessagingPage";
+import ChatPage from "./pages/MessagingPage/ChatPage";
 import BookingPage from "./pages/BookingPage/BookingPage";
 
 function App() {
@@ -24,7 +25,8 @@ function App() {
         <Route path="/booking" element={<BookingPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/messages" element={<MessagingPage />} />
+        <Route path="/chats/" element={<MessagingPage />} />
+        <Route path="/chats/:id" element={<ChatPage />} />
       </Routes>
       <Footer />
     </Router>

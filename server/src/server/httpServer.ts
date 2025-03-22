@@ -8,6 +8,8 @@ import { AllPets, PetByID, registerPet, removePet, addPetForUser, removePetFromU
 import { AllServices, ServiceByID, removeService, addServiceForUser, removeServiceFromUser } from '../routers/ServiceStatic';
 import { getBookingsForUser, getAllBookings } from '../routers/BookingStatic';
 import { saveUploadedImage, saveUserImage, saveUserProfileImage, getImageByFilename, getUploadDir, deleteImageByFilename } from '../routers/ImageStatic';
+import { getChatsForUser, getChatById, addMessage, createChat } from '../routers/MessageStatic';
+// import { } from '../routers/NotificationStatic';
 
 import { log } from '../utils/utils';
 import cors from 'cors';
@@ -16,6 +18,7 @@ const app: Express = express();
 const port = process.env.PORT || 3001;
 const server = http.createServer(app);
 
+//#region Multer configuration
 // Configure multer storage for image uploads
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -44,7 +47,9 @@ const upload = multer({
     fileFilter: fileFilter,
     limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
 });
+//#endregion
 
+//#region Middleware for checking if user is logged in
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -55,7 +60,9 @@ app.use((req: Request, res: Response, next) => {
     log(req.url, req);
     next();
 });
+//#endregion
 
+//#region Middleware for checking if user is logged in
 // Routes
 app.get('/', (req: Request, res: Response) => {
     res.status(200).send('Hello World!');
@@ -64,6 +71,7 @@ app.get('/', (req: Request, res: Response) => {
 app.get('/ping', (req: Request, res: Response) => {
     res.status(200).send('pong!');
 });
+//#endregion
 
 //#region User Routes
 // Get all users
@@ -235,6 +243,39 @@ app.delete('/image/:filename', (req: Request, res: Response) => {
     res.status(result.success ? 200 : 404).send(result.message);
 });
 //#endregion
+
+//#region Message Routes and Chat routes
+
+// Get messages for a user
+app.get('/chats/:userId', (req, res) => {
+    const result = getChatsForUser(parseInt(req.params.userId))
+    res.json(result);
+});
+
+// Get chat by ID
+app.get('/chat/:chatId', (req, res) => {
+    const result = getChatById(parseInt(req.params.chatId));
+    res.json(result);
+});
+
+// Add message to a chat
+app.post('/chat/message', (req, res) => {
+    const result = addMessage(req.body.chatId, req.body.message);
+    res.json(result);
+});
+
+// Create a new chat
+app.post('/chat/create', (req, res) => {
+    res.json(createChat(req.body));
+});
+
+//#endregion
+
+// #region Notifications Routes
+// Get notifications for a user
+
+
+// #endregion
 
 // Error handling middleware
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
