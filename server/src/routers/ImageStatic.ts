@@ -50,8 +50,10 @@ export function saveUploadedImage(file: Express.Multer.File | undefined): ImageU
         message: 'Image uploaded successfully',
         data: {
             imageId: imageId,
-            filename: file.filename,
-            path: `/images/${file.filename}`
+            filename: newFilename,
+            path: `/images/${newFilename}`
+            // filename: file.filename,
+            // path: `/images/${file.filename}`
         }
     };
 }
