@@ -303,6 +303,47 @@ export async function markNotificationAsRead(notificationId: number) {
     }
 }
 
+export async function uploadImage(file: File) {
+    const formData = new FormData();
+    formData.append("image", file);
+
+    try {
+        const response = await fetch(`${API_URL}/upload-image`, {
+            method: "POST",
+            body: formData
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            return data.filename;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return null;
+        }
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+}
+
+export async function getImageByFilename(filename: string) {
+    try {
+        const response = await fetch(`${API_URL}/image/${filename}`);
+        if (response.ok) {
+            const data = await response.blob();
+            return URL.createObjectURL(data);
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return null;
+        }
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+}
+
 function notifyUserUpdate() {
     window.dispatchEvent(new Event("userUpdate")); // Notify all listeners
 }

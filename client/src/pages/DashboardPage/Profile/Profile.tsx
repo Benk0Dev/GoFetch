@@ -5,6 +5,7 @@ import ImageViewer from "./ImageViewer";
 import getFullFilePath from "../../../utils/FullFilePath";
 import "react-range-slider-input/dist/style.css";
 import { X, Plus } from "lucide-react";
+import { editUser, getImageByFilename, uploadImage } from "../../../services/Registry";
 
 function Profile({ user }: { user: any }) {
     const [bio, setBio] = useState(user.minderRoleInfo.bio);
@@ -14,6 +15,21 @@ function Profile({ user }: { user: any }) {
     const [originalState, setOriginalState] = useState({ bio, availability, distanceRange, pictures });
     const [showImageViewer, setShowImageViewer] = useState<string | null>(null);
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        async function fetchImage(filename: string) {
+            return await getImageByFilename(filename);
+        }
+
+        setPictures(user.minderRoleInfo.pictures.map(async (pic: any) => {
+            const response = await fetchImage(pic);
+            return response;
+        }));
+
+        setLoading(false);
+
+    }, [loading]);
 
     // Check for unsaved changes
     useEffect(() => {
@@ -39,10 +55,16 @@ function Profile({ user }: { user: any }) {
     }, [hasUnsavedChanges]);
 
     // Add new picture
-    const handleAddPicture = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleAddPicture = async (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
-            const newPicture = URL.createObjectURL(e.target.files[0]);
-            setPictures([...pictures, newPicture]);
+            const uploadedFilename = await uploadImage(e.target.files[0]);
+
+            if (uploadedFilename) {
+                setPictures((prev: any) => [...prev, uploadedFilename]);
+            } else {
+                alert("Image upload failed.")
+            }
+            console.log(pictures);
         }
     };
 
@@ -63,8 +85,18 @@ function Profile({ user }: { user: any }) {
     };
 
     // Confirm & save changes
-    const handleSave = () => {
+    const handleSave = async () => {
         setOriginalState({ bio, availability, distanceRange, pictures });
+
+        await editUser(user.userDetails.id, {
+            minderRoleInfo: {
+                bio,
+                availability,
+                distanceRange,
+                pictures: pictures.map((pic: any) => pic.split("/").pop())
+            }
+        });
+
         setHasUnsavedChanges(false);
     };
 
