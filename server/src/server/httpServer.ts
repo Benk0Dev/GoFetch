@@ -9,7 +9,7 @@ import { AllServices, ServiceByID, removeService, addServiceForUser, removeServi
 import { getBookingsForUser, getAllBookings } from '../routers/BookingStatic';
 import { saveUploadedImage, saveUserImage, saveUserProfileImage, getImageByFilename, getUploadDir, deleteImageByFilename } from '../routers/ImageStatic';
 import { getChatsForUser, getChatById, addMessage, createChat } from '../routers/MessageStatic';
-// import { } from '../routers/NotificationStatic';
+import { getNotificationsForUser, markNotificationAsRead, addNotification } from '../routers/NotificationStatic';
 
 import { log } from '../utils/utils';
 import cors from 'cors';
@@ -273,7 +273,17 @@ app.post('/chat/create', (req, res) => {
 
 // #region Notifications Routes
 // Get notifications for a user
+app.get('/notifications/:userId', (req, res) => {
+    res.json(getNotificationsForUser(parseInt(req.params.userId)));
+});
 
+app.put('/notifications/:notificationId/read', (req, res) => {
+    res.json(markNotificationAsRead(parseInt(req.params.notificationId)));
+});
+
+app.post('/notifications', (req, res) => {
+    res.json(addNotification(req.body));
+});
 
 // #endregion
 
