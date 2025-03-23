@@ -51,11 +51,9 @@ function App() {
         <Route
           path="/chats"
           element={!isGuest ? <MessagingPage /> : <Navigate to="/" replace />}
-        />
-        <Route
-          path="/chats/:id"
-          element={!isGuest ? <ChatPage /> : <Navigate to="/" replace />}
-        />
+        >
+          <Route path=":id" element={<ChatPage />} />
+        </Route>
       </Routes>
       <Footer />
     </Router>
