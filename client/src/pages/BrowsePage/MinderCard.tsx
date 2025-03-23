@@ -2,8 +2,20 @@ import { useNavigate } from "react-router-dom";
 import "./MinderCard.css";
 import getFullFilePath from "../../utils/FullFilePath"; // ✅ Import the helper
 import { MapPin } from "lucide-react";
+import { getUserId } from "../../utils/StorageManager"; // ✅ Import getUserId
 
 function MinderCard({ minder }: { minder: any }) {
+  const navigate = useNavigate(); // ✅ Initialize navigate
+
+  const handleBooking = () => {
+    const userId = getUserId();
+    if (!userId) {
+      navigate("/login"); // ✅ Redirect to login if not logged in
+    } else {
+        navigate("/booking", { state: { minderId: minder.userDetails.id } }); // ✅ Redirect to booking if logged in
+    }
+  };
+
   return (
     <div className="minder-card">
       {/* ✅ Main Display Image or fallback */}
@@ -60,8 +72,10 @@ function MinderCard({ minder }: { minder: any }) {
         </div>
       )}
 
-      {/* ✅ Book Button with NO onClick */}
-      <button className="book-button">Book</button>
+      {/* ✅ Book Button with onClick event */}
+      <button className="book-button" onClick={handleBooking}>
+        Book
+      </button>
     </div>
   );
 }
