@@ -1,8 +1,8 @@
-import { getCachedUsersWithPetsAndServices, getUserWithoutPassword, RegisterUserCache, removeUserCache, editUserCache } from '../services/UserCached';
+import { getCachedUsersWithPetsServicesAndBookings, getUserWithoutPassword, RegisterUserCache, removeUserCache, editUserCache } from '../services/UserCached';
 import { IRegisterUser, IUser, Role } from '../models/IUser';
 
 export function AllUsersData() {
-  const result = getCachedUsersWithPetsAndServices();
+  const result = getCachedUsersWithPetsServicesAndBookings();
   if (result.length === 0) {
     return { success: false, message: 'No users found' };
   }
@@ -10,7 +10,7 @@ export function AllUsersData() {
 }
 
 export function getUserByID(id: number) {
-  const user = getCachedUsersWithPetsAndServices().find(user => user.userDetails.id === id);
+  const user = getCachedUsersWithPetsServicesAndBookings().find(user => user.userDetails.id === id);
   if (user) {
     return { success: true, user: getUserWithoutPassword(user) };
   }
@@ -18,7 +18,7 @@ export function getUserByID(id: number) {
 }
 
 export function getUserByUsername(username: string) {
-  const user = getCachedUsersWithPetsAndServices().find(user =>
+  const user = getCachedUsersWithPetsServicesAndBookings().find(user =>
     user.userDetails.loginDetails.username === username
   );
 
@@ -29,7 +29,7 @@ export function getUserByUsername(username: string) {
 }
 
 export function loginUser(credentials: string, password: string) {
-  const user = getCachedUsersWithPetsAndServices().find(user => (user.userDetails.loginDetails.email === credentials || user.userDetails.loginDetails.username === credentials) && user.userDetails.loginDetails.password === password);
+  const user = getCachedUsersWithPetsServicesAndBookings().find(user => (user.userDetails.loginDetails.email === credentials || user.userDetails.loginDetails.username === credentials) && user.userDetails.loginDetails.password === password);
   if (user) {
     return { success: true, user: getUserWithoutPassword(user) };
   }
@@ -45,11 +45,11 @@ export function removeUser(id: number) {
 }
 
 export function getMinders() {
-  return { success: true, users: getCachedUsersWithPetsAndServices().filter(user => user.roles.includes(Role.MINDER))};
+  return { success: true, users: getCachedUsersWithPetsServicesAndBookings().filter(user => user.roles.includes(Role.MINDER))};
 }
 
 export function isUserMinder(id: number) {
-  const user = getCachedUsersWithPetsAndServices().find(user => user.userDetails.id === id);
+  const user = getCachedUsersWithPetsServicesAndBookings().find(user => user.userDetails.id === id);
   if (user) {
     return { success: true, isMinder: user.roles.includes(Role.MINDER) };
   }
@@ -57,7 +57,7 @@ export function isUserMinder(id: number) {
 }
 
 export function getUserImages(id: number) {
-  const user = getCachedUsersWithPetsAndServices().find(user => user.userDetails.id === id);
+  const user = getCachedUsersWithPetsServicesAndBookings().find(user => user.userDetails.id === id);
   if (user) {
     return { success: true, images: user.minderRoleInfo?.pictures };
   }
