@@ -1,89 +1,84 @@
-.bookingForm {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.container {
+    display: grid;
+    grid-template-columns: 3fr 1fr; /* Left content 2/3, right 1/3 for extra content */
+    gap: 40px;
+    padding: 40px 60px;
+    background-color: #f9f9f9;
+    min-height: 100vh;
   }
-
-  .bookingPage {
+  
+  .leftContent {
     display: flex;
-    justify-content: space-between;
-    padding: 20px;
-  }
-
-  .formContainer {
-    flex: 1;
-    margin-right: 20px;
+    flex-direction: column;
+    gap: 30px;
   }
   
-  .summaryContainer {
-    flex: 1;
-    margin-left: 20px;
+  .section {
+    background-color: #ffffff;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   }
   
-  .formGroup {
-    margin-bottom: 16px;
+  .section h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 12px;
   }
   
-  .formGroup label {
+  .section label {
+    font-size: 17px;
+    font-weight: 500;
     display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
+    margin-bottom: 6px;
   }
   
-  .formGroup select,
-  .formGroup input,
-  .formGroup textarea {
+  .input,
+  .select,
+  .textarea {
     width: 100%;
     padding: 10px;
+    font-size: 15px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 6px;
+    margin-top: 6px;
     box-sizing: border-box;
   }
   
-  .serviceDetails,
-  .petDetails {
-    background: #f9f9f9;
-    padding: 10px;
-    border-radius: 4px;
-    margin-top: 10px;
+  .textarea {
+    min-height: 80px;
+    resize: vertical;
   }
   
-  .addPetButton {
-    display: flex;
-    align-items: center;
-    background: #1abc9c;
+  .bookButton {
+    background-color: #c1126b; /* GoFetch purple */
     color: white;
-    padding: 10px 16px;
+    padding: 16px 32px;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
-    margin-top: 10px;
-  }
-  
-  .addPetButton span {
-    margin-right: 8px;
-  }
-  
-  .addPetButton:hover {
-    background: #16a085;
-  }
-  
-  .submitButton {
+    font-weight: bold;
+    font-size: 18px;
     width: 100%;
-    padding: 10px;
-    background-color: #3498db;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 20px;
+    margin-top: 25px;
+    transition: background-color 0.3s ease;
   }
   
-  .submitButton:hover {
-    background-color: #2980b9;
+  .bookButton:hover {
+    background-color: #a00d59;
+  }
+  
+  .rightContent {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    height: fit-content;
+  }
+
+  .timers {
+    display: flex; 
+    gap: 1rem; 
+    align-items: flex-start;
+    flex-wrap: wrap;
   }
