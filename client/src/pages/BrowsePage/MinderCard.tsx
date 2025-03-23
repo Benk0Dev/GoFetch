@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import "./MinderCard.css";
-import getFullFilePath from "../../utils/FullFilePath"; // ✅ Import the helper
 import { MapPin } from "lucide-react";
 import { getUserId } from "../../utils/StorageManager"; // ✅ Import getUserId
 
@@ -23,10 +22,8 @@ function MinderCard({ minder }: { minder: any }) {
         <img
           src={
             minder.minderRoleInfo.pictures?.length > 0
-              ? getFullFilePath(
-                  `user_images/${minder.minderRoleInfo.pictures[0]}`
-                ) // ✅ First image
-              : getFullFilePath("user_images/default-profile.png") // ✅ Fallback image
+              ? `/images/user_images/${minder.minderRoleInfo.pictures[0]}`
+              : "/images/user_images/default-profile.png"
           }
           alt={minder.userDetails.fname}
           width="150"
@@ -64,7 +61,7 @@ function MinderCard({ minder }: { minder: any }) {
             .map((pic: any, index: any) => (
               <img
                 key={index}
-                src={getFullFilePath(`user_images/${pic}`)}
+                src={`/images/user_images/${pic}`}
                 alt={`${minder.userDetails.fname} ${index + 1}`}
                 width="100"
               />

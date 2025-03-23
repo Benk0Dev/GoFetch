@@ -1,7 +1,12 @@
+import { useAuth } from "../../context/AuthContext";
 import styles from "./DashboardHome.module.css";
 import dashboardStyles from "./DashboardPage.module.css";
 
-function DashboardHome({ user }: { user: any }) {
+function DashboardHome() {
+    const { user } = useAuth();
+
+    if (!user) return null;
+
     const fname = user.userDetails.fname;
 
     return (

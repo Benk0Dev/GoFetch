@@ -1,10 +1,12 @@
+import { useAuth } from "../../context/AuthContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./AuthenticationPage.module.css";
 import "../../global.css";
-import { login } from "../../services/Registry";
 
 function LoginForm() {
+    const { login } = useAuth();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -17,7 +19,7 @@ function LoginForm() {
         const user = await login(email, password);
         if (user) {
             console.log("Login successful:", user);
-            navigate("/dashboard");
+            navigate("/dashboard", { replace: true });
         } else {
             setError("Invalid Email or Password");
         }

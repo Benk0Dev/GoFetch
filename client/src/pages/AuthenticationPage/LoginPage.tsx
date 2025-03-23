@@ -1,19 +1,10 @@
 import LoginForm from "./LoginForm";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./AuthenticationPage.module.css";
 import "../../global.css";
-import { getUserRole } from "../../utils/StorageManager";
 
 function LoginPage() {
     const navigate = useNavigate();
-    
-        useEffect(() => {
-            const currentUserType = getUserRole();
-            if (currentUserType) {
-                navigate("/dashboard");
-            }
-        }, []);
 
     return (
         <div className={styles.authenticationContainer}>

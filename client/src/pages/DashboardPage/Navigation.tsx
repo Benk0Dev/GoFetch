@@ -1,30 +1,63 @@
 import { Role } from "../../models/IUser";
-import { getUserRole } from "../../utils/StorageManager";
 import styles from "./Navigation.module.css";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
-interface SidebarProps {
-    activeTab: string;
-    setActiveTab: (tab: string) => void;
-}
+function Navigation() {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const currentPath = location.pathname;
 
-function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
+    const { role } = useAuth();
+
     return (
         <div className={styles.sidebar}>
-            <button className={activeTab === "home" ? styles.active : ""} onClick={() => setActiveTab("home")}>Overview</button>
-            {getUserRole() === Role.MINDER ? (
+            <button
+                className={currentPath === "/dashboard" ? styles.active : ""}
+                onClick={() => navigate("/dashboard")}
+            >
+                Overview
+            </button>
+
+            {role === Role.MINDER ? (
                 <>
-                    <button className={activeTab === "profile" ? styles.active : ""} onClick={() => setActiveTab("profile")}>Profile</button>
-                    <button className={activeTab === "services" ? styles.active : ""} onClick={() => setActiveTab("services")}>Services</button>
-                    <button className={activeTab === "bookings" ? styles.active : ""} onClick={() => setActiveTab("bookings")}>Bookings</button>
+                    <button
+                        className={currentPath === "/dashboard/profile" ? styles.active : ""}
+                        onClick={() => navigate("/dashboard/profile")}
+                    >
+                        Profile
+                    </button>
+                    <button
+                        className={currentPath === "/dashboard/services" ? styles.active : ""}
+                        onClick={() => navigate("/dashboard/services")}
+                    >
+                        Services
+                    </button>
+                    <button
+                        className={currentPath === "/dashboard/bookings" ? styles.active : ""}
+                        onClick={() => navigate("/dashboard/bookings")}
+                    >
+                        Bookings
+                    </button>
                 </>
             ) : (
                 <>
-                    <button className={activeTab === "pets" ? styles.active : ""} onClick={() => setActiveTab("pets")}>Pets</button>
-                    <button className={activeTab === "bookings" ? styles.active : ""} onClick={() => setActiveTab("bookings")}>Bookings</button>
+                    <button
+                        className={currentPath === "/dashboard/pets" ? styles.active : ""}
+                        onClick={() => navigate("/dashboard/pets")}
+                    >
+                        Pets
+                    </button>
+                    <button
+                        className={currentPath === "/dashboard/bookings" ? styles.active : ""}
+                        onClick={() => navigate("/dashboard/bookings")}
+                    >
+                        Bookings
+                    </button>
                 </>
             )}
         </div>
     );
 }
 
-export default Sidebar;
+export default Navigation;
