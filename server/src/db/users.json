@@ -101,7 +101,9 @@
     "minderRoleInfo": {
       "serviceIDs": [
         1,
-        2
+        2,
+        3,
+        4
       ],
       "rating": 4.8,
       "bio": "Experienced pet sitter with 5 years of experience.",
@@ -193,6 +195,7 @@
     },
     "minderRoleInfo": {
       "serviceIDs": [
+        4,
         5,
         6
       ],
