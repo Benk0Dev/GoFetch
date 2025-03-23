@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
-import { IBooking, EBookingStatus } from "../../models/IBooking";
+import { INewBooking } from "../../models/IBooking";
 import { IPet } from "../../models/IPet";
 import { IUser } from "../../models/IUser";
 import { IService } from "../../models/IService";
 
 // Assuming you have a POST function in your service file
-import { createBooking } from "../../services/booking/BookingService";
+import { createBooking } from "../../services/Registry";
 
 interface IBookSubmitProps {
   pet: IPet;
@@ -40,19 +40,12 @@ const BookSubmit: React.FC<IBookSubmitProps> = ({
         setIsSubmitting(true);
 
         // Create booking data object
-        const bookingData: IBooking = {
-            id: 0, // Dummy ID (you can replace with logic to generate a real ID)
+        const bookingData: INewBooking = {
             petId: pet.id,
             minderId: minder.userDetails.id,
             ownerId: owner.userDetails.id,
             serviceId: service.id,
-            startDate,
-            endDate,
             notes,
-            price: service.price,
-            status: EBookingStatus.Pending, // Dummy status (you can use an enum or string)
-            createdAt: new Date(), // Current timestamp for createdAt
-            updatedAt: new Date() // Current timestamp for updatedAt
           };
 
         // Send the booking data via POST request
