@@ -1,5 +1,5 @@
 import { useAuth } from "../../../context/AuthContext";
-import dashboardStyles from "../DashboardPage.module.css";
+import dashboardStyles from "../Dashboard.module.css";
 import Pet from "./Pet";
 import styles from "./Pets.module.css";
 import { PawPrint } from "lucide-react";

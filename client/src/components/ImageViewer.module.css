@@ -24,3 +24,14 @@
     object-fit: contain;
     border-radius: var(--border-radius);
 }
+
+.closeButton {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: white;
+    z-index: 10;
+}

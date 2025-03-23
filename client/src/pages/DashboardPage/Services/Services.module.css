@@ -1,0 +1,45 @@
+.servicesTable {
+    width: 100%;
+    border-collapse: collapse;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.servicesTableHeader,
+.servicesTableRow {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 0.5fr;
+    align-items: center;
+    padding: 0 16px;
+    border-radius: var(--border-radius);
+    background-color: var(--background-light);
+}
+
+.servicesTableHeader {
+    font-weight: 700;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    padding: 8px 16px;
+}
+
+.servicesTableRow {
+    background-color: var(--menu-card-background-color);
+}
+
+.servicesTableRow > div {
+    display: flex;
+    align-items: left;
+    gap: 0px;
+}
+
+.servicesTableRow svg {
+    color: var(--highlight-color);
+}
+
+.addService {
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+    margin-top: 10px;
+}
