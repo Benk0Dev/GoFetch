@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { IBooking, EBookingStatus } from "../../models/IBooking";
 import { IPet } from "../../models/IPet";
 import { IUser } from "../../models/IUser";
@@ -29,8 +29,11 @@ const BookSubmit: React.FC<IBookSubmitProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const hasSubmitted = useRef(false);
 
   useEffect(() => {
+    if (hasSubmitted.current) return; // Prevent duplicate submission
+    hasSubmitted.current = true;
     // Trigger the booking submission after the component mounts
     const submitBooking = async () => {
       try {
