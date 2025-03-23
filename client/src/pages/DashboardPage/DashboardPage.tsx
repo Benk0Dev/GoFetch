@@ -1,81 +1,69 @@
-import { useState, useEffect } from "react";
-import Sidebar from "./Navigation";
+import { useEffect, useState } from "react";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import Navigation from "./Navigation";
 import DashboardHome from "./DashboardHome";
 import Services from "./Services";
 import Profile from "./Profile/Profile";
 import Bookings from "./Bookings";
 import styles from "./DashboardPage.module.css";
-import { useNavigate } from "react-router-dom";
-import { getUserId, getUserRole } from "../../utils/StorageManager";
-import { getUserById } from "../../services/Registry";
 import { Role } from "../../models/IUser";
 import Pets from "./Pets/Pets";
+import { useAuth } from "../../context/AuthContext";
 
-function Dashboard() {
+function DashboardPage() {
     const navigate = useNavigate();
-    const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [activeTab, setActiveTab] = useState("home");
+    const { user, role, loading } = useAuth();
 
     useEffect(() => {
-        const updateUser = async () => {
-            const id = getUserId();
-            if (id) {
-                const fetchedUser = await getUserById(id);
-                setUser(fetchedUser);
-            }
-            setLoading(false);
-        };
-
-        updateUser();
-        window.addEventListener("userUpdate", updateUser);
-        return () => window.removeEventListener("userUpdate", updateUser);
-    }, []);
-
-    useEffect(() => {
-        if (!getUserRole()) {
-            navigate("/");
+        if (!role) {
+            navigate("/", { replace: true });
         }
-    }, []);
+    }, [role, navigate]);
 
-    const renderTab = () => {
-        if (loading) {
-            return <div className={styles.loading}>Loading...</div>;
-        }
-
-        if (getUserRole() === Role.MINDER) {
-            switch (activeTab) {
-                case "services":
-                    return <Services user={user} />;
-                case "profile":
-                    return <Profile user={user} />;
-                case "bookings":
-                    return <Bookings user={user} />;
-                default:
-                    return <DashboardHome user={user} />;
-            }
-        }
-
-        if (getUserRole() === Role.OWNER) {
-            switch (activeTab) {
-                case "pets":
-                    return <Pets user={user} />;
-                case "bookings":
-                    return <Bookings user={user} />;
-                default:
-                    return <DashboardHome user={user} />;
-            }
-        }
-    };
+    if (loading || !user) {
+        return <div className={styles.loading}>Loading...</div>;
+    }
 
     return (
         <div className={`container ${styles.dashboardContainer}`}>
-            <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+            <Navigation />
             <div className={styles.dashboardContent}>
-                {renderTab()}
+                <Routes>
+                    <Route path="" element={<DashboardHome />} />
+
+                    <Route
+                        path="services"
+                        element={role === Role.MINDER ? (
+                            <Services />
+                        ) : (
+                            <Navigate to="/dashboard" replace />
+                        )}
+                    />
+                    <Route
+                        path="profile"
+                        element={role === Role.MINDER ? (
+                            <Profile />
+                        ) : (
+                            <Navigate to="/dashboard" replace />
+                        )}
+                    />
+                    <Route
+                        path="pets"
+                        element={role === Role.OWNER ? (
+                            <Pets />
+                        ) : (
+                            <Navigate to="/dashboard" replace />
+                        )}
+                    />
+                    <Route
+                        path="bookings"
+                        element={<Bookings />}
+                    />
+                    <Route path="*" element={<Navigate to="/dashboard" replace />} />
+                </Routes>
             </div>
         </div>
     );
 }
 
-export default Dashboard;
+export default DashboardPage;

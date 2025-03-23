@@ -1,4 +1,3 @@
-import getFullFilePath from "../../../utils/FullFilePath";
 import styles from "./Pets.module.css";
 import "../../../global.css";
 
@@ -22,10 +21,10 @@ function Pet({ pet }: { pet: any }) {
         <div className={styles.pet}>
             <h3>{pet.name}</h3>
             <p>{pet.breed}, {getAge(pet.dob)} years</p>
-            <img src={getFullFilePath(`dog_images/${pet.picture}`)} alt={pet.name} />
+            <img src={(`/images/dog_images/${pet.picture}`)} alt={pet.name} />
             <div className={styles.buttons}>
-                <button className="btn2" onClick={() => {}}>View Details</button>
-                <button className="btn2" onClick={() => {}}>Edit</button>
+                <button className="btn" onClick={() => {}}>View Details</button>
+                <button className="btn" onClick={() => {}}>Edit</button>
             </div>
         </div>
     );

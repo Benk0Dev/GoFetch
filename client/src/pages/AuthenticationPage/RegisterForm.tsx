@@ -3,8 +3,10 @@ import { useNavigate } from "react-router-dom";
 import styles from "./AuthenticationPage.module.css";
 import { registerUser, verifyUniqueEmailAndUsername } from "../../services/Registry";
 import { IRegisterUser, Role } from "../../models/IUser";
+import { useAuth } from "../../context/AuthContext";
 
 function RegisterForm() {
+    const { loginUser } = useAuth();
     const navigate = useNavigate();
 
     const [fname, setFname] = useState("");
@@ -54,7 +56,7 @@ function RegisterForm() {
         }
 
         if (password.length < 8) {
-            setPasswordError("Password should be atleast 8 characters long.");
+            setPasswordError("Password should be at least 8 characters long.");
             error = true;
         }
 
@@ -65,14 +67,11 @@ function RegisterForm() {
 
         const dobDate = new Date(dob);
         const currentDate = new Date();
-
         let age = currentDate.getFullYear() - dobDate.getFullYear();
+        const hasBirthdayPassed = currentDate.getMonth() > dobDate.getMonth() || 
+            (currentDate.getMonth() === dobDate.getMonth() && currentDate.getDate() >= dobDate.getDate());
 
-        const hasBirthdayPassed = currentDate.getMonth() > dobDate.getMonth() || (currentDate.getMonth() === dobDate.getMonth() && currentDate.getDate() >= dobDate.getDate());
-
-        if (!hasBirthdayPassed) {
-            age -= 1;
-        }
+        if (!hasBirthdayPassed) age -= 1;
 
         if (age < 16) {
             setDobError("You do not meet the minimum age requirement to use GoFetch.");
@@ -80,22 +79,18 @@ function RegisterForm() {
         }
 
         const notUnique = await verifyUniqueEmailAndUsername(email, username);
-
         if (notUnique) {
             if (notUnique.email) {
                 setEmailError("Email is already in use.");
                 error = true;
             }
-
             if (notUnique.username) {
                 setUsernameError("Username is already in use.");
                 error = true;
             }
         }
 
-        if (error) {
-            return;
-        }
+        if (error) return;
 
         const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 
@@ -106,18 +101,17 @@ function RegisterForm() {
             username,
             password,
             dob: new Date(dob),
-            role: role === Role.OWNER ? Role.OWNER : Role.MINDER,
-        }
+            role,
+        };
 
         const newUser = await registerUser(userDetails);
 
         if (newUser) {
-            console.log("Registration successful:", newUser);
-            navigate("/dashboard"); 
+            loginUser(newUser);
+            navigate("/dashboard", { replace: true });
         } else {
             console.log("Registration failed");
         }
-
     };
 
     return (
@@ -125,110 +119,57 @@ function RegisterForm() {
             <div className={styles.doubleRow}>
                 <div className={styles.input}>
                     <label>First Name</label>
-                    <input
-                        type="text"
-                        value={fname}
-                        placeholder="John"
-                        onChange={(e) => setFname(e.target.value)}
-                        required
-                    />
+                    <input type="text" value={fname} placeholder="John" onChange={(e) => setFname(e.target.value)} required />
                     <p className={styles.error}>{fnameError}</p>
                 </div>
                 <div className={styles.input}>
                     <label>Last Name</label>
-                    <input
-                        type="text"
-                        value={sname}
-                        placeholder="Doe"
-                        onChange={(e) => setSname(e.target.value)}
-                        required
-                    />
+                    <input type="text" value={sname} placeholder="Doe" onChange={(e) => setSname(e.target.value)} required />
                     <p className={styles.error}>{snameError}</p>
                 </div>
             </div>
             <div className={styles.input}>
                 <label>Username</label>
-                <input
-                    type="text"
-                    value={username}
-                    placeholder="johndoe"
-                    onChange={(e) => setUsername(e.target.value)}
-                    required
-                />
+                <input type="text" value={username} placeholder="johndoe" onChange={(e) => setUsername(e.target.value)} required />
                 <p>This will be your unique identifier on GoFetch.</p>
                 <p className={styles.error}>{usernameError}</p>
             </div>
             <div className={styles.input}>
                 <label>Date of Birth</label>
-                <input
-                    type="date"
-                    value={dob}
-                    onChange={(e) => setDob(e.target.value)}
-                    required
-                />
-                <p>You must be atleast 16 years old to use GoFetch.</p>
+                <input type="date" value={dob} onChange={(e) => setDob(e.target.value)} required />
+                <p>You must be at least 16 years old to use GoFetch.</p>
                 <p className={styles.error}>{dobError}</p>
             </div>
             <div className={styles.input}>
                 <label>Email</label>
-                <input
-                    type="email"
-                    value={email}
-                    placeholder="john.doe@example.com"
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
+                <input type="email" value={email} placeholder="john.doe@example.com" onChange={(e) => setEmail(e.target.value)} required />
                 <p className={styles.error}>{emailError}</p>
             </div>
             <div className={styles.input}>
                 <label>Password</label>
-                <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
+                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                 <p className={styles.error}>{passwordError}</p>
             </div>
             <div className={styles.input}>
-                    <label>Confirm Password</label>
-                    <input
-                        type="password"
-                        value={password2}
-                        onChange={(e) => setPassword2(e.target.value)}
-                        required
-                    />
-                    <p className={styles.error}>{password2Error}</p>
+                <label>Confirm Password</label>
+                <input type="password" value={password2} onChange={(e) => setPassword2(e.target.value)} required />
+                <p className={styles.error}>{password2Error}</p>
             </div>
             <div className={styles.input}>
                 <label>Account Type</label>
                 <div className={styles.radioGroup}>
                     <label>
-                        <input
-                            type="radio"
-                            name="role"
-                            value={Role.OWNER}
-                            checked={role === Role.OWNER}
-                            onChange={() => setRole(Role.OWNER)}
-                            required
-                        />
+                        <input type="radio" name="role" value={Role.OWNER} checked={role === Role.OWNER} onChange={() => setRole(Role.OWNER)} required />
                         <span>Pet Owner</span>
                     </label>
                     <label>
-                        <input
-                            type="radio"
-                            name="role"
-                            value={Role.MINDER}
-                            checked={role === Role.MINDER}
-                            onChange={() => setRole(Role.MINDER)}
-                            required
-                        />
+                        <input type="radio" name="role" value={Role.MINDER} checked={role === Role.MINDER} onChange={() => setRole(Role.MINDER)} required />
                         <span>Pet Minder</span>
                     </label>
                 </div>
                 <p>Select whether you want to find pet minders or offer pet minding services.</p>
             </div>
-            <button type="submit" className="btn2 btn-primary" style={{width: "100%"}}>Create Account</button>
+            <button type="submit" className="btn btn-primary" style={{ width: "100%" }}>Create Account</button>
         </form>
     );
 }

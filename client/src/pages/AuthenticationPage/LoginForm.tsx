@@ -1,3 +1,4 @@
+import { useAuth } from "../../context/AuthContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./AuthenticationPage.module.css";
@@ -5,6 +6,8 @@ import "../../global.css";
 import { login } from "../../services/Registry";
 
 function LoginForm() {
+    const { loginUser } = useAuth();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -17,9 +20,10 @@ function LoginForm() {
         const user = await login(email, password);
         if (user) {
             console.log("Login successful:", user);
-            navigate("/dashboard");
+            loginUser(user);
+            navigate("/dashboard", { replace: true });
         } else {
-            setError("Invalid Email or Password");
+            setError("Invalid Email or Password.");
         }
     };
 
@@ -48,7 +52,7 @@ function LoginForm() {
 
             <p className={styles.error}>{error}</p>
 
-            <button type="submit" className="btn2 btn-primary" style={{width: "100%"}}>Login</button>
+            <button type="submit" className="btn btn-primary" style={{width: "100%"}}>Login</button>
         </form>
     );
 }

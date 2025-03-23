@@ -1,136 +1,156 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
-import { IUserDetails } from "../../utils/StorageManager";
+import { useLocation, useNavigate } from "react-router-dom";
+import { getUserId } from "../../utils/StorageManager";
+import { getUserById } from "../../services/Registry";
+import { IUser } from "../../models/IUser";
+import { IPet } from "../../models/IPet";
+import { IService } from "../../models/IService";
+import PetSelector from "./PetSelector";
+import ServiceSelector from "./ServiceSelector";
 import styles from "./BookingPage.module.css";
-import ServiceSelection from "./ServiceSelection";
-import PetProfileSelection from "./PetProfileSelection";
-import PetMinderSummary from "./PetMinderSummary";
-
-interface PetMinder {
-  userDetails: IUserDetails;
-  primaryUserInfo: {
-    profilePic: string;
-    verified: boolean;
-  };
-  minderRoleInfo: {
-      serviceIDs: number[];
-      price: string;
-      rating: number;
-      availability: string;
-      bio: string;
-  };
-}
+import MinderCard from "./MinderCard";
 
 const BookingPage: React.FC = () => {
-  const { userId, petMinderId } = useParams<{ userId: string; petMinderId: string }>();
+  const location = useLocation();
   const navigate = useNavigate();
-  const [user, setUser] = useState<any>(null);
-  const [petMinder, setPetMinder] = useState<PetMinder | null>(null);
-  const [selectedServiceId, setSelectedServiceId] = useState<number | null>(null);
-  const [selectedPetId, setSelectedPetId] = useState<number | null>(null);
-  const [selectedDate, setSelectedDate] = useState<string>("");
-  const [selectedTime, setSelectedTime] = useState<string>("");
-  const [instructions, setInstructions] = useState<string>("");
+  const minderId = location.state?.minderId;
+
+  const [selectedService, setSelectedService] = useState<IService | null>(null);
+  const userId = Number(getUserId());
+  const [user, setUser] = useState<IUser | null>(null);
+  const [minder, setMinder] = useState<IUser | null>(null);
+  const [selectedPet, setSelectedPet] = useState<IPet | null>(null);
+  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedTime, setSelectedTime] = useState("");
+  const [specialInstructions, setSpecialInstructions] = useState("");
+  const [isProcessing, setIsProcessing] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/users/${userId}`);
-        setUser(response.data);
+        const fetchedUser = await getUserById(userId);
+        if (fetchedUser) {
+          setUser(fetchedUser);
+          if (fetchedUser.ownerRoleInfo?.pets?.length > 0) {
+            setSelectedPet(fetchedUser.ownerRoleInfo.pets[0]);
+          }
+        }
       } catch (error) {
-        console.error("Error fetching user:", error);
+        console.error("Failed to fetch user:", error);
       }
     };
 
-    const fetchPetMinder = async () => {
+    const fetchMinder = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/minders/${petMinderId}`);
-        setPetMinder(response.data);
+        const fetchedMinder = await getUserById(minderId);
+        if (fetchedMinder) {
+          setMinder(fetchedMinder);
+          if (fetchedMinder.minderRoleInfo?.services?.length > 0) {
+            setSelectedService(fetchedMinder.minderRoleInfo.services[0]);
+          }
+        }
       } catch (error) {
-        console.error("Error fetching pet minder:", error);
+        console.error("Failed to fetch minder:", error);
       }
     };
 
-    fetchUser();
-    fetchPetMinder();
-  }, [userId, petMinderId]);
+    if (userId) fetchUser();
+    if (minderId) fetchMinder();
+  }, [userId, minderId]);
 
-  if (!user || !petMinder) {
-    return <p>User or Pet Minder not found.</p>;
-  }
-
-  const handleAddPetProfile = () => {
-    navigate("/add-pet-profile");
-  };
-
-  const handleSubmit = () => {
-    if (!selectedServiceId) {
-      alert("Please select a service.");
-      return;
-    }
-    if (!selectedPetId) {
-      alert("Please select a pet profile.");
-      return;
-    }
-    if (!selectedDate) {
-      alert("Please select a date.");
-      return;
-    }
-    if (!selectedTime) {
-      alert("Please select a time.");
-      return;
-    }
-    if (!instructions) {
-      alert("Please enter instructions for the minder.");
+  const handleBooking = () => {
+    if (!selectedPet) {
+      alert("Please select a pet before booking.");
       return;
     }
 
-    // Check if the selected date and time are within the pet minder's availability
-    const availability = petMinder.minderRoleInfo.availability;
-    const [startTime, endTime] = availability.split(" - ");
-    const selectedDateTime = new Date(`${selectedDate}T${selectedTime}`);
-    const startDateTime = new Date(`${selectedDate}T${startTime}`);
-    const endDateTime = new Date(`${selectedDate}T${endTime}`);
+    if (!minder) return;
 
-    if (selectedDateTime < startDateTime || selectedDateTime > endDateTime) {
-      alert("The pet minder is not available at the selected time.");
-      return;
-    }
+    setIsProcessing(true);
+    const selectedDay = new Date(selectedDate).toLocaleDateString("en-US", { weekday: "long" });
+    const availability = minder.minderRoleInfo?.availability;
+    const isAvailable =
+      availability === "Flexible" ||
+      (availability === "Weekdays" &&
+        ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].includes(selectedDay)) ||
+      (availability === "Weekends" && ["Saturday", "Sunday"].includes(selectedDay));
 
-    // Submit the form
-    console.log("Form submitted");
+    setTimeout(() => {
+      if (!isAvailable) {
+        alert(`Sorry, ${minder.userDetails?.fname} is not available on ${selectedDay}.`);
+      } else {
+        // Navigate to dashboard on success
+        alert(`Booking was successful.`);
+        navigate("/dashboard");
+      }
+      setIsProcessing(false);
+    }, 1000);
   };
 
   return (
-    <div className={styles.bookingPage}>
-      <div className={styles.formContainer}>
-        <h2>Book a Service</h2>
+    <div className={styles.container}>
+      <div className={styles.leftContent}>
+        <div className={styles.section}>
+          <h1 className={styles.heading}>
+            Book a service with {minder?.userDetails?.fname || "your pet minder"}
+          </h1>
 
-        <ServiceSelection selectedServiceId={selectedServiceId} onServiceChange={setSelectedServiceId}/>
-
-        <PetProfileSelection userId={userId ? parseInt(userId) : 0} selectedPetId={selectedPetId} onPetChange={setSelectedPetId} onAddPetProfile={handleAddPetProfile}/>
-
-        <div className={styles.formGroup}>
-          <label htmlFor="dateSelect">Select Date</label>
-          <input type="date" id="dateSelect" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} />
+          {minder?.minderRoleInfo?.services && (
+            <ServiceSelector
+              services={minder.minderRoleInfo.services}
+              selectedService={selectedService || minder.minderRoleInfo.services[0]}
+              setSelectedService={setSelectedService}
+            />
+          )}
         </div>
 
-        <div className={styles.formGroup}>
-          <label htmlFor="timeSelect">Select Time</label>
-          <input type="time" id="timeSelect" value={selectedTime} onChange={(e) => setSelectedTime(e.target.value)} />
+        <div className={styles.section}>
+          <PetSelector user={user} selectedPet={selectedPet} setSelectedPet={setSelectedPet} />
         </div>
 
-        <div className={styles.formGroup}>
-          <label htmlFor="instructions">Please enter instructions for the minder</label>
-          <textarea id="instructions" value={instructions} onChange={(e) => setInstructions(e.target.value)} />
-        </div>
+        <div className={styles.section}>
+          <div className={styles.timers}>
+            <div>
+              <label className={styles.label}>Select a Date:</label>
+              <input
+                type="date"
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)}
+                className={styles.input}
+              />
+            </div>
 
-        <button className={styles.submitButton} onClick={handleSubmit}>Submit</button>
+            <div>
+              <label className={styles.label}>Select a Time:</label>
+              <input
+                type="time"
+                value={selectedTime}
+                onChange={(e) => setSelectedTime(e.target.value)}
+                className={styles.input}
+              />
+            </div>
+          </div>
+
+          <label className={styles.label}>Special Instructions:</label>
+          <textarea
+            placeholder="Enter in information that would be useful to the Pet Minder. This can include interest of the dog, or specific routes."
+            value={specialInstructions}
+            onChange={(e) => setSpecialInstructions(e.target.value)}
+            className={styles.textarea}
+          />
+
+          <button
+            onClick={handleBooking}
+            disabled={isProcessing}
+            className={styles.bookButton}
+          >
+            {isProcessing ? "Processing ..." : "Book Session"}
+          </button>
+        </div>
       </div>
 
-      <div className={styles.summaryContainer}>
-        <PetMinderSummary petMinderId={petMinderId ? parseInt(petMinderId) : 0} minder={petMinder} />
+      <div className={styles.minderCardSection}>
+        <MinderCard minderId={minderId} />
       </div>
     </div>
   );

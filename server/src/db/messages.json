@@ -6,7 +6,7 @@
         5,
         2
       ],
-      "lastMessage": "hi"
+      "lastMessage": "Hello"
     },
     {
       "id": 2,
@@ -214,6 +214,13 @@
       "userId": 4,
       "message": "Hi there! I'm interested in your pet sitting services.",
       "timestamp": "2025-03-18T16:55:40.000Z"
+    },
+    {
+      "id": 28,
+      "userId": 5,
+      "message": "Hello",
+      "chatId": 1,
+      "timestamp": "2025-03-23T00:12:05.529Z"
     }
   ]
 }

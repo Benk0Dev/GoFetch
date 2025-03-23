@@ -1,19 +1,20 @@
-.sidebar {
+.navigation {
     display: flex;
     width: 100%;
-    background: var(--menu-background-color);
-    color: var(--menu-text-color);
+    background: var(--secondary-color);
     padding: 5px;
     gap: 5px;
     border-radius: var(--border-radius);
+
 }
 
-.sidebar button {
+.navigation button {
     background: none;
     border: none;
-    color: var(--menu-text-color);;
-    padding: 10px;
-    font-size: 18px;
+    color: var(--primary-color);;
+    padding: 8px 12px;
+    font-size: 16px;
+    font-weight: 500;
     text-align: center;
     cursor: pointer;
     width: 100%;
@@ -21,15 +22,14 @@
     border-radius: var(--border-radius);
 }
 
-.sidebar button:hover {
-    background: var(--menu-background-color-light);
+.navigation button:hover {
+    background: var(--secondary-color-hover);
 }
 
-.sidebar .active {
-    background: var(--menu-primary-color);
-    font-weight: 600;
+.navigation .active {
+    background: var(--highlight-color);
 }
 
-.sidebar .active:hover {
-    background: var(--menu-primary-color-light);
+.navigation .active:hover {
+    background: var(--highlight-color-hover);
 }
