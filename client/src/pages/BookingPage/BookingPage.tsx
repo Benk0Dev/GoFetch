@@ -9,6 +9,7 @@ import PetSelector from "./PetSelector";
 import ServiceSelector from "./ServiceSelector";
 import styles from "./BookingPage.module.css";
 import MinderCard from "./MinderCard";
+import BookSubmit from "./BookSubmit"; // Import the BookSubmit component
 
 const BookingPage: React.FC = () => {
   const location = useLocation();
@@ -24,6 +25,7 @@ const BookingPage: React.FC = () => {
   const [selectedTime, setSelectedTime] = useState("");
   const [specialInstructions, setSpecialInstructions] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false); // Track submission status
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -59,8 +61,8 @@ const BookingPage: React.FC = () => {
   }, [userId, minderId]);
 
   const handleBooking = () => {
-    if (!selectedPet) {
-      alert("Please select a pet before booking.");
+    if (!selectedPet || !selectedService || !selectedDate || !selectedTime || !specialInstructions) {
+      alert("Please fill out all fields before booking.");
       return;
     }
 
@@ -79,16 +81,19 @@ const BookingPage: React.FC = () => {
       if (!isAvailable) {
         alert(`Sorry, ${minder.userDetails?.fname} is not available on ${selectedDay}.`);
       } else {
-        // Navigate to dashboard on success
-        alert(`Booking was successful.`);
-        navigate("/dashboard");
+        // Set the submission state and show the BookSubmit component
+        setIsSubmitted(true);
+        // After showing the BookSubmit component, navigate to the Dashboard
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 2000); // Wait for BookSubmit component to be displayed before navigating
       }
       setIsProcessing(false);
     }, 1000);
   };
 
   return (
-    <div className={styles.container}>
+    <div className="container">
       <div className={styles.leftContent}>
         <div className={styles.section}>
           <h1 className={styles.heading}>
@@ -152,6 +157,18 @@ const BookingPage: React.FC = () => {
       <div className={styles.minderCardSection}>
         <MinderCard minderId={minderId} />
       </div>
+
+      {isSubmitted && selectedPet && minder && (
+        <BookSubmit
+          pet={selectedPet}
+          minder={minder as IUser}
+          owner={user as IUser}
+          service={selectedService as IService}
+          startDate={selectedDate}
+          endDate={selectedDate}
+          notes={specialInstructions}
+        />
+      )}
     </div>
   );
 };
