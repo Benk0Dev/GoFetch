@@ -1,10 +1,13 @@
+import { useAuth } from "../../../context/AuthContext";
 import dashboardStyles from "../DashboardPage.module.css";
 import Pet from "./Pet";
 import styles from "./Pets.module.css";
 import { PawPrint } from "lucide-react";
 import "../../../global.css";
 
-function Pets({ user }: { user: any }) {
+function Pets() {
+    const { user } = useAuth();
+
     return (
         <div className={`${dashboardStyles.dashboardSection} ${styles.pets}`}>
             <h2>Your Pets</h2>
@@ -12,7 +15,7 @@ function Pets({ user }: { user: any }) {
             <div className={styles.petList}>
                 {user.ownerRoleInfo.pets.map((pet: any) => {
                     return (
-                        <Pet pet={pet} />
+                        <Pet key={pet.id} pet={pet} />
                     );
                 })}
                 <div className={styles.addPet}>
@@ -24,7 +27,6 @@ function Pets({ user }: { user: any }) {
             </div>
         </div>
     );
-    
 }
 
 export default Pets;

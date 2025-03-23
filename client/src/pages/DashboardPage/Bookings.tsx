@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useAuth } from "../../context/AuthContext";
 import styles from "./Bookings.module.css";
 import dashboardStyles from "./DashboardPage.module.css";
 
@@ -9,15 +10,37 @@ interface Booking {
     status: "Pending" | "Confirmed" | "Completed";
 }
 
-function Bookings({ user }: { user: any }) {
-    const [bookings, setBookings] = useState<Booking[]>([
-        { id: 1, petName: "Bella", date: "Tomorrow 10AM", status: "Pending" },
-        { id: 2, petName: "Max", date: "Friday 6PM", status: "Confirmed" }
-    ]);
+function Bookings() {
+    const { user, setUser } = useAuth();
+    const [bookings, setBookings] = useState<Booking[]>([]);
+
+    useEffect(() => {
+        // Mock load from user object (when integrated with backend, this would come from API)
+        if (user?.bookings) {
+            setBookings(user.bookings);
+        } else {
+            setBookings([
+                { id: 1, petName: "Bella", date: "Tomorrow 10AM", status: "Pending" },
+                { id: 2, petName: "Max", date: "Friday 6PM", status: "Confirmed" }
+            ]);
+        }
+    }, [user]);
 
     const updateStatus = (id: number, newStatus: Booking["status"]) => {
-        setBookings(bookings.map(b => b.id === id ? { ...b, status: newStatus } : b));
+        const updated = bookings.map(b =>
+            b.id === id ? { ...b, status: newStatus } : b
+        );
+
+        setBookings(updated);
+
+        // Update global user object to reflect the new booking status
+        setUser({
+            ...user,
+            bookings: updated
+        });
     };
+
+    if (!user) return null;
 
     return (
         <div className={`${dashboardStyles.dashboardSection} ${styles.bookings}`}>

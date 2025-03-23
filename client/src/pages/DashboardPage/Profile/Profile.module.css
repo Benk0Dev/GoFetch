@@ -149,9 +149,9 @@ input[type='range']::-webkit-slider-thumb {
 
 .buttonGroup {
     display: flex;
-    gap: 12px;
+    gap: 10px;
     margin-top: 25px;
-    justify-content: center;
+    justify-content: flex-end;
 }
 
 .cancelBtn, .saveBtn {
@@ -196,33 +196,4 @@ input[type="file"] {
 
 input[type="file"]:hover {
     border-color: #2c3e50;
-}
-
-@media screen and (max-width: 768px) {
-    .profile {
-        padding: 20px;
-    }
-
-    .photoGrid {
-        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-    }
-
-    .photoItem {
-        width: 100%;
-        height: auto;
-    }
-
-    .removeBtn {
-        width: 18px;
-        height: 18px;
-        font-size: 10px;
-    }
-
-    .buttonGroup {
-        flex-direction: column;
-    }
-
-    .cancelBtn, .saveBtn {
-        width: 100%;
-    }
 }

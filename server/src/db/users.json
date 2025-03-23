@@ -172,7 +172,7 @@
       "petowner",
       "petminder"
     ],
-    "currentRole": "petowner",
+    "currentRole": "petminder",
     "primaryUserInfo": {
       "profilePic": "eve.jpg",
       "dob": "1995-08-25",
@@ -197,13 +197,14 @@
         6
       ],
       "rating": 4.9,
-      "bio": "Pet owner and minder with a passion for animals.",
+      "bio": "Pet owner and minder with a passion for animals, especially dogs!",
       "pictures": [
-        "eve1.jpg",
-        "eve2.jpg"
+        "1",
+        "2",
+        "3"
       ],
       "availability": "Flexible",
-      "distanceRange": 20,
+      "distanceRange": 2.5,
       "verified": true
     }
   },

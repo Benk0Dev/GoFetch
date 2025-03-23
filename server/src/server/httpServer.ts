@@ -254,7 +254,7 @@ app.use('/image', express.static(getUploadDir()));
 // Upload an image
 app.post('/upload-image', upload.single('image'), (req: Request, res: Response) => {
     const result = saveUploadedImage(req.file);
-    res.status(result.success ? 201 : 400).send(result);
+    res.status(result.success ? 201 : 400).send(result.data);
 });
 
 // Upload an image for a specific user
