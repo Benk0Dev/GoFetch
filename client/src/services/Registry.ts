@@ -1,5 +1,5 @@
 import { IRegisterUser } from "../models/IUser";
-import { IBooking } from "../models/IBooking";
+import { INewBooking } from "../models/IBooking";
 import { clearUser, getUserId, setUserId } from "../utils/StorageManager";
 import imageCompression from 'browser-image-compression';
 
@@ -333,5 +333,28 @@ export async function getImageByFilename(filename: string) {
         return null;
     }
 }
+
+export const createBooking = async (bookingData: INewBooking) => {
+    try {
+        const response = await fetch(`${API_URL}/booking`, { 
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(bookingData)
+        });
+        if (response.ok) {
+            const data = await response.json();
+            return data;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return null;
+        }
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+};
 
 
