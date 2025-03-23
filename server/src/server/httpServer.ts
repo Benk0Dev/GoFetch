@@ -225,7 +225,7 @@ app.get('/bookings/minder/:id', (req: Request, res: Response) => {
 // Create a new booking
 app.post('/booking', (req: Request, res: Response) => {
     const result = createBooking(req.body);
-    res.json(result);
+    res.json(result.booking);
 });
 
 // Update booking status

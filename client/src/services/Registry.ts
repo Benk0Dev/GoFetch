@@ -344,8 +344,33 @@ export const createBooking = async (bookingData: INewBooking) => {
             body: JSON.stringify(bookingData)
         });
         if (response.ok) {
-            const data = await response.json();
-            return data;
+            const booking = await response.json();
+
+            const minder = await getUserById(booking.minderId);
+
+            const editMinder = await editUser(booking.minderId, {
+                minderRoleInfo: {
+                    bookingIDs: [booking.id, ...minder.minderRoleInfo.bookings.map((b: any) => b.id)],
+                }
+            });
+
+            if (!editMinder) {
+                return null;
+            }
+
+            const petOwner = await getUserById(booking.ownerId);
+
+            const editOwner = await editUser(booking.ownerId, {
+                ownerRoleInfo: {
+                    bookingIDs: [booking.id, ...petOwner.ownerRoleInfo.bookings.map((b: any) => b.id)],
+                }
+            });
+
+            if (!editOwner) {
+                return null;
+            }
+
+            return booking;
         } else {
             const text = await response.text();
             console.error(text);
