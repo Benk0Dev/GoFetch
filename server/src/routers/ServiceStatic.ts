@@ -50,7 +50,8 @@ export function addServiceForUser(userId: number, serviceId: number) {
             pictures: [],
             availability: '',
             distanceRange: 0,
-            verified: false
+            verified: false,
+            bookingIDs: []
         };
     }
 

@@ -1,8 +1,8 @@
-import { useAuth } from "../../context/AuthContext";
-import styles from "./DashboardHome.module.css";
-import dashboardStyles from "./DashboardPage.module.css";
+import { useAuth } from "../../../context/AuthContext";
+import styles from "./Home.module.css";
+import dashboardStyles from "../Dashboard.module.css";
 
-function DashboardHome() {
+function Home() {
     const { user } = useAuth();
 
     if (!user) return null;
@@ -35,4 +35,4 @@ function DashboardHome() {
     );
 }
 
-export default DashboardHome;
+export default Home;

@@ -12,7 +12,7 @@ export function getCachedUsers(): IUser[] {
   }
 }
 
-export function getCachedUsersWithPetsAndServices(): IUser[] {
+export function getCachedUsersWithPetsServicesAndBookings(): IUser[] {
   return cache.users.map(user => {
     const userCopy = { ...user };
 
@@ -20,16 +20,20 @@ export function getCachedUsersWithPetsAndServices(): IUser[] {
       userCopy.ownerRoleInfo = {
         ...userCopy.ownerRoleInfo,
         pets: cache.pets.filter(pet => user.ownerRoleInfo?.petIDs?.includes(pet.id) || false),
+        bookings: cache.bookings.filter(booking => user.ownerRoleInfo?.bookingIDs?.includes(booking.ownerId) || false),
       };
       delete (userCopy.ownerRoleInfo as any).petIDs;
+      delete (userCopy.ownerRoleInfo as any).bookingIDs;
     }
 
     if (userCopy.minderRoleInfo) {
       userCopy.minderRoleInfo = {
         ...userCopy.minderRoleInfo,
         services: cache.services.filter(service => user.minderRoleInfo?.serviceIDs?.includes(service.id) || false),
+        bookings: cache.bookings.filter(booking => user.minderRoleInfo?.bookingIDs?.includes(booking.minderId) || false),
       };
       delete (userCopy.minderRoleInfo as any).serviceIDs;
+      delete (userCopy.minderRoleInfo as any).bookingIDs;
     }
 
     return userCopy;
@@ -93,6 +97,7 @@ export function RegisterUserCache(user: IRegisterUser) {
       },
       ownerRoleInfo: {
         petIDs: [],
+        bookingIDs: [],
       },
       minderRoleInfo: {
         rating: 0,
@@ -102,6 +107,7 @@ export function RegisterUserCache(user: IRegisterUser) {
         distanceRange: 0,
         verified: false,
         serviceIDs: [],
+        bookingIDs: [],
       }
     };
 

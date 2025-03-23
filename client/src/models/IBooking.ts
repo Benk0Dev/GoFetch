@@ -1,2 +1,3 @@
-export type { IBooking } from '../../../server/src/models/IBooking.ts';
-export { EBookingStatus } from '../../../server/src/models/IBooking.ts';
+
+export type { IBooking, EBookingStatus, INewBooking } from "../../../server/src/models/IBooking";
+

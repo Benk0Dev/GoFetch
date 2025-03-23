@@ -15,7 +15,7 @@ export interface DbCache {
   users: IUser[];
   pets: IPet[];
   services: IService[];
-  booking: IBooking[];
+  bookings: IBooking[];
   messages: IMessage[];
   chats: IChat[];
   notifications: INotification[];
@@ -26,7 +26,7 @@ export const cache: DbCache = {
   users: [],
   pets: [],
   services: [],
-  booking: [],
+  bookings: [],
   messages: [],
   chats: [],
   notifications: [],
@@ -46,7 +46,7 @@ export function initCache(): void {
     cache.users = JSON.parse(usersData);
     cache.pets = JSON.parse(petsData);
     cache.services = JSON.parse(servicesData);
-    cache.booking = JSON.parse(bookingData);
+    cache.bookings = JSON.parse(bookingData);
     cache.notifications = JSON.parse(notificationsData);
     const parsedMessagesData = JSON.parse(messagesData);
     cache.messages = parsedMessagesData.messages;

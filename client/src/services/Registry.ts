@@ -87,20 +87,6 @@ export async function editUser(id: number, user: any) {
     }
 }
 
-export async function switchRole() {
-    const userId = getUserId();
-    if (userId === null) return;
-
-    const user = await getUserById(userId);
-    if (user.roles.length > 1) {
-        const newRole = user.roles.find((r: string) => r !== user.currentRole);
-        await editUser(userId, { currentRole: newRole });
-        return true;
-    } else {
-        return false;
-    }
-}
-
 export async function getUserById(id: number) {
     try {
         const response = await fetch(`${API_URL}/user/${id}`);
