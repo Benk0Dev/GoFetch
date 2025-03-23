@@ -1,38 +1,35 @@
 import fs from 'fs';
-import { EBookingStatus, IBooking } from '../models/IBooking';
+import { EBookingStatus, IBooking, INewBooking } from '../models/IBooking';
 import { DB_PATH, cache } from './Cache';
 import path from 'path';
 
 // Get all bookings
 export function getAllBookingsCached(): IBooking[] {
-  return cache.booking;
+  return cache.bookings;
 }
 
 export function getBookingByIdCached(bookingId: number): IBooking | null {
-  const booking = cache.booking.find(b => b.id === bookingId);
+  const booking = cache.bookings.find(b => b.id === bookingId);
   return booking || null;
 }
 
 export function getBookingsForUserCached(userId: number): IBooking[] {
   // Return bookings where user is either the owner or the minder
-  return cache.booking.filter(b => b.ownerId === userId || b.minderId === userId);
+  return cache.bookings.filter(b => b.ownerId === userId || b.minderId === userId);
 }
 
 export function getBookingsForPetCached(petId: number): IBooking[] {
-  return cache.booking.filter(b => b.petId === petId);
+  return cache.bookings.filter(b => b.petId === petId);
 }
 
 export function getBookingsForMindeCached(minderId: number): IBooking[] {
-  return cache.booking.filter(b => b.minderId === minderId);
+  return cache.bookings.filter(b => b.minderId === minderId);
 }
 
-export function addBookingCached(bookingData: Omit<IBooking, 'id' | 'status' | 'createdAt' | 'updatedAt'>): IBooking {
-  // Create new booking with ID
-  const newId = cache.booking.length > 0 ? Math.max(...cache.booking.map(b => b.id)) + 1 : 1;
-
+export function addBookingCached(bookingData: INewBooking): IBooking {
   const now = new Date();
   const newBooking: IBooking = {
-    id: newId,
+    id: cache.bookings.length + 1,
     ...bookingData,
     status: EBookingStatus.Pending,
     createdAt: now,
@@ -40,7 +37,7 @@ export function addBookingCached(bookingData: Omit<IBooking, 'id' | 'status' | '
   };
 
   // Add to bookings array
-  cache.booking.push(newBooking);
+  cache.bookings.push(newBooking);
 
   // Save to file
   saveBookingsToFile();
@@ -49,7 +46,7 @@ export function addBookingCached(bookingData: Omit<IBooking, 'id' | 'status' | '
 }
 
 export function updateBookingStatusCached(bookingId: number, status: EBookingStatus): IBooking | null {
-  const booking = cache.booking.find(b => b.id === bookingId);
+  const booking = cache.bookings.find(b => b.id === bookingId);
   if (booking) {
     booking.status = status;
     booking.updatedAt = new Date();
@@ -66,7 +63,7 @@ export function updateBookingDetailsCached(
   bookingId: number,
   updates: Partial<Omit<IBooking, 'id' | 'createdAt' | 'updatedAt'>>
 ): IBooking | null {
-  const booking = cache.booking.find(b => b.id === bookingId);
+  const booking = cache.bookings.find(b => b.id === bookingId);
   if (booking) {
     // Update all provided fields
     Object.assign(booking, updates);
@@ -83,10 +80,10 @@ export function updateBookingDetailsCached(
 }
 
 export function deleteBookingCached(bookingId: number): boolean {
-  const initialLength = cache.booking.length;
-  cache.booking = cache.booking.filter(b => b.id !== bookingId);
+  const initialLength = cache.bookings.length;
+  cache.bookings = cache.bookings.filter(b => b.id !== bookingId);
 
-  if (initialLength !== cache.booking.length) {
+  if (initialLength !== cache.bookings.length) {
     // Save to file
     saveBookingsToFile();
     return true;
@@ -96,7 +93,7 @@ export function deleteBookingCached(bookingId: number): boolean {
 
 function saveBookingsToFile() {
   try {
-    fs.writeFileSync(path.join(DB_PATH, 'booking.json'),JSON.stringify(cache.booking, null, 2),'utf8'
+    fs.writeFileSync(path.join(DB_PATH, 'booking.json'),JSON.stringify(cache.bookings, null, 2),'utf8'
     );
   } catch (error) {
     console.error('Error saving booking data:', error);
