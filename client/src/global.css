@@ -139,7 +139,9 @@ p {
 }
 
 .btn-link {
-    margin: 0 10px;
+    display: flex;
+    align-items: center;
+    background-color: transparent;
 }
 
 .btn-primary {

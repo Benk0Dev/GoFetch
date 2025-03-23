@@ -26,7 +26,7 @@ function Navbar() {
             <div className={styles.loading}>Loading...</div>
           ) : role ? (
             <>
-              <Link to="/browse" className="btn-link">Explore Minders</Link>
+              <Link to="/browse" className="btn-link" style={{ marginRight: "10px" }}>Explore Minders</Link>
               <NotificationIcon />
               <Link to="/chats" className="btn-round btn-transparent">
                 <Mail strokeWidth={2.25} />

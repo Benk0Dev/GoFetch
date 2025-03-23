@@ -50,14 +50,14 @@ function Services() {
                 </div>
                 {services.map((service) => (
                     <div key={service.id} className={styles.servicesTableRow}>
-                        <div>{capitalize(service.type)}</div>
-                        <div><Clock size={16} strokeWidth={2.25} />{service.duration} minutes</div>
-                        <div><PoundSterling size={16} strokeWidth={2.25} />{service.price}</div>
-                        <div>
-                            <button className="btn-round btn-transparent">
+                        <div className={styles.columnData}>{capitalize(service.type)}</div>
+                        <div className={styles.columnData}><Clock size={16} strokeWidth={2.25} />{service.duration} minutes</div>
+                        <div className={styles.columnData}><PoundSterling size={16} strokeWidth={2.25} />{service.price}</div>
+                        <div className={styles.actions}>
+                            <button className="btn-link">
                                 <SquarePen size={16} strokeWidth={2.25} />
                             </button>
-                            <button className="btn-round btn-transparent">
+                            <button className="btn-link">
                                 <Trash2 size={16} strokeWidth={2.25} />
                             </button>
                         </div>

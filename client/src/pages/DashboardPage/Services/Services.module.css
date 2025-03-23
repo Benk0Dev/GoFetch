@@ -27,14 +27,26 @@
     background-color: var(--menu-card-background-color);
 }
 
-.servicesTableRow > div {
+.columnData, .actions {
     display: flex;
-    align-items: left;
-    gap: 0px;
+    align-items: center;
+    gap: 5px;
 }
 
-.servicesTableRow svg {
+.columnData svg {
     color: var(--highlight-color);
+}
+
+.servicesTableRow .actions {
+    gap: 10px;
+}
+
+.actions button {
+    color: var(--highlight-color);
+}
+
+.actions button:hover {
+    color: var(--highlight-color-hover);
 }
 
 .addService {
