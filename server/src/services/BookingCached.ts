@@ -28,7 +28,7 @@ export function getBookingsForMindeCached(minderId: number): IBooking[] {
 
 export function addBookingCached(bookingData: Omit<IBooking, 'id' | 'status' | 'createdAt' | 'updatedAt'>): IBooking {
   // Create new booking with ID
-  const newId = cache.booking.length > 0 ? Math.max(...cache.booking.map(b => b.id)) + 1 : 1;
+  const newId = cache.booking.length + 1;
 
   const now = new Date();
   const newBooking: IBooking = {

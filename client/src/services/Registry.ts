@@ -1,4 +1,5 @@
 import { IRegisterUser } from "../models/IUser";
+import { IBooking } from "../models/IBooking";
 import { clearUser, getUserId, setUserId } from "../utils/StorageManager";
 import imageCompression from 'browser-image-compression';
 
@@ -346,3 +347,5 @@ export async function getImageByFilename(filename: string) {
         return null;
     }
 }
+
+
