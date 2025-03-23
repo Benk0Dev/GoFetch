@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { PawPrint } from "lucide-react";
 import { IPet } from "../../models/IPet";
 import { IUser } from "../../models/IUser";
-import getFullFilePath from "../../utils/FullFilePath";
 import styles from "./PetSelector.module.css";
 
 interface PetSelectorProps {
@@ -26,7 +25,7 @@ const PetSelector: React.FC<PetSelectorProps> = ({ user, selectedPet, setSelecte
             className={`${styles.petCard} ${selectedPet?.id === pet.id ? styles.selected : ""}`}
           >
             <img
-              src={pet.picture ? getFullFilePath(`dog_images/${pet.picture}`) : "/placeholder.svg"}
+              src={pet.picture ? `/images/dog_images/${pet.picture}` : "/placeholder.svg"}
               alt={pet.name}
               className={styles.petImage}
             />

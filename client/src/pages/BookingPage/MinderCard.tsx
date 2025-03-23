@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { getUserById } from "../../services/Registry";
 import { IUser } from "../../models/IUser";
 import styles from "./MinderCard.module.css";
-import getFullFilePath from "../../utils/FullFilePath"; 
 
 
 interface MinderCardProps {
@@ -37,10 +36,8 @@ const MinderCard: React.FC<MinderCardProps> = ({ minderId }) => {
         <img
           src={
             minder.minderRoleInfo && minder.minderRoleInfo.pictures?.length > 0
-              ? getFullFilePath(
-                  `user_images/${minder.minderRoleInfo.pictures[0]}`
-                ) // ✅ First image
-              : getFullFilePath("user_images/default-profile.png") // ✅ Fallback image
+              ? `/images/user_images/${minder.minderRoleInfo.pictures[0]}`
+              : "/images/user_images/default-profile.png"
           }
           alt={minder.userDetails.fname}
           width="400"
