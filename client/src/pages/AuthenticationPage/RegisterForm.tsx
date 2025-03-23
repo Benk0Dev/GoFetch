@@ -107,7 +107,7 @@ function RegisterForm() {
         const newUser = await registerUser(userDetails);
 
         if (newUser) {
-            loginUser(newUser.userDetails.id);
+            loginUser(newUser);
             navigate("/dashboard", { replace: true });
         } else {
             console.log("Registration failed");
@@ -169,7 +169,7 @@ function RegisterForm() {
                 </div>
                 <p>Select whether you want to find pet minders or offer pet minding services.</p>
             </div>
-            <button type="submit" className="btn2 btn-primary" style={{ width: "100%" }}>Create Account</button>
+            <button type="submit" className="btn btn-primary" style={{ width: "100%" }}>Create Account</button>
         </form>
     );
 }

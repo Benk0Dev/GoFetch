@@ -1,11 +1,11 @@
   /* Footer */
   .footer {
     text-align: center;
-    padding: 20px;
-    background: var(--secondary-color);
-    color: white;
-    /* margin-top: 20px; */
+    padding: 5px;
+    background: var(--primary-color);
+    color: var(--text-color);
     margin-bottom: 0;
+    border-top: 1px solid var(--text-color);
   }
 
   .footer p {

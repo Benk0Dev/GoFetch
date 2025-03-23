@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { editUser, getUserById } from "../services/Registry";
 import { getUserId, clearUser, setUserId as storeUser } from "../utils/StorageManager";
-import { login as loginUser } from "../services/Registry";
+import { login as performLogin } from "../services/Registry";
 import { Role } from "../models/IUser";
 
 const AuthContext = createContext<any>(null);
@@ -24,9 +24,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     fetchUser();
   }, []);
 
+  const loginUser = (user: any) => {
+    setUser(user);
+    setRole(user.currentRole);
+  }
+
   const login = async (email: string, password: string) => {
     setLoading(true);
-    const returnedUser = await loginUser(email, password);
+    const returnedUser = await performLogin(email, password);
     if (returnedUser) {
       storeUser(returnedUser.userDetails.id);
       setUser(returnedUser);
@@ -63,7 +68,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   
 
   return (
-    <AuthContext.Provider value={{ user, role, loading, setUser, setRole, login, logout, switchRole }}>
+    <AuthContext.Provider value={{ user, role, loading, setUser, setRole, loginUser, login, logout, switchRole }}>
       {children}
     </AuthContext.Provider>
   );

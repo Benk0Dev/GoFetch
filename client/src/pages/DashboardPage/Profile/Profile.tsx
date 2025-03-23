@@ -177,8 +177,8 @@ function Profile() {
             </div>
 
             <div className={styles.buttonGroup}>
-                <button className={`btn2 btn-secondary`} onClick={handleCancel} disabled={!hasUnsavedChanges}>Cancel</button>
-                <button className={`btn2 btn-menu`} onClick={handleSave} disabled={!hasUnsavedChanges}>Confirm</button>
+                <button className={`btn btn-secondary`} onClick={handleCancel} disabled={!hasUnsavedChanges}>Cancel</button>
+                <button className={`btn btn-primary`} onClick={handleSave} disabled={!hasUnsavedChanges}>Confirm</button>
             </div>
 
             {showImageViewer && <ImageViewer imageSrc={showImageViewer} onClose={() => setShowImageViewer(null)} />}

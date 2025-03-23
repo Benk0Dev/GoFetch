@@ -22,7 +22,7 @@ function Pets() {
                     <PawPrint className={styles.addPetIcon} size={64} />
                     <h3>Add a New Pet</h3>
                     <p>Add another pet to your profile to book services for them.</p>
-                    <button className="btn2 btn-primary" onClick={() => {}}>Add New Pet</button>
+                    <button className="btn btn-primary" onClick={() => {}}>Add New Pet</button>
                 </div>
             </div>
         </div>

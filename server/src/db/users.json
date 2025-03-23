@@ -174,7 +174,7 @@
       "petowner",
       "petminder"
     ],
-    "currentRole": "petminder",
+    "currentRole": "petowner",
     "primaryUserInfo": {
       "profilePic": "eve.jpg",
       "dob": "1995-08-25",
@@ -209,46 +209,6 @@
       "availability": "Flexible",
       "distanceRange": 2.5,
       "verified": true
-    }
-  },
-  {
-    "userDetails": {
-      "id": 6,
-      "fname": "Test",
-      "sname": "Test",
-      "loginDetails": {
-        "email": "test@test.com",
-        "username": "testUser",
-        "password": "password"
-      }
-    },
-    "roles": [
-      "petowner"
-    ],
-    "currentRole": "petowner",
-    "primaryUserInfo": {
-      "profilePic": "",
-      "dob": "2001-01-01T00:00:00.000Z",
-      "location": {
-        "name": "",
-        "longitude": 0,
-        "latitude": 0
-      },
-      "suspended": false,
-      "suspendReason": null,
-      "suspendEndsAt": null
-    },
-    "ownerRoleInfo": {
-      "petIDs": []
-    },
-    "minderRoleInfo": {
-      "rating": 0,
-      "bio": "",
-      "pictures": [],
-      "availability": "",
-      "distanceRange": 0,
-      "verified": false,
-      "serviceIDs": []
     }
   }
 ]

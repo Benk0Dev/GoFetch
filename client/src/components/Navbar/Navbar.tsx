@@ -36,7 +36,7 @@ function Navbar() {
           ) : !["/login", "/register"].includes(location.pathname) ? (
             <>
               <Link to="/login" className="btn btn-transparent">Login</Link>
-              <Link to="/register" className="btn btn-background">Sign Up</Link>
+              <Link to="/register" className="btn btn-primary">Sign Up</Link>
             </>
           ) : null}
         </div>

@@ -11,10 +11,10 @@
 }
 
 .dashboardSection {
-    background: var(--menu-section-background-color);
+    background: var(--primary-color);
     padding: 20px;
     border-radius: var(--border-radius);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--text-color);
 }
 
 .dashboardSection h2 {

@@ -9,7 +9,7 @@
     background: white;
     padding: calc(var(--padding) * 2) var(--padding);
     border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
+    border: 1px solid var(--text-color);
     width: max-content;
     min-width: 350px;
     max-width: 500px;
@@ -44,7 +44,7 @@ p.error {
 }
 
 .alternateLink {
-    color: var(--primary-color);
+    color: var(--highlight-color);
     text-decoration: underline;
     cursor: pointer;
     background-color: transparent;

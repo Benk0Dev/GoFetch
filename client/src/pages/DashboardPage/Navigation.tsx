@@ -11,7 +11,7 @@ function Navigation() {
     const { role } = useAuth();
 
     return (
-        <div className={styles.sidebar}>
+        <div className={styles.navigation}>
             <button
                 className={currentPath === "/dashboard" ? styles.active : ""}
                 onClick={() => navigate("/dashboard")}

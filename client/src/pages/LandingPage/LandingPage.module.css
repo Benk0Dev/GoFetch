@@ -1,110 +1,95 @@
-.landingPageSection {
+.hero, .howItWorks, .loginRegister {
+    padding: 50px 0;
+}
+
+.hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    gap: 50px;
+}
+
+.hero h1, .hero p {
+    color: var(--text-color);
+}
+  
+.hero h1 {
+    margin-bottom: 10px;
+    line-height: 1.2;
+}
+  
+.hero p {
+    margin-bottom: 30px;
+}
+
+.imageContainer {
+    width: 100%;
+    height: auto;
+}
+
+.imageContainer img {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--text-color);
+}
+
+.background {
+    background: var(--primary-color);
+    width: 100%;
+}
+
+.howItWorks {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    text-align: center;
-    color: white;
-    position: relative;
-}
-
-
-.container {
-    padding: .5rem 0.5rem;
-    text-align: center;
-    /* border: double 6px var(--primary-color); */
-    border-radius: 25px;
-    padding-left: 5rem;
-    padding-right: 5rem;
-    padding-top: 2.5rem;
-    padding-bottom: 2.5rem;
-    color: white;
-}
-
-.HowItWorks h2,
-.LoginRegister h2 {
-    font-size: 3rem;
-    margin-bottom: 0.2rem;
-    /* border-top: dashed 4px var(--primary-color); */
-}
-
-.HowItWorks h2 {
-    border-bottom: dashed 4px;
-    border-color: white;
-}
-
-.HowItWorks h3 {
-    font-size: 2rem;
-    margin-bottom: 0.2rem;
-}
-
-.HowItWorks p,
-.LoginRegister p {
-    font-size: 1.25rem;
-    margin-bottom: 0.2rem;
-}
-
-.HowItWorks div,
-.LoginRegister div {
-    /* background:var(--primary-color); */
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    text-align: center;
-    /* opacity: 60%; */
 }
 
+.steps {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-content: center;
+    align-items: start;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+}
+
+.howItWorks .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--highlight-color);
+    border-radius: 100px;
+    padding: 8px;
+    color: var(--primary-color);
+    width: min-content;
+}
 
 .HowItWorks div:hover {
     padding: .2rem;
     transform: scale(1rem);
 }
 
+.loginRegister {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 2rem;
-    /* padding: 4%; */
-    margin-left: 2rem;
-    margin-right: 2rem;
-    column-gap: 15px;
-}
-
-
-.LoginRegister {
-    background: url('../../assets/images/dogwalk.jpg') center/cover no-repeat;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    position: relative;
-    color: white;
-    /* opacity: 60%; */
-}
-
-.HowItWorks {
-    background: url('../../assets/images/HowitWorks.jpg') center/cover no-repeat;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    position: relative;
-    color: white;
-    /* opacity: 60%; */
-}
-
-.LoginRegister::before, .HowItWorks::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1;
-}
-
-.LoginRegister > *, .HowItWorks > * {
-    position: relative;
-    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: max-content;
+    column-gap: 10px;
 }
