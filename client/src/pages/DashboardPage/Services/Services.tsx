@@ -31,10 +31,6 @@ function Services() {
     //     });
     // };
 
-    const capitalize = (str: string) => {
-        return str.charAt(0).toUpperCase() + str.slice(1);
-    };
-
     if (!user) return null;
 
     return (
@@ -50,14 +46,14 @@ function Services() {
                 </div>
                 {services.map((service) => (
                     <div key={service.id} className={styles.servicesTableRow}>
-                        <div className={styles.columnData}>{capitalize(service.type)}</div>
-                        <div className={styles.columnData}><Clock size={16} strokeWidth={2.25} />{service.duration} minutes</div>
+                        <div className={styles.columnData}>{service.type}</div>
+                        <div className={styles.columnData}><Clock size={16} strokeWidth={2.25} />{service.duration}</div>
                         <div className={styles.columnData}><PoundSterling size={16} strokeWidth={2.25} />{service.price}</div>
                         <div className={styles.actions}>
-                            <button className="btn-link">
+                            <button className="btn-link" onClick={() => {}}>
                                 <SquarePen size={16} strokeWidth={2.25} />
                             </button>
-                            <button className="btn-link">
+                            <button className="btn-link" onClick={() => {}}>
                                 <Trash2 size={16} strokeWidth={2.25} />
                             </button>
                         </div>
