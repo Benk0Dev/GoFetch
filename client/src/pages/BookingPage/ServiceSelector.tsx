@@ -24,7 +24,7 @@ const ServiceSelector: React.FC<ServiceSelectorProps> = ({ services, selectedSer
               <h3 className={styles.serviceTitle}>{service.type}</h3>
               <p className={styles.servicePrice}>£{service.price}</p>
             </div>
-            <p className={styles.duration}><Clock className={styles.clockIcon} /> {service.duration} minutes</p>
+            <p className={styles.duration}><Clock className={styles.clockIcon} /> {service.duration}</p>
           </div>
         ))}
       </div>
