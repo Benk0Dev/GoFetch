@@ -44,7 +44,7 @@ function Bookings() {
 
     return (
         <div className={`${dashboardStyles.dashboardSection} ${styles.bookings}`}>
-            <h2>Manage Bookings</h2>
+            <h2>Your Bookings</h2>
             <ul>
                 {bookings.map((booking) => (
                     <li key={booking.id}>

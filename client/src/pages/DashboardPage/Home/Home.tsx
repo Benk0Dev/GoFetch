@@ -11,8 +11,8 @@ function Home() {
 
     return (
         <div className={dashboardStyles.dashboardSection}>
-            <h2>Welcome Back, {fname}!</h2>
-            <div className={styles.stats}>
+            <h2>Hello, {fname}!</h2>
+            <div>
                 <div>
                     <h3>12</h3>
                     <p>Total Bookings</p>

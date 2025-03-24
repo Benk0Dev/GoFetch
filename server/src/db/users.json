@@ -195,7 +195,7 @@
       "petminder",
       "petowner"
     ],
-    "currentRole": "petowner",
+    "currentRole": "petminder",
     "primaryUserInfo": {
       "profilePic": "",
       "dob": "1995-08-25T00:00:00.000Z",
@@ -232,6 +232,48 @@
         5,
         6
       ],
+      "bookingIDs": []
+    }
+  },
+  {
+    "userDetails": {
+      "id": 6,
+      "fname": "Mark",
+      "sname": "Robert",
+      "loginDetails": {
+        "email": "mark@example.com",
+        "username": "markR",
+        "password": "password"
+      }
+    },
+    "roles": [
+      "petminder"
+    ],
+    "currentRole": "petminder",
+    "primaryUserInfo": {
+      "profilePic": "",
+      "dob": "2000-05-03T00:00:00.000Z",
+      "location": {
+        "name": "",
+        "longitude": 0,
+        "latitude": 0
+      },
+      "suspended": false,
+      "suspendReason": null,
+      "suspendEndsAt": null
+    },
+    "ownerRoleInfo": {
+      "petIDs": [],
+      "bookingIDs": []
+    },
+    "minderRoleInfo": {
+      "rating": 0,
+      "bio": "",
+      "pictures": [],
+      "availability": "",
+      "distanceRange": 0,
+      "verified": false,
+      "serviceIDs": [],
       "bookingIDs": []
     }
   }

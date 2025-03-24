@@ -24,7 +24,7 @@ function BecomeRolePage({ role }: { role: Role }) {
                 </div>
                 <h2>{role === Role.MINDER ? "Become a Pet Minder" : "Become a Pet Owner"}</h2>
                 <p>
-                    You're about to create a {role === Role.MINDER ? "Pet Minder" : "Pet Owner"} account. By confirming, you'll be able to {role === Role.MINDER ? "set up your public profile, add services and receive booking requests" : "add pets and book services"}.
+                    By confirming, you'll be able to {role === Role.MINDER ? "set up your public profile, add services and receive booking requests" : "add pets and book services"}.
                 </p>
                 <button className="btn-round btn-primary" onClick={handleConfirm}>
                     <Check size={18} strokeWidth={2} />Confirm
