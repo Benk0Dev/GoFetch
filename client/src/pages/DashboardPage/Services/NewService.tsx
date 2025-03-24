@@ -72,7 +72,7 @@ function NewService( { onCancel, onAdd }: { onCancel: () => void, onAdd: (servic
                     <p>How much do you charge for this service?</p>
                 </div>
 
-                {error && <div className={error}>{error}</div>}
+                {error && <span className={styles.error}>{error}</span>}
 
                 <div className={styles.addServiceButtons}>
                     <button className="btn btn-secondary" type="button" onClick={onCancel}>Cancel</button>
