@@ -64,7 +64,7 @@ export function addPetForUser(userId: number, pet: IPet) {
 
     // Add pet ID to user's pet list
     if (!cache.users[userIndex].ownerRoleInfo) {
-        cache.users[userIndex].ownerRoleInfo = { petIDs: [] };
+        cache.users[userIndex].ownerRoleInfo = { petIDs: [], bookingIDs: [] };
     }
     cache.users[userIndex].ownerRoleInfo.petIDs.push(newPet.id);
 

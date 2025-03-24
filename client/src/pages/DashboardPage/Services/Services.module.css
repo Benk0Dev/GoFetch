@@ -1,0 +1,102 @@
+.servicesTable {
+    width: 100%;
+    border-collapse: collapse;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.servicesTableHeader,
+.servicesTableRow {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 0.5fr;
+    align-items: center;
+    padding: 0 16px;
+    border-radius: var(--border-radius);
+    background-color: var(--background-light);
+}
+
+.servicesTableHeader {
+    font-weight: 700;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    padding: 8px 16px;
+}
+
+.servicesTableRow {
+    background-color: var(--menu-card-background-color);
+    padding: 6px 16px;
+}
+
+.columnData, .actions {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.columnData svg {
+    color: var(--highlight-color);
+}
+
+.servicesTableRow .actions {
+    gap: 10px;
+}
+
+.actions button {
+    color: var(--highlight-color);
+}
+
+.actions button:hover {
+    color: var(--highlight-color-hover);
+}
+
+.addService {
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+    margin-top: 10px;
+}
+
+.newService {
+    width: 100%;
+    border: 1px solid var(--text-color);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.newService h2 {
+    margin-bottom: 10px;
+}
+
+.newService form {
+    width: 100%;
+}
+
+.newService label {
+    font-weight: 500;
+}
+
+.newService p {
+    font-size: 14px;
+}
+
+.newService input, .newService select {
+    width: 100%;
+    padding: 8px 10px;
+    margin: 3px 0;
+}
+
+.addServiceButtons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+span.error {
+    color: var(--error-color);
+    font-weight: 500;
+    margin-bottom: 5px;
+    text-align: left;
+}

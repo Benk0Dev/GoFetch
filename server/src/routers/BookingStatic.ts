@@ -1,6 +1,7 @@
 import {
     IBooking,
-    EBookingStatus
+    EBookingStatus,
+    INewBooking
 } from '../models/IBooking';
 import {
     getAllBookingsCached,
@@ -45,7 +46,7 @@ export function getBookingsForMinder(minderId: number) {
     return { success: true, bookings };
 }
 
-export function createBooking(bookingData: Omit<IBooking, 'id' | 'status' | 'createdAt' | 'updatedAt'>) {
+export function createBooking(bookingData: INewBooking) {
     try {
         const booking = addBookingCached(bookingData);
         return { success: true, booking };

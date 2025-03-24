@@ -38,9 +38,7 @@ export function markNotificationAsReadCached(notificationId: number): INotificat
 
 export function addNotificationCached(notificationData: Omit<INotification, 'id' | 'createdAt' | 'updatedAt' | 'read'>): INotification {
     // Create new notification with ID
-    const newId = cache.notifications.length > 0
-        ? Math.max(...cache.notifications.map(n => n.id)) + 1
-        : 1;
+    const newId = cache.notifications.length > 0 ? Math.max(...cache.notifications.map(n => n.id)) + 1 : 1;
 
     const now = new Date();
     const newNotification: INotification = {

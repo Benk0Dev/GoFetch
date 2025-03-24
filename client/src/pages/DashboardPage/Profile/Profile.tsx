@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import styles from "./Profile.module.css";
-import dashboardStyles from "../DashboardPage.module.css";
-import ImageViewer from "./ImageViewer";
+import dashboardStyles from "../Dashboard.module.css";
+import ImageViewer from "../../../components/ImageViewer";
 import "react-range-slider-input/dist/style.css";
 import { X, Plus } from "lucide-react";
 import { editUser, getImageByFilename, uploadImage } from "../../../services/Registry";

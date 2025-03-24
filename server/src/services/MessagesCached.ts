@@ -45,9 +45,7 @@ export function addMessageCached(chatID: number, messageData: Omit<IMessage, 'id
     }
 
     // Create new message with ID
-    const newId = cache.messages.length > 0
-        ? Math.max(...cache.messages.map(m => m.id)) + 1
-        : 1;
+    const newId = cache.messages.length > 0 ? Math.max(...cache.messages.map(m => m.id)) + 1 : 1;
 
     const newMessage: IMessage = {
         id: newId,
@@ -70,9 +68,7 @@ export function addMessageCached(chatID: number, messageData: Omit<IMessage, 'id
 
 export function createChatCached(chatData: Omit<IChat, 'id' | 'messages'>): IChat {
     // Create new chat with ID
-    const newId = cache.chats.length > 0
-        ? Math.max(...cache.chats.map(c => c.id)) + 1
-        : 1;
+    const newId = cache.chats.length > 0 ? Math.max(...cache.chats.map(c => c.id)) + 1 : 1;
 
     const newChat: IChat = {
         id: newId,

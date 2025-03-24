@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { IChat, IMessage } from "../../models/IMessage";
-import { getChatById, sendMessage } from "../../services/Registry";
+import { getChatById, sendMessage, getUserById } from "../../services/Registry";
 import styles from './MessagingPage.module.css';
 
 function ChatPage() {
@@ -9,6 +9,7 @@ function ChatPage() {
     const [chat, setChat] = useState<IChat | null>(null);
     const [newMessage, setNewMessage] = useState("");
     const [loading, setLoading] = useState(true);
+    const [otherUserName, setOtherUserName] = useState("");
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
     async function fetchChat() {
@@ -46,18 +47,37 @@ function ChatPage() {
         messagesEndRef.current?.scrollIntoView({ behavior: 'instant' });
     }, [chat?.messages]);
 
+    useEffect(() => {
+        async function fetchOtherUser() {
+            if (!chat) return;
+            
+            const currentUserId = parseInt(localStorage.getItem('userID') || '0');
+            // Find the ID of the other user in the chat (not the current user)
+            const otherUserId = chat.users.find(id => id !== currentUserId) || null;
+            
+            if (otherUserId) {
+                const otherUser = await getUserById(otherUserId);
+                if (otherUser) {
+                    setOtherUserName(`${otherUser.userDetails.fname} ${otherUser.userDetails.sname}`);
+                }
+            }
+        }
+        
+        fetchOtherUser();
+    }, [chat]);
+
     if (loading) {
-        return <div>Loading chat...</div>;
+        return <div className={styles.chatLoading}>Loading conversation...</div>;
     }
 
     if (!chat) {
-        return <div>Chat not found</div>;
+        return <div className={styles.chatError}>Conversation not found</div>;
     }
 
     return (
         <div className={styles.chatContainer}>
             <div className={styles.chatHeader}>
-                <h2>Chat with {chat.users.join(", ")}</h2>
+                {otherUserName || "Loading..."}
             </div>
             
             <div className={styles.messagesContainer}>

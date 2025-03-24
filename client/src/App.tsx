@@ -6,7 +6,7 @@ import LoginPage from "./pages/AuthenticationPage/LoginPage";
 import RegisterPage from "./pages/AuthenticationPage/RegisterPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import BrowsePage from "./pages/BrowsePage/BrowsePage";
-import DashboardPage from "./pages/DashboardPage/DashboardPage";
+import DashboardPage from "./pages/DashboardPage/Dashboard";
 import MessagingPage from "./pages/MessagingPage/MessagingPage";
 import ChatPage from "./pages/MessagingPage/ChatPage";
 import BookingPage from "./pages/BookingPage/BookingPage";
@@ -51,11 +51,9 @@ function App() {
         <Route
           path="/chats"
           element={!isGuest ? <MessagingPage /> : <Navigate to="/" replace />}
-        />
-        <Route
-          path="/chats/:id"
-          element={!isGuest ? <ChatPage /> : <Navigate to="/" replace />}
-        />
+        >
+          <Route path=":id" element={<ChatPage />} />
+        </Route>
       </Routes>
       <Footer />
     </Router>

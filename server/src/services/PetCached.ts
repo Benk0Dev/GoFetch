@@ -13,9 +13,10 @@ export function getCachedPets(): IPet[] {
 }
 
 export function addPetCached(pet: IPet) {
-    
+
+    const newId = cache.pets.length > 0 ? cache.pets[cache.pets.length - 1].id + 1 + 1 : 1;
     const newPet: IPet = {
-        id: cache.pets.length + 1,
+        id: newId,
         name: pet.name,
         dob: pet.dob,
         gender: pet.gender,

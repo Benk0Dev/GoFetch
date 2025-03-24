@@ -1,3 +1,4 @@
+import { IBooking } from './IBooking';
 import { IPet } from './IPet';
 import { IService } from './IService';
 
@@ -5,9 +6,9 @@ export interface IUser {
   userDetails: IUserDetails;
   roles: Role[];
   currentRole: Role;
-  primaryUserInfo?: IPrimaryUserInfo;
-  ownerRoleInfo?: IOwnerRoleInfo;
-  minderRoleInfo?: IMinderRoleInfo;
+  primaryUserInfo: IPrimaryUserInfo;
+  ownerRoleInfo: IOwnerRoleInfo;
+  minderRoleInfo: IMinderRoleInfo;
 }
 
 export interface ILoginDetails {
@@ -41,6 +42,8 @@ export interface IPrimaryUserInfo {
 export interface IOwnerRoleInfo {
   petIDs: number[];
   pets?: IPet[];
+  bookingIDs: number[];
+  bookings?: IBooking[];
 }
 
 export interface IMinderRoleInfo {
@@ -52,6 +55,8 @@ export interface IMinderRoleInfo {
   availability: string;
   distanceRange: number;
   verified: boolean;
+  bookingIDs: number[];
+  bookings?: IBooking[];
 }
 
 export interface ILocation {

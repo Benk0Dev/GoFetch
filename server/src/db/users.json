@@ -7,7 +7,7 @@
       "loginDetails": {
         "email": "alice@example.com",
         "username": "alice123",
-        "password": "securePass1"
+        "password": "password"
       }
     },
     "roles": [
@@ -15,12 +15,12 @@
     ],
     "currentRole": "petowner",
     "primaryUserInfo": {
-      "profilePic": "alice.jpg",
-      "dob": "1990-06-15",
+      "profilePic": "",
+      "dob": "1990-06-15T00:00:00.000Z",
       "location": {
-        "name": "New York",
-        "longitude": -74.006,
-        "latitude": 40.7128
+        "name": "Bristol",
+        "longitude": -2.5879,
+        "latitude": 51.4545
       },
       "suspended": false,
       "suspendReason": null,
@@ -29,13 +29,18 @@
     "ownerRoleInfo": {
       "petIDs": [
         1
-      ]
+      ],
+      "bookingIDs": []
     },
-    "ownerInfo": {
-      "petIDs": [
-        2,
-        4
-      ]
+    "minderRoleInfo": {
+      "rating": 0,
+      "bio": "",
+      "pictures": [],
+      "availability": "",
+      "distanceRange": 0,
+      "verified": false,
+      "serviceIDs": [],
+      "bookingIDs": []
     }
   },
   {
@@ -46,7 +51,7 @@
       "loginDetails": {
         "email": "bob@example.com",
         "username": "bobbyJ",
-        "password": "securePass2"
+        "password": "password"
       }
     },
     "roles": [
@@ -54,12 +59,12 @@
     ],
     "currentRole": "petowner",
     "primaryUserInfo": {
-      "profilePic": "bob.jpg",
-      "dob": "1985-09-20",
+      "profilePic": "",
+      "dob": "1985-09-20T00:00:00.000Z",
       "location": {
-        "name": "Los Angeles",
-        "longitude": -118.2437,
-        "latitude": 34.0522
+        "name": "Leeds",
+        "longitude": -1.5491,
+        "latitude": 53.8008
       },
       "suspended": false,
       "suspendReason": null,
@@ -68,7 +73,18 @@
     "ownerRoleInfo": {
       "petIDs": [
         2
-      ]
+      ],
+      "bookingIDs": []
+    },
+    "minderRoleInfo": {
+      "rating": 0,
+      "bio": "",
+      "pictures": [],
+      "availability": "",
+      "distanceRange": 0,
+      "verified": false,
+      "serviceIDs": [],
+      "bookingIDs": []
     }
   },
   {
@@ -79,7 +95,7 @@
       "loginDetails": {
         "email": "charlie@example.com",
         "username": "charlieD",
-        "password": "securePass3"
+        "password": "password"
       }
     },
     "roles": [
@@ -87,33 +103,35 @@
     ],
     "currentRole": "petminder",
     "primaryUserInfo": {
-      "profilePic": "charlie.jpg",
-      "dob": "1992-04-10",
+      "profilePic": "",
+      "dob": "1992-04-10T00:00:00.000Z",
       "location": {
-        "name": "Chicago",
-        "longitude": -87.6298,
-        "latitude": 41.8781
+        "name": "Manchester",
+        "longitude": -2.2426,
+        "latitude": 53.4808
       },
       "suspended": false,
       "suspendReason": null,
       "suspendEndsAt": null
     },
+    "ownerRoleInfo": {
+      "petIDs": [],
+      "bookingIDs": []
+    },
     "minderRoleInfo": {
-      "serviceIDs": [
-        1,
-        2,
-        3,
-        4
-      ],
       "rating": 4.8,
       "bio": "Experienced pet sitter with 5 years of experience.",
-      "pictures": [
-        "charlie1.jpg",
-        "charlie2.jpg"
-      ],
+      "pictures": [],
       "availability": "Weekdays",
       "distanceRange": 10,
-      "verified": true
+      "verified": true,
+      "serviceIDs": [
+        1,
+        2
+      ],
+      "bookingIDs": [
+        1
+      ]
     }
   },
   {
@@ -124,7 +142,7 @@
       "loginDetails": {
         "email": "diana@example.com",
         "username": "dianaE",
-        "password": "securePass4"
+        "password": "password"
       }
     },
     "roles": [
@@ -132,31 +150,33 @@
     ],
     "currentRole": "petminder",
     "primaryUserInfo": {
-      "profilePic": "diana.jpg",
-      "dob": "1988-12-05",
+      "profilePic": "",
+      "dob": "1988-12-05T00:00:00.000Z",
       "location": {
-        "name": "Houston",
-        "longitude": -95.3698,
-        "latitude": 29.7604
+        "name": "Brighton",
+        "longitude": -0.1372,
+        "latitude": 50.8225
       },
       "suspended": false,
       "suspendReason": null,
       "suspendEndsAt": null
     },
+    "ownerRoleInfo": {
+      "petIDs": [],
+      "bookingIDs": []
+    },
     "minderRoleInfo": {
+      "rating": 4.6,
+      "bio": "Lifelong pet lover and certified dog trainer.",
+      "pictures": [],
+      "availability": "Weekends",
+      "distanceRange": 15,
+      "verified": true,
       "serviceIDs": [
         3,
         4
       ],
-      "rating": 4.6,
-      "bio": "Lifelong pet lover and certified dog trainer.",
-      "pictures": [
-        "diana1.jpg",
-        "diana2.jpg"
-      ],
-      "availability": "Weekends",
-      "distanceRange": 15,
-      "verified": true
+      "bookingIDs": []
     }
   },
   {
@@ -166,22 +186,22 @@
       "sname": "White",
       "loginDetails": {
         "email": "eve@example.com",
-        "username": "eveW",
-        "password": "securePass5"
+        "username": "eve@example.com",
+        "password": "password"
       }
     },
     "roles": [
-      "petowner",
-      "petminder"
+      "petminder",
+      "petowner"
     ],
     "currentRole": "petminder",
     "primaryUserInfo": {
-      "profilePic": "eve.jpg",
-      "dob": "1995-08-25",
+      "profilePic": "",
+      "dob": "1995-08-25T00:00:00.000Z",
       "location": {
-        "name": "Phoenix",
-        "longitude": -112.074,
-        "latitude": 33.4484
+        "name": "Nottingham",
+        "longitude": -1.1517,
+        "latitude": 52.9548
       },
       "suspended": false,
       "suspendReason": null,
@@ -191,15 +211,13 @@
       "petIDs": [
         3,
         4
+      ],
+      "bookingIDs": [
+        1
       ]
     },
     "minderRoleInfo": {
-      "serviceIDs": [
-        4,
-        5,
-        6
-      ],
-      "rating": 4.9,
+      "rating": 0,
       "bio": "Pet owner and minder with a passion for animals, especially dogs!",
       "pictures": [
         "1",
@@ -207,8 +225,13 @@
         "3"
       ],
       "availability": "Flexible",
-      "distanceRange": 2.5,
-      "verified": true
+      "distanceRange": 3,
+      "verified": true,
+      "serviceIDs": [
+        5,
+        6
+      ],
+      "bookingIDs": []
     }
   }
 ]

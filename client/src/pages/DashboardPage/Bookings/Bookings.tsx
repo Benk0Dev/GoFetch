@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../../context/AuthContext";
 import styles from "./Bookings.module.css";
-import dashboardStyles from "./DashboardPage.module.css";
+import dashboardStyles from "../Dashboard.module.css";
 
 interface Booking {
     id: number;

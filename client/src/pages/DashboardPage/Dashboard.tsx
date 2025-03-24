@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import Navigation from "./Navigation";
-import DashboardHome from "./DashboardHome";
-import Services from "./Services";
+import Home from "./Home/Home";
+import Services from "./Services/Services";
 import Profile from "./Profile/Profile";
-import Bookings from "./Bookings";
-import styles from "./DashboardPage.module.css";
+import Bookings from "./Bookings/Bookings";
+import styles from "./Dashboard.module.css";
 import { Role } from "../../models/IUser";
 import Pets from "./Pets/Pets";
 import { useAuth } from "../../context/AuthContext";
@@ -29,7 +29,7 @@ function DashboardPage() {
             <Navigation />
             <div className={styles.dashboardContent}>
                 <Routes>
-                    <Route path="" element={<DashboardHome />} />
+                    <Route path="" element={<Home />} />
 
                     <Route
                         path="services"

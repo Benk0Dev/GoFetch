@@ -1,4 +1,5 @@
 import { IRegisterUser } from "../models/IUser";
+import { INewBooking } from "../models/IBooking";
 import { clearUser, getUserId, setUserId } from "../utils/StorageManager";
 import imageCompression from 'browser-image-compression';
 
@@ -83,20 +84,6 @@ export async function editUser(id: number, user: any) {
     } catch (e) {
         console.error(e);
         return null;
-    }
-}
-
-export async function switchRole() {
-    const userId = getUserId();
-    if (userId === null) return;
-
-    const user = await getUserById(userId);
-    if (user.roles.length > 1) {
-        const newRole = user.roles.find((r: string) => r !== user.currentRole);
-        await editUser(userId, { currentRole: newRole });
-        return true;
-    } else {
-        return false;
     }
 }
 
@@ -346,3 +333,53 @@ export async function getImageByFilename(filename: string) {
         return null;
     }
 }
+
+export const createBooking = async (bookingData: INewBooking) => {
+    try {
+        const response = await fetch(`${API_URL}/booking`, { 
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(bookingData)
+        });
+        if (response.ok) {
+            const booking = await response.json();
+
+            const minder = await getUserById(booking.minderId);
+
+            const editMinder = await editUser(booking.minderId, {
+                minderRoleInfo: {
+                    bookingIDs: [booking.id, ...minder.minderRoleInfo.bookings.map((b: any) => b.id)],
+                }
+            });
+
+            if (!editMinder) {
+                return null;
+            }
+
+            const petOwner = await getUserById(booking.ownerId);
+
+            const editOwner = await editUser(booking.ownerId, {
+                ownerRoleInfo: {
+                    bookingIDs: [booking.id, ...petOwner.ownerRoleInfo.bookings.map((b: any) => b.id)],
+                }
+            });
+
+            if (!editOwner) {
+                return null;
+            }
+
+            return booking;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return null;
+        }
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+};
+
+
