@@ -56,3 +56,47 @@
     column-gap: 5px;
     margin-top: 10px;
 }
+
+.newService {
+    width: 100%;
+    border: 1px solid var(--text-color);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.newService h2 {
+    margin-bottom: 10px;
+}
+
+.newService form {
+    width: 100%;
+}
+
+.newService label {
+    font-weight: 500;
+}
+
+.newService p {
+    font-size: 14px;
+}
+
+.newService input, .newService select {
+    width: 100%;
+    padding: 8px 10px;
+    margin: 3px 0;
+}
+
+.addServiceButtons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+p.error {
+    color: var(--error-color);
+    font-weight: 500;
+    margin-bottom: 5px;
+    text-align: left;
+}

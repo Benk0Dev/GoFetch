@@ -2,12 +2,14 @@ import { useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
 import styles from "./Services.module.css";
 import dashboardStyles from "../Dashboard.module.css";
-import { IService } from "../../../models/IService";
+import { IService, INewService } from "../../../models/IService";
 import { Clock, PoundSterling, SquarePen, Trash2, Plus } from "lucide-react";
+import NewService from "./NewService";
 
 function Services() {
     const { user, setUser } = useAuth();
     const [services, setServices] = useState<IService[]>(user.minderRoleInfo.services);
+    const [showNewService, setShowNewService] = useState(false);
 
     // const addService = () => {
     //     const updated = [
@@ -31,7 +33,25 @@ function Services() {
     //     });
     // };
 
-    if (!user) return null;
+    const addService = () => {
+        setShowNewService(true);
+    }
+
+    const editService = (id: number) => {
+
+    }
+
+    const deleteService = (id: number) => {
+
+    }
+
+    const handleAdd = (service: INewService) => {
+        
+    }
+
+    const handleCancel = () => {
+        setShowNewService(false);
+    }
 
     return (
         <div className={`${dashboardStyles.dashboardSection}`}>
@@ -50,10 +70,10 @@ function Services() {
                         <div className={styles.columnData}><Clock size={16} strokeWidth={2.25} />{service.duration}</div>
                         <div className={styles.columnData}><PoundSterling size={16} strokeWidth={2.25} />{service.price}</div>
                         <div className={styles.actions}>
-                            <button className="btn-link" onClick={() => {}}>
+                            <button className="btn-link" onClick={() => editService(service.id)}>
                                 <SquarePen size={16} strokeWidth={2.25} />
                             </button>
-                            <button className="btn-link" onClick={() => {}}>
+                            <button className="btn-link" onClick={() => deleteService(service.id)}>
                                 <Trash2 size={16} strokeWidth={2.25} />
                             </button>
                         </div>
@@ -61,7 +81,8 @@ function Services() {
                 ))}
 
             </div>
-            <button className={`btn btn-primary ${styles.addService}`} onClick={() => {}}><Plus size={18} strokeWidth={2.25} />Add New Service</button>
+            {!showNewService && <button className={`btn btn-primary ${styles.addService}`} onClick={() => addService()}><Plus size={18} strokeWidth={2.25} />Add New Service</button>}
+            {showNewService && <NewService onCancel={handleCancel} onAdd={handleAdd} />}
         </div>
     );
 }
