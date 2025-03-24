@@ -29,8 +29,9 @@ export function getBookingsForMindeCached(minderId: number): IBooking[] {
 export function addBookingCached(bookingData: INewBooking): IBooking {
 
   const now = new Date();
+  const newId = cache.bookings.length > 0 ? cache.bookings[cache.bookings.length - 1].id + 1 : 1;
   const newBooking: IBooking = {
-    id: cache.bookings.length + 1,
+    id: newId,
     ...bookingData,
     status: EBookingStatus.Pending,
     createdAt: now,

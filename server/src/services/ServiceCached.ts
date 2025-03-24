@@ -1,4 +1,5 @@
 import { IService } from '../models/IService';
+import { saveUsersToFile } from './UserCached';
 import { cache, DB_PATH } from './Cache';
 import fs from 'fs';
 
@@ -12,10 +13,11 @@ export function getCachedServices(): IService[] {
     }
 }
 
-export function addServiceCached(service: IService) {
-    
+export function addServiceCached(id: number, service: IService) {
+
+    const newId = cache.services.length > 0 ? cache.services[cache.services.length - 1].id + 1 : 1;
     const newService: IService = {
-        id: cache.services.length + 1,
+        id: newId,
         type: service.type,
         duration: service.duration,
         price: service.price,
@@ -25,7 +27,31 @@ export function addServiceCached(service: IService) {
 
     saveServicesToFile(cache.services);
 
-    return { success: true, message: 'Service added successfully!' };
+    // Add the service to the user
+    const userIndex = cache.users.findIndex(user => user.userDetails.id === id);
+    if (userIndex === -1) {
+        return { success: false, message: 'User not found' };
+    }
+    else {
+        if (!cache.users[userIndex].minderRoleInfo) {
+            cache.users[userIndex].minderRoleInfo = {
+                serviceIDs: [],
+                rating: 0,
+                bio: '',
+                pictures: [],
+                availability: '',
+                distanceRange: 0,
+                verified: false,
+                bookingIDs: []
+            };
+        }
+
+        cache.users[userIndex].minderRoleInfo.serviceIDs.push(newService.id);
+
+        saveUsersToFile(cache.users);
+    }
+
+    return { success: true, message: 'Service added successfully!', service: newService };
 }
 
 export function removeServiceCached(id: number) {
@@ -33,10 +59,23 @@ export function removeServiceCached(id: number) {
     if (index === -1) {
         return { success: false, message: 'Service not found!' };
     }
+
     cache.services.splice(index, 1);
-    return { success: true, message: 'Service removed successfully!' };
+
+    // Save the updated services
+    try {
+        saveServicesToFile(cache.services);
+        return { success: true, message: 'Service removed successfully!' };
+    } catch (error) {
+        console.error('Error saving services file:', error);
+        return { success: false, message: 'Error removing service' };
+    }
 }
 
 function saveServicesToFile(services: IService[]) {
-    fs.writeFileSync(`${DB_PATH}/services.json`, JSON.stringify(services, null, 2), 'utf8');
+    try {
+        fs.writeFileSync(`${DB_PATH}/services.json`, JSON.stringify(services, null, 2), 'utf8');
+    } catch (error) {
+        console.error('Error saving services file:', error);
+    }
 }

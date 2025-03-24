@@ -5,7 +5,7 @@ import path from 'path';
 
 import { AllUsersData, getUserByID, getUserByUsername, RegisterUser, loginUser, removeUser, getMinders, editUser } from '../routers/UserStatic';
 import { AllPets, PetByID, registerPet, removePet, addPetForUser, removePetFromUser } from '../routers/PetStatic';
-import { AllServices, ServiceByID, removeService, addServiceForUser, removeServiceFromUser } from '../routers/ServiceStatic';
+import { AllServices, ServiceByID, addServiceForUser, editService, removeService } from '../routers/ServiceStatic';
 import { getBookingsForUser, getAllBookings, getBookingById, getBookingsForPet, getBookingsForMinder, createBooking, updateBookingDetails, updateBookingStatus, deleteBooking } from '../routers/BookingStatic';
 import { saveUploadedImage, saveUserImage, saveUserProfileImage, getImageByFilename, getUploadDir, deleteImageByFilename } from '../routers/ImageStatic';
 import { getChatsForUser, getChatById, addMessage, createChat } from '../routers/MessageStatic';
@@ -173,20 +173,23 @@ app.get('/service/:id', (req: Request, res: Response) => {
     res.status(result.success ? 200 : 404).send(result.message);
 });
 
-app.delete('/service/:id', (req: Request, res: Response) => {
+// Create new service
+app.post('/newservice/:id', (req: Request, res: Response) => {
+    const userId = parseInt(req.params.id);
+    const result = addServiceForUser(userId, req.body);
+    res.status(result.success ? 201 : 400).send(result);
+});
+
+// Edit a service
+app.post('/editservice/:id', (req: Request, res: Response) => {
+    const serviceId = parseInt(req.params.id);
+    const result = editService(serviceId, req.body);
+    res.status(result.success ? 200 : 404).send(result);
+});
+
+// Delete a service
+app.delete('/deleteservice/:id', (req: Request, res: Response) => {
     const result = removeService(parseInt(req.params.id));
-    res.status(result.success ? 200 : 404).send(result.message);
-});
-
-// Add service for a specific user (pet minder)
-app.post('/user/:userId/service', (req: Request, res: Response) => {
-    const result = addServiceForUser(parseInt(req.params.userId), req.body);
-    res.status(result.success ? 201 : 400).send(result.message);
-});
-
-// Remove service from a specific user
-app.delete('/user/:userId/service/:serviceId', (req: Request, res: Response) => {
-    const result = removeServiceFromUser(parseInt(req.params.userId), parseInt(req.params.serviceId));
     res.status(result.success ? 200 : 404).send(result.message);
 });
 //#endregion

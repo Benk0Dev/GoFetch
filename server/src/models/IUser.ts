@@ -1,6 +1,5 @@
 import { IBooking } from './IBooking';
 import { IPet } from './IPet';
-import { IService } from './IService';
 
 export interface IUser {
   userDetails: IUserDetails;
@@ -48,7 +47,6 @@ export interface IOwnerRoleInfo {
 
 export interface IMinderRoleInfo {
   serviceIDs: number[];
-  services?: IService[];
   rating: number;
   bio: string;
   pictures: string[];
