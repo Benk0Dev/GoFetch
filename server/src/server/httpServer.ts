@@ -173,6 +173,8 @@ app.get('/service/:id', (req: Request, res: Response) => {
     res.status(result.success ? 200 : 404).send(result.message);
 });
 
+
+
 // Create new service
 app.post('/newservice/:id', (req: Request, res: Response) => {
     const userId = parseInt(req.params.id);

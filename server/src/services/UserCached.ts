@@ -16,6 +16,7 @@ export function getCachedUsersWithPetsServicesAndBookings(): IUser[] {
   return cache.users.map(user => {
     const userCopy = { ...user };
 
+    // Add pets and services to owner
     if (userCopy.ownerRoleInfo) {
       userCopy.ownerRoleInfo = {
         ...userCopy.ownerRoleInfo,
@@ -26,9 +27,11 @@ export function getCachedUsersWithPetsServicesAndBookings(): IUser[] {
       delete (userCopy.ownerRoleInfo as any).bookingIDs;
     }
 
+    // Add services and bookings to minder
     if (userCopy.minderRoleInfo) {
       userCopy.minderRoleInfo = {
         ...userCopy.minderRoleInfo,
+        services: cache.services.filter(service => user.minderRoleInfo?.serviceIDs?.includes(service.id) || false),
         bookings: cache.bookings.filter(booking => user.minderRoleInfo?.bookingIDs?.includes(booking.minderId) || false),
       };
       delete (userCopy.minderRoleInfo as any).serviceIDs;
