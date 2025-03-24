@@ -33,21 +33,7 @@ export function addServiceCached(id: number, service: IService) {
         return { success: false, message: 'User not found' };
     }
     else {
-        if (!cache.users[userIndex].minderRoleInfo) {
-            cache.users[userIndex].minderRoleInfo = {
-                serviceIDs: [],
-                rating: 0,
-                bio: '',
-                pictures: [],
-                availability: '',
-                distanceRange: 0,
-                verified: false,
-                bookingIDs: []
-            };
-        }
-
         cache.users[userIndex].minderRoleInfo.serviceIDs.push(newService.id);
-
         saveUsersToFile(cache.users);
     }
 
@@ -61,6 +47,17 @@ export function removeServiceCached(id: number) {
     }
 
     cache.services.splice(index, 1);
+
+    // Remove the service ID from users who have it
+    cache.users.forEach(user => {
+        const serviceIndex = user.minderRoleInfo.serviceIDs.indexOf(id);
+        if (serviceIndex !== -1) {
+            user.minderRoleInfo.serviceIDs.splice(serviceIndex, 1);
+        }
+    });
+
+    // Save the updated users
+    saveUsersToFile(cache.users);
 
     // Save the updated services
     try {

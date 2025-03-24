@@ -273,7 +273,10 @@
       "availability": "",
       "distanceRange": 0,
       "verified": false,
-      "serviceIDs": [],
+      "serviceIDs": [
+        7,
+        8
+      ],
       "bookingIDs": []
     }
   }

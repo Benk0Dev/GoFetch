@@ -42,11 +42,11 @@
     gap: 10px;
 }
 
-.actions button {
+.deleteButton {
     color: var(--highlight-color);
 }
 
-.actions button:hover {
+.deleteButton:hover {
     color: var(--highlight-color-hover);
 }
 
