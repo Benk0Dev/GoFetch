@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "petId": 3,
+    "minderId": 3,
+    "ownerId": 5,
+    "serviceId": 1,
+    "time": "2025-03-27T13:00:00.000Z",
+    "notes": "She really loves tennis balls!",
+    "status": "Cancelled",
+    "createdAt": "2025-03-24T19:55:02.462Z",
+    "updatedAt": "2025-03-24T21:55:53.169Z"
+  },
+  {
+    "id": 2,
+    "petId": 3,
+    "minderId": 3,
+    "ownerId": 5,
+    "serviceId": 1,
+    "time": "2025-03-27T13:00:00.000Z",
+    "notes": "She really loves tennis balls!",
+    "status": "Confirmed",
+    "createdAt": "2025-03-24T19:55:02.462Z",
+    "updatedAt": "2025-03-24T19:55:02.462Z"
+  },
+  {
+    "id": 3,
+    "petId": 3,
+    "minderId": 3,
+    "ownerId": 5,
+    "serviceId": 1,
+    "time": "2025-03-27T13:00:00.000Z",
+    "notes": "She really loves tennis balls!",
+    "status": "Completed",
+    "createdAt": "2025-03-24T19:55:02.462Z",
+    "updatedAt": "2025-03-24T19:55:02.462Z"
+  }
+]

@@ -1,28 +1,51 @@
-.bookings ul {
-    list-style: none;
-    padding: 0;
+.bookingsNavigation {
+    width: fit-content;
 }
 
-.bookings li {
-    background: #ecf0f1;
+.bookingsNavigation button {
+    padding: 5px 10px;
+}
+
+.bookingsList {
+    display: grid;
+    row-gap: 10px;
+    margin-top: 10px;
+}
+
+.booking {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
     padding: 10px;
+    background-color: var(--menu-card-background-color);
     border-radius: 5px;
-    margin-bottom: 5px;
+}
+
+.bookingHeading {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.bookings button {
-    background: #1abc9c;
-    border: none;
-    color: white;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 5px;
-    margin-left: 10px;
+.bookingInfo {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1px;
 }
 
-.bookings button:last-child {
-    background: #e74c3c;
+.bookingDetail {
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+}
+
+.bookingActions {
+    display: flex;
+    column-gap: 10px;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.bookingActions button {
+    width: 100%;
 }

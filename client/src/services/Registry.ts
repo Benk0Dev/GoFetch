@@ -1,5 +1,5 @@
 import { IRegisterUser } from "../models/IUser";
-import { INewBooking } from "../models/IBooking";
+import { EBookingStatus, INewBooking } from "../models/IBooking";
 import { clearUser, getUserId, setUserId } from "../utils/StorageManager";
 import imageCompression from 'browser-image-compression';
 
@@ -383,6 +383,29 @@ export const createBooking = async (bookingData: INewBooking) => {
     }
 };
 
+export async function setBookingStatus(bookingId: number, status: EBookingStatus) {
+    try {
+        const response = await fetch(`${API_URL}/booking/${bookingId}/status`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ status })
+        });
+        if (response.ok) {
+            const booking = await response.json();
+            return booking;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return null;
+        }
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+}
+
 export async function addService(userId: number, service: any) {
     try {
         const response = await fetch(`${API_URL}/newservice/${userId}`, { 
@@ -441,5 +464,39 @@ export async function deleteService(serviceId: number) {
     } catch (e) {
         console.error(e);
         return false;
+    }
+}
+
+export async function getAllServices() {
+    try {
+        const response = await fetch(`${API_URL}/services`);
+        if (response.ok) {
+            const services = await response.json();
+            return services;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return null;
+        }
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+}
+
+export async function getServiceById(serviceId: number) {
+    try {
+        const response = await fetch(`${API_URL}/service/${serviceId}`);
+        if (response.ok) {
+            const service = await response.json();
+            return service;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return null;
+        }
+    } catch (e) {
+        console.error(e);
+        return null;
     }
 }

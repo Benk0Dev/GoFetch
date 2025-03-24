@@ -39,7 +39,7 @@ export function initCache(): void {
     const usersData = fs.readFileSync(`${DB_PATH}/users.json`, 'utf8');
     const petsData = fs.readFileSync(`${DB_PATH}/pets.json`, 'utf8');
     const servicesData = fs.readFileSync(`${DB_PATH}/services.json`, 'utf8');
-    const bookingData = fs.readFileSync(`${DB_PATH}/booking.json`, 'utf8');
+    const bookingData = fs.readFileSync(`${DB_PATH}/bookings.json`, 'utf8');
     const messagesData = fs.readFileSync(`${DB_PATH}/messages.json`, 'utf8');
     const notificationsData = fs.readFileSync(`${DB_PATH}/notifications.json`, 'utf8');
 

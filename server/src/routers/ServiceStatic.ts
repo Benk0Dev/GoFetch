@@ -9,7 +9,7 @@ export function AllServices() {
     if (result.length === 0) {
         return { success: false, message: 'No services found' };
     }
-    return { success: true, pets: result };
+    return { success: true, services: result };
 }
 
 export function ServiceByID(id: number) {
