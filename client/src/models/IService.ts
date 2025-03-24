@@ -1,1 +1,3 @@
-export type { IService, IType } from '../../../server/src/models/IService';
+import { IType, IDuration } from "../../../server/src/models/IService";
+export type { IService, INewService } from "../../../server/src/models/IService";
+export { IType, IDuration };

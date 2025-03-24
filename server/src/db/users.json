@@ -194,7 +194,7 @@
       "petminder",
       "petowner"
     ],
-    "currentRole": "petowner",
+    "currentRole": "petminder",
     "primaryUserInfo": {
       "profilePic": "",
       "dob": "1995-08-25T00:00:00.000Z",

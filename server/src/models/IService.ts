@@ -30,3 +30,9 @@ export enum IDuration {
     FULL_DAY = "8 hours (Full Day)",
     OVERNIGHT = "24 hours (Overnight)",
 }
+
+export interface INewService {
+    type: IType;
+    duration: IDuration;
+    price: number;
+}
