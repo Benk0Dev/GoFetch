@@ -16,6 +16,7 @@ export function getCachedUsersWithPetsServicesAndBookings(): IUser[] {
   return cache.users.map(user => {
     const userCopy = { ...user };
 
+    // Add pets and services to owner
     if (userCopy.ownerRoleInfo) {
       userCopy.ownerRoleInfo = {
         ...userCopy.ownerRoleInfo,
@@ -26,6 +27,7 @@ export function getCachedUsersWithPetsServicesAndBookings(): IUser[] {
       delete (userCopy.ownerRoleInfo as any).bookingIDs;
     }
 
+    // Add services and bookings to minder
     if (userCopy.minderRoleInfo) {
       userCopy.minderRoleInfo = {
         ...userCopy.minderRoleInfo,
@@ -73,10 +75,11 @@ export function RegisterUserCache(user: IRegisterUser) {
       return { success: false, message: 'Must be at least 16 years old' };
     }
 
+    const newId = cache.users.length > 0 ? cache.users[cache.users.length - 1].userDetails.id + 1 : 1;
     // Create new user object
     const newUser: IUser = {
       userDetails: {
-        id: cache.users.length + 1,
+        id: newId,
         fname: user.fname,
         sname: user.sname,
         loginDetails: {
@@ -220,6 +223,6 @@ function isObject(item: any): boolean {
   return (item && typeof item === 'object' && !Array.isArray(item));
 }
 
-function saveUsersToFile(users: IUser[]) {
+export function saveUsersToFile(users: IUser[]) {
   fs.writeFileSync(`${DB_PATH}/users.json`, JSON.stringify(users, null, 2), 'utf8');
 }
