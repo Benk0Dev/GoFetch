@@ -55,7 +55,8 @@ export async function registerUser(user: IRegisterUser) {
         if (response.ok) {
             const user = await response.json();
             setUserId(user.userDetails.id);
-            return user;
+            const completeUser = await getUserById(user.userDetails.id);
+            return completeUser;
         } else {
             const text = await response.text();
             console.error(text);
