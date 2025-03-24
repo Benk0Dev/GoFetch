@@ -4,6 +4,7 @@ export interface IBooking {
     minderId: number;
     ownerId: number;
     serviceId: number;
+    time: Date;
     status: EBookingStatus;
     notes?: string;
     createdAt: Date;
@@ -23,5 +24,6 @@ export interface INewBooking {
     minderId: number;
     ownerId: number;
     serviceId: number;
+    time: Date;
     notes?: string;
 }

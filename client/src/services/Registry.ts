@@ -443,3 +443,37 @@ export async function deleteService(serviceId: number) {
         return false;
     }
 }
+
+export async function getAllServices() {
+    try {
+        const response = await fetch(`${API_URL}/services`);
+        if (response.ok) {
+            const services = await response.json();
+            return services;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return null;
+        }
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+}
+
+export async function getServiceById(serviceId: number) {
+    try {
+        const response = await fetch(`${API_URL}/service/${serviceId}`);
+        if (response.ok) {
+            const service = await response.json();
+            return service;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return null;
+        }
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+}

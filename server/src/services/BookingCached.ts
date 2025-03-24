@@ -95,7 +95,7 @@ export function deleteBookingCached(bookingId: number): boolean {
 
 function saveBookingsToFile() {
   try {
-    fs.writeFileSync(path.join(DB_PATH, 'booking.json'),JSON.stringify(cache.bookings, null, 2),'utf8'
+    fs.writeFileSync(path.join(DB_PATH, 'bookings.json'),JSON.stringify(cache.bookings, null, 2),'utf8'
     );
   } catch (error) {
     console.error('Error saving booking data:', error);

@@ -165,12 +165,12 @@ app.delete('/user/:userId/pet/:petId', (req: Request, res: Response) => {
 //#region Service Routes
 app.get('/services', (req: Request, res: Response) => {
     const result = AllServices();
-    res.status(result.success ? 200 : 404).send(result.message);
+    res.status(result.success ? 200 : 404).send(result.services);
 });
 
 app.get('/service/:id', (req: Request, res: Response) => {
     const result = ServiceByID(parseInt(req.params.id));
-    res.status(result.success ? 200 : 404).send(result.message);
+    res.status(result.success ? 200 : 404).send(result.service);
 });
 
 

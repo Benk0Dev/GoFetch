@@ -164,8 +164,7 @@ const BookingPage: React.FC = () => {
           minder={minder as IUser}
           owner={user as IUser}
           service={selectedService as IService}
-          startDate={selectedDate}
-          endDate={selectedDate}
+          time={new Date(`${selectedDate} ${selectedTime}`)}
           notes={specialInstructions}
         />
       )}

@@ -12,8 +12,7 @@ interface IBookSubmitProps {
   minder: IUser;
   owner: IUser;
   service: IService;
-  startDate: string;
-  endDate: string;
+  time: Date;
   notes: string;
 }
 
@@ -22,8 +21,7 @@ const BookSubmit: React.FC<IBookSubmitProps> = ({
   minder,
   owner,
   service,
-  startDate,
-  endDate,
+  time,
   notes,
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -45,6 +43,7 @@ const BookSubmit: React.FC<IBookSubmitProps> = ({
             minderId: minder.userDetails.id,
             ownerId: owner.userDetails.id,
             serviceId: service.id,
+            time,
             notes,
           };
 
@@ -64,7 +63,7 @@ const BookSubmit: React.FC<IBookSubmitProps> = ({
     };
 
     submitBooking();
-  }, [pet, minder, owner, service, startDate, endDate, notes]);
+  }, [pet, minder, owner, service, time, notes]);
 
   return (
     <div>
