@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
 import styles from "./Bookings.module.css";
 import navigationStyles from "../Navigation.module.css";
@@ -7,10 +7,51 @@ import { EBookingStatus, IBooking } from "../../../models/IBooking";
 import { Role } from "../../../models/IUser";
 import OwnerBooking from "./OwnerBooking";
 import MinderBooking from "./MinderBooking";
+import { getUserById, setBookingStatus } from "../../../services/Registry";
 
 function Bookings() {
-    const { user } = useAuth();
+    const { user, setUser } = useAuth();
     const [status, setStatus] = useState<EBookingStatus>(EBookingStatus.Confirmed);
+
+    const handleCancel = async (bookingId: number) => {
+        const booking = await setBookingStatus(bookingId, EBookingStatus.Cancelled);
+        if (booking) {
+            const updatedUser = await getUserById(user.userDetails.id);
+            setUser(updatedUser);
+        } else {
+            console.error("Failed to cancel booking.");
+        }
+    }
+
+    const handleAccept = async (bookingId: number) => {
+        const booking = await setBookingStatus(bookingId, EBookingStatus.Confirmed);
+        if (booking) {
+            const updatedUser = await getUserById(user.userDetails.id);
+            setUser(updatedUser);
+        } else {
+            console.error("Failed to cancel booking.");
+        }
+    }
+
+    const handleDecline = async (bookingId: number) => {
+        const booking = await setBookingStatus(bookingId, EBookingStatus.Cancelled);
+        if (booking) {
+            const updatedUser = await getUserById(user.userDetails.id);
+            setUser(updatedUser);
+        } else {
+            console.error("Failed to cancel booking.");
+        }
+    }
+
+    const handleReview = (bookingId: number) => {
+        console.log("Review booking", bookingId);
+        // Open review modal
+    }
+
+    const handleMessage = (bookingId: number) => {
+        console.log("Message user", bookingId);
+        // Open chat with user
+    }
 
     return (
         <div className={`${dashboardStyles.dashboardSection}`}>
@@ -42,7 +83,7 @@ function Bookings() {
                         user.ownerRoleInfo.bookings
                             .filter((b: IBooking) => b.status === status)
                             .map((booking: IBooking) => (
-                                <OwnerBooking key={booking.id} booking={booking} status={status} />
+                                <OwnerBooking key={booking.id} booking={booking} status={status} onCancel={handleCancel} onMessage={handleMessage} onReview={handleReview} />
                             ))
                         ) : (
                         <p className={styles.emptyState}>You have no {status === EBookingStatus.Confirmed ? "upcoming" : status === EBookingStatus.Pending ? "pending" : "past"} bookings.</p>
@@ -51,7 +92,7 @@ function Bookings() {
                         user.minderRoleInfo.bookings
                         .filter((b: IBooking) => b.status === status)
                         .map((booking: IBooking) => (
-                            <MinderBooking key={booking.id} booking={booking} status={status} />
+                            <MinderBooking key={booking.id} booking={booking} status={status} onAccept={handleAccept} onDecline={handleDecline} onMessage={handleMessage} />
                         ))
                     ) : (
                         <p className={styles.emptyState}>You have no {status === EBookingStatus.Confirmed ? "upcoming" : status === EBookingStatus.Pending ? "pending" : "past"} bookings.</p>

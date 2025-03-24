@@ -236,7 +236,7 @@ app.post('/booking', (req: Request, res: Response) => {
 // Update booking status
 app.put('/booking/:id/status', (req: Request, res: Response) => {
     const result = updateBookingStatus(parseInt(req.params.id),req.body.status);
-    res.json(result);
+    res.json(result.booking);
 });
 
 // Update booking details
