@@ -99,9 +99,10 @@
       }
     },
     "roles": [
-      "petminder"
+      "petminder",
+      "petowner"
     ],
-    "currentRole": "petminder",
+    "currentRole": "petowner",
     "primaryUserInfo": {
       "profilePic": "",
       "dob": "1992-04-10T00:00:00.000Z",
@@ -194,7 +195,7 @@
       "petminder",
       "petowner"
     ],
-    "currentRole": "petminder",
+    "currentRole": "petowner",
     "primaryUserInfo": {
       "profilePic": "",
       "dob": "1995-08-25T00:00:00.000Z",

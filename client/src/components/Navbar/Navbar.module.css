@@ -30,6 +30,10 @@
     color: var(--text-color);
 }
 
+.navbar button {
+    padding: 10px;
+}
+
 .dropdownContainer {
     position: relative;
     display: flex;

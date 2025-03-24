@@ -67,7 +67,7 @@ function ProfileIcon() {
                   switchRole();
                   navigate("/dashboard");
                 } else {
-                  navigate(role === Role.OWNER ? "/register-minder" : "/register-owner");
+                  navigate(role === Role.OWNER ? "/become-minder" : "/become-owner");
                 }
                 toggleMenu();
               }}

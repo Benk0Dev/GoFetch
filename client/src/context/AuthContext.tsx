@@ -44,7 +44,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
   
-
   const logout = () => {
     clearUser();
     setUser(null);
@@ -52,10 +51,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const switchRole = async () => {
-    if (!user || user.roles.length === 1) return;
+    if (!user) return;
+
+    setLoading(true);
+
+    if (user.roles.length === 1) {
+      await editUser(user.userDetails.id, { roles: [Role.MINDER, Role.OWNER] });
+      setUser((prev: any) => ({
+        ...prev,
+        roles: [Role.MINDER, Role.OWNER]
+      }));
+    }
   
     const newRole = role === Role.MINDER ? Role.OWNER : Role.MINDER;
-    setLoading(true);
     setRole(newRole);
     setUser((prev: any) => ({
       ...prev,

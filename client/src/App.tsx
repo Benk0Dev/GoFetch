@@ -4,6 +4,7 @@ import Footer from "./components/Footer";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import LoginPage from "./pages/AuthenticationPage/LoginPage";
 import RegisterPage from "./pages/AuthenticationPage/RegisterPage";
+import BecomeRolePage from "./pages/AuthenticationPage/BecomeRolePage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import BrowsePage from "./pages/BrowsePage/BrowsePage";
 import DashboardPage from "./pages/DashboardPage/Dashboard";
@@ -34,6 +35,14 @@ function App() {
         <Route
           path="/register"
           element={isGuest ? <RegisterPage /> : <Navigate to="/dashboard" replace />}
+        />
+        <Route
+          path="/become-minder"
+          element={role === Role.OWNER ? <BecomeRolePage role={Role.MINDER} /> : role === Role.MINDER ? <Navigate to="/dashboard" replace /> : <Navigate to="/" replace />}
+        />
+        <Route
+          path="/become-owner"
+          element={role === Role.MINDER ? <BecomeRolePage role={Role.OWNER} /> : role === Role.OWNER ? <Navigate to="/dashboard" replace /> : <Navigate to="/" replace />}
         />
         <Route path="/browse" element={<BrowsePage />} />
         <Route

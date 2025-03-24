@@ -126,10 +126,11 @@ p {
     color: var(--text-color);
     font-weight: 400;
     font-size: 16px;
+    cursor: pointer;
 }
 
 .btn-round {
-    padding: 10px;
+    padding: 10px 20px;
     border-radius: 100px;
     height: 40px;
     width: 40px;
