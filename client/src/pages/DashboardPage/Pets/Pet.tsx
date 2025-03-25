@@ -23,8 +23,8 @@ function Pet({ pet }: { pet: any }) {
             <p>{pet.breed}, {getAge(pet.dob)} years</p>
             <img src={(pet.picture)} alt={pet.name} />
             <div className={styles.buttons}>
-                <button className="btn" onClick={() => {}}>View Details</button>
-                <button className="btn" onClick={() => {}}>Edit</button>
+                <button className="btn btn-secondary" onClick={() => {}}>View Details</button>
+                <button className="btn btn-secondary" onClick={() => {}}>Edit</button>
             </div>
         </div>
     );

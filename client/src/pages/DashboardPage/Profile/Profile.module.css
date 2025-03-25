@@ -1,8 +1,7 @@
 .profile label {
     display: block;
     margin-top: 20px;
-    margin-left: 9px;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 18px;
     text-align: left;
 }
@@ -12,13 +11,7 @@
     width: 100%;
     min-width: 100%;
     max-width: 100%;
-    padding: 12px;
     margin-top: 6px;
-    border-radius: 8px;
-    border: 1px solid #d1d1d1;
-    font-size: 16px;
-    background: #f9f9f9;
-    transition: background 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
 .profile textarea {
@@ -26,14 +19,6 @@
     min-height: 50px;
     max-height: 400px;
     resize: vertical;
-}
-
-.profile textarea:focus,
-.profile input[type="text"]:focus {
-    border-color: #2c3e50;
-    background: #fff;
-    outline: none;
-    box-shadow: 0 0 6px rgba(44, 62, 80, 0.2);
 }
 
 .photoGrid {
@@ -50,7 +35,7 @@
     aspect-ratio: 1 / 1;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--box-shadow);
     transition: transform 0.2s ease-in-out;
     cursor: pointer;
 }
@@ -99,20 +84,19 @@ Label.addImage {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px dashed #bdc3c7;
+    border: 2px dashed var(--menu-card-border-color);
     border-radius: 8px;
     cursor: pointer;
-    color: #bdc3c7;
+    color: var(--menu-card-border-color);
     transition: all 0.2s ease-in-out;
-    background: #f9f9f9;
     margin: 0;
     aspect-ratio: 1/1;
 }
 
 .addImage:hover {
-    background: #e9e9e9;
-    border-color: #000000;
-    color: #000000;
+    background: var(--primary-color);
+    border-color: var(--text-color);
+    color: var(--text-color);
 }
 
 .fileInput {
@@ -127,15 +111,19 @@ Label.addImage {
     margin: 8px 0;
     border-radius: 8px;
     column-gap: 20px;
-    background-color: #f6f6f6;
-    border: 1px solid #d1d1d1;
+    background-color: var(--primary-color);
+    border: 1px solid var(--menu-card-border-color);
+}
+
+.sliderContainer:focus-within {
+    border-color: var(--text-color);
 }
 
 input[type='range']::-webkit-slider-thumb {
     width: 6px;
     -webkit-appearance: none;
     height: 12px;
-    background: black;
+    background: var(--text-color);
     border-radius: 2px;
   }
 
