@@ -1,130 +1,147 @@
-import { useEffect, useState, useRef } from "react";
-import { useParams } from "react-router-dom";
-import { IChat, IMessage } from "../../models/IMessage";
-import { getChatById, sendMessage, getUserById } from "../../services/Registry";
-import { useAuth } from "../../context/AuthContext";
+import { useEffect, useState, useCallback, useMemo } from "react";
+import { Link, Outlet, useParams, useNavigate } from "react-router-dom";
+import { IChat } from "../../models/IMessage";
+import { getUserChats, getUserById } from "../../services/Registry";
 import styles from './MessagingPage.module.css';
+import { useAuth } from "../../context/AuthContext";
 
-function ChatPage() {
-    const { id } = useParams<{id: string}>();
-    const [chat, setChat] = useState<IChat | null>(null);
-    const [newMessage, setNewMessage] = useState("");
+function MessagingPage() {
+    const [chats, setChats] = useState<IChat[]>([]);
     const [loading, setLoading] = useState(true);
-    const [otherUserName, setOtherUserName] = useState("");
-    const messagesEndRef = useRef<HTMLDivElement>(null);
+    const [chatUserNames, setChatUserNames] = useState<{[chatId: string]: string}>({});
+    const { id } = useParams<{id: string}>();
+    const navigate = useNavigate();
     const { user } = useAuth();
 
-    async function fetchChat() {
-        if (!id) return;
+    // Memoize the current user ID to prevent unnecessary effect triggers
+    const currentUserId = useMemo(() => user.userDetails.id, [user.userDetails.id]);
+
+    // Use useCallback to memoize the fetchChats function
+    const fetchChats = useCallback(async (shouldSetLoading = true) => {
+        if (shouldSetLoading) {
+            setLoading(true);
+        }
         
-        setLoading(true);
-        const data = await getChatById(parseInt(id));
-        if (data) {
-            setChat(data);
-        }
-        setLoading(false);
-    }
-
-    async function handleSendMessage(e: React.FormEvent) {
-        e.preventDefault();
-        if (!newMessage.trim() || !id) return;
-
-        const sent = await sendMessage(parseInt(id), newMessage);
-        if (sent) {
-            setNewMessage("");
-            // Refetch the chat to get the updated messages
-            fetchChat();
-        }
-    }
-
-    useEffect(() => {
-        fetchChat();
-        // Set up polling to refresh messages every 5 seconds
-        const interval = setInterval(fetchChat, 5000);
-        return () => clearInterval(interval);
-    }, [id]);
-
-    useEffect(() => {
-        // Scroll to bottom when messages change
-        messagesEndRef.current?.scrollIntoView({ behavior: 'instant' });
-    }, [chat?.messages]);
-
-    useEffect(() => {
-        async function fetchOtherUser() {
-            if (!chat) return;
-            console.log(user)
-            const userId = user.userDetails.id;
-            console.log(userId)
-            const currentUserId = user.userDetails.id;
-            // Find the ID of the other user in the chat (not the current user)
-            const otherUserId = chat.users.find(id => id !== currentUserId) || null;
-            
-            if (otherUserId) {
-                const otherUser = await getUserById(otherUserId);
-                if (otherUser) {
-                    setOtherUserName(`${otherUser.userDetails.fname} ${otherUser.userDetails.sname}`);
+        const data = await getUserChats();
+        if (data && data.chats) {
+            // Only update state if chats have actually changed
+            if (JSON.stringify(data.chats) !== JSON.stringify(chats)) {
+                setChats(data.chats);
+                
+                // If no chat is selected and we have chats, select the first one
+                if (!id && data.chats.length > 0) {
+                    navigate(`/chats/${data.chats[0].id}`);
                 }
             }
         }
         
-        fetchOtherUser();
-    }, [chat]);
+        if (shouldSetLoading) {
+            setLoading(false);
+        }
+    }, [chats, id, navigate]);
 
-    if (loading) {
-        return <div className={styles.chatLoading}>Loading conversation...</div>;
-    }
+    // Fetch chat user names only when necessary
+    const fetchChatUserNames = useCallback(async () => {
+        const pendingChats = chats.filter(chat => !chatUserNames[chat.id.toString()]);
+        
+        if (pendingChats.length === 0) return;
+        
+        const namesMap = {...chatUserNames};
+        
+        for (const chat of pendingChats) {
+            const otherUserId = chat.users.find(userId => userId !== currentUserId) || null;
+            
+            if (otherUserId) {
+                try {
+                    const otherUser = await getUserById(otherUserId);
+                    if (otherUser && otherUser.userDetails) {
+                        namesMap[chat.id.toString()] = 
+                            `${otherUser.userDetails.fname} ${otherUser.userDetails.sname}`;
+                    } else {
+                        namesMap[chat.id.toString()] = "Unknown User";
+                    }
+                } catch (error) {
+                    console.error("Error fetching user:", error);
+                    namesMap[chat.id.toString()] = "Unknown User";
+                }
+            } else {
+                namesMap[chat.id.toString()] = "Unknown User";
+            }
+        }
+        
+        setChatUserNames(namesMap);
+    }, [chats, chatUserNames, currentUserId]);
 
-    if (!chat) {
-        return <div className={styles.chatError}>Conversation not found</div>;
+    // Initial fetch
+    useEffect(() => {
+        fetchChats();
+    }, [fetchChats]);
+
+    // Set up polling to refresh chats - with silent updates
+    useEffect(() => {
+        const interval = setInterval(() => fetchChats(false), 10000);
+        return () => clearInterval(interval);
+    }, [fetchChats]);
+
+    // Fetch user names only when we have new chats without names
+    useEffect(() => {
+        if (chats.length > 0) {
+            fetchChatUserNames();
+        }
+    }, [chats, fetchChatUserNames]);
+
+    if (loading && chats.length === 0) {
+        return <div>Loading chats...</div>;
     }
 
     return (
-        <div className={styles.chatContainer}>
-            <div className={styles.chatHeader}>
-                {otherUserName || "Loading..."}
-            </div>
-            
-            <div className={styles.messagesContainer}>
-                {chat.messages && chat.messages.length > 0 ? (
-                    chat.messages.map((message: IMessage) => (
-                        <div 
-                            key={message.id} 
-                            className={`${styles.message} ${
-                                message.userId === user.userDetails.id
-                                ? styles.sentMessage 
-                                : styles.receivedMessage
-                            }`}
-                        >
-                            <p className={styles.messageContent}>{message.message}</p>
-                            <span className={styles.messageTime}>
-                                {new Date(message.timestamp).toLocaleTimeString()}
-                            </span>
-                        </div>
-                    ))
+        <div className={styles.messagingContainer}>
+            {/* Chat list sidebar */}
+            <div className={styles.chatsSidebar}>
+                <h2>Chats</h2>
+                
+                {chats.length > 0 ? (
+                    <div className={styles.chatsList}>
+                        {chats.map((chat: IChat) => (
+                            <Link 
+                                to={`/chats/${chat.id}`} 
+                                key={chat.id} 
+                                className={`${styles.chatListItem} ${id === chat.id?.toString() ? styles.activeChatItem : ''}`}
+                            >
+                                <div className={styles.chatPreview}>
+                                    <h3>
+                                        {chatUserNames[chat.id.toString()] || 
+                                            <span className={styles.loadingName}>Loading...</span>}
+                                    </h3>
+                                    <p className={styles.previewMessage}>
+                                        {chat.lastMessage || "No messages yet"}
+                                    </p>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
                 ) : (
-                    <p className={styles.noMessages}>No messages yet. Send the first one!</p>
+                    <div className={styles.noChats}>
+                        <p>No conversations yet</p>
+                        <Link to="/browse" className={styles.browseButton}>
+                            Browse Pet Minders
+                        </Link>
+                    </div>
                 )}
-                <div ref={messagesEndRef} />
             </div>
             
-            <form onSubmit={handleSendMessage} className={styles.messageForm}>
-                <input
-                    type="text"
-                    value={newMessage}
-                    onChange={(e) => setNewMessage(e.target.value)}
-                    placeholder="Type a message..."
-                    className={styles.messageInput}
-                />
-                <button 
-                    type="submit" 
-                    className={styles.sendButton}
-                    disabled={!newMessage.trim()}
-                >
-                    Send
-                </button>
-            </form>
+            {/* Chat window - will display the Outlet (ChatPage) */}
+            <div className={styles.chatWindowContainer}>
+                {id ? (
+                    <Outlet />
+                ) : (
+                    <div className={styles.noChatSelected}>
+                        <p>Select a conversation</p>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }
 
-export default ChatPage;
+export default MessagingPage;

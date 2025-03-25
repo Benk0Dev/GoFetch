@@ -3,22 +3,31 @@ import { cache, DB_PATH } from './Cache';
 import fs from 'fs';
 import path from 'path';
 
-// Initialize cache for notifications if not present
-if (!cache.notifications) {
+// Initialize cache for notifications if not present or not an array
+if (!cache.notifications || !Array.isArray(cache.notifications)) {
+    cache.notifications = [];
+    
     try {
         const notificationsData = fs.readFileSync(path.join(DB_PATH, 'notifications.json'), 'utf8');
         const parsed = JSON.parse(notificationsData);
-        cache.notifications = parsed.notifications || [];
+        
+        // Ensure we're getting an array
+        if (parsed && parsed.notifications && Array.isArray(parsed.notifications)) {
+            cache.notifications = parsed.notifications;
+        }
     } catch (error) {
         console.error('Error loading notifications data:', error);
-        cache.notifications = [];
-
+        
         // Create initial notifications.json file if it doesn't exist
         saveNotificationsToFile();
     }
 }
 
 export function getNotificationsForUserCached(userId: number): INotification[] {
+    // Ensure we're working with an array
+    if (!Array.isArray(cache.notifications)) {
+        cache.notifications = [];
+    }
     return cache.notifications.filter(notification => notification.userId === userId);
 }
 
