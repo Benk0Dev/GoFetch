@@ -1,8 +1,9 @@
-import { EBookingStatus, IBooking } from "../../../models/IBooking";
+import { EBookingStatus } from "../../../models/IBooking";
 import BookingInfo from "./BookingInfo";
 import styles from "./Bookings.module.css";
+import { Booking } from "./Bookings";
 
-function OwnerBooking({ booking, status, onMessage, onCancel, onReview }: { booking: IBooking, status: EBookingStatus, onMessage: (bookingId: number) => void, onCancel: (bookingId: number) => void, onReview: (bookingId: number) => void }) {
+function OwnerBooking({ booking, status, onMessage, onCancel, onReview }: { booking: Booking, status: EBookingStatus, onMessage: (bookingId: number) => void, onCancel: (bookingId: number) => void, onReview: (bookingId: number) => void }) {
   return (
     <div className={styles.booking}>
         <BookingInfo booking={booking} />

@@ -1,8 +1,9 @@
-import { EBookingStatus, IBooking } from "../../../models/IBooking";
+import { EBookingStatus } from "../../../models/IBooking";
 import BookingInfo from "./BookingInfo";
 import styles from "./Bookings.module.css";
+import { Booking } from "./Bookings";
 
-function MinderBooking({ booking, status, onMessage, onAccept, onDecline }: { booking: IBooking, status: EBookingStatus, onMessage: (bookingId: number) => void, onAccept: (bookingId: number) => void, onDecline: (bookingId: number) => void }) {
+function MinderBooking({ booking, status, onMessage, onAccept, onDecline }: { booking: Booking, status: EBookingStatus, onMessage: (bookingId: number) => void, onAccept: (bookingId: number) => void, onDecline: (bookingId: number) => void }) {
   return (
     <div className={styles.booking}>
         <BookingInfo booking={booking} />

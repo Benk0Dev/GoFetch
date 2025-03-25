@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
 import styles from "./Bookings.module.css";
 import navigationStyles from "../Navigation.module.css";
@@ -7,11 +7,65 @@ import { EBookingStatus, IBooking } from "../../../models/IBooking";
 import { Role } from "../../../models/IUser";
 import OwnerBooking from "./OwnerBooking";
 import MinderBooking from "./MinderBooking";
-import { getUserByIdWithPictures, setBookingStatus } from "../../../services/Registry";
+import { getServiceById, getUserById, getUserByIdWithPictures, setBookingStatus } from "../../../services/Registry";
+import { IPet } from "../../../models/IPet";
+
+export interface Booking {
+    owner: any;
+    minder: any;
+    pet: any;
+    service: any;
+    time: Date;
+    status: EBookingStatus;
+    id: number;
+}
 
 function Bookings() {
     const { user, setUser } = useAuth();
     const [status, setStatus] = useState<EBookingStatus>(EBookingStatus.Confirmed);
+    const [bookings, setBookings] = useState<Booking[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchInfo = async () => {
+            const rawBookings = user.currentRole === Role.OWNER
+                ? user.ownerRoleInfo.bookings
+                : user.minderRoleInfo.bookings;
+    
+            const detailedBookings = await Promise.all(
+                rawBookings.map(async (booking: IBooking) => {
+                    const [owner, minder, service] = await Promise.all([
+                        getUserById(booking.ownerId),
+                        getUserById(booking.minderId),
+                        getServiceById(booking.serviceId)
+                    ]);
+    
+                    const pet = owner.ownerRoleInfo.pets.find((pet: IPet) => pet.id === booking.petId);
+    
+                    return {
+                        id: booking.id,
+                        time: booking.time,
+                        status: booking.status,
+                        owner,
+                        minder,
+                        pet,
+                        service
+                    };
+                })
+            );
+    
+            const sortedBookings = detailedBookings.sort(
+                (a, b) => new Date(a.time).getTime() - new Date(b.time).getTime()
+            );
+    
+            setBookings(sortedBookings);
+            setLoading(false);
+        };
+    
+        fetchInfo();
+    }, []);
+    
+    
 
     const handleCancel = async (bookingId: number) => {
         const booking = await setBookingStatus(bookingId, EBookingStatus.Cancelled);
@@ -53,6 +107,10 @@ function Bookings() {
         // Open chat with user
     }
 
+    if (loading) {
+        return null;
+    }
+
     return (
         <div className={`${dashboardStyles.dashboardSection}`}>
             <h2>Your Bookings</h2>
@@ -78,25 +136,21 @@ function Bookings() {
                     </button>
                 </div>
                 <div className={styles.bookingsList}>
-                    {user.currentRole === Role.OWNER ? (
-                        user.ownerRoleInfo.bookings.filter((b: IBooking) => b.status === status).length > 0 ? (
-                        user.ownerRoleInfo.bookings
-                            .filter((b: IBooking) => b.status === status)
-                            .map((booking: IBooking) => (
-                                <OwnerBooking key={booking.id} booking={booking} status={status} onCancel={handleCancel} onMessage={handleMessage} onReview={handleReview} />
+                    {bookings.filter((b: Booking) => b.status === status).length > 0 ? (
+                        bookings
+                            .filter((b: Booking) => b.status === status)
+                            .map((booking: Booking) => (
+                                user.currentRole === Role.OWNER ? (
+                                    <OwnerBooking key={booking.id} booking={booking} status={status} onCancel={handleCancel} onMessage={handleMessage} onReview={handleReview} />
+                                ) : (
+                                    <MinderBooking key={booking.id} booking={booking} status={status} onAccept={handleAccept} onDecline={handleDecline} onMessage={handleMessage} />
+                                )
+                                
                             ))
                         ) : (
                         <p className={styles.emptyState}>You have no {status === EBookingStatus.Confirmed ? "upcoming" : status === EBookingStatus.Pending ? "pending" : "past"} bookings.</p>
                         )
-                    ) : user.minderRoleInfo.bookings.filter((b: IBooking) => b.status === status).length > 0 ? (
-                        user.minderRoleInfo.bookings
-                        .filter((b: IBooking) => b.status === status)
-                        .map((booking: IBooking) => (
-                            <MinderBooking key={booking.id} booking={booking} status={status} onAccept={handleAccept} onDecline={handleDecline} onMessage={handleMessage} />
-                        ))
-                    ) : (
-                        <p className={styles.emptyState}>You have no {status === EBookingStatus.Confirmed ? "upcoming" : status === EBookingStatus.Pending ? "pending" : "past"} bookings.</p>
-                    )}
+                    }
                 </div>
             </div>
         </div>
