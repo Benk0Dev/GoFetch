@@ -1,126 +1,130 @@
-import { useEffect, useState } from "react";
-import { Link, Outlet, useParams, useNavigate } from "react-router-dom";
-import { IChat } from "../../models/IMessage";
-import { getUserChats, getUserById } from "../../services/Registry";
-import styles from './MessagingPage.module.css';
+import { useEffect, useState, useRef } from "react";
+import { useParams } from "react-router-dom";
+import { IChat, IMessage } from "../../models/IMessage";
+import { getChatById, sendMessage, getUserById } from "../../services/Registry";
 import { useAuth } from "../../context/AuthContext";
+import styles from './MessagingPage.module.css';
 
-function MessagingPage() {
-    const [chats, setChats] = useState<IChat[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [chatUserNames, setChatUserNames] = useState<{[chatId: string]: string}>({});
+function ChatPage() {
     const { id } = useParams<{id: string}>();
-    const navigate = useNavigate();
+    const [chat, setChat] = useState<IChat | null>(null);
+    const [newMessage, setNewMessage] = useState("");
+    const [loading, setLoading] = useState(true);
+    const [otherUserName, setOtherUserName] = useState("");
+    const messagesEndRef = useRef<HTMLDivElement>(null);
     const { user } = useAuth();
 
-    async function fetchChats() {
+    async function fetchChat() {
+        if (!id) return;
+        
         setLoading(true);
-        const data = await getUserChats();
-        if (data && data.chats) {
-            setChats(data.chats);
-            
-            // If no chat is selected and we have chats, select the first one
-            if (!id && data.chats.length > 0) {
-                navigate(`/chats/${data.chats[0].id}`);
-            }
+        const data = await getChatById(parseInt(id));
+        if (data) {
+            setChat(data);
         }
         setLoading(false);
     }
 
-    useEffect(() => {
-        fetchChats();
-        // Set up polling to refresh chats every 10 seconds
-        const interval = setInterval(fetchChats, 10000);
-        return () => clearInterval(interval);
-    }, []);
+    async function handleSendMessage(e: React.FormEvent) {
+        e.preventDefault();
+        if (!newMessage.trim() || !id) return;
 
-    // Fetch user names for all chats
+        const sent = await sendMessage(parseInt(id), newMessage);
+        if (sent) {
+            setNewMessage("");
+            // Refetch the chat to get the updated messages
+            fetchChat();
+        }
+    }
+
     useEffect(() => {
-        async function fetchChatUserNames() {
+        fetchChat();
+        // Set up polling to refresh messages every 5 seconds
+        const interval = setInterval(fetchChat, 5000);
+        return () => clearInterval(interval);
+    }, [id]);
+
+    useEffect(() => {
+        // Scroll to bottom when messages change
+        messagesEndRef.current?.scrollIntoView({ behavior: 'instant' });
+    }, [chat?.messages]);
+
+    useEffect(() => {
+        async function fetchOtherUser() {
+            if (!chat) return;
+            console.log(user)
+            const userId = user.userDetails.id;
+            console.log(userId)
             const currentUserId = user.userDetails.id;
-            const namesMap: {[chatId: string]: string} = {};
+            // Find the ID of the other user in the chat (not the current user)
+            const otherUserId = chat.users.find(id => id !== currentUserId) || null;
             
-            for (const chat of chats) {
-                const otherUserId = chat.users.find(userId => userId !== currentUserId) || null;
-                
-                if (otherUserId) {
-                    try {
-                        const otherUser = await getUserById(otherUserId);
-                        if (otherUser && otherUser.userDetails) {
-                            namesMap[chat.id.toString()] = 
-                                `${otherUser.userDetails.fname} ${otherUser.userDetails.sname}`;
-                        } else {
-                            namesMap[chat.id.toString()] = "Unknown User";
-                        }
-                    } catch (error) {
-                        console.error("Error fetching user:", error);
-                        namesMap[chat.id.toString()] = "Unknown User";
-                    }
-                } else {
-                    namesMap[chat.id.toString()] = "Unknown User";
+            if (otherUserId) {
+                const otherUser = await getUserById(otherUserId);
+                if (otherUser) {
+                    setOtherUserName(`${otherUser.userDetails.fname} ${otherUser.userDetails.sname}`);
                 }
             }
-            
-            setChatUserNames(namesMap);
         }
         
-        if (chats.length > 0) {
-            fetchChatUserNames();
-        }
-    }, [chats]);
+        fetchOtherUser();
+    }, [chat]);
 
-    if (loading && chats.length === 0) {
-        return <div>Loading chats...</div>;
+    if (loading) {
+        return <div className={styles.chatLoading}>Loading conversation...</div>;
+    }
+
+    if (!chat) {
+        return <div className={styles.chatError}>Conversation not found</div>;
     }
 
     return (
-        <div className={styles.messagingContainer}>
-            {/* Chat list sidebar */}
-            <div className={styles.chatsSidebar}>
-                <h2>Chats</h2>
-                
-                {chats.length > 0 ? (
-                    <div className={styles.chatsList}>
-                        {chats.map((chat: IChat) => (
-                            <Link 
-                                to={`/chats/${chat.id}`} 
-                                key={chat.id} 
-                                className={`${styles.chatListItem} ${id === chat.id?.toString() ? styles.activeChatItem : ''}`}
-                            >
-                                <div className={styles.chatPreview}>
-                                    <h3>
-                                        {chatUserNames[chat.id.toString()] || 
-                                            <span className={styles.loadingName}>Loading...</span>}
-                                    </h3>
-                                    <p className={styles.previewMessage}>
-                                        {chat.lastMessage || "No messages yet"}
-                                    </p>
-                                </div>
-                            </Link>
-                        ))}
-                    </div>
-                ) : (
-                    <div className={styles.noChats}>
-                        <p>No conversations yet</p>
-                        <Link to="/browse" className={styles.browseButton}>
-                            Browse Pet Minders
-                        </Link>
-                    </div>
-                )}
+        <div className={styles.chatContainer}>
+            <div className={styles.chatHeader}>
+                {otherUserName || "Loading..."}
             </div>
             
-            {/* Chat window - will display the Outlet (ChatPage) */}
-            <div className={styles.chatWindowContainer}>
-                {id ? (
-                    <Outlet />
+            <div className={styles.messagesContainer}>
+                {chat.messages && chat.messages.length > 0 ? (
+                    chat.messages.map((message: IMessage) => (
+                        <div 
+                            key={message.id} 
+                            className={`${styles.message} ${
+                                message.userId === user.userDetails.id
+                                ? styles.sentMessage 
+                                : styles.receivedMessage
+                            }`}
+                        >
+                            <p className={styles.messageContent}>{message.message}</p>
+                            <span className={styles.messageTime}>
+                                {new Date(message.timestamp).toLocaleTimeString()}
+                            </span>
+                        </div>
+                    ))
                 ) : (
-                    <div className={styles.noChatSelected}>
-                        <p>Select a conversation</p>
-                    </div>
+                    <p className={styles.noMessages}>No messages yet. Send the first one!</p>
                 )}
+                <div ref={messagesEndRef} />
             </div>
+            
+            <form onSubmit={handleSendMessage} className={styles.messageForm}>
+                <input
+                    type="text"
+                    value={newMessage}
+                    onChange={(e) => setNewMessage(e.target.value)}
+                    placeholder="Type a message..."
+                    className={styles.messageInput}
+                />
+                <button 
+                    type="submit" 
+                    className={styles.sendButton}
+                    disabled={!newMessage.trim()}
+                >
+                    Send
+                </button>
+            </form>
         </div>
     );
 }
 
-export default MessagingPage;
+export default ChatPage;
