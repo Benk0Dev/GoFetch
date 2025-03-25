@@ -71,9 +71,7 @@ function saveNotificationsToFile() {
     try {
         fs.writeFileSync(
             path.join(DB_PATH, 'notifications.json'),
-            JSON.stringify({
-                notifications: cache.notifications
-            }, null, 2),
+            JSON.stringify(cache.notifications, null, 2),
             'utf8'
         );
     } catch (error) {
