@@ -1,8 +1,17 @@
+.authentication {
+    display: flex;
+    margin-bottom: auto;
+    margin-top: 20px;
+    justify-content: center;
+}
+
 .authenticationContainer {
     display: flex;
-    justify-content: center;
-    padding: 40px 0;
-    margin-bottom: auto;
+    flex-direction: column;
+}
+
+.authenticationContainer > button {
+    margin-bottom: 10px;
 }
 
 .authenticationBox {
@@ -97,7 +106,6 @@ input[type="date"] {
     display: flex;
     margin-bottom: auto;
     margin-top: 20px;
-    margin-bottom: 20px;
     justify-content: center;
 }
 
