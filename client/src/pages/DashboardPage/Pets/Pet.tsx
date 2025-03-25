@@ -1,8 +1,12 @@
 import styles from "./Pets.module.css";
 import "../../../global.css";
+import { IPet } from "../../../models/IPet";
+import { useNavigate } from "react-router-dom";
 
-function Pet({ pet }: { pet: any }) {
-    const getAge = (dob: string): number => {
+function Pet({ pet }: { pet: IPet }) {
+    const navigate = useNavigate();
+
+    const getAge = (dob: Date): number => {
         const birthDate = new Date(dob);
         const today = new Date();
         let age = today.getFullYear() - birthDate.getFullYear();
@@ -22,10 +26,7 @@ function Pet({ pet }: { pet: any }) {
             <h3>{pet.name}</h3>
             <p>{pet.breed}, {getAge(pet.dob)} years</p>
             <img src={(pet.picture)} alt={pet.name} />
-            <div className={styles.buttons}>
-                <button className="btn btn-secondary" onClick={() => {}}>View Details</button>
-                <button className="btn btn-secondary" onClick={() => {}}>Edit</button>
-            </div>
+            <button className="btn btn-secondary" onClick={() => navigate(pet.id.toString())}>View Details</button>
         </div>
     );
 }

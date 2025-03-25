@@ -12,6 +12,7 @@ import MessagingPage from "./pages/MessagingPage/MessagingPage";
 import ChatPage from "./pages/MessagingPage/ChatPage";
 import BookingPage from "./pages/BookingPage/BookingPage";
 import AddPetPage from "./pages/DashboardPage/Pets/AddPet";
+import PetDetailsPage from "./pages/DashboardPage/Pets/PetDetails";
 import { useAuth } from "./context/AuthContext";
 import { Role } from "./models/IUser";
 
@@ -68,6 +69,7 @@ function App() {
         >
           <Route path=":id" element={<ChatPage />} />
         </Route>
+        <Route path="/dashboard/pets/:id" element={role === Role.OWNER ? <PetDetailsPage /> : <Navigate to="/" replace />} />
       </Routes>
       <Footer />
     </Router>

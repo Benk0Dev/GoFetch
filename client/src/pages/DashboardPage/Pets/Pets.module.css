@@ -47,9 +47,7 @@
     aspect-ratio: 1/1;
 }
 
-.pet .buttons {
-    display: flex;
-    justify-content: space-between;
+.pet button {
     margin: 20px 0 10px;
 }
 
