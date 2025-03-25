@@ -134,9 +134,8 @@
         2
       ],
       "bookingIDs": [
-        1,
-        2,
-        3
+        3,
+        1
       ]
     }
   },
@@ -185,7 +184,9 @@
         3,
         4
       ],
-      "bookingIDs": []
+      "bookingIDs": [
+        2
+      ]
     }
   },
   {
@@ -222,9 +223,9 @@
         2
       ],
       "bookingIDs": [
+        3,
         1,
-        2,
-        3
+        2
       ]
     },
     "minderRoleInfo": {
