@@ -1,38 +1,50 @@
 [
   {
     "id": 1,
-    "petId": 3,
+    "petId": 1,
     "minderId": 3,
     "ownerId": 5,
     "serviceId": 1,
-    "time": "2025-03-27T13:00:00.000Z",
-    "notes": "She really loves tennis balls!",
-    "status": "Cancelled",
-    "createdAt": "2025-03-24T19:55:02.462Z",
-    "updatedAt": "2025-03-24T21:55:53.169Z"
+    "time": "2025-03-28T13:00:00.000Z",
+    "notes": "He loves tennis balls!",
+    "status": "Confirmed",
+    "createdAt": "2025-03-25T02:15:08.717Z",
+    "updatedAt": "2025-03-25T02:18:29.113Z"
   },
   {
     "id": 2,
-    "petId": 3,
-    "minderId": 3,
+    "petId": 2,
+    "minderId": 4,
     "ownerId": 5,
-    "serviceId": 1,
-    "time": "2025-03-27T13:00:00.000Z",
-    "notes": "She really loves tennis balls!",
-    "status": "Confirmed",
-    "createdAt": "2025-03-24T19:55:02.462Z",
-    "updatedAt": "2025-03-24T19:55:02.462Z"
+    "serviceId": 3,
+    "time": "2025-03-30T11:00:00.000Z",
+    "notes": "She needs company at night.",
+    "status": "Pending",
+    "createdAt": "2025-03-25T02:16:18.154Z",
+    "updatedAt": "2025-03-25T02:16:18.154Z"
   },
   {
     "id": 3,
-    "petId": 3,
+    "petId": 2,
     "minderId": 3,
     "ownerId": 5,
-    "serviceId": 1,
-    "time": "2025-03-27T13:00:00.000Z",
-    "notes": "She really loves tennis balls!",
-    "status": "Completed",
-    "createdAt": "2025-03-24T19:55:02.462Z",
-    "updatedAt": "2025-03-24T19:55:02.462Z"
+    "serviceId": 2,
+    "time": "2025-03-26T15:30:00.000Z",
+    "notes": " She will not leave your side.",
+    "status": "Pending",
+    "createdAt": "2025-03-25T02:17:32.807Z",
+    "updatedAt": "2025-03-25T02:17:32.807Z"
+  },
+  {
+    "id": 4,
+    "petId": 1,
+    "minderId": 5,
+    "ownerId": 5,
+    "serviceId": 5,
+    "time": "2025-03-28T15:30:00.000Z",
+    "notes": "He loves tennis balls!",
+    "status": "Pending",
+    "createdAt": "2025-03-25T02:48:00.163Z",
+    "updatedAt": "2025-03-25T02:48:00.163Z"
   }
 ]

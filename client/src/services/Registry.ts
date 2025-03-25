@@ -105,6 +105,49 @@ export async function getUserById(id: number) {
     }
 }
 
+export async function getUserByIdWithPictures(id: number) {
+    try {
+        const response = await fetch(`${API_URL}/user/${id}`);
+        if (response.ok) {
+            const user = await response.json();
+
+            // Get profile picture
+            const profilePicURL = user.primaryUserInfo.profilePic ? await getImageByFilename(user.primaryUserInfo.profilePic) : null;
+
+            // Get minder pictures
+            const minderPictures = user.minderRoleInfo.pictures;
+            const minderPictureURLs = await Promise.all(
+                minderPictures.map(async (filename: string) => {
+                    return filename ? await getImageByFilename(filename) : null;
+                })
+            );
+
+            // Get pet pictures
+            const pets = user.ownerRoleInfo.pets;
+            const petsWithPictures = await Promise.all(
+                pets.map(async (pet: any) => {
+                    const petPicURL = pet.picture ? await getImageByFilename(pet.picture) : null;
+                    return { ...pet, picture: petPicURL };
+                })
+            );            
+
+            return { 
+                ...user, 
+                primaryUserInfo: { ...user.primaryUserInfo, profilePic: profilePicURL },
+                minderRoleInfo: { ...user.minderRoleInfo, pictures: minderPictureURLs },
+                ownerRoleInfo: { ...user.ownerRoleInfo, pets: petsWithPictures }
+            };
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return null;
+        }
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+}
+
 export async function getUserByUsername(username: string) {
     try {
         const response = await fetch(`${API_URL}/user/username/${username}`);
@@ -155,6 +198,52 @@ export async function getAllMinders() {
         return null;
     }
 }
+
+export async function getAllMindersWithPictures() {
+    try {
+        const response = await fetch(`${API_URL}/minders`);
+        if (!response.ok) {
+            const text = await response.text();
+            console.error(text);
+            return null;
+        }
+
+        const users = await response.json();
+
+        const usersWithPictures = await Promise.all(users.map(async (user: any) => {
+            // Fetch profile picture if valid
+            const profilePicURL = user.primaryUserInfo?.profilePic
+                ? await getImageByFilename(user.primaryUserInfo.profilePic)
+                : null;
+
+            // Fetch minder role pictures
+            const rawPictures = user.minderRoleInfo?.pictures || [];
+            const pictureURLs = await Promise.all(
+                rawPictures.map(async (filename: string) =>
+                    filename ? await getImageByFilename(filename) : null
+                )
+            );
+
+            return {
+                ...user,
+                primaryUserInfo: {
+                    ...user.primaryUserInfo,
+                    profilePic: profilePicURL
+                },
+                minderRoleInfo: {
+                    ...user.minderRoleInfo,
+                    pictures: pictureURLs.filter(Boolean) // Remove nulls if any
+                }
+            };
+        }));
+
+        return usersWithPictures;
+    } catch (e) {
+        console.error("Failed to fetch minders with pictures:", e);
+        return null;
+    }
+}
+
 
 export async function getUserChats() {
     try {
@@ -318,19 +407,19 @@ export async function uploadImage(file: File) {
     }
 }
 
-export async function getImageByFilename(filename: string) {
+export async function getImageByFilename(filename: string | undefined | null) {
+    if (!filename || filename.startsWith("blob:")) return null;
+
     try {
         const response = await fetch(`${API_URL}/image/${filename}`);
         if (response.ok) {
             const data = await response.blob();
             return URL.createObjectURL(data);
         } else {
-            const text = await response.text();
-            console.error(text);
             return null;
         }
     } catch (e) {
-        console.error(e);
+        console.error("Failed to fetch image:", filename, e);
         return null;
     }
 }
@@ -498,5 +587,27 @@ export async function getServiceById(serviceId: number) {
     } catch (e) {
         console.error(e);
         return null;
+    }
+}
+
+export async function addPetForUser(userId: number, pet: any) {
+    try {
+        const response = await fetch(`${API_URL}/user/${userId}/pet`, { 
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(pet)
+        });
+        if (response.ok) {
+            return true;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return false;
+        }
+    } catch (e) {
+        console.error(e);
+        return false;
     }
 }

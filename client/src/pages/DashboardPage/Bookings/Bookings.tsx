@@ -7,7 +7,7 @@ import { EBookingStatus, IBooking } from "../../../models/IBooking";
 import { Role } from "../../../models/IUser";
 import OwnerBooking from "./OwnerBooking";
 import MinderBooking from "./MinderBooking";
-import { getUserById, setBookingStatus } from "../../../services/Registry";
+import { getUserByIdWithPictures, setBookingStatus } from "../../../services/Registry";
 
 function Bookings() {
     const { user, setUser } = useAuth();
@@ -16,7 +16,7 @@ function Bookings() {
     const handleCancel = async (bookingId: number) => {
         const booking = await setBookingStatus(bookingId, EBookingStatus.Cancelled);
         if (booking) {
-            const updatedUser = await getUserById(user.userDetails.id);
+            const updatedUser = await getUserByIdWithPictures(user.userDetails.id);
             setUser(updatedUser);
         } else {
             console.error("Failed to cancel booking.");
@@ -26,7 +26,7 @@ function Bookings() {
     const handleAccept = async (bookingId: number) => {
         const booking = await setBookingStatus(bookingId, EBookingStatus.Confirmed);
         if (booking) {
-            const updatedUser = await getUserById(user.userDetails.id);
+            const updatedUser = await getUserByIdWithPictures(user.userDetails.id);
             setUser(updatedUser);
         } else {
             console.error("Failed to cancel booking.");
@@ -36,7 +36,7 @@ function Bookings() {
     const handleDecline = async (bookingId: number) => {
         const booking = await setBookingStatus(bookingId, EBookingStatus.Cancelled);
         if (booking) {
-            const updatedUser = await getUserById(user.userDetails.id);
+            const updatedUser = await getUserByIdWithPictures(user.userDetails.id);
             setUser(updatedUser);
         } else {
             console.error("Failed to cancel booking.");

@@ -21,7 +21,7 @@ export function addPetCached(pet: IPet) {
         dob: pet.dob,
         gender: pet.gender,
         breed: pet.breed,
-        weight: pet.weight,
+        size: pet.size,
         neutered: pet.neutered,
         behaviour: pet.behaviour,
         allergies: pet.allergies || "",
@@ -32,7 +32,7 @@ export function addPetCached(pet: IPet) {
 
     savePetsToFile(cache.pets);
 
-    return { success: true, message: 'Pet registered successfully!' };
+    return { success: true, message: 'Pet registered successfully!', pet: newPet };
 }
 
 export function removePetCahce(id: number) {

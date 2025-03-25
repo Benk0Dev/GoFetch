@@ -10,17 +10,18 @@ import ServiceSelector from "./ServiceSelector";
 import styles from "./BookingPage.module.css";
 import MinderCard from "./MinderCard";
 import BookSubmit from "./BookSubmit"; // Import the BookSubmit component
+import { useAuth } from "../../context/AuthContext";
 
 const BookingPage: React.FC = () => {
+  const { user } = useAuth();
+
   const location = useLocation();
   const navigate = useNavigate();
   const minderId = location.state?.minderId;
 
   const [selectedService, setSelectedService] = useState<IService | null>(null);
-  const userId = Number(getUserId());
-  const [user, setUser] = useState<IUser | null>(null);
   const [minder, setMinder] = useState<IUser | null>(null);
-  const [selectedPet, setSelectedPet] = useState<IPet | null>(null);
+  const [selectedPet, setSelectedPet] = useState<IPet | null>(user.ownerRoleInfo.pets[0]);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
   const [specialInstructions, setSpecialInstructions] = useState("");
@@ -28,20 +29,6 @@ const BookingPage: React.FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false); // Track submission status
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const fetchedUser = await getUserById(userId);
-        if (fetchedUser) {
-          setUser(fetchedUser);
-          if (fetchedUser.ownerRoleInfo?.pets?.length > 0) {
-            setSelectedPet(fetchedUser.ownerRoleInfo.pets[0]);
-          }
-        }
-      } catch (error) {
-        console.error("Failed to fetch user:", error);
-      }
-    };
-
     const fetchMinder = async () => {
       try {
         const fetchedMinder = await getUserById(minderId);
@@ -56,9 +43,8 @@ const BookingPage: React.FC = () => {
       }
     };
 
-    if (userId) fetchUser();
     if (minderId) fetchMinder();
-  }, [userId, minderId]);
+  }, [minderId]);
 
   const handleBooking = () => {
     if (!selectedPet || !selectedService || !selectedDate || !selectedTime || !specialInstructions) {
@@ -97,7 +83,7 @@ const BookingPage: React.FC = () => {
       <div className={styles.leftContent}>
         <div className={styles.section}>
           <h1 className={styles.heading}>
-            Book a service with {minder?.userDetails?.fname || "your pet minder"}
+            Book a service with {minder?.userDetails.fname || "your pet minder"}
           </h1>
 
           {minder?.minderRoleInfo?.services && (
@@ -110,7 +96,7 @@ const BookingPage: React.FC = () => {
         </div>
 
         <div className={styles.section}>
-          <PetSelector user={user} selectedPet={selectedPet} setSelectedPet={setSelectedPet} />
+          <PetSelector selectedPet={selectedPet} setSelectedPet={setSelectedPet} />
         </div>
 
         <div className={styles.section}>

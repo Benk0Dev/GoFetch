@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { editUser, getUserById } from "../services/Registry";
+import { editUser, getUserByIdWithPictures } from "../services/Registry";
 import { getUserId, clearUser, setUserId as storeUser } from "../utils/StorageManager";
 import { login as performLogin } from "../services/Registry";
 import { Role } from "../models/IUser";
@@ -15,7 +15,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const fetchUser = async () => {
       const id = getUserId();
       if (id) {
-        const fetchedUser = await getUserById(id);
+        const fetchedUser = await getUserByIdWithPictures(id);
         setUser(fetchedUser);
         setRole(fetchedUser.currentRole);
       }
@@ -24,10 +24,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     fetchUser();
   }, []);
 
-  const loginUser = (user: any) => {
-    setUser(user);
-    setRole(user.currentRole);
+  const loginUser = async (userId: number) => {
+    setLoading(true);
+    const fetchedUser = await getUserByIdWithPictures(userId);
+    setUser(fetchedUser);
+    setRole(fetchedUser.currentRole);
+    setLoading(false);
   }
+
+  const refreshUser = async () => {
+    if (!user) return;
+    setLoading(true);
+    const fetchedUser = await getUserByIdWithPictures(user.userDetails.id);
+    setUser(fetchedUser);
+    setRole(fetchedUser.currentRole);
+    setLoading(false);
+  };
 
   const login = async (email: string, password: string) => {
     setLoading(true);
@@ -57,26 +69,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     if (user.roles.length === 1) {
       await editUser(user.userDetails.id, { roles: [Role.MINDER, Role.OWNER] });
-      setUser((prev: any) => ({
-        ...prev,
-        roles: [Role.MINDER, Role.OWNER]
-      }));
     }
   
     const newRole = role === Role.MINDER ? Role.OWNER : Role.MINDER;
     setRole(newRole);
-    setUser((prev: any) => ({
-      ...prev,
-      currentRole: newRole
-    }));
-  
     await editUser(user.userDetails.id, { currentRole: newRole });
+
+    await refreshUser();
     setLoading(false);
   };
   
 
   return (
-    <AuthContext.Provider value={{ user, role, loading, setUser, setRole, loginUser, login, logout, switchRole }}>
+    <AuthContext.Provider value={{ user, role, loading, refreshUser, setUser, setRole, loginUser, login, logout, switchRole }}>
       {children}
     </AuthContext.Provider>
   );

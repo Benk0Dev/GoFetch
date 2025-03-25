@@ -11,6 +11,8 @@ import DashboardPage from "./pages/DashboardPage/Dashboard";
 import MessagingPage from "./pages/MessagingPage/MessagingPage";
 import ChatPage from "./pages/MessagingPage/ChatPage";
 import BookingPage from "./pages/BookingPage/BookingPage";
+import AddPetPage from "./pages/DashboardPage/Pets/AddPet";
+import PetDetailsPage from "./pages/DashboardPage/Pets/PetDetails";
 import { useAuth } from "./context/AuthContext";
 import { Role } from "./models/IUser";
 
@@ -38,16 +40,16 @@ function App() {
         />
         <Route
           path="/become-minder"
-          element={role === Role.OWNER ? <BecomeRolePage role={Role.MINDER} /> : role === Role.MINDER ? <Navigate to="/dashboard" replace /> : <Navigate to="/" replace />}
+          element={role === Role.OWNER ? <BecomeRolePage role={Role.MINDER} /> : <Navigate to="/" replace />}
         />
         <Route
           path="/become-owner"
-          element={role === Role.MINDER ? <BecomeRolePage role={Role.OWNER} /> : role === Role.OWNER ? <Navigate to="/dashboard" replace /> : <Navigate to="/" replace />}
+          element={role === Role.MINDER ? <BecomeRolePage role={Role.OWNER} /> : <Navigate to="/" replace />}
         />
         <Route path="/browse" element={<BrowsePage />} />
         <Route
           path="/booking"
-          element={role === Role.OWNER ? <BookingPage /> : role === Role.MINDER ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />}
+          element={role === Role.OWNER ? <BookingPage /> : <Navigate to="/" replace />}
         />
         <Route
           path="/dashboard/*"
@@ -58,11 +60,16 @@ function App() {
           element={!isGuest ? <ProfilePage /> : <Navigate to="/" replace />}
         />
         <Route
+          path="/add-pet"
+          element={role === Role.OWNER ? <AddPetPage /> : <Navigate to="/" replace />}
+        />
+        <Route
           path="/chats"
           element={!isGuest ? <MessagingPage /> : <Navigate to="/" replace />}
         >
           <Route path=":id" element={<ChatPage />} />
         </Route>
+        <Route path="/dashboard/pets/:id" element={role === Role.OWNER ? <PetDetailsPage /> : <Navigate to="/" replace />} />
       </Routes>
       <Footer />
     </Router>

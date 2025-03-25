@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import MinderCard from "./MinderCard";
 import FilterBar from "./FilterBar";
 import "./Browse.css";
-import { getAllMinders } from "../../services/Registry";
+import { getAllMindersWithPictures } from "../../services/Registry";
 
 const BrowsePage: React.FC = () => {
   const [allMinders, setAllMinders] = useState<any[]>([]);
@@ -12,7 +12,8 @@ const BrowsePage: React.FC = () => {
   useEffect(() => {
     const fetchMinders = async () => {
       try {
-        const minders = await getAllMinders(); // ✅ Should include userDetails & minderRoleInfo
+        const minders = await getAllMindersWithPictures(); // ✅ Should include userDetails & minderRoleInfo
+        if (!minders) throw new Error("Failed to fetch minders.");
         console.log("Fetched minders:", minders);
         setAllMinders(minders);
         setFilteredMinders(minders);
@@ -30,29 +31,29 @@ const BrowsePage: React.FC = () => {
     console.log("Filters applied:", filters);
 
     const filtered = allMinders.filter((minder) => {
-      const searchText = filters.location.toLowerCase() || "";
-      const availabilityText = filters.availability?.toLowerCase() || "";
+    const searchText = filters.location.toLowerCase() || "";
+    const availabilityText = filters.availability?.toLowerCase() || "";
 
-      // ✅ Use correct nested paths
-      const fullName =
-        `${minder.userDetails.fname} ${minder.userDetails.lname}`.toLowerCase();
-      const location =
-        minder.primaryUserInfo.location.name?.toLowerCase() || "";
-      const rating = minder.minderRoleInfo.rating || 0;
-      const availability =
-        minder.minderRoleInfo.availability?.toLowerCase() || "";
+    // ✅ Use correct nested paths
+    const fullName =
+      `${minder.userDetails.fname} ${minder.userDetails.lname}`.toLowerCase();
+    const location =
+      minder.primaryUserInfo.location.name?.toLowerCase() || "";
+    const rating = minder.minderRoleInfo.rating || 0;
+    const availability =
+      minder.minderRoleInfo.availability?.toLowerCase() || "";
 
-      const nameMatch = fullName.includes(searchText);
-      const locationMatch = location.includes(searchText);
-      const ratingMatch = rating >= (filters.rating || 0);
-      const availabilityMatch = availability.includes(availabilityText);
+    const nameMatch = fullName.includes(searchText);
+    const locationMatch = location.includes(searchText);
+    const ratingMatch = rating >= (filters.rating || 0);
+    const availabilityMatch = availability.includes(availabilityText);
 
-      return (
-        (nameMatch || locationMatch) &&
-        ratingMatch &&
-        (availabilityText === "" || availabilityMatch)
-      );
-    });
+    return (
+      (nameMatch || locationMatch) &&
+      ratingMatch &&
+      (availabilityText === "" || availabilityMatch)
+    );
+  });
 
     setFilteredMinders(filtered);
   };

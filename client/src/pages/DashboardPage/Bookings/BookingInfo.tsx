@@ -1,7 +1,7 @@
 import styles from "./Bookings.module.css";
 import { IBooking } from "../../../models/IBooking";
 import { useAuth } from "../../../context/AuthContext";
-import { Calendar, Clock, MapPin, PawPrint, PoundSterling } from "lucide-react";
+import { Calendar, Clock, MapPin, PawPrint } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getServiceById, getUserById } from "../../../services/Registry";
 import { IService } from "../../../models/IService";

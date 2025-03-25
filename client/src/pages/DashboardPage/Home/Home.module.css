@@ -1,0 +1,26 @@
+.statsGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+}
+
+.statistic {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid var(--text-color);
+    border-radius: var(--border-radius);
+    padding: 10px;
+}
+
+.statisticContent p, .statisticContent h3 {
+    margin: 0;
+}
+
+.statistic svg {
+    margin-top: 5px;
+}
+
+.note {
+    margin-top: 20px;
+}
