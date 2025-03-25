@@ -6,7 +6,7 @@
         5,
         2
       ],
-      "lastMessage": "asd"
+      "lastMessage": "Hello"
     },
     {
       "id": 2,
@@ -221,46 +221,6 @@
       "message": "Hello",
       "chatId": 1,
       "timestamp": "2025-03-23T00:12:05.529Z"
-    },
-    {
-      "id": 29,
-      "senderId": 5,
-      "message": "asd",
-      "isRead": false,
-      "chatId": 1,
-      "timestamp": "2025-03-25T18:53:08.333Z"
-    },
-    {
-      "id": 30,
-      "senderId": 5,
-      "message": "asd",
-      "isRead": false,
-      "chatId": 1,
-      "timestamp": "2025-03-25T18:53:18.861Z"
-    },
-    {
-      "id": 31,
-      "senderId": 5,
-      "message": "asd",
-      "isRead": false,
-      "chatId": 1,
-      "timestamp": "2025-03-25T18:53:19.599Z"
-    },
-    {
-      "id": 32,
-      "senderId": 5,
-      "message": "asd",
-      "isRead": false,
-      "chatId": 1,
-      "timestamp": "2025-03-25T18:55:43.049Z"
-    },
-    {
-      "id": 33,
-      "senderId": 5,
-      "message": "asd",
-      "isRead": false,
-      "chatId": 1,
-      "timestamp": "2025-03-25T18:59:07.227Z"
     }
   ]
 }
