@@ -2,6 +2,8 @@ import styles from "./Pets.module.css";
 import "../../../global.css";
 
 function Pet({ pet }: { pet: any }) {
+    const [picture, setPicture] = useState(true);
+
     const getAge = (dob: string): number => {
         const birthDate = new Date(dob);
         const today = new Date();

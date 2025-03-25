@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { editUser, getUserById } from "../services/Registry";
+import { editUser, getUserByIdWithPictures } from "../services/Registry";
 import { getUserId, clearUser, setUserId as storeUser } from "../utils/StorageManager";
 import { login as performLogin } from "../services/Registry";
 import { Role } from "../models/IUser";
@@ -15,7 +15,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const fetchUser = async () => {
       const id = getUserId();
       if (id) {
-        const fetchedUser = await getUserById(id);
+        const fetchedUser = await getUserByIdWithPictures(id);
         setUser(fetchedUser);
         setRole(fetchedUser.currentRole);
       }
@@ -28,6 +28,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(user);
     setRole(user.currentRole);
   }
+
+  const refreshUser = async () => {
+    if (!user) return;
+    setLoading(true);
+    const fetchedUser = await getUserByIdWithPictures(user.userDetails.id);
+    setUser(fetchedUser);
+    setRole(fetchedUser.currentRole);
+    setLoading(false);
+  };
 
   const login = async (email: string, password: string) => {
     setLoading(true);
@@ -76,7 +85,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   
 
   return (
-    <AuthContext.Provider value={{ user, role, loading, setUser, setRole, loginUser, login, logout, switchRole }}>
+    <AuthContext.Provider value={{ user, role, loading, refreshUser, setUser, setRole, loginUser, login, logout, switchRole }}>
       {children}
     </AuthContext.Provider>
   );
