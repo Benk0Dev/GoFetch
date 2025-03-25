@@ -67,9 +67,9 @@ function App() {
           />
           <Route
             path="/chats"
-            element={!isGuest ? <MessagingPage /> : <Navigate to="/" replace />}
+            element={!isGuest ? <ChatPage /> : <Navigate to="/" replace />}
           >
-            <Route path=":id" element={<ChatPage />} />
+            <Route path=":id" element={<MessagingPage />} />
           </Route>
           <Route path="/dashboard/pets/:id" element={role === Role.OWNER ? <PetDetailsPage /> : <Navigate to="/" replace />} />
         </Routes>

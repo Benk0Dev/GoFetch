@@ -2,8 +2,9 @@ import express, { Express, Request, Response, NextFunction } from 'express';
 import http from 'http';
 import multer from 'multer';
 import path from 'path';
-import { Server } from 'socket.io';
+import cors from 'cors';
 
+import { setupWebSocketServer } from '../server/wsServer';
 import { AllUsersData, getUserByID, getUserByUsername, RegisterUser, loginUser, removeUser, getMinders, editUser } from '../routers/UserStatic';
 import { AllPets, PetByID, registerPet, removePet, addPetForUser, removePetFromUser } from '../routers/PetStatic';
 import { AllServices, ServiceByID, addServiceForUser, editService, removeService } from '../routers/ServiceStatic';
@@ -13,11 +14,13 @@ import { getChatsForUser, getChatById, addMessage, createChat } from '../routers
 import { getNotificationsForUser, markNotificationAsRead, addNotification } from '../routers/NotificationStatic';
 
 import { log } from '../utils/utils';
-import cors from 'cors';
 
 const app: Express = express();
 const port = process.env.PORT || 3001;
 const server = http.createServer(app);
+
+// Initialize Socket.IO server
+const io = setupWebSocketServer(server);
 
 // Important CORS setup for Express
 app.use(cors({
@@ -26,51 +29,6 @@ app.use(cors({
   credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
-
-// Socket.IO setup
-const io = new Server(server, {
-  cors: {
-    origin: ["http://localhost:3000", "http://localhost:5173"], // Match frontend URL
-    methods: ["GET", "POST", "OPTIONS"],
-    credentials: true,
-    allowedHeaders: ["Content-Type"]
-  },
-  transports: ['polling', 'websocket'],
-  pingTimeout: 60000,
-  pingInterval: 25000
-});
-
-// Basic connection handler
-io.on('connection', (socket) => {
-  console.log('New socket connection:', socket.id);
-
-  // Handle ping (for debugging)
-  socket.on('ping', () => {
-    console.log(`Received ping from ${socket.id}`);
-    socket.emit('pong', { time: new Date().toISOString() });
-  });
-  
-  // Handle user registration
-  socket.on('register-user', (userId) => {
-    console.log(`User ${userId} registered on socket ${socket.id}`);
-    socket.join(`user-${userId}`);
-  });
-  
-  // Handle chat room
-  socket.on('join-chat', (chatId) => {
-    console.log(`Socket ${socket.id} joined chat-${chatId}`);
-    socket.join(`chat-${chatId}`);
-  });
-  
-  socket.on('leave-chat', (chatId) => {
-    console.log(`Socket ${socket.id} left chat-${chatId}`);
-    socket.leave(`chat-${chatId}`);
-  });
-  
-  socket.on('disconnect', () => {
-    console.log('Socket disconnected:', socket.id);
-  });
-});
 
 //#region Multer configuration
 // Configure multer storage for image uploads
@@ -103,7 +61,6 @@ const upload = multer({
 });
 //#endregion
 
-//#region Middleware for checking if user is logged in
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -114,9 +71,7 @@ app.use((req: Request, res: Response, next) => {
     log(req.url, req);
     next();
 });
-//#endregion
 
-//#region Middleware for checking if user is logged in
 // Routes
 app.get('/', (req: Request, res: Response) => {
     res.status(200).send('Hello World!');
@@ -125,7 +80,6 @@ app.get('/', (req: Request, res: Response) => {
 app.get('/ping', (req: Request, res: Response) => {
     res.status(200).send('pong!');
 });
-//#endregion
 
 //#region User Routes
 // Get all users
@@ -348,29 +302,45 @@ app.delete('/image/:filename', (req: Request, res: Response) => {
 //#region Message Routes and Chat routes
 
 // Get messages for a user
-app.get('/chats/:userId', (req, res) => {
+app.get('/chats/:userId', (req: Request, res: Response) => {
     const result = getChatsForUser(parseInt(req.params.userId))
     res.json(result);
 });
 
 // Get chat by ID
-app.get('/chat/:chatId', (req, res) => {
+app.get('/chat/:chatId', (req: Request, res: Response) => {
     const result = getChatById(parseInt(req.params.chatId));
     res.json(result);
 });
 
 // Add message to a chat
-app.post('/chat/message', (req, res) => {
-    try {
-        const result = addMessage(req.body.chatId, req.body.message);
-        
-        // Emit to all users in the chat
-        io.to(`chat-${req.body.chatId}`).emit('new-message', result.message);
-        
-        res.json(result);
-    } catch (error) {
-        res.status(500).json({ success: false, error: 'Failed to send message' });
+app.post('/chat/message', (req: Request, res: Response): void => {
+  try {
+    console.log('Received message request via HTTP:', req.body);
+    
+    // Make sure chatId and message are provided
+    if (!req.body.chatId || !req.body.message) {
+      res.status(400).json({ 
+        success: false, 
+        error: 'Missing chatId or message data' 
+      });
+      return;
     }
+    
+    // Call the same addMessage function that the WebSocket uses
+    const result = addMessage(req.body.chatId, req.body.message);
+    
+    // The message is emitted in the addMessage function,
+    // so we don't need to emit it again here
+    
+    res.json(result);
+  } catch (error) {
+    console.error('Error in chat message endpoint:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Failed to send message' 
+    });
+  }
 });
 
 // Create a new chat

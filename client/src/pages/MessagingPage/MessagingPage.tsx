@@ -1,253 +1,207 @@
-import { useEffect, useState, useCallback, useMemo } from "react";
-import { Link, Outlet, useParams, useNavigate } from "react-router-dom";
-import { IChat } from "../../models/IMessage";
-import { getUserChats, getUserById } from "../../services/Registry";
+import React, { useState, useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
+import { getChatById, sendMessage, getUserById } from '../../services/Registry';
+import { IChat, IMessage } from '../../models/IMessage';
+import { useAuth } from '../../context/AuthContext';
+import { useSocket } from '../../context/SocketContext';
 import styles from './MessagingPage.module.css';
-import { useAuth } from "../../context/AuthContext";
-import { useSocket } from "../../context/SocketContext";
 
-function MessagingPage() {
-    const [chats, setChats] = useState<IChat[]>([]);
+function ChatPage() {
+    const { id } = useParams<{ id: string }>();
+    const [chat, setChat] = useState<IChat | null>(null);
+    const [newMessage, setNewMessage] = useState('');
     const [loading, setLoading] = useState(true);
-    const [chatUserNames, setChatUserNames] = useState<{[chatId: string]: string}>({});
-    const [socketInfo, setSocketInfo] = useState<string>('Initializing socket...');
-    const { id } = useParams<{id: string}>();
-    const navigate = useNavigate();
+    const [error, setError] = useState<string | null>(null);
+    const messagesEndRef = useRef<HTMLDivElement>(null);
     const { user } = useAuth();
-    const { socket, isConnected, connectionError } = useSocket();
-
-    // Memoize the current user ID to prevent unnecessary effect triggers
-    const currentUserId = useMemo(() => user.userDetails.id, [user.userDetails.id]);
-
-    // Debug logger for socket state changes
-    useEffect(() => {
-        console.log("Socket state changed:", { 
-            exists: !!socket, 
-            isConnected, 
-            error: connectionError,
-            id: socket?.id 
-        });
+    const { socket } = useSocket();
+    const [chatName, setChatName] = useState('Chat');
+    
+    // Format timestamp to readable format
+    const formatTime = (timestamp: Date | string) => {
+        const date = new Date(timestamp);
+        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    };
+    
+    // Scroll to bottom of messages
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+    
+    // Fetch chat data
+    const fetchChat = async () => {
+        if (!id) return;
         
-        if (connectionError) {
-            setSocketInfo(`Error: ${connectionError}`);
-        } else if (isConnected && socket) {
-            setSocketInfo(`Connected: ID=${socket.id}`);
-        } else {
-            setSocketInfo('Waiting for connection...');
-        }
-    }, [socket, isConnected, connectionError]);
-
-    // Debug helper to ping server
-    const pingServer = useCallback(() => {
-        if (socket && isConnected) {
-            console.log('Pinging server with socket ID:', socket.id);
-            socket.emit('ping');
-            setSocketInfo(`Pinging server...`);
-        } else {
-            console.error('Cannot ping: Socket not connected');
-            setSocketInfo(`Cannot ping: ${!socket ? 'No socket' : 'Not connected'}`);
-        }
-    }, [socket, isConnected]);
-
-    const fetchChats = useCallback(async () => {
-        setLoading(true);
         try {
-            const data = await getUserChats();
-            if (data && data.chats) {
-                setChats(data.chats);
-                
-                // If no chat is selected and we have chats, select the first one
-                if (!id && data.chats.length > 0) {
-                    navigate(`/chats/${data.chats[0].id}`);
-                }
+            setLoading(true);
+            setError(null);
+            const response = await getChatById(parseInt(id));
+            
+            if (response.success && response.chat) {
+                setChat(response.chat);
+            } else {
+                setError('Failed to load chat');
             }
-        } catch (error) {
-            console.error("Error fetching chats:", error);
+        } catch (err) {
+            console.error('Error fetching chat:', err);
+            setError('Failed to load chat');
         } finally {
             setLoading(false);
         }
-    }, [id, navigate]);
+    };
+    
+    // Handle sending a new message
+    const handleSendMessage = async (e: React.FormEvent) => {
+        e.preventDefault();
+        
+        if (!newMessage.trim() || !id || !user) return;
 
-    // Fetch chat user names only when necessary
-    const fetchChatUserNames = useCallback(async () => {
-        const pendingChats = chats.filter(chat => !chatUserNames[chat.id.toString()]);
+        const messageData = {
+            chatId: parseInt(id),
+            message: {
+                senderId: user.userDetails.id,
+                message: newMessage.trim(),
+                isRead: false
+            }
+        };
         
-        if (pendingChats.length === 0) return;
-        
-        const namesMap = {...chatUserNames};
-        
-        for (const chat of pendingChats) {
-            const otherUserId = chat.users.find(userId => userId !== currentUserId) || null;
-            
-            if (otherUserId) {
-                try {
-                    const otherUser = await getUserById(otherUserId);
-                    if (otherUser && otherUser.userDetails) {
-                        namesMap[chat.id.toString()] = 
-                            `${otherUser.userDetails.fname} ${otherUser.userDetails.sname}`;
-                    } else {
-                        namesMap[chat.id.toString()] = "Unknown User";
-                    }
-                } catch (error) {
-                    console.error("Error fetching user:", error);
-                    namesMap[chat.id.toString()] = "Unknown User";
-                }
-            } else {
-                namesMap[chat.id.toString()] = "Unknown User";
+        // Use socket to send message
+        if (socket) {
+            socket.emit('send-message', messageData);
+            setNewMessage('');
+        } else {
+            // Fallback to REST API if socket is not available
+            try {
+                await sendMessage(parseInt(id), messageData.message);
+                fetchChat(); // Refresh chat to see the new message
+                setNewMessage('');
+            } catch (err) {
+                console.error('Error sending message:', err);
+                setError('Failed to send message');
             }
         }
+    };
+    
+    // Join chat room when component mounts or chat ID changes
+    useEffect(() => {
+        if (socket && id) {
+            socket.emit('join-chat', id);
+            
+            return () => {
+                socket.emit('leave-chat', id);
+            };
+        }
+    }, [socket, id]);
+    
+    // Listen for new messages
+    useEffect(() => {
+        if (!socket) return;
         
-        setChatUserNames(namesMap);
-    }, [chats, chatUserNames, currentUserId]);
-
+        const handleNewMessage = (message: IMessage) => {
+            // Only update if this message belongs to our current chat
+            if (message.chatId.toString() === id) {
+                setChat(prevChat => {
+                    if (!prevChat) return null;
+                    
+                    return {
+                        ...prevChat,
+                        messages: [...(prevChat.messages || []), message],
+                        lastMessage: message.message
+                    };
+                });
+            }
+        };
+        
+        socket.on('new-message', handleNewMessage);
+        
+        return () => {
+            socket.off('new-message', handleNewMessage);
+        };
+    }, [socket, id]);
+    
     // Initial fetch
     useEffect(() => {
-        fetchChats();
-    }, [fetchChats]);
-
-    // Setup socket event listeners
+        fetchChat();
+    }, [id]);
+    
+    // Scroll to bottom when messages change
     useEffect(() => {
-        if (!socket) return;
+        scrollToBottom();
+    }, [chat?.messages]);
 
-        // Listen for chat updates
-        const handleChatUpdated = (updatedChat: IChat) => {
-            setChats(prevChats => {
-                // Find and update the specific chat
-                const chatIndex = prevChats.findIndex(chat => chat.id === updatedChat.id);
-                
-                if (chatIndex !== -1) {
-                    const newChats = [...prevChats];
-                    newChats[chatIndex] = updatedChat;
-                    return newChats;
-                }
-                
-                // If it's a new chat, add it
-                return [...prevChats, updatedChat];
-            });
-        };
-
-        // Listen for new chats
-        const handleNewChat = (newChat: IChat) => {
-            setChats(prevChats => {
-                // Check if this chat already exists
-                if (!prevChats.some(chat => chat.id === newChat.id)) {
-                    return [...prevChats, newChat];
-                }
-                return prevChats;
-            });
-        };
-
-        socket.on('chat-updated', handleChatUpdated);
-        socket.on('new-chat', handleNewChat);
-
-        return () => {
-            socket.off('chat-updated', handleChatUpdated);
-            socket.off('new-chat', handleNewChat);
-        };
-    }, [socket]);
-
-    // Fetch user names only when we have new chats without names
     useEffect(() => {
-        if (chats.length > 0) {
-            fetchChatUserNames();
-        }
-    }, [chats, fetchChatUserNames]);
-
-    // Set up a socket connection debug listener
-    useEffect(() => {
-        if (!socket) return;
-        
-        const handlePong = (data: any) => {
-            console.log('Received pong from server:', data);
-            setSocketInfo(`Ping successful at ${new Date().toLocaleTimeString()}`);
+        const fetchOtherUserName = async () => {
+            if (!chat) return;
+            const otherUserId = chat.users.find(userId => userId !== user.userDetails.id) || null;
+            if (otherUserId) {
+                const otherUserName = await getUserById(otherUserId);
+                setChatName(otherUserName ? `Chat with ${otherUserName.userDetails.fname} ${otherUserName.userDetails.sname}` : 'Chat');
+            }
         };
-        
-        socket.on('pong', handlePong);
-        
-        return () => {
-            socket.off('pong', handlePong);
-        };
-    }, [socket]);
-
-    if (loading && chats.length === 0) {
-        return <div>Loading chats...</div>;
+        fetchOtherUserName();
+    }, [chat, user]);
+    
+    if (loading) {
+        return <div className={styles.chatLoading}>Loading chat...</div>;
     }
-
+    
+    if (error) {
+        return <div className={styles.chatError}>{error}</div>;
+    }
+    
+    if (!chat) {
+        return <div className={styles.chatError}>Chat not found</div>;
+    }
+    
     return (
-        <div className={styles.messagingContainer}>
-            {/* Socket connection indicator - always show in development
-            <div className={styles.socketStatus} style={{ 
-                backgroundColor: connectionError ? 'rgba(255, 0, 0, 0.8)' : 
-                                isConnected ? 'rgba(0, 128, 0, 0.8)' : 
-                                'rgba(255, 165, 0, 0.8)'
-            }}>
-                <span>
-                    {connectionError ? '❌ ' : isConnected ? '✅ ' : '⚠️ '}
-                    {socketInfo}
-                </span>
-            </div> */}
-            
-            {/* Debugging button in development mode
-            {process.env.NODE_ENV === 'development' && (
-                <div className={styles.debugPanel}>
-                    <button onClick={pingServer} disabled={!isConnected}>
-                        Ping Server
-                    </button>
-                    <button onClick={() => socket?.connect()} disabled={isConnected}>
-                        Reconnect
-                    </button>
-                    <div>Status: {isConnected ? 'Connected' : 'Disconnected'}</div>
-                    <div>Socket ID: {socket?.id || 'None'}</div>
-                    {connectionError && <div className={styles.error}>{connectionError}</div>}
-                </div>
-            )} */}
-            
-            {/* Chat list sidebar */}
-            <div className={styles.chatsSidebar}>
-                <h2>Chats</h2>
-                
-                {chats.length > 0 ? (
-                    <div className={styles.chatsList}>
-                        {chats.map((chat: IChat) => (
-                            <Link 
-                                to={`/chats/${chat.id}`} 
-                                key={chat.id} 
-                                className={`${styles.chatListItem} ${id === chat.id?.toString() ? styles.activeChatItem : ''}`}
-                            >
-                                <div className={styles.chatPreview}>
-                                    <h3>
-                                        {chatUserNames[chat.id.toString()] || 
-                                            <span className={styles.loadingName}>Loading...</span>}
-                                    </h3>
-                                    <p className={styles.previewMessage}>
-                                        {chat.lastMessage || "No messages yet"}
-                                    </p>
-                                </div>
-                            </Link>
-                        ))}
-                    </div>
-                ) : (
-                    <div className={styles.noChats}>
-                        <p>No conversations yet</p>
-                        <Link to="/browse" className={styles.browseButton}>
-                            Browse Pet Minders
-                        </Link>
-                    </div>
-                )}
+        <div className={styles.chatContainer}>
+            <div className={styles.chatHeader}>
+                <h2>{chatName}</h2>
             </div>
             
-            {/* Chat window - will display the Outlet (ChatPage) */}
-            <div className={styles.chatWindowContainer}>
-                {id ? (
-                    <Outlet />
+            <div className={styles.messagesContainer}>
+                {chat.messages && chat.messages.length > 0 ? (
+                    chat.messages.map((message, index) => (
+                        <div 
+                            key={index}
+                            className={`${styles.message} ${
+                                message.userId !== user.userDetails.id
+                                    ? styles.sentMessage 
+                                    : styles.receivedMessage
+                            }`}
+                        >
+                            <p className={styles.messageContent}>{message.message}</p>
+                            <span className={styles.messageTime}>
+                                {formatTime(message.timestamp)}
+                            </span>
+                        </div>
+                    ))
                 ) : (
-                    <div className={styles.noChatSelected}>
-                        <p>Select a conversation</p>
+                    <div className={styles.noMessages}>
+                        No messages yet. Start the conversation!
                     </div>
                 )}
+                <div ref={messagesEndRef} />
             </div>
+            
+            <form className={styles.messageForm} onSubmit={handleSendMessage}>
+                <input
+                    type="text"
+                    className={styles.messageInput}
+                    placeholder="Type a message..."
+                    value={newMessage}
+                    onChange={(e) => setNewMessage(e.target.value)}
+                />
+                <button 
+                    type="submit" 
+                    className={styles.sendButton}
+                    disabled={!newMessage.trim()}
+                >
+                    Send
+                </button>
+            </form>
         </div>
     );
 }
 
-export default MessagingPage;
+export default ChatPage;
