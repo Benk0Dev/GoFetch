@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { IChat, IMessage } from "../../models/IMessage";
 import { getChatById, sendMessage, getUserById } from "../../services/Registry";
+import { useAuth } from "../../context/AuthContext";
 import styles from './MessagingPage.module.css';
 
 function ChatPage() {
@@ -11,6 +12,7 @@ function ChatPage() {
     const [loading, setLoading] = useState(true);
     const [otherUserName, setOtherUserName] = useState("");
     const messagesEndRef = useRef<HTMLDivElement>(null);
+    const { user } = useAuth();
 
     async function fetchChat() {
         if (!id) return;
@@ -50,8 +52,10 @@ function ChatPage() {
     useEffect(() => {
         async function fetchOtherUser() {
             if (!chat) return;
-            
-            const currentUserId = parseInt(localStorage.getItem('userID') || '0');
+            console.log(user)
+            const userId = user.userDetails.id;
+            console.log(userId)
+            const currentUserId = user.userDetails.id;
             // Find the ID of the other user in the chat (not the current user)
             const otherUserId = chat.users.find(id => id !== currentUserId) || null;
             
@@ -86,7 +90,7 @@ function ChatPage() {
                         <div 
                             key={message.id} 
                             className={`${styles.message} ${
-                                message.userId === parseInt(localStorage.getItem('userID') || '0') 
+                                message.userId === user.userDetails.id
                                 ? styles.sentMessage 
                                 : styles.receivedMessage
                             }`}

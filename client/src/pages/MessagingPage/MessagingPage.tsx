@@ -3,6 +3,7 @@ import { Link, Outlet, useParams, useNavigate } from "react-router-dom";
 import { IChat } from "../../models/IMessage";
 import { getUserChats, getUserById } from "../../services/Registry";
 import styles from './MessagingPage.module.css';
+import { useAuth } from "../../context/AuthContext";
 
 function MessagingPage() {
     const [chats, setChats] = useState<IChat[]>([]);
@@ -10,6 +11,7 @@ function MessagingPage() {
     const [chatUserNames, setChatUserNames] = useState<{[chatId: string]: string}>({});
     const { id } = useParams<{id: string}>();
     const navigate = useNavigate();
+    const { user } = useAuth();
 
     async function fetchChats() {
         setLoading(true);
@@ -35,7 +37,7 @@ function MessagingPage() {
     // Fetch user names for all chats
     useEffect(() => {
         async function fetchChatUserNames() {
-            const currentUserId = parseInt(localStorage.getItem('userID') || '0');
+            const currentUserId = user.userDetails.id;
             const namesMap: {[chatId: string]: string} = {};
             
             for (const chat of chats) {
