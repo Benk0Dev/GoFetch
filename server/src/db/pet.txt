@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "Buddy",
+    "dob": "2020-03-10",
+    "gender": "male",
+    "breed": "Golden Retriever",
+    "size": "Large (30kg+)",
+    "neutered": true,
+    "behaviour": "Friendly and playful",
+    "allergies": "",
+    "picture": "buddy.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Bella",
+    "dob": "2018-07-21",
+    "gender": "female",
+    "breed": "Labrador Retriever",
+    "size": "Medium (15-30kg)",
+    "neutered": false,
+    "behaviour": "Loyal and energetic",
+    "allergies": ["Chicken"],
+    "picture": "bella.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Rex",
+    "dob": "2019-05-30",
+    "gender": "male",
+    "breed": "German Shepherd",
+    "size": "Large (30kg+)",
+    "neutered": true,
+    "behaviour": "Protective and intelligent",
+    "allergies": "",
+    "picture": "rex.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Luna",
+    "dob": "2021-02-14",
+    "gender": "female",
+    "breed": "Siberian Husky",
+    "size": "Medium (15-30kg)",
+    "neutered": false,
+    "behaviour": "Energetic and vocal",
+    "allergies": "",
+    "picture": "luna.jpg"
+  }
+]

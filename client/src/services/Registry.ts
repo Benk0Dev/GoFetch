@@ -500,3 +500,25 @@ export async function getServiceById(serviceId: number) {
         return null;
     }
 }
+
+export async function addPetForUser(userId: number, pet: any) {
+    try {
+        const response = await fetch(`${API_URL}/user/${userId}/pet`, { 
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(pet)
+        });
+        if (response.ok) {
+            return true;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return false;
+        }
+    } catch (e) {
+        console.error(e);
+        return false;
+    }
+}

@@ -6,7 +6,7 @@
 }
 
 .authenticationBox {
-    background: white;
+    background: var(--primary-color);
     padding: calc(var(--padding) * 2) var(--padding);
     border-radius: var(--border-radius);
     border: 1px solid var(--text-color);
@@ -97,6 +97,7 @@ input[type="date"] {
     display: flex;
     margin-bottom: auto;
     margin-top: 20px;
+    margin-bottom: 20px;
     justify-content: center;
 }
 

@@ -1,6 +1,6 @@
 import { IPet } from '../models/IPet';
 import { Role } from '../models/IUser';
-import { getCachedPets, removePetCahce } from '../services/PetCached';
+import { addPetCached, getCachedPets, removePetCahce } from '../services/PetCached';
 import { cache } from '../services/Cache';
 import { DB_PATH } from '../services/Cache';
 import fs from 'fs';
@@ -22,11 +22,11 @@ export function PetByID(id: number) {
 }
 
 export function registerPet(pet: IPet) {
-    const result = registerPet(pet);
+    const result = addPetCached(pet);
     if (!result.success) {
         return { success: false, message: 'Pet not registered' };
     }
-    return { success: true, message: 'Pet registered successfully!' };
+    return { success: true, message: 'Pet registered successfully!', pet: result.pet };
 }
 
 export function removePet(id: number) {
@@ -52,7 +52,7 @@ export function addPetForUser(userId: number, pet: IPet) {
         dob: pet.dob,
         gender: pet.gender,
         breed: pet.breed,
-        weight: pet.weight,
+        size: pet.size,
         neutered: pet.neutered,
         behaviour: pet.behaviour,
         allergies: pet.allergies || "",

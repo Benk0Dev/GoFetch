@@ -36,7 +36,7 @@ const PetSelector: React.FC<PetSelectorProps> = ({ user, selectedPet, setSelecte
           </div>
         ))}
 
-        <div onClick={() => navigate("/pet")} className={`${styles.petCard} ${styles.addPetCard}`}>
+        <div onClick={() => navigate("/add-pet")} className={`${styles.petCard} ${styles.addPetCard}`}>
           <PawPrint className={styles.addPetIcon} />
           <span className={styles.addPetText}>Add Pet</span>
         </div>
