@@ -122,7 +122,10 @@
     "minderRoleInfo": {
       "rating": 4.8,
       "bio": "Experienced pet sitter with 5 years of experience.",
-      "pictures": [],
+      "pictures": [
+        "8",
+        "9"
+      ],
       "availability": "Weekdays",
       "distanceRange": 10,
       "verified": true,
@@ -171,7 +174,10 @@
     "minderRoleInfo": {
       "rating": 4.6,
       "bio": "Lifelong pet lover and certified dog trainer.",
-      "pictures": [],
+      "pictures": [
+        "10",
+        "11"
+      ],
       "availability": "Weekends",
       "distanceRange": 15,
       "verified": true,
@@ -197,7 +203,7 @@
       "petminder",
       "petowner"
     ],
-    "currentRole": "petminder",
+    "currentRole": "petowner",
     "primaryUserInfo": {
       "profilePic": "",
       "dob": "1995-08-25T00:00:00.000Z",

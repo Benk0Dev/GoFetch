@@ -5,7 +5,7 @@ import dashboardStyles from "../Dashboard.module.css";
 import { IService, INewService } from "../../../models/IService";
 import { Clock, PoundSterling, Trash2, Plus } from "lucide-react";
 import NewService from "./NewService";
-import { addService, deleteService, getUserById } from "../../../services/Registry";
+import { addService, deleteService, getUserByIdWithPictures } from "../../../services/Registry";
 
 function Services() {
     const { user, setUser } = useAuth();
@@ -14,7 +14,7 @@ function Services() {
     const deleteUserService = async (id: number) => {
         const deleted = await deleteService(id);
         if (deleted) {
-            const updatedUser = await getUserById(user.userDetails.id);
+            const updatedUser = await getUserByIdWithPictures(user.userDetails.id);
             if (!updatedUser) {
                 console.error("Error updating user");
                 return;
@@ -28,7 +28,7 @@ function Services() {
     const handleAdd = async (service: INewService) => {
         const added = await addService(user.userDetails.id, service);
         if (added) {
-            const updatedUser = await getUserById(user.userDetails.id);
+            const updatedUser = await getUserByIdWithPictures(user.userDetails.id);
             if (!updatedUser) {
                 console.error("Error updating user");
                 return;

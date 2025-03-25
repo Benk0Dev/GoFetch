@@ -24,9 +24,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     fetchUser();
   }, []);
 
-  const loginUser = (user: any) => {
-    setUser(user);
-    setRole(user.currentRole);
+  const loginUser = async (userId: number) => {
+    setLoading(true);
+    const fetchedUser = await getUserByIdWithPictures(userId);
+    setUser(fetchedUser);
+    setRole(fetchedUser.currentRole);
+    setLoading(false);
   }
 
   const refreshUser = async () => {
@@ -66,20 +69,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     if (user.roles.length === 1) {
       await editUser(user.userDetails.id, { roles: [Role.MINDER, Role.OWNER] });
-      setUser((prev: any) => ({
-        ...prev,
-        roles: [Role.MINDER, Role.OWNER]
-      }));
     }
   
     const newRole = role === Role.MINDER ? Role.OWNER : Role.MINDER;
     setRole(newRole);
-    setUser((prev: any) => ({
-      ...prev,
-      currentRole: newRole
-    }));
-  
     await editUser(user.userDetails.id, { currentRole: newRole });
+
+    await refreshUser();
     setLoading(false);
   };
   

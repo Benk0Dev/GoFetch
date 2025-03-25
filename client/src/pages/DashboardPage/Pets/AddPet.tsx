@@ -5,7 +5,7 @@ import BackButton from "../../../components/BackButton";
 import { EGender, ESize } from "../../../models/IPet";
 import { PawPrint } from "lucide-react";
 import { useAuth } from "../../../context/AuthContext";
-import { addPetForUser, getUserById, uploadImage } from "../../../services/Registry";
+import { addPetForUser, getUserByIdWithPictures, uploadImage } from "../../../services/Registry";
 import { useNavigate } from "react-router-dom";
 
 function capitalizeWords(str: string): string {
@@ -68,7 +68,7 @@ function AddPet() {
         console.log("Submitting new pet:", newPet);
         const petAdded = await addPetForUser(user.userDetails.id, newPet);
         if (petAdded) {
-            const updatedUser = await getUserById(user.userDetails.id);
+            const updatedUser = await getUserByIdWithPictures(user.userDetails.id);
             if (updatedUser) {
                 setUser(updatedUser);
                 navigate(-1);

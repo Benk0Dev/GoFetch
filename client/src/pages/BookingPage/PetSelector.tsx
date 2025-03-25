@@ -2,30 +2,30 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { PawPrint } from "lucide-react";
 import { IPet } from "../../models/IPet";
-import { IUser } from "../../models/IUser";
 import styles from "./PetSelector.module.css";
+import { useAuth } from "../../context/AuthContext";
 
 interface PetSelectorProps {
-  user: IUser | null;
   selectedPet: IPet | null;
   setSelectedPet: (pet: IPet) => void;
 }
 
-const PetSelector: React.FC<PetSelectorProps> = ({ user, selectedPet, setSelectedPet }) => {
+const PetSelector: React.FC<PetSelectorProps> = ({ selectedPet, setSelectedPet }) => {
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   return (
     <div className={styles.container}>
       <h2 className={styles.heading}>Select a Pet</h2>
       <div className={styles.petGrid}>
-        {user?.ownerRoleInfo?.pets?.map((pet) => (
+        {user.ownerRoleInfo.pets.map((pet: IPet) => (
           <div
             key={pet.id}
             onClick={() => setSelectedPet(pet)}
             className={`${styles.petCard} ${selectedPet?.id === pet.id ? styles.selected : ""}`}
           >
             <img
-              src={pet.picture ? `/images/dog_images/${pet.picture}` : "/placeholder.svg"}
+              src={pet.picture ? pet.picture : "/placeholder.svg"}
               alt={pet.name}
               className={styles.petImage}
             />

@@ -107,7 +107,7 @@ function RegisterForm() {
         const newUser = await registerUser(userDetails);
 
         if (newUser) {
-            loginUser(newUser);
+            loginUser(newUser.userDetails.id);
             navigate("/dashboard", { replace: true });
         } else {
             console.log("Registration failed");

@@ -20,7 +20,7 @@ function LoginForm() {
         const user = await login(email, password);
         if (user) {
             console.log("Login successful:", user);
-            loginUser(user);
+            loginUser(user.userDetails.id);
             navigate("/dashboard", { replace: true });
         } else {
             setError("Invalid Email or Password.");

@@ -1,14 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import "./MinderCard.css";
 import { MapPin } from "lucide-react";
-import { getUserId } from "../../utils/StorageManager"; // ✅ Import getUserId
+import { useAuth } from "../../context/AuthContext";
 
 function MinderCard({ minder }: { minder: any }) {
+  const { user } = useAuth();
+
   const navigate = useNavigate(); // ✅ Initialize navigate
 
   const handleBooking = () => {
-    const userId = getUserId();
-    if (!userId) {
+    if (!user) {
       navigate("/login"); // ✅ Redirect to login if not logged in
     } else {
         navigate("/booking", { state: { minderId: minder.userDetails.id } }); // ✅ Redirect to booking if logged in
@@ -20,11 +21,7 @@ function MinderCard({ minder }: { minder: any }) {
       {/* ✅ Main Display Image or fallback */}
       <div className="minder-image">
         <img
-          src={
-            minder.minderRoleInfo.pictures?.length > 0
-              ? `/images/user_images/${minder.minderRoleInfo.pictures[0]}`
-              : "/images/user_images/default-profile.png"
-          }
+          src={minder.minderRoleInfo.pictures[0]}
           alt={minder.userDetails.fname}
           width="150"
         />
@@ -61,7 +58,7 @@ function MinderCard({ minder }: { minder: any }) {
             .map((pic: any, index: any) => (
               <img
                 key={index}
-                src={`/images/user_images/${pic}`}
+                src={pic}
                 alt={`${minder.userDetails.fname} ${index + 1}`}
                 width="100"
               />

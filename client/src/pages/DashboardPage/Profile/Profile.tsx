@@ -4,41 +4,30 @@ import dashboardStyles from "../Dashboard.module.css";
 import ImageViewer from "../../../components/ImageViewer";
 import "react-range-slider-input/dist/style.css";
 import { X, Plus } from "lucide-react";
-import { editUser, getImageByFilename, uploadImage } from "../../../services/Registry";
+import { editUser, getUserById, uploadImage } from "../../../services/Registry";
 import { useAuth } from "../../../context/AuthContext";
 
 function Profile() {
-    const { user, setUser } = useAuth();
-
+    const { user, refreshUser } = useAuth();
     const [bio, setBio] = useState(user.minderRoleInfo.bio);
     const [availability, setAvailability] = useState(user.minderRoleInfo.availability);
     const [distanceRange, setDistanceRange] = useState(user.minderRoleInfo.distanceRange);
-    const [pictureFileNames, setPictureFileNames] = useState<string[]>(user.minderRoleInfo.pictures);
-    const [pictures, setPictures] = useState<string[]>([]);
+    const [pictures, setPictures] = useState<string[]>([...user.minderRoleInfo.pictures]);
+    const [pictureFileNames, setPictureFileNames] = useState<string[]>([]);
     const [pendingFiles, setPendingFiles] = useState<File[]>([]);
-    const [originalState, setOriginalState] = useState({ bio, availability, distanceRange, pictureFileNames, pictures });
+    const [originalState, setOriginalState] = useState({ bio, availability, distanceRange, pictures, pictureFileNames });
     const [showImageViewer, setShowImageViewer] = useState<string | null>(null);
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
-    const [picturesLoading, setPicturesLoading] = useState(true);
+    const [pictureIdsLoading, setpictureIdsLoading] = useState(true);
 
     useEffect(() => {
-        async function fetchPictures() {
-            const fetched = await Promise.all(
-                user.minderRoleInfo.pictures.map(async (pic: string) => {
-                    const response = await getImageByFilename(pic);
-                    return response;
-                })
-            );
-            return fetched;
-        }
-
         async function initialize() {
-            const fetchedPictures = await fetchPictures();
-            setPictures(fetchedPictures);
-            setOriginalState({ bio, availability, distanceRange, pictureFileNames, pictures: fetchedPictures });
-            setPicturesLoading(false);
+            const fetchedUser = await getUserById(user.userDetails.id);
+            const pictureFileNames = [...fetchedUser.minderRoleInfo.pictures];
+            setPictureFileNames(pictureFileNames);
+            setOriginalState({ bio, availability, distanceRange, pictures, pictureFileNames: pictureFileNames });
+            setpictureIdsLoading(false);
         }
-
         initialize();
     }, []);
 
@@ -120,15 +109,7 @@ function Profile() {
 
         await editUser(user.userDetails.id, updatedData);
 
-        const updatedUser = {
-            ...user,
-            minderRoleInfo: {
-                ...user.minderRoleInfo,
-                ...updatedData.minderRoleInfo
-            }
-        };
-
-        setUser(updatedUser);
+        refreshUser();
         setPendingFiles([]);
         setOriginalState({ bio, availability, distanceRange, pictureFileNames: newPictureFileNames, pictures });
         setHasUnsavedChanges(false);
@@ -160,7 +141,7 @@ function Profile() {
 
             <label>Photos</label>
             <div className={styles.photoGrid}>
-                {picturesLoading ? (
+                {pictureIdsLoading ? (
                     <div className={styles.loading}>Loading...</div>
                 ) : (
                     pictures.map((pic, index) => (
