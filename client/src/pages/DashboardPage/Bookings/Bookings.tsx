@@ -63,9 +63,7 @@ function Bookings() {
         };
     
         fetchInfo();
-    }, []);
-    
-    
+    }, [user]);
 
     const handleCancel = async (bookingId: number) => {
         const booking = await setBookingStatus(bookingId, EBookingStatus.Cancelled);
@@ -107,10 +105,6 @@ function Bookings() {
         // Open chat with user
     }
 
-    if (loading) {
-        return null;
-    }
-
     return (
         <div className={`${dashboardStyles.dashboardSection}`}>
             <h2>Your Bookings</h2>
@@ -136,21 +130,24 @@ function Bookings() {
                     </button>
                 </div>
                 <div className={styles.bookingsList}>
-                    {bookings.filter((b: Booking) => b.status === status).length > 0 ? (
-                        bookings
-                            .filter((b: Booking) => b.status === status)
-                            .map((booking: Booking) => (
-                                user.currentRole === Role.OWNER ? (
-                                    <OwnerBooking key={booking.id} booking={booking} status={status} onCancel={handleCancel} onMessage={handleMessage} onReview={handleReview} />
-                                ) : (
-                                    <MinderBooking key={booking.id} booking={booking} status={status} onAccept={handleAccept} onDecline={handleDecline} onMessage={handleMessage} />
-                                )
-                                
-                            ))
-                        ) : (
+                    {loading ? (
                         <p className={styles.emptyState}>You have no {status === EBookingStatus.Confirmed ? "upcoming" : status === EBookingStatus.Pending ? "pending" : "past"} bookings.</p>
-                        )
-                    }
+                    ) : (
+                        bookings.filter((b: Booking) => b.status === status).length > 0 ? (
+                                bookings
+                                    .filter((b: Booking) => b.status === status)
+                                    .map((booking: Booking) => (
+                                        user.currentRole === Role.OWNER ? (
+                                            <OwnerBooking key={booking.id} booking={booking} status={status} onCancel={handleCancel} onMessage={handleMessage} onReview={handleReview} />
+                                        ) : (
+                                            <MinderBooking key={booking.id} booking={booking} status={status} onAccept={handleAccept} onDecline={handleDecline} onMessage={handleMessage} />
+                                        )
+                                        
+                                    ))
+                                ) : (
+                                <p className={styles.emptyState}>You have no {status === EBookingStatus.Confirmed ? "upcoming" : status === EBookingStatus.Pending ? "pending" : "past"} bookings.</p>
+                            ) 
+                    )}
                 </div>
             </div>
         </div>
