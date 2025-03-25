@@ -2,6 +2,7 @@ import express, { Express, Request, Response, NextFunction } from 'express';
 import http from 'http';
 import multer from 'multer';
 import path from 'path';
+import { Server } from 'socket.io';
 
 import { AllUsersData, getUserByID, getUserByUsername, RegisterUser, loginUser, removeUser, getMinders, editUser } from '../routers/UserStatic';
 import { AllPets, PetByID, registerPet, removePet, addPetForUser, removePetFromUser } from '../routers/PetStatic';
@@ -17,6 +18,59 @@ import cors from 'cors';
 const app: Express = express();
 const port = process.env.PORT || 3001;
 const server = http.createServer(app);
+
+// Important CORS setup for Express
+app.use(cors({
+  origin: ["http://localhost:3000", "http://localhost:5173"], // Add all your frontend URLs
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+// Socket.IO setup
+const io = new Server(server, {
+  cors: {
+    origin: ["http://localhost:3000", "http://localhost:5173"], // Match frontend URL
+    methods: ["GET", "POST", "OPTIONS"],
+    credentials: true,
+    allowedHeaders: ["Content-Type"]
+  },
+  transports: ['polling', 'websocket'],
+  pingTimeout: 60000,
+  pingInterval: 25000
+});
+
+// Basic connection handler
+io.on('connection', (socket) => {
+  console.log('New socket connection:', socket.id);
+
+  // Handle ping (for debugging)
+  socket.on('ping', () => {
+    console.log(`Received ping from ${socket.id}`);
+    socket.emit('pong', { time: new Date().toISOString() });
+  });
+  
+  // Handle user registration
+  socket.on('register-user', (userId) => {
+    console.log(`User ${userId} registered on socket ${socket.id}`);
+    socket.join(`user-${userId}`);
+  });
+  
+  // Handle chat room
+  socket.on('join-chat', (chatId) => {
+    console.log(`Socket ${socket.id} joined chat-${chatId}`);
+    socket.join(`chat-${chatId}`);
+  });
+  
+  socket.on('leave-chat', (chatId) => {
+    console.log(`Socket ${socket.id} left chat-${chatId}`);
+    socket.leave(`chat-${chatId}`);
+  });
+  
+  socket.on('disconnect', () => {
+    console.log('Socket disconnected:', socket.id);
+  });
+});
 
 //#region Multer configuration
 // Configure multer storage for image uploads
@@ -307,8 +361,16 @@ app.get('/chat/:chatId', (req, res) => {
 
 // Add message to a chat
 app.post('/chat/message', (req, res) => {
-    const result = addMessage(req.body.chatId, req.body.message);
-    res.json(result);
+    try {
+        const result = addMessage(req.body.chatId, req.body.message);
+        
+        // Emit to all users in the chat
+        io.to(`chat-${req.body.chatId}`).emit('new-message', result.message);
+        
+        res.json(result);
+    } catch (error) {
+        res.status(500).json({ success: false, error: 'Failed to send message' });
+    }
 });
 
 // Create a new chat
@@ -343,8 +405,9 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 export function startHttpServer() {
     server.listen(port, () => {
         console.log(`Server is running on http://localhost:${port}`);
+        console.log(`Socket.IO server is running`);
     });
     return server;
 }
 
-export { app, server };
+export { app, server, io };
