@@ -46,5 +46,17 @@
     "type": "Dog Walking",
     "duration": "30 minutes",
     "price": 10
+  },
+  {
+    "id": 9,
+    "type": "Dog Walking",
+    "duration": "1 hour",
+    "price": 15
+  },
+  {
+    "id": 10,
+    "type": "Day Care",
+    "duration": "8 hours (Full Day)",
+    "price": 80
   }
 ]

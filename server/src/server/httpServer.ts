@@ -156,10 +156,10 @@ app.post('/user/:userId/pet', (req: Request, res: Response) => {
 });
 
 // Remove pet from a specific user
-app.delete('/user/:userId/pet/:petId', (req: Request, res: Response) => {
-    const result = removePetFromUser(parseInt(req.params.userId), parseInt(req.params.petId));
-    res.status(result.success ? 200 : 404).send(result.message);
-});
+// app.delete('/user/:userId/pet/:petId', (req: Request, res: Response) => {
+//     const result = removePetFromUser(parseInt(req.params.userId), parseInt(req.params.petId));
+//     res.status(result.success ? 200 : 404).send(result.message);
+// });
 //#endregion
 
 //#region Service Routes

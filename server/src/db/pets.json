@@ -46,5 +46,29 @@
     "behaviour": "Loyal and energetic.",
     "allergies": "",
     "picture": "7"
+  },
+  {
+    "id": 5,
+    "name": "Pipa",
+    "dob": "2020-12-22T00:00:00.000Z",
+    "gender": "female",
+    "breed": "Cocker Spaniel",
+    "size": "Small (0-15kg)",
+    "neutered": false,
+    "behaviour": "She is very friendly to everyone and loves to chase squirrels and catch frisbees. Sometimes she doesn't listen though.",
+    "allergies": "",
+    "picture": "13"
+  },
+  {
+    "id": 6,
+    "name": "Rusty",
+    "dob": "2020-03-25T00:00:00.000Z",
+    "gender": "male",
+    "breed": "Cocker Spaniel",
+    "size": "Medium (15-30kg)",
+    "neutered": false,
+    "behaviour": "He is a very affectionate boy and nice to all people. He is very active and can run for hours. He can however get into fights with other male dogs but this is rare.",
+    "allergies": "",
+    "picture": "14"
   }
 ]

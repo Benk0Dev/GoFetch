@@ -51,7 +51,7 @@ function ProfileIcon() {
   return (
     <div className={styles.dropdownContainer} ref={menuRef}>
       <button ref={iconRef} className={styles.profileIcon} onClick={toggleMenu}>
-        {user.userDetails.fname.charAt(0)}
+        <img src={user.primaryUserInfo.profilePic} alt="Profile" />
       </button>
 
       {menuOpen && (

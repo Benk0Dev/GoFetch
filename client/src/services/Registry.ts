@@ -2,6 +2,8 @@ import { IRegisterUser } from "../models/IUser";
 import { EBookingStatus, INewBooking } from "../models/IBooking";
 import { clearUser, getUserId, setUserId } from "../utils/StorageManager";
 import imageCompression from 'browser-image-compression';
+import defaultProfile from "../assets/images/default-profile-picture.svg"
+import defaultPet from "../assets/images/default-pet-picture.svg"
 
 const API_URL = "http://localhost:3001";
 
@@ -112,7 +114,7 @@ export async function getUserByIdWithPictures(id: number) {
             const user = await response.json();
 
             // Get profile picture
-            const profilePicURL = user.primaryUserInfo.profilePic ? await getImageByFilename(user.primaryUserInfo.profilePic) : null;
+            const profilePicURL = user.primaryUserInfo.profilePic ? await getImageByFilename(user.primaryUserInfo.profilePic) : defaultProfile;
 
             // Get minder pictures
             const minderPictures = user.minderRoleInfo.pictures;
@@ -126,7 +128,7 @@ export async function getUserByIdWithPictures(id: number) {
             const pets = user.ownerRoleInfo.pets;
             const petsWithPictures = await Promise.all(
                 pets.map(async (pet: any) => {
-                    const petPicURL = pet.picture ? await getImageByFilename(pet.picture) : null;
+                    const petPicURL = pet.picture ? await getImageByFilename(pet.picture) : defaultPet;
                     return { ...pet, picture: petPicURL };
                 })
             );            
@@ -211,18 +213,18 @@ export async function getAllMindersWithPictures() {
         const users = await response.json();
 
         const usersWithPictures = await Promise.all(users.map(async (user: any) => {
-            // Fetch profile picture if valid
-            const profilePicURL = user.primaryUserInfo?.profilePic
-                ? await getImageByFilename(user.primaryUserInfo.profilePic)
-                : null;
-
             // Fetch minder role pictures
-            const rawPictures = user.minderRoleInfo?.pictures || [];
+            const rawPictures = user.minderRoleInfo.pictures || [];
             const pictureURLs = await Promise.all(
                 rawPictures.map(async (filename: string) =>
                     filename ? await getImageByFilename(filename) : null
                 )
             );
+
+            // Fetch profile picture if valid
+            const profilePicURL = user.primaryUserInfo.profilePic
+                ? await getImageByFilename(user.primaryUserInfo.profilePic)
+                : rawPictures ? rawPictures[0] : defaultProfile;
 
             return {
                 ...user,
@@ -598,6 +600,24 @@ export async function addPetForUser(userId: number, pet: any) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(pet)
+        });
+        if (response.ok) {
+            return true;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return false;
+        }
+    } catch (e) {
+        console.error(e);
+        return false;
+    }
+}
+
+export async function removePetForUser(userId: number, petId: number) {
+    try {
+        const response = await fetch(`${API_URL}/removePet/${petId}`, { 
+            method: "DELETE"
         });
         if (response.ok) {
             return true;
