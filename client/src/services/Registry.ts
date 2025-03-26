@@ -1,9 +1,11 @@
-import { IRegisterUser } from "../models/IUser";
+import { IRegisterUser, IUser } from "../models/IUser";
 import { EBookingStatus, INewBooking } from "../models/IBooking";
 import { clearUser, getUserId, setUserId } from "../utils/StorageManager";
 import imageCompression from 'browser-image-compression';
 import defaultProfile from "../assets/images/default-profile-picture.svg"
 import defaultPet from "../assets/images/default-pet-picture.svg"
+import { IPet } from "../models/IPet";
+import { IService } from "../models/IService";
 
 const API_URL = "http://localhost:3001";
 
@@ -38,8 +40,8 @@ export function logout() {
 export async function verifyUniqueEmailAndUsername(email: string, username: string) {
     const allUsers = await getAllUsers();
     if (allUsers) {
-        const existingEmail = allUsers.find((user: any) => user.userDetails.loginDetails.email === email);
-        const existingUsername = allUsers.find((user: any) => user.userDetails.loginDetails.username === username);
+        const existingEmail = allUsers.find((user: IUser) => user.userDetails.loginDetails.email === email);
+        const existingUsername = allUsers.find((user: IUser) => user.userDetails.loginDetails.username === username);
         return { email: existingEmail, username: existingUsername };
     }
     return null;
@@ -70,7 +72,7 @@ export async function registerUser(user: IRegisterUser) {
     }
 }
 
-export async function editUser(id: number, user: any) {
+export async function editUser(id: number, user: IUser) {
     try {
         const response = await fetch(`${API_URL}/editUser/${id}`, { 
             method: "POST",
@@ -127,7 +129,7 @@ export async function getUserByIdWithPictures(id: number) {
             // Get pet pictures
             const pets = user.ownerRoleInfo.pets;
             const petsWithPictures = await Promise.all(
-                pets.map(async (pet: any) => {
+                pets.map(async (pet: IPet) => {
                     const petPicURL = pet.picture ? await getImageByFilename(pet.picture) : defaultPet;
                     return { ...pet, picture: petPicURL };
                 })
@@ -212,7 +214,7 @@ export async function getAllMindersWithPictures() {
 
         const users = await response.json();
 
-        const usersWithPictures = await Promise.all(users.map(async (user: any) => {
+        const usersWithPictures = await Promise.all(users.map(async (user: IUser) => {
             // Fetch minder role pictures
             const rawPictures = user.minderRoleInfo.pictures || [];
             const pictureURLs = await Promise.all(
@@ -504,7 +506,7 @@ export async function setBookingStatus(bookingId: number, status: EBookingStatus
     }
 }
 
-export async function addService(userId: number, service: any) {
+export async function addService(userId: number, service: IService) {
     try {
         const response = await fetch(`${API_URL}/newservice/${userId}`, { 
             method: "POST",
@@ -526,7 +528,7 @@ export async function addService(userId: number, service: any) {
     }
 }
 
-export async function editService(serviceId: number, service: any) {
+export async function editService(serviceId: number, service: IService) {
     try {
         const response = await fetch(`${API_URL}/editservice/${serviceId}`, { 
             method: "PUT",
@@ -599,7 +601,7 @@ export async function getServiceById(serviceId: number) {
     }
 }
 
-export async function addPetForUser(userId: number, pet: any) {
+export async function addPetForUser(userId: number, pet: IPet) {
     try {
         const response = await fetch(`${API_URL}/user/${userId}/pet`, { 
             method: "POST",

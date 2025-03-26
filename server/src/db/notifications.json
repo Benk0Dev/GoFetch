@@ -48,5 +48,15 @@
     "linkId": 301,
     "createdAt": "2025-03-18T11:25:00.000Z",
     "updatedAt": "2025-03-18T12:00:00.000Z"
+  },
+  {
+    "id": 6,
+    "userId": 5,
+    "message": "Sup",
+    "type": "message",
+    "linkId": 120,
+    "read": false,
+    "createdAt": "2025-03-26T16:06:08.667Z",
+    "updatedAt": "2025-03-26T16:06:08.667Z"
   }
 ]

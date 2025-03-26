@@ -6,6 +6,8 @@ import styles from "./Navbar.module.css";
 import { Bell } from "lucide-react";
 import { getUserNotifications, markNotificationAsRead } from "../../services/Registry";
 import { INotification } from "../../models/INotification";
+import { useSocket } from "../../context/SocketContext";
+import { useAuth } from "../../context/AuthContext";
 
 function NotificationIcon() {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -14,6 +16,8 @@ function NotificationIcon() {
     const menuRef = useRef<HTMLDivElement>(null);
     const iconRef = useRef<HTMLButtonElement>(null);
     const navigate = useNavigate();
+    const { socket, isConnected } = useSocket();
+    const { user } = useAuth();
 
     const toggleMenu = () => {
         setMenuOpen((prev) => !prev);
@@ -23,7 +27,11 @@ function NotificationIcon() {
         setLoading(true);
         const result = await getUserNotifications();
         if (result && result.notifications) {
-            setNotifications(result.notifications);
+            // Sort notifications by createdAt date (newest first)
+            const sortedNotifications = result.notifications.sort(
+                (a: { createdAt: string | number | Date; }, b: { createdAt: string | number | Date; }) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            );
+            setNotifications(sortedNotifications);
         }
         setLoading(false);
     };
@@ -58,18 +66,50 @@ function NotificationIcon() {
         fetchNotifications();
     };
 
+    // Setup socket listeners for real-time notifications
+    useEffect(() => {
+        if (!socket || !isConnected) return;
+        
+        // Handler for new notifications
+        const handleNewNotification = (newNotification: INotification) => {
+            console.log('Received new notification:', newNotification);
+            
+            // Add notification to state if it's for this user
+            if (user?.userDetails?.id === newNotification.userId) {
+                setNotifications(prev => {
+                    // Add new notification and re-sort (newest first)
+                    const updated = [newNotification, ...prev];
+                    return updated.sort(
+                        (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+                    );
+                });
+            }
+        };
+        
+        // Subscribe to notification events
+        socket.on('new-notification', handleNewNotification);
+        
+        // Cleanup
+        return () => {
+            socket.off('new-notification', handleNewNotification);
+        };
+    }, [socket, isConnected, user]);
+
+    // Initial fetch and periodic refresh as a fallback
     useEffect(() => {
         fetchNotifications();
         
-        // Poll for new notifications every 30 seconds
-        const interval = setInterval(fetchNotifications, 30000);
+        // Poll for new notifications every 60 seconds as a fallback
+        // This ensures notifications aren't missed if socket connection fails
+        const interval = setInterval(fetchNotifications, 60000);
         return () => clearInterval(interval);
     }, []);
 
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
-            if (menuRef?.current && !menuRef.current.contains(event.target as Node)) {
-                toggleMenu();
+            if (menuRef?.current && !menuRef.current.contains(event.target as Node) && 
+                iconRef?.current !== event.target) {
+                setMenuOpen(false);
             }
         }
 
@@ -80,7 +120,7 @@ function NotificationIcon() {
         }
         
         return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, [menuRef, toggleMenu]);
+    }, [menuOpen]);
 
     // Count unread notifications
     const unreadCount = notifications.filter(n => !n.read).length;
