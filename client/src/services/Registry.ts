@@ -348,6 +348,24 @@ export async function createNewChat(users: number[], initialMessage: string = ""
         return null;
     }
 }
+// Creates a new chat if one does not exist between the two users, otherwise returns the existing chat
+export async function startChat(withUserId: number) {
+    const userId = getUserId();
+    if (!userId) {
+        return null;
+    }
+    const chatsResponse = await getUserChats();
+    const userChats = chatsResponse.chats;
+    const existingChat = userChats.find((chat: any) => 
+        chat.users.includes(withUserId) && chat.users.includes(userId)
+);
+if (existingChat) {
+    return existingChat;
+} else {
+    const newChatResponse = await createNewChat([userId, withUserId]);
+    return newChatResponse;
+}
+}
 //#endregion
 
 //#region Notifications

@@ -43,9 +43,9 @@
     "serviceId": 5,
     "time": "2025-03-28T15:30:00.000Z",
     "notes": "He loves tennis balls!",
-    "status": "Confirmed",
+    "status": "Completed",
     "createdAt": "2025-03-25T02:48:00.163Z",
-    "updatedAt": "2025-03-26T00:14:29.920Z"
+    "updatedAt": "2025-03-26T16:15:02.257Z"
   },
   {
     "id": 5,
@@ -67,8 +67,8 @@
     "serviceId": 5,
     "time": "2025-03-29T18:00:00.000Z",
     "notes": "Teach her how to do a barrel roll.",
-    "status": "Pending",
+    "status": "Confirmed",
     "createdAt": "2025-03-26T00:16:33.827Z",
-    "updatedAt": "2025-03-26T00:16:33.827Z"
+    "updatedAt": "2025-03-26T16:03:47.734Z"
   }
 ]

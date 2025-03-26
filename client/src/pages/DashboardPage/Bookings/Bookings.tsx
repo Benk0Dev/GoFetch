@@ -7,8 +7,9 @@ import { EBookingStatus, IBooking } from "../../../models/IBooking";
 import { Role } from "../../../models/IUser";
 import OwnerBooking from "./OwnerBooking";
 import MinderBooking from "./MinderBooking";
-import { getServiceById, getUserById, getUserByIdWithPictures, setBookingStatus } from "../../../services/Registry";
+import { getServiceById, getUserById, getUserByIdWithPictures, setBookingStatus, startChat } from "../../../services/Registry";
 import { IPet } from "../../../models/IPet";
+import { useNavigate } from "react-router-dom";
 
 export interface Booking {
     owner: any;
@@ -26,6 +27,7 @@ function Bookings() {
     const [status, setStatus] = useState<EBookingStatus>(EBookingStatus.Confirmed);
     const [bookings, setBookings] = useState<Booking[]>([]);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchInfo = async () => {
@@ -102,9 +104,19 @@ function Bookings() {
         // Open review modal
     }
 
-    const handleMessage = (bookingId: number) => {
-        console.log("Message user", bookingId);
-        // Open chat with user
+    const handleMessage = async (recipientId: number) => {
+        const chat = await startChat(recipientId);
+        navigate(`/chats/${chat.id}`);
+    }
+
+    const handleComplete = async (bookingId: number) => {
+        const booking = await setBookingStatus(bookingId, EBookingStatus.Completed);
+        if (booking) {
+            const updatedUser = await getUserByIdWithPictures(user.userDetails.id);
+            setUser(updatedUser);
+        } else {
+            console.error("Failed to complete booking.");
+        }
     }
 
     return (
@@ -142,7 +154,7 @@ function Bookings() {
                                         user.currentRole === Role.OWNER ? (
                                             <OwnerBooking key={booking.id} booking={booking} status={status} onCancel={handleCancel} onMessage={handleMessage} onReview={handleReview} />
                                         ) : (
-                                            <MinderBooking key={booking.id} booking={booking} status={status} onAccept={handleAccept} onDecline={handleDecline} onMessage={handleMessage} />
+                                            <MinderBooking key={booking.id} booking={booking} status={status} onAccept={handleAccept} onDecline={handleDecline} onMessage={handleMessage} onComplete={handleComplete} />
                                         )
                                         
                                     ))
