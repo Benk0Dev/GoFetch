@@ -5,6 +5,7 @@ import { getUserChats, getUserById } from "../../services/Registry";
 import styles from './MessagingPage.module.css';
 import { useAuth } from "../../context/AuthContext";
 import { useSocket } from "../../context/SocketContext";
+import { Role } from "../../models/IUser";
 
 function MessagingPage() {
     const [chats, setChats] = useState<IChat[]>([]);
@@ -176,9 +177,12 @@ function MessagingPage() {
                 ) : (
                     <div className={styles.noChats}>
                         <p>No conversations yet</p>
-                        <Link to="/browse" className={styles.browseButton}>
+                        {user.currentRole === Role.OWNER && (
+                            <Link to="/browse" className="btn btn-primary">
                             Browse Pet Minders
-                        </Link>
+                            </Link>
+                        )}
+                        
                     </div>
                 )}
             </div>
