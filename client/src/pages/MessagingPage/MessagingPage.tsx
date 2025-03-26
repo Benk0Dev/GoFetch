@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { getChatById, sendMessage, getUserById } from '../../services/Registry';
+import { getChatById, sendMessage, getUserById, getUserByIdWithPictures } from '../../services/Registry';
 import { IChat, IMessage } from '../../models/IMessage';
 import { useAuth } from '../../context/AuthContext';
 import { useSocket } from '../../context/SocketContext';
@@ -16,6 +16,7 @@ function ChatPage() {
     const { user } = useAuth();
     const { socket } = useSocket();
     const [chatName, setChatName] = useState('Chat');
+    const [userPicture, setUserPicture] = useState<string>("");
     
     // Format timestamp to readable format
     const formatMessageTime = (timestamp: Date | string) => {
@@ -146,15 +147,16 @@ function ChatPage() {
     }, [chat?.messages]);
 
     useEffect(() => {
-        const fetchOtherUserName = async () => {
+        const fetchOtherUserInfo = async () => {
             if (!chat) return;
             const otherUserId = chat.users.find(userId => userId !== user.userDetails.id) || null;
             if (otherUserId) {
-                const otherUserName = await getUserById(otherUserId);
+                const otherUserName = await getUserByIdWithPictures(otherUserId);
                 setChatName(otherUserName ? `${otherUserName.userDetails.fname} ${otherUserName.userDetails.sname}` : 'Chat');
+                setUserPicture(otherUserName && otherUserName.primaryUserInfo.profilePic);
             }
         };
-        fetchOtherUserName();
+        fetchOtherUserInfo();
     }, [chat, user]);
     
     if (loading) {
@@ -172,6 +174,10 @@ function ChatPage() {
     return (
         <div className={styles.chatContainer}>
             <div className={styles.chatHeader}>
+                <img 
+                    src={userPicture} 
+                    alt="User" 
+                />
                 <h2>{chatName}</h2>
             </div>
             

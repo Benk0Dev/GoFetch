@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { Link, Outlet, useParams, useNavigate } from "react-router-dom";
 import { IChat } from "../../models/IMessage";
-import { getUserChats, getUserById } from "../../services/Registry";
+import { getUserChats, getUserByIdWithPictures } from "../../services/Registry";
 import styles from './MessagingPage.module.css';
 import { useAuth } from "../../context/AuthContext";
 import { useSocket } from "../../context/SocketContext";
@@ -74,7 +74,7 @@ function MessagingPage() {
             
             if (otherUserId) {
                 try {
-                    const otherUser = await getUserById(otherUserId);
+                    const otherUser = await getUserByIdWithPictures(otherUserId);
                     if (otherUser && otherUser.userDetails) {
                         namesMap[chat.id.toString()] = 
                             `${otherUser.userDetails.fname} ${otherUser.userDetails.sname}`;
