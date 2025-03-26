@@ -277,7 +277,7 @@ export async function getChatById(chatId: number) {
     }
 }
 
-export async function sendMessage(chatId: number, message: { senderId: number, message: string, isRead: boolean }) {
+export async function sendMessage(chatId: number, message: { senderId: number, message: string }) {
     try {
         const response = await fetch(`${API_URL}/chat/message`, {
             method: 'POST',

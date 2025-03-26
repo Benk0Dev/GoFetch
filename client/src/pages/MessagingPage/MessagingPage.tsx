@@ -18,9 +18,26 @@ function ChatPage() {
     const [chatName, setChatName] = useState('Chat');
     
     // Format timestamp to readable format
-    const formatTime = (timestamp: Date | string) => {
-        const date = new Date(timestamp);
-        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const formatMessageTime = (timestamp: Date | string) => {
+        const messageDate = new Date(timestamp);
+        const today = new Date();
+        
+        // Check if the message is from today
+        const isToday = messageDate.getDate() === today.getDate() &&
+                        messageDate.getMonth() === today.getMonth() &&
+                        messageDate.getFullYear() === today.getFullYear();
+        
+        if (isToday) {
+            // Just show time for today's messages
+            return messageDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        } else {
+            // Show date and time for older messages
+            return `${messageDate.toLocaleDateString([], { 
+                month: 'short', 
+                day: 'numeric',
+                year: messageDate.getFullYear() !== today.getFullYear() ? 'numeric' : undefined
+            })} ${messageDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+        }
     };
     
     // Scroll to bottom of messages
@@ -61,7 +78,6 @@ function ChatPage() {
             message: {
                 senderId: user.userDetails.id,
                 message: newMessage.trim(),
-                isRead: false
             }
         };
         
@@ -165,14 +181,14 @@ function ChatPage() {
                         <div 
                             key={index}
                             className={`${styles.message} ${
-                                message.userId !== user.userDetails.id
+                                message.senderId === user.userDetails.id
                                     ? styles.sentMessage 
                                     : styles.receivedMessage
                             }`}
                         >
                             <p className={styles.messageContent}>{message.message}</p>
                             <span className={styles.messageTime}>
-                                {formatTime(message.timestamp)}
+                                {formatMessageTime(message.timestamp)}
                             </span>
                         </div>
                     ))

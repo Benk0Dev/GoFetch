@@ -151,37 +151,8 @@ function MessagingPage() {
 
     return (
         <div className={styles.messagingContainer}>
-            {/* Socket connection indicator - always show in development
-            <div className={styles.socketStatus} style={{ 
-                backgroundColor: connectionError ? 'rgba(255, 0, 0, 0.8)' : 
-                                isConnected ? 'rgba(0, 128, 0, 0.8)' : 
-                                'rgba(255, 165, 0, 0.8)'
-            }}>
-                <span>
-                    {connectionError ? '❌ ' : isConnected ? '✅ ' : '⚠️ '}
-                    {socketInfo}
-                </span>
-            </div> */}
-            
-            {/* Debugging button in development mode
-            {process.env.NODE_ENV === 'development' && (
-                <div className={styles.debugPanel}>
-                    <button onClick={pingServer} disabled={!isConnected}>
-                        Ping Server
-                    </button>
-                    <button onClick={() => socket?.connect()} disabled={isConnected}>
-                        Reconnect
-                    </button>
-                    <div>Status: {isConnected ? 'Connected' : 'Disconnected'}</div>
-                    <div>Socket ID: {socket?.id || 'None'}</div>
-                    {connectionError && <div className={styles.error}>{connectionError}</div>}
-                </div>
-            )} */}
-            
-            {/* Chat list sidebar */}
             <div className={styles.chatsSidebar}>
                 <h2>Chats</h2>
-                
                 {chats.length > 0 ? (
                     <div className={styles.chatsList}>
                         {chats.map((chat: IChat) => (
