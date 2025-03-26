@@ -9,6 +9,7 @@ import { IService } from "../models/IService";
 
 const API_URL = "http://localhost:3001";
 
+//#region User
 export async function login(credentials: string, password: string) {
     try {
         const response = await fetch(`${API_URL}/login`, { 
@@ -185,7 +186,9 @@ export async function getAllUsers() {
         return null;
     }
 }
+//#endregion
 
+//#region Minder
 export async function getAllMinders() {
     try {
         const response = await fetch(`${API_URL}/minders`);
@@ -247,8 +250,9 @@ export async function getAllMindersWithPictures() {
         return null;
     }
 }
+//#endregion
 
-
+//#region Chats
 export async function getUserChats() {
     try {
         const userId = getUserId();
@@ -344,7 +348,9 @@ export async function createNewChat(users: number[], initialMessage: string = ""
         return null;
     }
 }
+//#endregion
 
+//#region Notifications
 export async function getUserNotifications() {
     try {
         const userId = getUserId();
@@ -386,6 +392,31 @@ export async function markNotificationAsRead(notificationId: number) {
     }
 }
 
+export async function createNotification(notification: { userId: number, message: string, type: string, link: string }) {
+    try {
+        const response = await fetch(`${API_URL}/notifications`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(notification)
+        });
+        if (response.ok) {
+            const data = await response.json();
+            return data.notification;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return null;
+        }
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+}
+//#endregion
+
+//#region Images
 export async function uploadImage(file: File) {
     try {
         const compressedFile = await imageCompression(file, {
@@ -434,7 +465,9 @@ export async function getImageByFilename(filename: string | undefined | null) {
         return null;
     }
 }
+//#endregion
 
+//#region Bookings
 export const createBooking = async (bookingData: INewBooking) => {
     try {
         const response = await fetch(`${API_URL}/booking`, { 
@@ -505,7 +538,9 @@ export async function setBookingStatus(bookingId: number, status: EBookingStatus
         return null;
     }
 }
+//#endregion
 
+//#region Services
 export async function addService(userId: number, service: IService) {
     try {
         const response = await fetch(`${API_URL}/newservice/${userId}`, { 
@@ -600,7 +635,9 @@ export async function getServiceById(serviceId: number) {
         return null;
     }
 }
+//#endregion
 
+//#region Pets
 export async function addPetForUser(userId: number, pet: IPet) {
     try {
         const response = await fetch(`${API_URL}/user/${userId}/pet`, { 
@@ -640,3 +677,4 @@ export async function removePetForUser(userId: number, petId: number) {
         return false;
     }
 }
+//#endregion
