@@ -42,7 +42,7 @@ function ChatPage() {
     
     // Scroll to bottom of messages
     const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+        messagesEndRef.current?.scrollIntoView();
     };
     
     // Fetch chat data
@@ -151,7 +151,7 @@ function ChatPage() {
             const otherUserId = chat.users.find(userId => userId !== user.userDetails.id) || null;
             if (otherUserId) {
                 const otherUserName = await getUserById(otherUserId);
-                setChatName(otherUserName ? `Chat with ${otherUserName.userDetails.fname} ${otherUserName.userDetails.sname}` : 'Chat');
+                setChatName(otherUserName ? `${otherUserName.userDetails.fname} ${otherUserName.userDetails.sname}` : 'Chat');
             }
         };
         fetchOtherUserName();
@@ -210,7 +210,7 @@ function ChatPage() {
                 />
                 <button 
                     type="submit" 
-                    className={styles.sendButton}
+                    className={`btn btn-primary ${styles.sendButton}`}
                     disabled={!newMessage.trim()}
                 >
                     Send
