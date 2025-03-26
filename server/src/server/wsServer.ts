@@ -1,6 +1,8 @@
 import { Server, Socket } from 'socket.io';
 import http from 'http';
 import { addMessage } from '../routers/MessageStatic';
+import { addNotification } from '../routers/NotificationStatic';
+import { NotificationType } from '../models/INotification';
 
 // Initialize Socket.IO server
 export function setupWebSocketServer(httpServer: http.Server) {
@@ -45,7 +47,30 @@ export function setupWebSocketServer(httpServer: http.Server) {
             // This will save the message to the database AND emit the socket event
             const result = addMessage(messageData.chatId, messageData.message);
             
-            if (!result.success) {
+            if (result.success) {
+                // Create a notification for each user in the chat except the sender
+                const chat = io.sockets.adapter.rooms.get(`chat-${messageData.chatId}`);
+                if (chat) {
+                    // Get the chat details to find the other user
+                    const chatDetails = require('../services/MessagesCached').getChatByIdCached(messageData.chatId);
+                    if (chatDetails) {
+                        // Notify other users in this chat
+                        const otherUsers = chatDetails.users.filter(
+                            (userId: number) => userId !== messageData.message.senderId
+                        );
+                        
+                        otherUsers.forEach((recipientId: number) => {
+                            // Create a notification for the message
+                            addNotification({
+                                userId: recipientId,
+                                message: `New message: ${messageData.message.message.substring(0, 30)}${messageData.message.message.length > 30 ? '...' : ''}`,
+                                type: NotificationType.Message,
+                                linkId: messageData.chatId
+                            });
+                        });
+                    }
+                }
+            } else {
                 // If there was an error, send it back to the sender
                 socket.emit('message-error', { 
                     error: result.error,
