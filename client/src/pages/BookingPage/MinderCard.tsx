@@ -29,7 +29,7 @@ const MinderCard: React.FC<MinderCardProps> = ({ minderId }) => {
   return (
     <div className={styles.card}>
       <h1 className={styles.name}>
-        {minder.userDetails?.fname || "Pet Minder"}
+        {minder.name.fname || "Pet Minder"}
       </h1>
 
       <div className="minder-image">
@@ -37,7 +37,7 @@ const MinderCard: React.FC<MinderCardProps> = ({ minderId }) => {
           src={
               minder.primaryUserInfo.profilePic === defaultUser ? minder.minderRoleInfo.pictures.length > 0 ? minder.minderRoleInfo.pictures[0] : defaultUser : minder.primaryUserInfo.profilePic
           }
-          alt={minder.userDetails.fname}
+          alt={minder.name.fname}
           width="400"
         />
       </div>
@@ -47,15 +47,7 @@ const MinderCard: React.FC<MinderCardProps> = ({ minderId }) => {
       </p>
 
       <div className={styles.infoLine}>
-        🗓️ <strong>Availability:</strong> {minder.minderRoleInfo?.availability || "N/A"}
-      </div>
-
-      <div className={styles.infoLine}>
-        <strong>📏 Range:</strong> {minder.minderRoleInfo?.distanceRange} miles
-      </div>
-
-      <div className={styles.infoLine}>
-        ✅ <strong>Verified:</strong> {minder.minderRoleInfo?.verified ? "Yes" : "No"}
+        🗓️ <strong>Availability:</strong> {minder.minderRoleInfo.availability || "N/A"}
       </div>
     </div>
   );

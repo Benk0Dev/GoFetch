@@ -1,3 +1,3 @@
-import { EGender, ESize } from '../../../server/src/models/IPet';
+import { Gender, Size } from '../../../server/src/models/IPet';
 export type { IPet } from '../../../server/src/models/IPet';
-export { EGender, ESize };
+export { Gender, Size };

@@ -4,19 +4,19 @@ import dashboardStyles from "../Dashboard.module.css";
 import { Role } from "../../../models/IUser";
 import Statistic from "./Statistic";
 import { PawPrint, Calendar, Star, Briefcase } from "lucide-react";
-import { EBookingStatus, IBooking } from "../../../models/IBooking";
+import { BookingStatus, IBooking } from "../../../models/IBooking";
 
 function Home() {
     const { user, role } = useAuth();
-    const fname = user.userDetails.fname;
+    const fname = user.fname;
 
     const isOwner = user.roles.includes(Role.OWNER);
     const isMinder = user.roles.includes(Role.MINDER);
 
-    const upcomingOwnerBookings = user.ownerRoleInfo.bookings.filter((booking: IBooking) => booking.status === EBookingStatus.Confirmed).length;
+    const upcomingOwnerBookings = user.ownerRoleInfo.bookings.filter((booking: IBooking) => booking.status === BookingStatus.Confirmed).length;
     const petCount = user.ownerRoleInfo.pets.length;
-    const upcomingMinderBookings = user.minderRoleInfo.bookings.filter((booking: IBooking) => booking.status === EBookingStatus.Confirmed).length;
-    const minderBookingRequests = user.minderRoleInfo.bookings.filter((booking: IBooking) => booking.status === EBookingStatus.Pending).length;
+    const upcomingMinderBookings = user.minderRoleInfo.bookings.filter((booking: IBooking) => booking.status === BookingStatus.Confirmed).length;
+    const minderBookingRequests = user.minderRoleInfo.bookings.filter((booking: IBooking) => booking.status === BookingStatus.Pending).length;
     const serviceCount = user.minderRoleInfo?.services?.length;
     const rating = user.minderRoleInfo?.rating?.toFixed(1) || "N/A";
 

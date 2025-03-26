@@ -13,7 +13,7 @@ function MinderCard({ minder }: { minder: any }) {
     if (!user) {
       navigate("/login"); // ✅ Redirect to login if not logged in
     } else {
-        navigate("/booking", { state: { minderId: minder.userDetails.id } }); // ✅ Redirect to booking if logged in
+        navigate("/booking", { state: { minderId: minder.id } }); // ✅ Redirect to booking if logged in
     }
   };
 
@@ -23,12 +23,12 @@ function MinderCard({ minder }: { minder: any }) {
       <div className="minder-image">
         <img
           src={minder.primaryUserInfo.profilePic}
-          alt={minder.userDetails.fname}
+          alt={minder.name.fname}
           width="150"
         />
       </div>
 
-      <h2>{minder.userDetails.fname}</h2>
+      <h2>{minder.name.fname}</h2>
       <p className="bio">{minder.minderRoleInfo.bio}</p>
 
       <p>
@@ -38,7 +38,7 @@ function MinderCard({ minder }: { minder: any }) {
         <strong>
           <MapPin /> Location:
         </strong>{" "}
-        {minder.primaryUserInfo.location.name}
+        {minder.primaryUserInfo.address.city}
       </p>
       <p>
         <strong>🗓️ Availability:</strong> {minder.minderRoleInfo.availability}

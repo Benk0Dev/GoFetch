@@ -5,7 +5,7 @@ import path from 'path';
 import cors from 'cors';
 
 import { setupWebSocketServer } from '../server/wsServer';
-import { AllUsersData, getUserByID, getUserByUsername, RegisterUser, loginUser, removeUser, getMinders, editUser } from '../routers/UserStatic';
+import { AllUsersData, getUserByID, RegisterUser, loginUser, removeUser, getMinders, editUser } from '../routers/UserStatic';
 import { AllPets, PetByID, registerPet, removePet, addPetForUser, removePetFromUser } from '../routers/PetStatic';
 import { AllServices, ServiceByID, addServiceForUser, editService, removeService } from '../routers/ServiceStatic';
 import { getBookingsForUser, getAllBookings, getBookingById, getBookingsForPet, getBookingsForMinder, createBooking, updateBookingDetails, updateBookingStatus, deleteBooking } from '../routers/BookingStatic';
@@ -14,6 +14,7 @@ import { getChatsForUser, getChatById, addMessage, createChat } from '../routers
 import { getNotificationsForUser, markNotificationAsRead, addNotification } from '../routers/NotificationStatic';
 
 import { log } from '../utils/utils';
+import { addReviewForUser, ReviewByID } from '../routers/ReviewStatic';
 
 const app: Express = express();
 const port = process.env.PORT || 3001;
@@ -91,12 +92,6 @@ app.get('/users', (req: Request, res: Response) => {
 // Get user by ID
 app.get('/user/:id', (req: Request, res: Response) => {
     const result = getUserByID(parseInt(req.params.id));
-    res.status(result.success ? 200 : 404).send(result.user);
-});
-
-// Get user by username
-app.get('/user/username/:username', (req: Request, res: Response) => {
-    const result = getUserByUsername(req.params.username);
     res.status(result.success ? 200 : 404).send(result.user);
 });
 
@@ -362,6 +357,21 @@ app.put('/notifications/:notificationId/read', (req, res) => {
 
 app.post('/notifications', (req, res) => {
     res.json(addNotification(req.body));
+});
+
+// #endregion
+
+// #region Reviews Routes
+// Get reviews by ID
+app.get('/reviews/:reviewId', (req, res) => {
+    const result = ReviewByID(parseInt(req.params.reviewId));
+    res.status(result.success ? 200 : 404).send(result.review);
+});
+
+// Add a review for a user
+app.post('/user/:userId/review', (req, res) => {
+    const result = addReviewForUser(parseInt(req.params.userId), req.body);
+    res.status(result.success ? 201 : 400).send(result.review);
 });
 
 // #endregion

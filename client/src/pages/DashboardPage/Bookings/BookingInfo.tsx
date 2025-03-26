@@ -4,14 +4,14 @@ import { Calendar, Clock, MapPin, PawPrint, ArrowDown, UserRound, NotebookPen, U
 import { Role } from "../../../models/IUser";
 import { Booking } from "./Bookings";
 import { useState } from "react";
-import { EGender } from "../../../models/IPet";
+import { Gender } from "../../../models/IPet";
 
 function BookingInfo({ booking }: { booking: Booking }) {
     const { user } = useAuth();
     const [showDetails, setShowDetails] = useState(false);
 
     const getFullName = (user: any) => {
-        return `${user.userDetails.fname} ${user.userDetails.sname}`;
+        return `${user.fname} ${user.sname}`;
     }
 
     const getAge = (dob: Date) => {
@@ -35,7 +35,7 @@ function BookingInfo({ booking }: { booking: Booking }) {
             </div>
             <div className={styles.bookingDetail}>
                 <MapPin size={16} strokeWidth={2} />
-                <span>{user.currentRole === Role.OWNER ? booking.minder.primaryUserInfo.location.name : booking.owner.primaryUserInfo.location.name}</span>
+                <span>{user.currentRole === Role.OWNER ? booking.minder.primaryUserInfo.address.city : booking.owner.primaryUserInfo.address.city}</span>
             </div>
             <div className={styles.bookingDetail}>
                 <PawPrint size={16} strokeWidth={2} />
@@ -62,7 +62,7 @@ function BookingInfo({ booking }: { booking: Booking }) {
                                 <div className={styles.infoSection}>
                                     <div className={styles.bookingDetail}>
                                         <UserRound size={16} strokeWidth={2} />
-                                        <span>{booking.owner.userDetails.fname}</span>
+                                        <span>{booking.owner.name.fname}</span>
                                     </div>
                                     <div className={styles.section}>
                                         <img src={booking.owner.primaryUserInfo.profilePic} alt={getFullName(booking.owner)} />
@@ -79,7 +79,7 @@ function BookingInfo({ booking }: { booking: Booking }) {
                                             <div className={styles.petInfoShort}>
                                                 <span className={styles.petTitle}>{booking.pet.breed}</span>
                                                 <span className={styles.petTitle}>{getAge(booking.pet.dob)} years old</span>
-                                                <span className={styles.petTitle}>{booking.pet.gender === EGender.MALE ? "Male" : "Female"}</span>
+                                                <span className={styles.petTitle}>{booking.pet.gender === Gender.MALE ? "Male" : "Female"}</span>
                                                 <span className={styles.petTitle}>{booking.pet.size}</span>
                                                 <span  className={styles.petTitle} style={{width: "max-content"}}>{booking.pet.neutered ? "" : "Not "}Neutered/Sprayed</span>
                                             </div>

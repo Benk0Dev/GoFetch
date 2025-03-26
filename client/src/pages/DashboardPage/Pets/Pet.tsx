@@ -7,7 +7,7 @@ import { useAuth } from "../../../context/AuthContext";
 
 function Pet({ pet }: { pet: IPet }) {
     const navigate = useNavigate();
-    const { user, refreshUser } = useAuth();
+    const { refreshUser } = useAuth();
 
     const getAge = (dob: Date): number => {
         const birthDate = new Date(dob);
@@ -25,7 +25,7 @@ function Pet({ pet }: { pet: IPet }) {
     };
 
     const handleRemove = async () => {
-        const removed = await removePetForUser(user.userDetails.id, pet.id);
+        const removed = await removePetForUser(pet.id);
         if (removed) {
             refreshUser();
         } else {

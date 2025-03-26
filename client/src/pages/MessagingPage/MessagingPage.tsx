@@ -43,7 +43,7 @@ function ChatPage() {
     
     // Scroll to bottom of messages
     const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView();
+        messagesEndRef.current?.scrollIntoView({ block: 'end' });
     };
     
     // Fetch chat data
@@ -77,7 +77,7 @@ function ChatPage() {
         const messageData = {
             chatId: parseInt(id),
             message: {
-                senderId: user.userDetails.id,
+                senderId: user.id,
                 message: newMessage.trim(),
             }
         };
@@ -149,10 +149,10 @@ function ChatPage() {
     useEffect(() => {
         const fetchOtherUserInfo = async () => {
             if (!chat) return;
-            const otherUserId = chat.users.find(userId => userId !== user.userDetails.id) || null;
+            const otherUserId = chat.users.find(userId => userId !== user.id) || null;
             if (otherUserId) {
                 const otherUserName = await getUserByIdWithPictures(otherUserId);
-                setChatName(otherUserName ? `${otherUserName.userDetails.fname} ${otherUserName.userDetails.sname}` : 'Chat');
+                setChatName(otherUserName ? `${otherUserName.name.fname} ${otherUserName.name.sname}` : 'Chat');
                 setUserPicture(otherUserName && otherUserName.primaryUserInfo.profilePic);
             }
         };
@@ -187,7 +187,7 @@ function ChatPage() {
                         <div 
                             key={index}
                             className={`${styles.message} ${
-                                message.senderId === user.userDetails.id
+                                message.senderId === user.id
                                     ? styles.sentMessage 
                                     : styles.receivedMessage
                             }`}

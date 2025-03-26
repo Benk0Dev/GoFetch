@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { IType, IDuration, INewService } from '../../../models/IService';
+import { Type, Duration, INewService } from '../../../models/IService';
 import styles from './Services.module.css';
 
 function NewService( { onCancel, onAdd }: { onCancel: () => void, onAdd: (service: INewService) => void } ) {
-    const [serviceType, setServiceType] = useState<IType | "">("");
-    const [duration, setDuration] = useState<IDuration | "">("");
+    const [serviceType, setServiceType] = useState<Type | "">("");
+    const [duration, setDuration] = useState<Duration | "">("");
     const [price, setPrice] = useState(0);
     const [error, setError] = useState("");
 
@@ -36,10 +36,10 @@ function NewService( { onCancel, onAdd }: { onCancel: () => void, onAdd: (servic
                     <select
                         id="service-type"
                         value={serviceType}
-                        onChange={(e) => setServiceType(e.target.value as IType)}
+                        onChange={(e) => setServiceType(e.target.value as Type)}
                     >
                         <option value="">Select service type</option>
-                        {Object.entries(IType).map(([key, label]) => (
+                        {Object.entries(Type).map(([key, label]) => (
                             <option key={key} value={label}>{label}</option>
                         ))}
                     </select>
@@ -51,10 +51,10 @@ function NewService( { onCancel, onAdd }: { onCancel: () => void, onAdd: (servic
                     <select
                         id="duration"
                         value={duration}
-                        onChange={(e) => setDuration(e.target.value as IDuration)}
+                        onChange={(e) => setDuration(e.target.value as Duration)}
                     >
                         <option value="">Select duration</option>
-                        {Object.entries(IDuration).map(([key, label]) => (
+                        {Object.entries(Duration).map(([key, label]) => (
                             <option key={key} value={label}>{label}</option>
                         ))}
                     </select>

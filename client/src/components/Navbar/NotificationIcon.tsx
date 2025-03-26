@@ -77,7 +77,7 @@ function NotificationIcon() {
             console.log('Received new notification:', newNotification);
             
             // Add notification to state if it's for this user
-            if (user?.userDetails?.id === newNotification.userId) {
+            if (user.id === newNotification.userId) {
                 setNotifications(prev => {
                     // Add new notification and re-sort (newest first)
                     const updated = [newNotification, ...prev];

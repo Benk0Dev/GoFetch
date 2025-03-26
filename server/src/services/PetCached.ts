@@ -44,9 +44,9 @@ export function removePetCached(id: number) {
     cache.pets.splice(index, 1);
 
     cache.users.forEach(user => {
-        const petIndex = user.ownerRoleInfo.petIDs.indexOf(id);
+        const petIndex = user.ownerRoleInfo.petIds.indexOf(id);
         if (petIndex !== -1) {
-            user.ownerRoleInfo.petIDs.splice(petIndex, 1);
+            user.ownerRoleInfo.petIds.splice(petIndex, 1);
         }
     });
 

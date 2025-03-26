@@ -1,6 +1,6 @@
 import {
     IBooking,
-    EBookingStatus,
+    BookingStatus,
     INewBooking
 } from '../models/IBooking';
 import {
@@ -56,7 +56,7 @@ export function createBooking(bookingData: INewBooking) {
     }
 }
 
-export function updateBookingStatus(bookingId: number, status: EBookingStatus) {
+export function updateBookingStatus(bookingId: number, status: BookingStatus) {
     const booking = updateBookingStatusCached(bookingId, status);
     if (!booking) {
         return { success: false, message: `Booking with ID ${bookingId} not found` };

@@ -1,14 +1,13 @@
 [
   {
-    "userDetails": {
-      "id": 1,
+    "id": 1,
+    "name": {
       "fname": "Alice",
-      "sname": "Smith",
-      "loginDetails": {
-        "email": "alice@example.com",
-        "username": "alice123",
-        "password": "password"
-      }
+      "sname": "Smith"
+    },
+    "loginDetails": {
+      "email": "alice@example.com",
+      "password": "password"
     },
     "roles": [
       "petowner"
@@ -17,42 +16,38 @@
     "primaryUserInfo": {
       "profilePic": "",
       "dob": "1990-06-15T00:00:00.000Z",
-      "location": {
-        "name": "Bristol",
-        "longitude": -2.5879,
-        "latitude": 51.4545
-      },
-      "suspended": false,
-      "suspendReason": null,
-      "suspendEndsAt": null
+      "address": {
+        "street": "",
+        "city": "Bristol",
+        "postcode": "",
+        "country": ""
+      }
     },
     "ownerRoleInfo": {
-      "petIDs": [
+      "petIds": [
         3
       ],
-      "bookingIDs": []
+      "bookingIds": []
     },
     "minderRoleInfo": {
+      "serviceIds": [],
       "rating": 0,
       "bio": "",
       "pictures": [],
       "availability": "",
-      "distanceRange": 0,
-      "verified": false,
-      "serviceIDs": [],
-      "bookingIDs": []
+      "bookingIds": [],
+      "reviewIds": []
     }
   },
   {
-    "userDetails": {
-      "id": 2,
+    "id": 2,
+    "name": {
       "fname": "Bob",
-      "sname": "Johnson",
-      "loginDetails": {
-        "email": "bob@example.com",
-        "username": "bobbyJ",
-        "password": "password"
-      }
+      "sname": "Johnson"
+    },
+    "loginDetails": {
+      "email": "bob@example.com",
+      "password": "password"
     },
     "roles": [
       "petowner"
@@ -61,42 +56,38 @@
     "primaryUserInfo": {
       "profilePic": "",
       "dob": "1985-09-20T00:00:00.000Z",
-      "location": {
-        "name": "Leeds",
-        "longitude": -1.5491,
-        "latitude": 53.8008
-      },
-      "suspended": false,
-      "suspendReason": null,
-      "suspendEndsAt": null
+      "address": {
+        "street": "",
+        "city": "Leeds",
+        "postcode": "",
+        "country": ""
+      }
     },
     "ownerRoleInfo": {
-      "petIDs": [
+      "petIds": [
         4
       ],
-      "bookingIDs": []
+      "bookingIds": []
     },
     "minderRoleInfo": {
+      "serviceIds": [],
       "rating": 0,
       "bio": "",
       "pictures": [],
       "availability": "",
-      "distanceRange": 0,
-      "verified": false,
-      "serviceIDs": [],
-      "bookingIDs": []
+      "bookingIds": [],
+      "reviewIds": []
     }
   },
   {
-    "userDetails": {
-      "id": 3,
+    "id": 3,
+    "name": {
       "fname": "Charlie",
-      "sname": "Davis",
-      "loginDetails": {
-        "email": "charlie@example.com",
-        "username": "charlieD",
-        "password": "password"
-      }
+      "sname": "Davis"
+    },
+    "loginDetails": {
+      "email": "charlie@example.com",
+      "password": "password"
     },
     "roles": [
       "petminder",
@@ -106,20 +97,22 @@
     "primaryUserInfo": {
       "profilePic": "",
       "dob": "1992-04-10T00:00:00.000Z",
-      "location": {
-        "name": "Manchester",
-        "longitude": -2.2426,
-        "latitude": 53.4808
-      },
-      "suspended": false,
-      "suspendReason": null,
-      "suspendEndsAt": null
+      "address": {
+        "street": "",
+        "city": "Manchester",
+        "postcode": "",
+        "country": ""
+      }
     },
     "ownerRoleInfo": {
-      "petIDs": [],
-      "bookingIDs": []
+      "petIds": [],
+      "bookingIds": []
     },
     "minderRoleInfo": {
+      "serviceIds": [
+        1,
+        2
+      ],
       "rating": 4.8,
       "bio": "Experienced pet sitter with 5 years of experience.",
       "pictures": [
@@ -127,28 +120,22 @@
         "9"
       ],
       "availability": "Weekdays",
-      "distanceRange": 10,
-      "verified": true,
-      "serviceIDs": [
-        1,
-        2
-      ],
-      "bookingIDs": [
+      "bookingIds": [
         3,
         1
-      ]
+      ],
+      "reviewIds": []
     }
   },
   {
-    "userDetails": {
-      "id": 4,
+    "id": 4,
+    "name": {
       "fname": "Diana",
-      "sname": "Evans",
-      "loginDetails": {
-        "email": "diana@example.com",
-        "username": "dianaE",
-        "password": "password"
-      }
+      "sname": "Evans"
+    },
+    "loginDetails": {
+      "email": "diana@example.com",
+      "password": "password"
     },
     "roles": [
       "petminder"
@@ -157,20 +144,22 @@
     "primaryUserInfo": {
       "profilePic": "",
       "dob": "1988-12-05T00:00:00.000Z",
-      "location": {
-        "name": "Brighton",
-        "longitude": -0.1372,
-        "latitude": 50.8225
-      },
-      "suspended": false,
-      "suspendReason": null,
-      "suspendEndsAt": null
+      "address": {
+        "street": "",
+        "city": "Brighton",
+        "postcode": "",
+        "country": ""
+      }
     },
     "ownerRoleInfo": {
-      "petIDs": [],
-      "bookingIDs": []
+      "petIds": [],
+      "bookingIds": []
     },
     "minderRoleInfo": {
+      "serviceIds": [
+        3,
+        4
+      ],
       "rating": 4.6,
       "bio": "Lifelong pet lover and certified dog trainer.",
       "pictures": [
@@ -178,28 +167,22 @@
         "11"
       ],
       "availability": "Weekends",
-      "distanceRange": 15,
-      "verified": true,
-      "serviceIDs": [
-        3,
-        4
-      ],
-      "bookingIDs": [
+      "bookingIds": [
         5,
         2
-      ]
+      ],
+      "reviewIds": []
     }
   },
   {
-    "userDetails": {
-      "id": 5,
+    "id": 5,
+    "name": {
       "fname": "Eve",
-      "sname": "White",
-      "loginDetails": {
-        "email": "eve@example.com",
-        "username": "eveW",
-        "password": "password"
-      }
+      "sname": "White"
+    },
+    "loginDetails": {
+      "email": "eve@example.com",
+      "password": "password"
     },
     "roles": [
       "petminder",
@@ -209,21 +192,19 @@
     "primaryUserInfo": {
       "profilePic": "",
       "dob": "1995-08-25T00:00:00.000Z",
-      "location": {
-        "name": "Nottingham",
-        "longitude": -1.1517,
-        "latitude": 52.9548
-      },
-      "suspended": false,
-      "suspendReason": null,
-      "suspendEndsAt": null
+      "address": {
+        "street": "",
+        "city": "Nottingham",
+        "postcode": "",
+        "country": ""
+      }
     },
     "ownerRoleInfo": {
-      "petIDs": [
+      "petIds": [
         1,
         2
       ],
-      "bookingIDs": [
+      "bookingIds": [
         4,
         1,
         2,
@@ -231,6 +212,10 @@
       ]
     },
     "minderRoleInfo": {
+      "serviceIds": [
+        5,
+        6
+      ],
       "rating": 0,
       "bio": "Pet owner and minder with a passion for animals, especially dogs!",
       "pictures": [
@@ -239,28 +224,22 @@
         "3"
       ],
       "availability": "Flexible",
-      "distanceRange": 3,
-      "verified": true,
-      "serviceIDs": [
-        5,
-        6
-      ],
-      "bookingIDs": [
+      "bookingIds": [
         6,
         4
-      ]
+      ],
+      "reviewIds": []
     }
   },
   {
-    "userDetails": {
-      "id": 6,
+    "id": 6,
+    "name": {
       "fname": "Mark",
-      "sname": "Robert",
-      "loginDetails": {
-        "email": "mark@example.com",
-        "username": "markR",
-        "password": "password"
-      }
+      "sname": "Robert"
+    },
+    "loginDetails": {
+      "email": "mark@example.com",
+      "password": "password"
     },
     "roles": [
       "petminder"
@@ -269,43 +248,39 @@
     "primaryUserInfo": {
       "profilePic": "",
       "dob": "2000-05-03T00:00:00.000Z",
-      "location": {
-        "name": "",
-        "longitude": 0,
-        "latitude": 0
-      },
-      "suspended": false,
-      "suspendReason": null,
-      "suspendEndsAt": null
+      "address": {
+        "street": "",
+        "city": "",
+        "postcode": "",
+        "country": ""
+      }
     },
     "ownerRoleInfo": {
-      "petIDs": [],
-      "bookingIDs": []
+      "petIds": [],
+      "bookingIds": []
     },
     "minderRoleInfo": {
+      "serviceIds": [
+        7,
+        8
+      ],
       "rating": 0,
       "bio": "",
       "pictures": [],
       "availability": "",
-      "distanceRange": 0,
-      "verified": false,
-      "serviceIDs": [
-        7,
-        8
-      ],
-      "bookingIDs": []
+      "bookingIds": [],
+      "reviewIds": []
     }
   },
   {
-    "userDetails": {
-      "id": 7,
+    "id": 7,
+    "name": {
       "fname": "Ben",
-      "sname": "Kul",
-      "loginDetails": {
-        "email": "ben@example.com",
-        "username": "BenK",
-        "password": "password"
-      }
+      "sname": "Kul"
+    },
+    "loginDetails": {
+      "email": "ben@example.com",
+      "password": "password"
     },
     "roles": [
       "petminder",
@@ -315,26 +290,28 @@
     "primaryUserInfo": {
       "profilePic": "15",
       "dob": "2004-12-22T00:00:00.000Z",
-      "location": {
-        "name": "London",
-        "longitude": 0,
-        "latitude": 0
-      },
-      "suspended": false,
-      "suspendReason": null,
-      "suspendEndsAt": null
+      "address": {
+        "street": "",
+        "city": "London",
+        "postcode": "",
+        "country": ""
+      }
     },
     "ownerRoleInfo": {
-      "petIDs": [
+      "petIds": [
         5,
         6
       ],
-      "bookingIDs": [
+      "bookingIds": [
         6,
         5
       ]
     },
     "minderRoleInfo": {
+      "serviceIds": [
+        9,
+        10
+      ],
       "rating": 0,
       "bio": "I love taking care of dogs. I have two dogs of my own and have the privilege to walk them everyday. I'm a student so I have quite a flexible schedule, so we can easily arrange a time for any of my services.",
       "pictures": [
@@ -342,13 +319,8 @@
         "16"
       ],
       "availability": "Flexible",
-      "distanceRange": 2.5,
-      "verified": false,
-      "serviceIDs": [
-        9,
-        10
-      ],
-      "bookingIDs": []
+      "bookingIds": [],
+      "reviewIds": []
     }
   }
 ]

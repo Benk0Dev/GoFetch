@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./AuthenticationPage.module.css";
-import { registerUser, verifyUniqueEmailAndUsername } from "../../services/Registry";
-import { IRegisterUser, Role } from "../../models/IUser";
+import { registerUser, verifyUniqueEmail } from "../../services/Registry";
+import { IRegisterdUser, Role } from "../../models/IUser";
 import { useAuth } from "../../context/AuthContext";
 
 function RegisterForm() {
@@ -12,7 +12,6 @@ function RegisterForm() {
     const [fname, setFname] = useState("");
     const [sname, setSname] = useState("");
     const [email, setEmail] = useState("");
-    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [password2, setPassword2] = useState("");
     const [dob, setDob] = useState("");
@@ -21,7 +20,6 @@ function RegisterForm() {
     const [fnameError, setFnameError] = useState("");
     const [snameError, setSnameError] = useState("");
     const [emailError, setEmailError] = useState("");
-    const [usernameError, setUsernameError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [password2Error, setPassword2Error] = useState("");
     const [dobError, setDobError] = useState("");
@@ -31,7 +29,6 @@ function RegisterForm() {
         setFnameError("");
         setSnameError("");
         setEmailError("");
-        setUsernameError("");
         setPasswordError("");
         setPassword2Error("");
         setDobError("");
@@ -47,11 +44,6 @@ function RegisterForm() {
 
         if (!nameRegex.test(sname)) {
             setSnameError("Last name should contain only letters.");
-            error = true;
-        }
-
-        if (username.length < 4 || username.length > 20) {
-            setUsernameError("Username should be between 4 and 20 characters.");
             error = true;
         }
 
@@ -78,14 +70,10 @@ function RegisterForm() {
             error = true;
         }
 
-        const notUnique = await verifyUniqueEmailAndUsername(email, username);
+        const notUnique = await verifyUniqueEmail(email);
         if (notUnique) {
             if (notUnique.email) {
                 setEmailError("Email is already in use.");
-                error = true;
-            }
-            if (notUnique.username) {
-                setUsernameError("Username is already in use.");
                 error = true;
             }
         }
@@ -94,11 +82,10 @@ function RegisterForm() {
 
         const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 
-        const userDetails: IRegisterUser = {
+        const userDetails: IRegisterdUser = {
             fname: capitalize(fname),
             sname: capitalize(sname),
             email,
-            username,
             password,
             dob: new Date(dob),
             role,
@@ -107,7 +94,7 @@ function RegisterForm() {
         const newUser = await registerUser(userDetails);
 
         if (newUser) {
-            loginUser(newUser.userDetails.id);
+            loginUser(newUser.id);
             navigate("/dashboard", { replace: true });
         } else {
             console.log("Registration failed");
@@ -127,12 +114,6 @@ function RegisterForm() {
                     <input type="text" value={sname} placeholder="Doe" onChange={(e) => setSname(e.target.value)} required />
                     <p className={styles.error}>{snameError}</p>
                 </div>
-            </div>
-            <div className={styles.input}>
-                <label>Username</label>
-                <input type="text" value={username} placeholder="johndoe" onChange={(e) => setUsername(e.target.value)} required />
-                <p>This will be your unique identifier on GoFetch.</p>
-                <p className={styles.error}>{usernameError}</p>
             </div>
             <div className={styles.input}>
                 <label>Date of Birth</label>

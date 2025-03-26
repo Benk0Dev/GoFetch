@@ -32,13 +32,13 @@ const BrowsePage: React.FC = () => {
 
     const filtered = allMinders.filter((minder) => {
     const searchText = filters.location.toLowerCase() || "";
-    const availabilityText = filters.availability?.toLowerCase() || "";
+    const availabilityText = filters.availability.toLowerCase() || "";
 
     // ✅ Use correct nested paths
     const fullName =
-      `${minder.userDetails.fname} ${minder.userDetails.lname}`.toLowerCase();
+      `${minder.name.fname} ${minder.name.lname}`.toLowerCase();
     const location =
-      minder.primaryUserInfo.location.name?.toLowerCase() || "";
+      minder.primaryUserInfo.address.city.toLowerCase() || "";
     const rating = minder.minderRoleInfo.rating || 0;
     const availability =
       minder.minderRoleInfo.availability?.toLowerCase() || "";

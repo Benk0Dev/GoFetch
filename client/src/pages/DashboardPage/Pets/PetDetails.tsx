@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
 import { useEffect, useMemo } from "react";
-import { EGender, IPet } from "../../../models/IPet";
+import { Gender, IPet } from "../../../models/IPet";
 import styles from "./PetDetails.module.css";
 import BackButton from "../../../components/BackButton";
 
@@ -38,7 +38,7 @@ function PetDetails() {
                         </div>
                         <div className={styles.petDetail}>
                             <span>Gender</span>
-                            <p>{pet.gender === EGender.MALE ? "Male" : "Female"}</p>
+                            <p>{pet.gender === Gender.MALE ? "Male" : "Female"}</p>
                         </div>
                         <div className={styles.petDetail}>
                             <span>Size</span>

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getUserId } from "../../utils/StorageManager";
 import { getUserById } from "../../services/Registry";
-import { IUser } from "../../models/IUser";
+import { Availability, IUser } from "../../models/IUser";
 import { IPet } from "../../models/IPet";
 import { IService } from "../../models/IService";
 import PetSelector from "./PetSelector";
@@ -34,7 +33,7 @@ const BookingPage: React.FC = () => {
         const fetchedMinder = await getUserById(minderId);
         if (fetchedMinder) {
           setMinder(fetchedMinder);
-          if (fetchedMinder.minderRoleInfo?.services?.length > 0) {
+          if (fetchedMinder.minderRoleInfo.services.length > 0) {
             setSelectedService(fetchedMinder.minderRoleInfo.services[0]);
           }
         }
@@ -56,16 +55,16 @@ const BookingPage: React.FC = () => {
 
     setIsProcessing(true);
     const selectedDay = new Date(selectedDate).toLocaleDateString("en-US", { weekday: "long" });
-    const availability = minder.minderRoleInfo?.availability;
+    const availability = minder.minderRoleInfo.availability;
     const isAvailable =
-      availability === "Flexible" ||
-      (availability === "Weekdays" &&
+      availability === Availability.FLEXIBLE ||
+      (availability === Availability.WEEKDAYS &&
         ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].includes(selectedDay)) ||
-      (availability === "Weekends" && ["Saturday", "Sunday"].includes(selectedDay));
+      (availability === Availability.WEEKENDS && ["Saturday", "Sunday"].includes(selectedDay));
 
     setTimeout(() => {
       if (!isAvailable) {
-        alert(`Sorry, ${minder.userDetails?.fname} is not available on ${selectedDay}.`);
+        alert(`Sorry, ${minder.name.fname} is not available on ${selectedDay}.`);
       } else {
         // Set the submission state and show the BookSubmit component
         setIsSubmitted(true);
@@ -83,13 +82,13 @@ const BookingPage: React.FC = () => {
       <div className={styles.leftContent}>
         <div className={styles.section}>
           <h1 className={styles.heading}>
-            Book a service with {minder?.userDetails.fname || "your pet minder"}
+            Book a service with {minder?.name.fname || "your pet minder"}
           </h1>
 
-          {minder?.minderRoleInfo?.services && (
+          {minder?.minderRoleInfo.services && (
             <ServiceSelector
-              services={minder.minderRoleInfo.services}
-              selectedService={selectedService || minder.minderRoleInfo.services[0]}
+              services={minder?.minderRoleInfo.services}
+              selectedService={selectedService || minder?.minderRoleInfo.services[0]}
               setSelectedService={setSelectedService}
             />
           )}
