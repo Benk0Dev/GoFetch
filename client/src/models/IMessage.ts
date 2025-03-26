@@ -1,7 +1,7 @@
 export interface IMessage {
     id: number;         // Unique identifier for the message
     chatId: number;     // Reference to the chat this message belongs to
-    userId: number;     // Unique identifier for the user who sent the message
+    senderId: number;   // Unique identifier for the user who sent the message
     message: string;    // The message content
     timestamp: Date;    // The date and time the message was sent
 }

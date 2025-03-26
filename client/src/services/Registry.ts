@@ -270,43 +270,50 @@ export async function getUserChats() {
 }
 
 export async function getChatById(chatId: number) {
-    const response = await fetch(`${API_URL}/chat/${chatId}`);
-    if (response.ok) {
-        const data = await response.json();
-        return data.chat;
-    } else {
-        const text = await response.text();
-        console.error(text);
-        return null;
+    try {
+        const response = await fetch(`${API_URL}/chat/${chatId}`);
+        return await response.json();
+    } catch (error) {
+        console.error('Error getting chat:', error);
+        return { success: false, error: 'Failed to get chat' };
     }
 }
 
-export async function sendMessage(chatId: number, message: string) {
+export async function sendMessage(chatId: number, message: { senderId: number, message: string }) {
     try {
         const response = await fetch(`${API_URL}/chat/message`, {
-            method: "POST",
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 chatId,
-                message: {
-                    userId: Number(getUserId()),
-                    message
-                }
+                message
             })
         });
-        if (response.ok) {
-            const data = await response.json();
-            return data.message;
-        } else {
-            const text = await response.text();
-            console.error(text);
-            return null;
-        }
-    } catch (e) {
-        console.error(e);
-        return null;
+        return await response.json();
+    } catch (error) {
+        console.error('Error sending message:', error);
+        return { success: false, error: 'Failed to send message' };
+    }
+}
+
+export async function createChat(users: number[]) {
+    try {
+        const response = await fetch(`${API_URL}/chat/create`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                users,
+                lastMessage: ''
+            })
+        });
+        return await response.json();
+    } catch (error) {
+        console.error('Error creating chat:', error);
+        return { success: false, error: 'Failed to create chat' };
     }
 }
 

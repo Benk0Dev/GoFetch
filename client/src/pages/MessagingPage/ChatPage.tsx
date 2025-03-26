@@ -4,28 +4,48 @@ import { IChat } from "../../models/IMessage";
 import { getUserChats, getUserById } from "../../services/Registry";
 import styles from './MessagingPage.module.css';
 import { useAuth } from "../../context/AuthContext";
+import { useSocket } from "../../context/SocketContext";
 
 function MessagingPage() {
     const [chats, setChats] = useState<IChat[]>([]);
     const [loading, setLoading] = useState(true);
     const [chatUserNames, setChatUserNames] = useState<{[chatId: string]: string}>({});
+    const [socketInfo, setSocketInfo] = useState<string>('Initializing socket...');
     const { id } = useParams<{id: string}>();
     const navigate = useNavigate();
     const { user } = useAuth();
+    const { socket, isConnected, connectionError } = useSocket();
 
     // Memoize the current user ID to prevent unnecessary effect triggers
     const currentUserId = useMemo(() => user.userDetails.id, [user.userDetails.id]);
 
-    // Use useCallback to memoize the fetchChats function
-    const fetchChats = useCallback(async (shouldSetLoading = true) => {
-        if (shouldSetLoading) {
-            setLoading(true);
-        }
+    useEffect(() => {
+        console.log(socketInfo);
+    }, [socketInfo]);
+
+    // Debug logger for socket state changes
+    useEffect(() => {
+        console.log("Socket state changed:", { 
+            exists: !!socket, 
+            isConnected, 
+            error: connectionError,
+            id: socket?.id 
+        });
         
-        const data = await getUserChats();
-        if (data && data.chats) {
-            // Only update state if chats have actually changed
-            if (JSON.stringify(data.chats) !== JSON.stringify(chats)) {
+        if (connectionError) {
+            setSocketInfo(`Error: ${connectionError}`);
+        } else if (isConnected && socket) {
+            setSocketInfo(`Connected: ID=${socket.id}`);
+        } else {
+            setSocketInfo('Waiting for connection...');
+        }
+    }, [socket, isConnected, connectionError]);
+
+    const fetchChats = useCallback(async () => {
+        setLoading(true);
+        try {
+            const data = await getUserChats();
+            if (data && data.chats) {
                 setChats(data.chats);
                 
                 // If no chat is selected and we have chats, select the first one
@@ -33,12 +53,12 @@ function MessagingPage() {
                     navigate(`/chats/${data.chats[0].id}`);
                 }
             }
-        }
-        
-        if (shouldSetLoading) {
+        } catch (error) {
+            console.error("Error fetching chats:", error);
+        } finally {
             setLoading(false);
         }
-    }, [chats, id, navigate]);
+    }, [id, navigate]);
 
     // Fetch chat user names only when necessary
     const fetchChatUserNames = useCallback(async () => {
@@ -77,11 +97,46 @@ function MessagingPage() {
         fetchChats();
     }, [fetchChats]);
 
-    // Set up polling to refresh chats - with silent updates
+    // Setup socket event listeners
     useEffect(() => {
-        const interval = setInterval(() => fetchChats(false), 10000);
-        return () => clearInterval(interval);
-    }, [fetchChats]);
+        if (!socket) return;
+
+        // Listen for chat updates
+        const handleChatUpdated = (updatedChat: IChat) => {
+            setChats(prevChats => {
+                // Find and update the specific chat
+                const chatIndex = prevChats.findIndex(chat => chat.id === updatedChat.id);
+                
+                if (chatIndex !== -1) {
+                    const newChats = [...prevChats];
+                    newChats[chatIndex] = updatedChat;
+                    return newChats;
+                }
+                
+                // If it's a new chat, add it
+                return [...prevChats, updatedChat];
+            });
+        };
+
+        // Listen for new chats
+        const handleNewChat = (newChat: IChat) => {
+            setChats(prevChats => {
+                // Check if this chat already exists
+                if (!prevChats.some(chat => chat.id === newChat.id)) {
+                    return [...prevChats, newChat];
+                }
+                return prevChats;
+            });
+        };
+
+        socket.on('chat-updated', handleChatUpdated);
+        socket.on('new-chat', handleNewChat);
+
+        return () => {
+            socket.off('chat-updated', handleChatUpdated);
+            socket.off('new-chat', handleNewChat);
+        };
+    }, [socket]);
 
     // Fetch user names only when we have new chats without names
     useEffect(() => {
@@ -96,10 +151,8 @@ function MessagingPage() {
 
     return (
         <div className={styles.messagingContainer}>
-            {/* Chat list sidebar */}
             <div className={styles.chatsSidebar}>
                 <h2>Chats</h2>
-                
                 {chats.length > 0 ? (
                     <div className={styles.chatsList}>
                         {chats.map((chat: IChat) => (
