@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import "./MinderCard.css";
 import { MapPin } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
+import { Role } from "../../models/IUser";
 
 function MinderCard({ minder }: { minder: any }) {
   const { user } = useAuth();
@@ -15,6 +16,7 @@ function MinderCard({ minder }: { minder: any }) {
         navigate("/booking", { state: { minderId: minder.userDetails.id } }); // ✅ Redirect to booking if logged in
     }
   };
+  console.log("USER" + user);
 
   return (
     <div className="minder-card">
@@ -66,10 +68,14 @@ function MinderCard({ minder }: { minder: any }) {
         </div>
       )}
 
-      {/* ✅ Book Button with onClick event */}
-      <button className="book-button" onClick={handleBooking}>
+      
+
+      {(!user || user.currentRole === Role.OWNER) && (
+        <button className="book-button" onClick={handleBooking}>
         Book
       </button>
+      )}
+      
     </div>
   );
 }

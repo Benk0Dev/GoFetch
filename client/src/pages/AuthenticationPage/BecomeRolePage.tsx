@@ -26,7 +26,7 @@ function BecomeRolePage({ role }: { role: Role }) {
                 <p>
                     By confirming, you'll be able to {role === Role.MINDER ? "set up your public profile, add services and receive booking requests" : "add pets and book services"}.
                 </p>
-                <button className="btn-round btn-primary" onClick={handleConfirm}>
+                <button className="btn2 btn-primary" onClick={handleConfirm}>
                     <Check size={18} strokeWidth={2} />Confirm
                 </button>
             </div>
