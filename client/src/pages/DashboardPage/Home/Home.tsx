@@ -8,7 +8,7 @@ import { BookingStatus, IBooking } from "../../../models/IBooking";
 
 function Home() {
     const { user, role } = useAuth();
-    const fname = user.fname;
+    const fname = user.name.fname;
 
     const isOwner = user.roles.includes(Role.OWNER);
     const isMinder = user.roles.includes(Role.MINDER);

@@ -1,6 +1,6 @@
 import styles from "./Bookings.module.css";
 import { useAuth } from "../../../context/AuthContext";
-import { Calendar, Clock, MapPin, PawPrint, ArrowDown, UserRound, NotebookPen, User } from "lucide-react";
+import { Calendar, Clock, MapPin, PawPrint, ArrowDown, UserRound, NotebookPen } from "lucide-react";
 import { Role } from "../../../models/IUser";
 import { Booking } from "./Bookings";
 import { useState } from "react";
@@ -11,7 +11,7 @@ function BookingInfo({ booking }: { booking: Booking }) {
     const [showDetails, setShowDetails] = useState(false);
 
     const getFullName = (user: any) => {
-        return `${user.fname} ${user.sname}`;
+        return `${user.name.fname} ${user.name.sname}`;
     }
 
     const getAge = (dob: Date) => {
