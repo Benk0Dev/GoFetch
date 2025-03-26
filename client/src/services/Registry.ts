@@ -21,7 +21,7 @@ export async function login(credentials: string, password: string) {
         });
         if (response.ok) {
             const user = await response.json();
-            setUserId(user.userDetails.id);
+            setUserId(user.id);
             return user;
         } else {
             const text = await response.text();
@@ -58,8 +58,8 @@ export async function registerUser(user: IRegisterdUser) {
         });
         if (response.ok) {
             const user = await response.json();
-            setUserId(user.userDetails.id);
-            const completeUser = await getUserById(user.userDetails.id);
+            setUserId(user.id);
+            const completeUser = await getUserById(user.id);
             return completeUser;
         } else {
             const text = await response.text();

@@ -40,8 +40,8 @@ const BookSubmit: React.FC<IBookSubmitProps> = ({
         // Create booking data object
         const bookingData: INewBooking = {
             petId: pet.id,
-            minderId: minder.userDetails.id,
-            ownerId: owner.userDetails.id,
+            minderId: minder.id,
+            ownerId: owner.id,
             serviceId: service.id,
             time,
             notes,

@@ -35,7 +35,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const refreshUser = async () => {
     if (!user) return;
     setLoading(true);
-    const fetchedUser = await getUserByIdWithPictures(user.userDetails.id);
+    const fetchedUser = await getUserByIdWithPictures(user.id);
     setUser(fetchedUser);
     setRole(fetchedUser.currentRole);
     setLoading(false);
@@ -45,7 +45,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setLoading(true);
     const returnedUser = await performLogin(email, password);
     if (returnedUser) {
-      storeUser(returnedUser.userDetails.id);
+      storeUser(returnedUser.id);
       setUser(returnedUser);
       setRole(returnedUser.currentRole);
       setLoading(false);
@@ -68,12 +68,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setLoading(true);
 
     if (user.roles.length === 1) {
-      await editUser(user.userDetails.id, { roles: [Role.MINDER, Role.OWNER] });
+      await editUser(user.id, { roles: [Role.MINDER, Role.OWNER] });
     }
   
     const newRole = role === Role.MINDER ? Role.OWNER : Role.MINDER;
     setRole(newRole);
-    await editUser(user.userDetails.id, { currentRole: newRole });
+    await editUser(user.id, { currentRole: newRole });
 
     await refreshUser();
     setLoading(false);

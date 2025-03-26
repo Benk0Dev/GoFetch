@@ -14,7 +14,7 @@ function Services() {
     const deleteUserService = async (id: number) => {
         const deleted = await deleteService(id);
         if (deleted) {
-            const updatedUser = await getUserByIdWithPictures(user.userDetails.id);
+            const updatedUser = await getUserByIdWithPictures(user.id);
             if (!updatedUser) {
                 console.error("Error updating user");
                 return;
@@ -26,9 +26,9 @@ function Services() {
     }
 
     const handleAdd = async (service: INewService) => {
-        const added = await addService(user.userDetails.id, service);
+        const added = await addService(user.id, service);
         if (added) {
-            const updatedUser = await getUserByIdWithPictures(user.userDetails.id);
+            const updatedUser = await getUserByIdWithPictures(user.id);
             if (!updatedUser) {
                 console.error("Error updating user");
                 return;

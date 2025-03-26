@@ -73,7 +73,7 @@ export enum Role {
 }
 
 export enum Availability {
+  FLEXIBLE = 'Flexible',
   WEEKDAYS = 'Weekdays',
-  WEEKEND = 'Weekend',
-  EVERYDAY = 'Everyday'
+  WEEKENDS = 'Weekends',
 }

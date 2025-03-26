@@ -2,8 +2,7 @@ import { useState } from "react";
 import styles from "./AddPet.module.css";
 import formStyles from "../../AuthenticationPage/AuthenticationPage.module.css";
 import BackButton from "../../../components/BackButton";
-import { EGender, ESize } from "../../../models/IPet";
-import { PawPrint } from "lucide-react";
+import { Gender, Size } from "../../../models/IPet";
 import { useAuth } from "../../../context/AuthContext";
 import { addPetForUser, getUserByIdWithPictures, uploadImage } from "../../../services/Registry";
 import { useNavigate } from "react-router-dom";
@@ -21,9 +20,9 @@ function AddPet() {
     const navigate = useNavigate();
     const [name, setName] = useState("");
     const [dob, setDob] = useState("");
-    const [gender, setGender] = useState<EGender>(EGender.MALE);
+    const [gender, setGender] = useState<Gender>(Gender.MALE);
     const [breed, setBreed] = useState("");
-    const [size, setSize] = useState<ESize>(ESize.SMALL);
+    const [size, setSize] = useState<Size>(Size.SMALL);
     const [neutered, setNeutered] = useState(false);
     const [behaviour, setBehaviour] = useState("");
     const [allergies, setAllergies] = useState("");
@@ -55,6 +54,7 @@ function AddPet() {
         }
 
         const newPet = {
+            id: 0,
             name: capitalizeWords(name),
             dob: new Date(dob),
             gender,
@@ -67,9 +67,9 @@ function AddPet() {
         };
 
         console.log("Submitting new pet:", newPet);
-        const petAdded = await addPetForUser(user.userDetails.id, newPet);
+        const petAdded = await addPetForUser(user.id, newPet);
         if (petAdded) {
-            const updatedUser = await getUserByIdWithPictures(user.userDetails.id);
+            const updatedUser = await getUserByIdWithPictures(user.id);
             if (updatedUser) {
                 setUser(updatedUser);
                 navigate(-1);
@@ -138,9 +138,9 @@ function AddPet() {
                     </div>
                     <div className={formStyles.input}>
                         <label>Gender</label>
-                        <select value={gender} onChange={(e) => setGender(e.target.value as EGender)} required>
-                            <option value={EGender.MALE}>Male</option>
-                            <option value={EGender.FEMALE}>Female</option>
+                        <select value={gender} onChange={(e) => setGender(e.target.value as Gender)} required>
+                            <option value={Gender.MALE}>Male</option>
+                            <option value={Gender.FEMALE}>Female</option>
                         </select>
                     </div>
                 </div>
@@ -172,10 +172,10 @@ function AddPet() {
                 </div>
                 <div className={formStyles.input}>
                     <label>Size</label>
-                    <select value={size} onChange={(e) => setSize(e.target.value as ESize)} required>
-                        <option value={ESize.SMALL}>{ESize.SMALL}</option>
-                        <option value={ESize.MEDIUM}>{ESize.MEDIUM}</option>
-                        <option value={ESize.LARGE}>{ESize.LARGE}</option>
+                    <select value={size} onChange={(e) => setSize(e.target.value as Size)} required>
+                        <option value={Size.SMALL}>{Size.SMALL}</option>
+                        <option value={Size.MEDIUM}>{Size.MEDIUM}</option>
+                        <option value={Size.LARGE}>{Size.LARGE}</option>
                     </select>
                 </div>
                 <div className={formStyles.input}>

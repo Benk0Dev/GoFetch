@@ -18,7 +18,7 @@ function MessagingPage() {
     const { socket, isConnected, connectionError } = useSocket();
 
     // Memoize the current user ID to prevent unnecessary effect triggers
-    const currentUserId = useMemo(() => user.userDetails.id, [user.userDetails.id]);
+    const currentUserId = useMemo(() => user.id, [user.id]);
 
     useEffect(() => {
         console.log(socketInfo);
@@ -75,9 +75,9 @@ function MessagingPage() {
             if (otherUserId) {
                 try {
                     const otherUser = await getUserByIdWithPictures(otherUserId);
-                    if (otherUser && otherUser.userDetails) {
+                    if (otherUser) {
                         namesMap[chat.id.toString()] = 
-                            `${otherUser.userDetails.fname} ${otherUser.userDetails.sname}`;
+                            `${otherUser.name.fname} ${otherUser.name.sname}`;
                     } else {
                         namesMap[chat.id.toString()] = "Unknown User";
                     }

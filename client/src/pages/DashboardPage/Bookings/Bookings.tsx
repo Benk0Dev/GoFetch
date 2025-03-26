@@ -3,7 +3,7 @@ import { useAuth } from "../../../context/AuthContext";
 import styles from "./Bookings.module.css";
 import navigationStyles from "../Navigation.module.css";
 import dashboardStyles from "../Dashboard.module.css";
-import { EBookingStatus, IBooking } from "../../../models/IBooking";
+import { BookingStatus, IBooking } from "../../../models/IBooking";
 import { Role } from "../../../models/IUser";
 import OwnerBooking from "./OwnerBooking";
 import MinderBooking from "./MinderBooking";
@@ -17,14 +17,14 @@ export interface Booking {
     pet: any;
     service: any;
     time: Date;
-    status: EBookingStatus;
+    status: BookingStatus;
     notes: string;
     id: number;
 }
 
 function Bookings() {
     const { user, setUser } = useAuth();
-    const [status, setStatus] = useState<EBookingStatus>(EBookingStatus.Confirmed);
+    const [status, setStatus] = useState<BookingStatus>(BookingStatus.Confirmed);
     const [bookings, setBookings] = useState<Booking[]>([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
@@ -70,9 +70,9 @@ function Bookings() {
     }, [user]);
 
     const handleCancel = async (bookingId: number) => {
-        const booking = await setBookingStatus(bookingId, EBookingStatus.Cancelled);
+        const booking = await setBookingStatus(bookingId, BookingStatus.Cancelled);
         if (booking) {
-            const updatedUser = await getUserByIdWithPictures(user.userDetails.id);
+            const updatedUser = await getUserByIdWithPictures(user.id);
             setUser(updatedUser);
         } else {
             console.error("Failed to cancel booking.");
@@ -80,9 +80,9 @@ function Bookings() {
     }
 
     const handleAccept = async (bookingId: number) => {
-        const booking = await setBookingStatus(bookingId, EBookingStatus.Confirmed);
+        const booking = await setBookingStatus(bookingId, BookingStatus.Confirmed);
         if (booking) {
-            const updatedUser = await getUserByIdWithPictures(user.userDetails.id);
+            const updatedUser = await getUserByIdWithPictures(user.id);
             setUser(updatedUser);
         } else {
             console.error("Failed to cancel booking.");
@@ -90,9 +90,9 @@ function Bookings() {
     }
 
     const handleDecline = async (bookingId: number) => {
-        const booking = await setBookingStatus(bookingId, EBookingStatus.Cancelled);
+        const booking = await setBookingStatus(bookingId, BookingStatus.Cancelled);
         if (booking) {
-            const updatedUser = await getUserByIdWithPictures(user.userDetails.id);
+            const updatedUser = await getUserByIdWithPictures(user.id);
             setUser(updatedUser);
         } else {
             console.error("Failed to cancel booking.");
@@ -110,9 +110,9 @@ function Bookings() {
     }
 
     const handleComplete = async (bookingId: number) => {
-        const booking = await setBookingStatus(bookingId, EBookingStatus.Completed);
+        const booking = await setBookingStatus(bookingId, BookingStatus.Completed);
         if (booking) {
-            const updatedUser = await getUserByIdWithPictures(user.userDetails.id);
+            const updatedUser = await getUserByIdWithPictures(user.id);
             setUser(updatedUser);
         } else {
             console.error("Failed to complete booking.");
@@ -126,26 +126,26 @@ function Bookings() {
             <div className={styles.bookingsContainer}>
                 <div className={styles.bookingsNavigation + " " + navigationStyles.navigation}>
                     <button
-                        className={status === EBookingStatus.Confirmed ? navigationStyles.active : ""}
-                        onClick={() => setStatus(EBookingStatus.Confirmed)}
+                        className={status === BookingStatus.Confirmed ? navigationStyles.active : ""}
+                        onClick={() => setStatus(BookingStatus.Confirmed)}
                     >
                         Upcoming
                     </button>
                     <button
-                        className={status === EBookingStatus.Pending ? navigationStyles.active : ""}
-                        onClick={() => setStatus(EBookingStatus.Pending)}
+                        className={status === BookingStatus.Pending ? navigationStyles.active : ""}
+                        onClick={() => setStatus(BookingStatus.Pending)}
                     >
                         Pending
                     </button>
                     <button
-                        className={status === EBookingStatus.Completed ? navigationStyles.active : ""}                      onClick={() => setStatus(EBookingStatus.Completed)}
+                        className={status === BookingStatus.Completed ? navigationStyles.active : ""}                      onClick={() => setStatus(BookingStatus.Completed)}
                     >
                         Past
                     </button>
                 </div>
                 <div className={styles.bookingsList}>
                     {loading ? (
-                        <p className={styles.emptyState}>You have no {status === EBookingStatus.Confirmed ? "upcoming" : status === EBookingStatus.Pending ? "pending" : "past"} bookings.</p>
+                        <p className={styles.emptyState}>You have no {status === BookingStatus.Confirmed ? "upcoming" : status === BookingStatus.Pending ? "pending" : "past"} bookings.</p>
                     ) : (
                         bookings.filter((b: Booking) => b.status === status).length > 0 ? (
                                 bookings
@@ -159,7 +159,7 @@ function Bookings() {
                                         
                                     ))
                                 ) : (
-                                <p className={styles.emptyState}>You have no {status === EBookingStatus.Confirmed ? "upcoming" : status === EBookingStatus.Pending ? "pending" : "past"} bookings.</p>
+                                <p className={styles.emptyState}>You have no {status === BookingStatus.Confirmed ? "upcoming" : status === BookingStatus.Pending ? "pending" : "past"} bookings.</p>
                             ) 
                     )}
                 </div>

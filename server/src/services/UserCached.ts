@@ -107,7 +107,7 @@ export function RegisterUserCache(user: IRegisterdUser) {
         rating: 0,
         bio: '',
         pictures: [],
-        availability: Availability.EVERYDAY,
+        availability: Availability.FLEXIBLE,
         bookingIds: [],
         reviewIds: [],
       }
@@ -178,8 +178,8 @@ export function editUserCache(id: number, userEdits: IUser) {
     // Update the user
     const updatedUser = deepMerge(user, userEdits);
 
-    if (updatedUser.userDetails) {
-      updatedUser.userDetails.id = id;
+    if (updatedUser) {
+      updatedUser.id = id;
     }
 
     // Update user
