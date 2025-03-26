@@ -17,6 +17,7 @@ export interface Booking {
     service: any;
     time: Date;
     status: EBookingStatus;
+    notes: string;
     id: number;
 }
 
@@ -35,7 +36,7 @@ function Bookings() {
             const detailedBookings = await Promise.all(
                 rawBookings.map(async (booking: IBooking) => {
                     const [owner, minder, service] = await Promise.all([
-                        getUserById(booking.ownerId),
+                        getUserByIdWithPictures(booking.ownerId),
                         getUserById(booking.minderId),
                         getServiceById(booking.serviceId)
                     ]);
@@ -49,7 +50,8 @@ function Bookings() {
                         owner,
                         minder,
                         pet,
-                        service
+                        service,
+                        notes: booking.notes
                     };
                 })
             );

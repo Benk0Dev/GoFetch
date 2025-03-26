@@ -43,8 +43,32 @@
     "serviceId": 5,
     "time": "2025-03-28T15:30:00.000Z",
     "notes": "He loves tennis balls!",
-    "status": "Pending",
+    "status": "Confirmed",
     "createdAt": "2025-03-25T02:48:00.163Z",
-    "updatedAt": "2025-03-25T02:48:00.163Z"
+    "updatedAt": "2025-03-26T00:14:29.920Z"
+  },
+  {
+    "id": 5,
+    "petId": 6,
+    "minderId": 4,
+    "ownerId": 7,
+    "serviceId": 3,
+    "time": "2025-03-29T08:00:00.000Z",
+    "notes": "Rusty always needs to be with someone or he gets very paranoid. He's a very well-behaved boy though and is extremely active.",
+    "status": "Pending",
+    "createdAt": "2025-03-25T23:24:38.951Z",
+    "updatedAt": "2025-03-25T23:24:38.951Z"
+  },
+  {
+    "id": 6,
+    "petId": 5,
+    "minderId": 5,
+    "ownerId": 7,
+    "serviceId": 5,
+    "time": "2025-03-29T18:00:00.000Z",
+    "notes": "Teach her how to do a barrel roll.",
+    "status": "Pending",
+    "createdAt": "2025-03-26T00:16:33.827Z",
+    "updatedAt": "2025-03-26T00:16:33.827Z"
   }
 ]

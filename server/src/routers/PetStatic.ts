@@ -1,6 +1,6 @@
 import { IPet } from '../models/IPet';
 import { Role } from '../models/IUser';
-import { addPetCached, getCachedPets, removePetCahce } from '../services/PetCached';
+import { addPetCached, getCachedPets, removePetCached } from '../services/PetCached';
 import { cache } from '../services/Cache';
 import { DB_PATH } from '../services/Cache';
 import fs from 'fs';
@@ -30,7 +30,7 @@ export function registerPet(pet: IPet) {
 }
 
 export function removePet(id: number) {
-    return {success: true, message: removePetCahce(id)}
+    return {success: true, message: removePetCached(id)}
 }
 
 export function addPetForUser(userId: number, pet: IPet) {

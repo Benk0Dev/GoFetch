@@ -47,8 +47,14 @@
     aspect-ratio: 1/1;
 }
 
-.pet button {
+.pet .buttons {
+    display: flex;
     margin: 20px 0 10px;
+    gap: 10px;
+}
+
+.pet button {
+    width: 100%;
 }
 
 .addPet button {

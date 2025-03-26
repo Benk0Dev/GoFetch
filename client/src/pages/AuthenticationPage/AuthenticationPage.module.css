@@ -1,7 +1,7 @@
 .authentication {
     display: flex;
     margin-bottom: auto;
-    margin-top: 20px;
+    padding: 40px 20px;
     justify-content: center;
 }
 
@@ -105,7 +105,7 @@ input[type="date"] {
 .becomeRole {
     display: flex;
     margin-bottom: auto;
-    margin-top: 20px;
+    padding: 40px 20px;
     justify-content: center;
 }
 

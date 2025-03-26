@@ -7,6 +7,7 @@ import { PawPrint } from "lucide-react";
 import { useAuth } from "../../../context/AuthContext";
 import { addPetForUser, getUserByIdWithPictures, uploadImage } from "../../../services/Registry";
 import { useNavigate } from "react-router-dom";
+import defaultPet from "../../../assets/images/default-pet-picture.svg";
 
 function capitalizeWords(str: string): string {
     return str
@@ -100,7 +101,7 @@ function AddPet() {
         } else {
         return (
             <div className={styles.photo}>
-            <PawPrint size={64} />
+            <img src={defaultPet} alt={name} />
             </div>
         );
         }

@@ -185,6 +185,7 @@
         4
       ],
       "bookingIDs": [
+        5,
         2
       ]
     }
@@ -196,7 +197,7 @@
       "sname": "White",
       "loginDetails": {
         "email": "eve@example.com",
-        "username": "eve@example.com",
+        "username": "eveW",
         "password": "password"
       }
     },
@@ -245,6 +246,7 @@
         6
       ],
       "bookingIDs": [
+        6,
         4
       ]
     }
@@ -290,6 +292,61 @@
       "serviceIDs": [
         7,
         8
+      ],
+      "bookingIDs": []
+    }
+  },
+  {
+    "userDetails": {
+      "id": 7,
+      "fname": "Ben",
+      "sname": "Kul",
+      "loginDetails": {
+        "email": "ben@example.com",
+        "username": "BenK",
+        "password": "password"
+      }
+    },
+    "roles": [
+      "petminder",
+      "petowner"
+    ],
+    "currentRole": "petowner",
+    "primaryUserInfo": {
+      "profilePic": "15",
+      "dob": "2004-12-22T00:00:00.000Z",
+      "location": {
+        "name": "London",
+        "longitude": 0,
+        "latitude": 0
+      },
+      "suspended": false,
+      "suspendReason": null,
+      "suspendEndsAt": null
+    },
+    "ownerRoleInfo": {
+      "petIDs": [
+        5,
+        6
+      ],
+      "bookingIDs": [
+        6,
+        5
+      ]
+    },
+    "minderRoleInfo": {
+      "rating": 0,
+      "bio": "I love taking care of dogs. I have two dogs of my own and have the privilege to walk them everyday. I'm a student so I have quite a flexible schedule, so we can easily arrange a time for any of my services.",
+      "pictures": [
+        "15",
+        "16"
+      ],
+      "availability": "Flexible",
+      "distanceRange": 2.5,
+      "verified": false,
+      "serviceIDs": [
+        9,
+        10
       ],
       "bookingIDs": []
     }
