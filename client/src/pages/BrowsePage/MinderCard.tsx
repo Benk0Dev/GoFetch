@@ -16,14 +16,13 @@ function MinderCard({ minder }: { minder: any }) {
         navigate("/booking", { state: { minderId: minder.userDetails.id } }); // ✅ Redirect to booking if logged in
     }
   };
-  console.log("USER" + user);
 
   return (
     <div className="minder-card">
       {/* ✅ Main Display Image or fallback */}
       <div className="minder-image">
         <img
-          src={minder.minderRoleInfo.pictures[0]}
+          src={minder.primaryUserInfo.profilePic}
           alt={minder.userDetails.fname}
           width="150"
         />
@@ -51,24 +50,6 @@ function MinderCard({ minder }: { minder: any }) {
         <strong>✅ Verified:</strong>{" "}
         {minder.minderRoleInfo.verified ? "Yes" : "No"}
       </p>
-
-      {/* ✅ Additional images */}
-      {minder.minderRoleInfo.pictures?.length > 1 && (
-        <div className="minder-images">
-          {minder.minderRoleInfo.pictures
-            .slice(1)
-            .map((pic: any, index: any) => (
-              <img
-                key={index}
-                src={pic}
-                alt={`${minder.userDetails.fname} ${index + 1}`}
-                width="100"
-              />
-            ))}
-        </div>
-      )}
-
-      
 
       {(!user || user.currentRole === Role.OWNER) && (
         <button className="book-button" onClick={handleBooking}>

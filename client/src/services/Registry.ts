@@ -224,7 +224,7 @@ export async function getAllMindersWithPictures() {
             // Fetch profile picture if valid
             const profilePicURL = user.primaryUserInfo.profilePic
                 ? await getImageByFilename(user.primaryUserInfo.profilePic)
-                : rawPictures ? rawPictures[0] : defaultProfile;
+                : rawPictures.length ? pictureURLs[0] : defaultProfile;
 
             return {
                 ...user,
