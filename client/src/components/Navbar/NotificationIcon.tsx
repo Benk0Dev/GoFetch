@@ -8,6 +8,7 @@ import { getUserNotifications, markNotificationAsRead } from "../../services/Reg
 import { INotification } from "../../models/INotification";
 import { useSocket } from "../../context/SocketContext";
 import { useAuth } from "../../context/AuthContext";
+import NotificationContainer from "../Notifications/NotificationContainer";
 
 function NotificationIcon() {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -29,7 +30,8 @@ function NotificationIcon() {
         if (result && result.notifications) {
             // Sort notifications by createdAt date (newest first)
             const sortedNotifications = result.notifications.sort(
-                (a: { createdAt: string | number | Date; }, b: { createdAt: string | number | Date; }) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+                (a: { createdAt: string | number | Date; }, b: { createdAt: string | number | Date; }) => 
+                    new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
             );
             setNotifications(sortedNotifications);
         }
@@ -126,53 +128,58 @@ function NotificationIcon() {
     const unreadCount = notifications.filter(n => !n.read).length;
 
     return (
-        <div className={styles.dropdownContainer} ref={menuRef}>
-            <button 
-                ref={iconRef} 
-                className="btn-round btn-transparent" 
-                onClick={toggleMenu}
-                style={{ position: 'relative' }}
-            >
-                <Bell strokeWidth={2.25} />
-                {unreadCount > 0 && (
-                    <span className={styles.notificationBadge}>
-                        {unreadCount}
-                    </span>
-                )}
-            </button>
-            {menuOpen && (
-                <DropdownMenu onClose={toggleMenu}>
-                    <div className={styles.notificationHeader}>
-                        <h4>Notifications</h4>
-                    </div>
-                    
-                    {loading ? (
-                        <DropdownItem text="Loading notifications..." onClick={() => {}} />
-                    ) : notifications.length > 0 ? (
-                        <>
-                            {notifications.map(notification => (
-                                <div 
-                                    key={notification.id} 
-                                    className={styles.notificationItem}
-                                    onClick={() => handleNotificationClick(notification)}
-                                >
-                                    <div className={`${styles.notificationContent} ${!notification.read ? styles.unread : ''}`}>
-                                        <p>{notification.message}</p>
-                                        <span className={styles.notificationTime}>
-                                            {new Date(notification.createdAt).toLocaleDateString()} 
-                                            {' '}
-                                            {new Date(notification.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
-                                        </span>
-                                    </div>
-                                </div>
-                            ))}
-                        </>
-                    ) : (
-                        <DropdownItem text="You have no notifications" onClick={() => {}} />
+        <>
+            <div className={styles.dropdownContainer} ref={menuRef}>
+                <button 
+                    ref={iconRef} 
+                    className="btn-round btn-transparent" 
+                    onClick={toggleMenu}
+                    style={{ position: 'relative' }}
+                >
+                    <Bell strokeWidth={2.25} />
+                    {unreadCount > 0 && (
+                        <span className={styles.notificationBadge}>
+                            {unreadCount}
+                        </span>
                     )}
-                </DropdownMenu>
-            )}
-        </div>
+                </button>
+                {menuOpen && (
+                    <DropdownMenu onClose={toggleMenu}>
+                        <div className={styles.notificationHeader}>
+                            <h4>Notifications</h4>
+                        </div>
+                        
+                        {loading ? (
+                            <DropdownItem text="Loading notifications..." onClick={() => {}} />
+                        ) : notifications.length > 0 ? (
+                            <>
+                                {notifications.map(notification => (
+                                    <div 
+                                        key={notification.id} 
+                                        className={styles.notificationItem}
+                                        onClick={() => handleNotificationClick(notification)}
+                                    >
+                                        <div className={`${styles.notificationContent} ${!notification.read ? styles.unread : ''}`}>
+                                            <p>{notification.message}</p>
+                                            <span className={styles.notificationTime}>
+                                                {new Date(notification.createdAt).toLocaleDateString()} 
+                                                {' '}
+                                                {new Date(notification.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                                            </span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </>
+                        ) : (
+                            <DropdownItem text="You have no notifications" onClick={() => {}} />
+                        )}
+                    </DropdownMenu>
+                )}
+            </div>
+            
+            {/* Add the notification popup container */}
+            <NotificationContainer notifications={notifications} />
+        </>
     );
 }
 

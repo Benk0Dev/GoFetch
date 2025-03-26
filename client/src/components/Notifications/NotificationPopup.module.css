@@ -1,0 +1,82 @@
+.popup {
+    position: relative;
+    width: 20em;
+    background-color: white;
+    border: 1px solid var(--text-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    z-index: 9999;
+    cursor: pointer;
+    transform: translateX(0);
+    animation: slideIn 0.3s ease-out;
+    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+    opacity: 1;
+}
+
+.exit {
+    transform: translateX(120%);
+    opacity: 0;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5em 1em;
+    background-color: var(--highlight-color);
+    border-bottom: 1px solid var(--text-color);
+    color: white;
+}
+
+.header h4 {
+    margin: 0;
+    font-size: 1em;
+    font-weight: 600;
+}
+
+.closeBtn {
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.2em;
+}
+
+.closeBtn:hover {
+    opacity: 0.8;
+}
+
+.content {
+    padding: 1em;
+    border-bottom: 1px solid var(--text-color);
+}
+
+.content p {
+    margin: 0;
+    font-size: 1em;
+    line-height: 1.4;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5em 1em;
+    font-size: 1em;
+    color: #666;
+    background-color: #f9f9f9;
+}
