@@ -23,6 +23,14 @@
         4
       ],
       "lastMessage": "Hi there! I'm interested in your pet sitting services."
+    },
+    {
+      "id": 4,
+      "users": [
+        5,
+        7
+      ],
+      "lastMessage": "I'm very excited to meet her"
     }
   ],
   "messages": [
@@ -221,6 +229,34 @@
       "message": "Hello",
       "chatId": 1,
       "timestamp": "2025-03-23T00:12:05.529Z"
+    },
+    {
+      "id": 29,
+      "senderId": 5,
+      "message": "Hello Ben!",
+      "chatId": 4,
+      "timestamp": "2025-03-26T16:04:53.258Z"
+    },
+    {
+      "id": 30,
+      "senderId": 5,
+      "message": "I am happy to train Pipa to do a barrel roll",
+      "chatId": 4,
+      "timestamp": "2025-03-26T16:06:56.757Z"
+    },
+    {
+      "id": 31,
+      "senderId": 7,
+      "message": "Hello, perfect!",
+      "chatId": 4,
+      "timestamp": "2025-03-26T16:07:22.305Z"
+    },
+    {
+      "id": 32,
+      "senderId": 5,
+      "message": "I'm very excited to meet her",
+      "chatId": 4,
+      "timestamp": "2025-03-26T16:08:08.623Z"
     }
   ]
 }
