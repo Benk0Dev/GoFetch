@@ -5,13 +5,13 @@ export interface IBooking {
     ownerId: number;
     serviceId: number;
     time: Date;
-    status: EBookingStatus;
+    status: BookingStatus;
     notes?: string;
     createdAt: Date;
     updatedAt: Date;
 }
 
-export enum EBookingStatus {
+export enum BookingStatus {
     Pending = "Pending",
     Confirmed = "Confirmed",
     Completed = "Completed",

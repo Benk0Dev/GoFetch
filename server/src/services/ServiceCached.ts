@@ -28,12 +28,12 @@ export function addServiceCached(id: number, service: IService) {
     saveServicesToFile(cache.services);
 
     // Add the service to the user
-    const userIndex = cache.users.findIndex(user => user.userDetails.id === id);
+    const userIndex = cache.users.findIndex(user => user.id === id);
     if (userIndex === -1) {
         return { success: false, message: 'User not found' };
     }
     else {
-        cache.users[userIndex].minderRoleInfo.serviceIDs.push(newService.id);
+        cache.users[userIndex].minderRoleInfo.serviceIds.push(newService.id);
         saveUsersToFile(cache.users);
     }
 
@@ -50,9 +50,9 @@ export function removeServiceCached(id: number) {
 
     // Remove the service ID from users who have it
     cache.users.forEach(user => {
-        const serviceIndex = user.minderRoleInfo.serviceIDs.indexOf(id);
+        const serviceIndex = user.minderRoleInfo.serviceIds.indexOf(id);
         if (serviceIndex !== -1) {
-            user.minderRoleInfo.serviceIDs.splice(serviceIndex, 1);
+            user.minderRoleInfo.serviceIds.splice(serviceIndex, 1);
         }
     });
 
