@@ -1,5 +1,5 @@
-import { IRegisterUser, IUser } from "../models/IUser";
-import { EBookingStatus, INewBooking } from "../models/IBooking";
+import { IRegisterdUser, IUser } from "../models/IUser";
+import { BookingStatus, INewBooking } from "../models/IBooking";
 import { clearUser, getUserId, setUserId } from "../utils/StorageManager";
 import imageCompression from 'browser-image-compression';
 import defaultProfile from "../assets/images/default-profile-picture.svg"
@@ -38,17 +38,16 @@ export function logout() {
     clearUser();
 }
 
-export async function verifyUniqueEmailAndUsername(email: string, username: string) {
+export async function verifyUniqueEmail(email: string) {
     const allUsers = await getAllUsers();
     if (allUsers) {
-        const existingEmail = allUsers.find((user: IUser) => user.userDetails.loginDetails.email === email);
-        const existingUsername = allUsers.find((user: IUser) => user.userDetails.loginDetails.username === username);
-        return { email: existingEmail, username: existingUsername };
+        const existingEmail = allUsers.find((user: IUser) => user.loginDetails.email === email);
+        return { email: existingEmail };
     }
     return null;
 }
 
-export async function registerUser(user: IRegisterUser) {
+export async function registerUser(user: IRegisterdUser) {
     try {
         const response = await fetch(`${API_URL}/registerUser`, { 
             method: "POST",
@@ -73,7 +72,7 @@ export async function registerUser(user: IRegisterUser) {
     }
 }
 
-export async function editUser(id: number, user: IUser) {
+export async function editUser(id: number, user: any) {
     try {
         const response = await fetch(`${API_URL}/editUser/${id}`, { 
             method: "POST",
@@ -142,23 +141,6 @@ export async function getUserByIdWithPictures(id: number) {
                 minderRoleInfo: { ...user.minderRoleInfo, pictures: minderPictureURLs },
                 ownerRoleInfo: { ...user.ownerRoleInfo, pets: petsWithPictures }
             };
-        } else {
-            const text = await response.text();
-            console.error(text);
-            return null;
-        }
-    } catch (e) {
-        console.error(e);
-        return null;
-    }
-}
-
-export async function getUserByUsername(username: string) {
-    try {
-        const response = await fetch(`${API_URL}/user/username/${username}`);
-        if (response.ok) {
-            const user = await response.json();
-            return user;
         } else {
             const text = await response.text();
             console.error(text);
@@ -502,7 +484,7 @@ export const createBooking = async (bookingData: INewBooking) => {
 
             const editMinder = await editUser(booking.minderId, {
                 minderRoleInfo: {
-                    bookingIDs: [booking.id, ...minder.minderRoleInfo.bookings.map((b: any) => b.id)],
+                    bookingIds: [booking.id, ...minder.minderRoleInfo.bookings.map((b: any) => b.id)],
                 }
             });
 
@@ -514,7 +496,7 @@ export const createBooking = async (bookingData: INewBooking) => {
 
             const editOwner = await editUser(booking.ownerId, {
                 ownerRoleInfo: {
-                    bookingIDs: [booking.id, ...petOwner.ownerRoleInfo.bookings.map((b: any) => b.id)],
+                    bookingIds: [booking.id, ...petOwner.ownerRoleInfo.bookings.map((b: any) => b.id)],
                 }
             });
 
@@ -534,7 +516,7 @@ export const createBooking = async (bookingData: INewBooking) => {
     }
 };
 
-export async function setBookingStatus(bookingId: number, status: EBookingStatus) {
+export async function setBookingStatus(bookingId: number, status: BookingStatus) {
     try {
         const response = await fetch(`${API_URL}/booking/${bookingId}/status`, {
             method: "PUT",
@@ -678,7 +660,7 @@ export async function addPetForUser(userId: number, pet: IPet) {
     }
 }
 
-export async function removePetForUser(userId: number, petId: number) {
+export async function removePetForUser(petId: number) {
     try {
         const response = await fetch(`${API_URL}/removePet/${petId}`, { 
             method: "DELETE"
@@ -696,3 +678,44 @@ export async function removePetForUser(userId: number, petId: number) {
     }
 }
 //#endregion
+
+//#region Reviews
+export async function addReviewForUser(userId: number, review: any) {
+    try {
+        const response = await fetch(`${API_URL}/user/${userId}/review`, { 
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(review)
+        });
+        if (response.ok) {
+            const review = await response.json();
+            return review;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return false;
+        }
+    } catch (e) {
+        console.error(e);
+        return false;
+    }
+}
+
+export async function getReviewById(reviewId: number) {
+    try {
+        const response = await fetch(`${API_URL}/review/${reviewId}`);
+        if (response.ok) {
+            const review = await response.json();
+            return review;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return null;
+        }
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+}
