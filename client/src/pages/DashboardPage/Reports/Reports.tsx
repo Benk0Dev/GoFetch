@@ -1,5 +1,5 @@
-import styles from '@client/pages/DashboardPage/Reports/Reports.module.css';
-import dashboardStyles from '@client/pages/DashboardPage/DashboardPage.module.css';
+import styles from './Reports.module.css';
+import dashboardStyles from '@client/pages/DashboardPage/Dashboard.module.css';
 import { useAuth } from '@client/context/AuthContext';
 
 function Report() {
