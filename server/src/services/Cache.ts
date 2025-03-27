@@ -7,7 +7,7 @@ import { IBooking } from '@gofetch/models/IBooking';
 import { IMessage, IChat } from '@gofetch/models/IMessage';
 import { INotification } from '@gofetch/models/INotification';
 import { IReview } from '@gofetch/models/IReview';
-import { IReport } from '../models/IReport';
+import { IReport } from '@gofetch/models/IReport';
 
 // DB path
 export const DB_PATH = path.join(__dirname, './../db');
