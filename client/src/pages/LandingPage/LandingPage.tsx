@@ -3,7 +3,7 @@ import { Search, Calendar, MessageCircle } from "lucide-react";
 import styles from "@client/pages/LandingPage/LandingPage.module.css";
 import "@client/global.css";
 import hero from "@client/assets/images/hero.jpg";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "@client/context/AuthContext";
 import { Role } from "@gofetch/models/IUser";
 
 function LandingPage() {

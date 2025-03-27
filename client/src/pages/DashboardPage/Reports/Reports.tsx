@@ -1,6 +1,6 @@
-import styles from './Reports.module.css';
-import dashboardStyles from '../Dashboard.module.css';
-import { useAuth } from '../../../context/AuthContext';
+import styles from '@client/pages/DashboardPage/Reports/Reports.module.css';
+import dashboardStyles from '@client/pages/DashboardPage/DashboardPage.module.css';
+import { useAuth } from '@client/context/AuthContext';
 
 function Report() {
     const { user } = useAuth();
