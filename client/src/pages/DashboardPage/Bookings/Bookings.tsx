@@ -31,7 +31,7 @@ function Bookings() {
     const [bookings, setBookings] = useState<Booking[]>([]);
     const [loading, setLoading] = useState(true);
     const [reviewModalOpen, setReviewModalOpen] = useState(false);
-    const [selectedBookingId, setSelectedBookingId] = useState<number | null>(null);
+    const [selectedBookingId, setSelectedBookingId] = useState<number>(0);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -50,7 +50,7 @@ function Bookings() {
     
                     const pet = owner.ownerRoleInfo.pets.find((pet: IPet) => pet.id === booking.petId);
 
-                    const reviewed = minder.minderRoleInfo.reviews.find((review: IReview) => review.reviewerId === user.id && review.revieweeId === minder.id) ? true : false;
+                    const reviewed = minder.minderRoleInfo.reviews.some((review: IReview) => review.bookingId === booking.id);
     
                     return {
                         id: booking.id,
@@ -127,7 +127,7 @@ function Bookings() {
         }
     }
 
-    const handleSubmitReview = async (rating: number, review: string) => {
+    async function handleSubmitReview(rating: number, review: string) {
         const revieweeId = bookings.find(b => b.id === selectedBookingId)!.minder.id;
 
         const reviewInfo: IReview = {
@@ -137,11 +137,14 @@ function Bookings() {
             date: new Date(),
             reviewerId: user.id,
             revieweeId,
+            bookingId: selectedBookingId
         };
 
         const reviewCreated = await addReviewForUser(revieweeId, reviewInfo);
 
         if (reviewCreated) {
+            bookings.find(b => b.id === selectedBookingId)!.reviewed = true;
+            setBookings([...bookings]);
             console.log("Review created successfully.", reviewCreated);
         } else {
             console.error("Failed to create review.");

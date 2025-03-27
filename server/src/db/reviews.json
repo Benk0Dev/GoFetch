@@ -3,24 +3,36 @@
     "id": 1,
     "rating": 5,
     "review": "",
-    "date": "2025-03-26T23:52:16.572Z",
+    "date": "2025-03-27T02:09:15.862Z",
     "reviewerId": 5,
-    "revieweeId": 5
+    "revieweeId": 5,
+    "bookingId": 7
   },
   {
     "id": 3,
-    "rating": 4,
-    "review": "",
-    "date": "2025-03-26T23:59:04.614Z",
+    "rating": 5,
+    "review": "Great service! Highly recommend.",
+    "date": "2025-03-27T02:12:46.170Z",
     "reviewerId": 5,
-    "revieweeId": 3
+    "revieweeId": 3,
+    "bookingId": 1
   },
   {
     "id": 5,
-    "rating": 3,
-    "review": "She tried her best but my dog still can't do a barrel roll.",
-    "date": "2025-03-27T01:29:29.903Z",
+    "rating": 1,
+    "review": "Tried to steal my dog!",
+    "date": "2025-03-27T02:13:06.165Z",
+    "reviewerId": 5,
+    "revieweeId": 5,
+    "bookingId": 4
+  },
+  {
+    "id": 7,
+    "rating": 5,
+    "review": "Taught my dog how to do a barrel roll! I thought it was impossible. Highly recommend.",
+    "date": "2025-03-27T02:14:53.290Z",
     "reviewerId": 7,
-    "revieweeId": 5
+    "revieweeId": 5,
+    "bookingId": 6
   }
 ]

@@ -5,4 +5,5 @@ export interface IReview {
     date: Date;
     reviewerId: number;
     revieweeId: number;
+    bookingId: number;
 }

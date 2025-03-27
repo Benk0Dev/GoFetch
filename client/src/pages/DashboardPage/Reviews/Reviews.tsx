@@ -38,7 +38,7 @@ function Reviews() {
             <p>See what pet owners are saying about your services.</p>
             <div className={styles.reviewsBreakdown}>
                 <div className={styles.reviewScore}>
-                    <h1>{user.minderRoleInfo.rating}</h1>
+                    <h1>{user.minderRoleInfo.rating.toFixed(1)}</h1>
                 </div>
                 <div className={styles.breakdownText}>
                     <h5>Overall Rating</h5>
@@ -51,23 +51,25 @@ function Reviews() {
                     </div>
                     <p>Based on {user.minderRoleInfo.reviews.length} review{user.minderRoleInfo.reviews.length === 1 ? "" : "s"}</p>
                 </div>
-                <div className={styles.percentageBreakdown}>
-                    <p>Rating Breakdown</p>
-                    {[5, 4, 3, 2, 1].map((rating, index) => {
-                        return percentages[index] > 0 && (
-                            <div className={styles.percentage}>
-                                <span>{rating}<Star size={18} strokeWidth={2} /></span>
-                                <div className={styles.percentageBar}>
-                                    <div className={styles.percentageBarBackground}>
-                                        <div className={styles.percentageBarFill} style={{ width: percentages[index] + "%" }}></div>
+                {user.minderRoleInfo.reviews.length > 0 && (
+                    <div className={styles.percentageBreakdown}>
+                        <p>Rating Breakdown</p>
+                        {[5, 4, 3, 2, 1].map((rating, index) => {
+                            return percentages[index] > 0 && (
+                                <div className={styles.percentage}>
+                                    <span>{rating}<Star size={18} strokeWidth={2} /></span>
+                                    <div className={styles.percentageBar}>
+                                        <div className={styles.percentageBarBackground}>
+                                            <div className={styles.percentageBarFill} style={{ width: percentages[index] + "%" }}></div>
+                                        </div>
+                                        
                                     </div>
-                                    
+                                    <span>{percentages[index]}%</span>
                                 </div>
-                                <span>{percentages[index]}%</span>
-                            </div>
-                        );
-                    })}
-                </div>
+                            );
+                        })}
+                    </div>
+                )}
             </div>
 
             {loading ? <p>Loading...</p> : (

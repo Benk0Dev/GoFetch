@@ -20,6 +20,7 @@ export function addReviewCached(review: IReview) {
         date: new Date(),
         reviewerId: review.reviewerId,
         revieweeId: review.revieweeId,
+        bookingId: review.bookingId
     };
 
     cache.reviews.push(newReview);

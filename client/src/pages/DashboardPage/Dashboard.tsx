@@ -9,7 +9,7 @@ import styles from "./Dashboard.module.css";
 import { Role } from "../../models/IUser";
 import Pets from "./Pets/Pets";
 import { useAuth } from "../../context/AuthContext";
-import Reviews from "./Reviews/Review";
+import Reviews from "./Reviews/Reviews";
 
 function DashboardPage() {
     const navigate = useNavigate();

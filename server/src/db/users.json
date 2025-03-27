@@ -113,7 +113,7 @@
         1,
         2
       ],
-      "rating": 4,
+      "rating": 5,
       "bio": "Experienced pet sitter with 5 years of experience.",
       "pictures": [
         "8",
@@ -190,7 +190,7 @@
       "petminder",
       "petowner"
     ],
-    "currentRole": "petminder",
+    "currentRole": "petowner",
     "primaryUserInfo": {
       "profilePic": "",
       "dob": "1995-08-25T00:00:00.000Z",
@@ -207,10 +207,11 @@
         2
       ],
       "bookingIds": [
-        4,
+        7,
         1,
         2,
-        3
+        3,
+        4
       ]
     },
     "minderRoleInfo": {
@@ -218,7 +219,7 @@
         5,
         6
       ],
-      "rating": 4,
+      "rating": 3.666666666666667,
       "bio": "Pet owner and minder with a passion for animals, especially dogs!",
       "pictures": [
         "1",
@@ -227,12 +228,14 @@
       ],
       "availability": "Flexible",
       "bookingIds": [
-        6,
-        4
+        7,
+        4,
+        6
       ],
       "reviewIds": [
         1,
-        5
+        5,
+        7
       ]
     }
   },
