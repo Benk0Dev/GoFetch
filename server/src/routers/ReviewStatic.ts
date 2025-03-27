@@ -27,6 +27,12 @@ export function addReviewForUser(userId: number, review: IReview) {
 
     cache.users[userIndex].minderRoleInfo.reviewIds.push(newReview.id);
 
+    const updatedRating = cache.users[userIndex].minderRoleInfo.reviewIds
+        .map(reviewId => cache.reviews.find(review => review.id === reviewId)?.rating || 0)
+        .reduce((acc, rating, _, arr) => acc + rating / arr.length, 0);
+
+    cache.users[userIndex].minderRoleInfo.rating = updatedRating;
+
     try {
         fs.writeFileSync(`${DB_PATH}/reviews.json`, JSON.stringify(cache.reviews, null, 2), 'utf8');
         fs.writeFileSync(`${DB_PATH}/users.json`, JSON.stringify(cache.users, null, 2), 'utf8');

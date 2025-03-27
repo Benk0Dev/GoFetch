@@ -6,6 +6,7 @@ import defaultProfile from "../assets/images/default-profile-picture.svg"
 import defaultPet from "../assets/images/default-pet-picture.svg"
 import { IPet } from "../models/IPet";
 import { IService } from "../models/IService";
+import { IReview } from "../models/IReview";
 
 const API_URL = "http://localhost:3001";
 
@@ -680,7 +681,7 @@ export async function removePetForUser(petId: number) {
 //#endregion
 
 //#region Reviews
-export async function addReviewForUser(userId: number, review: any) {
+export async function addReviewForUser(userId: number, review: IReview) {
     try {
         const response = await fetch(`${API_URL}/user/${userId}/review`, { 
             method: "POST",

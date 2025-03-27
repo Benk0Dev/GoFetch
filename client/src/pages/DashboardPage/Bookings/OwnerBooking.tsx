@@ -18,7 +18,7 @@ function OwnerBooking({ booking, status, onMessage, onCancel, onReview }: { book
             {status === BookingStatus.Pending && (
                 <button className="btn btn-secondary" onClick={() => onCancel(booking.id)}>Cancel</button>
             )} 
-            {status === BookingStatus.Completed && (
+            {status === BookingStatus.Completed && !booking.reviewed && (
                 <button className="btn btn-primary" onClick={() => onReview(booking.id)} style={{display: "flex", alignContent: "center", columnGap: "5px", justifyContent: "center"}}><Review size={18} strokeWidth={2} />Leave Review</button>
             )}
         </div>

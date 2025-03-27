@@ -7,19 +7,22 @@ import { BookingStatus, IBooking } from "../../../models/IBooking";
 import { Role } from "../../../models/IUser";
 import OwnerBooking from "./OwnerBooking";
 import MinderBooking from "./MinderBooking";
-import { getServiceById, getUserById, getUserByIdWithPictures, setBookingStatus, startChat } from "../../../services/Registry";
+import { addReviewForUser, getServiceById, getUserById, getUserByIdWithPictures, setBookingStatus, startChat } from "../../../services/Registry";
 import { IPet } from "../../../models/IPet";
 import { useNavigate } from "react-router-dom";
+import CreateReview from "./CreateReview";
+import { IReview } from "../../../models/IReview";
 
 export interface Booking {
+    id: number;
+    time: Date;
+    status: BookingStatus;
     owner: any;
     minder: any;
     pet: any;
     service: any;
-    time: Date;
-    status: BookingStatus;
     notes: string;
-    id: number;
+    reviewed: boolean;
 }
 
 function Bookings() {
@@ -27,6 +30,8 @@ function Bookings() {
     const [status, setStatus] = useState<BookingStatus>(BookingStatus.Confirmed);
     const [bookings, setBookings] = useState<Booking[]>([]);
     const [loading, setLoading] = useState(true);
+    const [reviewModalOpen, setReviewModalOpen] = useState(false);
+    const [selectedBookingId, setSelectedBookingId] = useState<number | null>(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -44,6 +49,8 @@ function Bookings() {
                     ]);
     
                     const pet = owner.ownerRoleInfo.pets.find((pet: IPet) => pet.id === booking.petId);
+
+                    const reviewed = minder.minderRoleInfo.reviews.find((review: IReview) => review.reviewerId === user.id && review.revieweeId === minder.id) ? true : false;
     
                     return {
                         id: booking.id,
@@ -53,7 +60,8 @@ function Bookings() {
                         minder,
                         pet,
                         service,
-                        notes: booking.notes
+                        notes: booking.notes,
+                        reviewed,
                     };
                 })
             );
@@ -100,8 +108,8 @@ function Bookings() {
     }
 
     const handleReview = (bookingId: number) => {
-        console.log("Review booking", bookingId);
-        // Open review modal
+        setSelectedBookingId(bookingId);
+        setReviewModalOpen(true);
     }
 
     const handleMessage = async (recipientId: number) => {
@@ -117,6 +125,29 @@ function Bookings() {
         } else {
             console.error("Failed to complete booking.");
         }
+    }
+
+    const handleSubmitReview = async (rating: number, review: string) => {
+        const revieweeId = bookings.find(b => b.id === selectedBookingId)!.minder.id;
+
+        const reviewInfo: IReview = {
+            id: 0,
+            rating,
+            review,
+            date: new Date(),
+            reviewerId: user.id,
+            revieweeId,
+        };
+
+        const reviewCreated = await addReviewForUser(revieweeId, reviewInfo);
+
+        if (reviewCreated) {
+            console.log("Review created successfully.", reviewCreated);
+        } else {
+            console.error("Failed to create review.");
+        }
+
+        setReviewModalOpen(false);
     }
 
     return (
@@ -164,6 +195,13 @@ function Bookings() {
                     )}
                 </div>
             </div>
+            {reviewModalOpen && (
+                <CreateReview 
+                    onSubmit={handleSubmitReview}
+                    onCancel={() => setReviewModalOpen(false)}
+                    minder={bookings.find(b => b.id === selectedBookingId)!.minder}
+                />
+            )}
         </div>
     );
 }

@@ -1,1 +1,26 @@
-[]
+[
+  {
+    "id": 1,
+    "rating": 5,
+    "review": "",
+    "date": "2025-03-26T23:52:16.572Z",
+    "reviewerId": 5,
+    "revieweeId": 5
+  },
+  {
+    "id": 3,
+    "rating": 4,
+    "review": "",
+    "date": "2025-03-26T23:59:04.614Z",
+    "reviewerId": 5,
+    "revieweeId": 3
+  },
+  {
+    "id": 5,
+    "rating": 3,
+    "review": "She tried her best but my dog still can't do a barrel roll.",
+    "date": "2025-03-27T01:29:29.903Z",
+    "reviewerId": 7,
+    "revieweeId": 5
+  }
+]

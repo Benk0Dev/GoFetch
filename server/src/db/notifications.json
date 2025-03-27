@@ -3,11 +3,11 @@
     "id": 1,
     "userId": 5,
     "message": "Sarah accepted your booking request for dog walking",
-    "read": false,
+    "read": true,
     "type": "booking",
     "linkId": 101,
     "createdAt": "2025-03-21T08:15:00.000Z",
-    "updatedAt": "2025-03-21T08:15:00.000Z"
+    "updatedAt": "2025-03-26T22:25:24.688Z"
   },
   {
     "id": 2,
@@ -33,11 +33,11 @@
     "id": 4,
     "userId": 5,
     "message": "John rated your service 5 stars!",
-    "read": false,
+    "read": true,
     "type": "review",
     "linkId": 201,
     "createdAt": "2025-03-19T09:10:00.000Z",
-    "updatedAt": "2025-03-19T09:10:00.000Z"
+    "updatedAt": "2025-03-26T23:52:05.897Z"
   },
   {
     "id": 5,
@@ -55,8 +55,8 @@
     "message": "Sup",
     "type": "message",
     "linkId": 120,
-    "read": false,
+    "read": true,
     "createdAt": "2025-03-26T16:06:08.667Z",
-    "updatedAt": "2025-03-26T16:06:08.667Z"
+    "updatedAt": "2025-03-26T22:49:18.481Z"
   }
 ]

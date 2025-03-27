@@ -22,8 +22,8 @@ export function getCachedUsersWithAllInfo(): IUser[] {
         pets: cache.pets.filter(pet => user.ownerRoleInfo.petIds.includes(pet.id) || false),
         bookings: cache.bookings.filter(booking => user.ownerRoleInfo.bookingIds.includes(booking.id) || false),
       };
-      delete (userCopy.ownerRoleInfo as any).petIDs;
-      delete (userCopy.ownerRoleInfo as any).bookingIDs;
+      delete (userCopy.ownerRoleInfo as any).petIds;
+      delete (userCopy.ownerRoleInfo as any).bookingIds;
     }
 
     // Add services, bookings and reviews to minder
@@ -34,9 +34,9 @@ export function getCachedUsersWithAllInfo(): IUser[] {
         bookings: cache.bookings.filter(booking => user.minderRoleInfo.bookingIds.includes(booking.id) || false),
         reviews: cache.reviews.filter(review => user.minderRoleInfo.reviewIds.includes(review.id) || false),
       };
-      delete (userCopy.minderRoleInfo as any).serviceIDs;
-      delete (userCopy.minderRoleInfo as any).bookingIDs;
-      delete (userCopy.minderRoleInfo as any).reviewIDs;
+      delete (userCopy.minderRoleInfo as any).serviceIds;
+      delete (userCopy.minderRoleInfo as any).bookingIds;
+      delete (userCopy.minderRoleInfo as any).reviewIds;
     }
 
     return userCopy;

@@ -50,7 +50,7 @@ function Home() {
                         />
                         <Statistic 
                             title="Rating" 
-                            value={rating} 
+                            value={parseFloat(rating).toFixed(1)} 
                             icon={<Star size={18} strokeWidth={2} />} 
                         />
                         <Statistic 

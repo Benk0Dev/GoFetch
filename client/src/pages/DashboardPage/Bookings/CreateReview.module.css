@@ -1,0 +1,81 @@
+.modalBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.1s ease-out;
+}
+
+.modal {
+    background-color: var(--primary-color);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    max-width: 500px;
+    width: 100%;
+    border: 1px solid var(--text-color);
+    position: relative;
+    animation: fadeIn 0.1s ease-out;
+}
+
+.modal h3 {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.rating {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.rating svg {
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--menu-card-border-color);
+    fill: var(--menu-card-border-color);
+    padding: 0 5px;
+    width: 34px;
+}
+
+.rating svg.selected {
+    color: #ffc654;
+    fill: #ffc654;
+}
+
+textarea {
+    width: 100%;
+    height: 100px;
+    resize: none;
+    outline: none;
+    margin-bottom: 10px;
+}
+
+.modalActions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.modalActions .cancelBtn {
+    background-color: #b5b5b5;
+}
+
+.modalActions .cancelBtn:hover {
+    background-color: #c2c2c2;
+}
+
+/* Animation for modal fade-in */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
