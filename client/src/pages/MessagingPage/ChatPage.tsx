@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { Link, Outlet, useParams, useNavigate } from "react-router-dom";
-import { IChat } from "../../models/IMessage";
+import { IChat } from "@gofetch/models/IMessage";
 import { getUserChats, getUserByIdWithPictures } from "../../services/Registry";
 import styles from './MessagingPage.module.css';
 import { useAuth } from "../../context/AuthContext";

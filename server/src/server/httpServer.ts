@@ -17,7 +17,7 @@ import { log } from '../utils/utils';
 import { addReviewForUser, ReviewByID } from '../routers/ReviewStatic';
 
 const app: Express = express();
-const port = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3001;
 const server = http.createServer(app);
 
 // Initialize Socket.IO server
@@ -70,6 +70,14 @@ app.use(express.urlencoded({ extended: true }));
 // Logging middleware
 app.use((req: Request, res: Response, next) => {
     log(req.url, req);
+    next();
+});
+
+// Middleware to strip /v1 prefix from API routes
+app.use((req: Request, res: Response, next) => {
+    if (req.url.startsWith('/v1')) {
+        req.url = req.url.replace('/v1', '');
+    }
     next();
 });
 
@@ -383,8 +391,8 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 });
 
 export function startHttpServer() {
-    server.listen(port, () => {
-        console.log(`Server is running on http://localhost:${port}`);
+    server.listen(PORT, () => {
+        console.log(`Server is running on http://localhost:${PORT}`);
         console.log(`Socket.IO server is running`);
     });
     return server;

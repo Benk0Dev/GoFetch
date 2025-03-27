@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { BookingStatus, IBooking, INewBooking } from '../models/IBooking';
+import { BookingStatus, IBooking, INewBooking } from '@gofetch/models/IBooking';
 import { DB_PATH, cache } from './Cache';
 import path from 'path';
 

@@ -95,17 +95,7 @@ function NotificationIcon() {
         return () => {
             socket.off('new-notification', handleNewNotification);
         };
-    }, [socket, isConnected, user]);
-
-    // Initial fetch and periodic refresh as a fallback
-    useEffect(() => {
-        fetchNotifications();
-        
-        // Poll for new notifications every 60 seconds as a fallback
-        // This ensures notifications aren't missed if socket connection fails
-        const interval = setInterval(fetchNotifications, 60000);
-        return () => clearInterval(interval);
-    }, []);
+    }, [socket, isConnected, user]);    
 
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
