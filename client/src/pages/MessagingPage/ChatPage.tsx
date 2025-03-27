@@ -76,8 +76,11 @@ function MessagingPage() {
                 try {
                     const otherUser = await getUserByIdWithPictures(otherUserId);
                     if (otherUser) {
-                        namesMap[chat.id.toString()] = 
-                            `${otherUser.name.fname} ${otherUser.name.sname}`;
+                        let name = `${otherUser.name.fname} ${otherUser.name.sname}`;
+                        if (otherUser.roles.includes(Role.ADMIN)) {
+                            name += " (Admin)";
+                        }
+                        namesMap[chat.id.toString()] = name;
                     } else {
                         namesMap[chat.id.toString()] = "Unknown User";
                     }
