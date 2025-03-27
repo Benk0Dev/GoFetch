@@ -28,7 +28,7 @@ function Navbar() {
             <>
               <Link to="/browse" className="btn-link" style={{ marginRight: "10px" }}>Explore Minders</Link>
               <NotificationIcon />
-              <Link to="/chats" className="btn-round btn-transparent">
+              <Link to="/chats" className="btn-round btn-transparent" style={{padding: "10px"}}>
                 <Mail strokeWidth={2.25} />
               </Link>
               <ProfileIcon />

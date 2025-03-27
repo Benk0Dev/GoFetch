@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { IUser, IRegisterUser } from '../models/IUser';
+import { IUser, IRegisterdUser, Availability } from '../models/IUser';
 import { cache, DB_PATH } from './Cache';
 
 // Get cached users
@@ -12,40 +12,39 @@ export function getCachedUsers(): IUser[] {
   }
 }
 
-export function getCachedUsersWithPetsServicesAndBookings(): IUser[] {
+export function getCachedUsersWithAllInfo(): IUser[] {
   return cache.users.map(user => {
     const userCopy = { ...user };
-
-    // Add pets and services to owner
+    // Add pets and bookings to owner
     if (userCopy.ownerRoleInfo) {
       userCopy.ownerRoleInfo = {
         ...userCopy.ownerRoleInfo,
-        pets: cache.pets.filter(pet => user.ownerRoleInfo?.petIDs?.includes(pet.id) || false),
-        bookings: cache.bookings.filter(booking => user.ownerRoleInfo?.bookingIDs?.includes(booking.ownerId) || false),
+        pets: cache.pets.filter(pet => user.ownerRoleInfo.petIds.includes(pet.id) || false),
+        bookings: cache.bookings.filter(booking => user.ownerRoleInfo.bookingIds.includes(booking.id) || false),
       };
-      delete (userCopy.ownerRoleInfo as any).petIDs;
-      delete (userCopy.ownerRoleInfo as any).bookingIDs;
+      delete (userCopy.ownerRoleInfo as any).petIds;
+      delete (userCopy.ownerRoleInfo as any).bookingIds;
     }
 
-    // Add services and bookings to minder
+    // Add services, bookings and reviews to minder
     if (userCopy.minderRoleInfo) {
       userCopy.minderRoleInfo = {
         ...userCopy.minderRoleInfo,
-        services: cache.services.filter(service => user.minderRoleInfo?.serviceIDs?.includes(service.id) || false),
-        bookings: cache.bookings.filter(booking => user.minderRoleInfo?.bookingIDs?.includes(booking.minderId) || false),
+        services: cache.services.filter(service => user.minderRoleInfo.serviceIds.includes(service.id) || false),
+        bookings: cache.bookings.filter(booking => user.minderRoleInfo.bookingIds.includes(booking.id) || false),
+        reviews: cache.reviews.filter(review => user.minderRoleInfo.reviewIds.includes(review.id) || false),
       };
-      delete (userCopy.minderRoleInfo as any).serviceIDs;
-      delete (userCopy.minderRoleInfo as any).bookingIDs;
+      delete (userCopy.minderRoleInfo as any).serviceIds;
+      delete (userCopy.minderRoleInfo as any).bookingIds;
+      delete (userCopy.minderRoleInfo as any).reviewIds;
     }
 
     return userCopy;
   });
 }
 
-
-
-export function RegisterUserCache(user: IRegisterUser) {
-  if (!user.fname || !user.sname || !user.email || !user.password || !user.username || !user.dob) {
+export function RegisterUserCache(user: IRegisterdUser) {
+  if (!user.fname || !user.sname || !user.email || !user.password || !user.dob) {
     return { success: false, message: 'All fields are required' };
   } 
 
@@ -55,7 +54,7 @@ export function RegisterUserCache(user: IRegisterUser) {
       return { success: false, message: 'Email and password are required' };
     }
     // Check if email already exists
-    const existingUser = cache.users.find(u => u.userDetails.loginDetails.email === user.email);
+    const existingUser = cache.users.find(u => u.loginDetails.email === user.email);
     if (existingUser) {
       return { success: false, message: 'Email already registered' };
     }
@@ -75,42 +74,42 @@ export function RegisterUserCache(user: IRegisterUser) {
       return { success: false, message: 'Must be at least 16 years old' };
     }
 
-    const newId = cache.users.length > 0 ? cache.users[cache.users.length - 1].userDetails.id + 1 : 1;
+    const newId = cache.users.length > 0 ? cache.users[cache.users.length - 1].id + 1 : 1;
     // Create new user object
     const newUser: IUser = {
-      userDetails: {
-        id: newId,
+      id: newId,
+      name: {
         fname: user.fname,
         sname: user.sname,
-        loginDetails: {
-          email: user.email,
-          username: user.username,
-          password: user.password, // Note: In a real app, we should hash passwords(idc for now)
-        },
+      },
+      loginDetails: {
+        email: user.email,
+        password: user.password, // Note: In a real app, we should hash passwords(idc for now)
       },
       roles: [user.role],
       currentRole: user.role,
       primaryUserInfo: {
         profilePic: '',
         dob: user.dob,
-        location: { name: '', longitude: 0, latitude: 0 },
-        suspended: false,
-        suspendReason: null,
-        suspendEndsAt: null,
+        address: {
+          street: '',
+          city: '',
+          postcode: '',
+          country: '',
+        },
       },
       ownerRoleInfo: {
-        petIDs: [],
-        bookingIDs: [],
+        petIds: [],
+        bookingIds: [],
       },
       minderRoleInfo: {
+        serviceIds: [],
         rating: 0,
         bio: '',
         pictures: [],
-        availability: '',
-        distanceRange: 0,
-        verified: false,
-        serviceIDs: [],
-        bookingIDs: [],
+        availability: Availability.FLEXIBLE,
+        bookingIds: [],
+        reviewIds: [],
       }
     };
 
@@ -137,7 +136,7 @@ export function RegisterUserCache(user: IRegisterUser) {
 export function removeUserCache(id: number): { success: boolean; message: string } {
   try {
     // Find the user
-    const userIndex = cache.users.findIndex(u => u.userDetails.id === id);
+    const userIndex = cache.users.findIndex(u => u.id === id);
     if (userIndex < 0) {
       return { success: false, message: 'User not found' };
     }
@@ -158,13 +157,10 @@ export function removeUserCache(id: number): { success: boolean; message: string
 export function getUserWithoutPassword(user: IUser) {
   if (user) {
     // Remove password from response
-    const { userDetails: { loginDetails: { password, ...loginDetailsWithoutPassword }, ...otherUserDetails }, ...restUser } = user;
+    const { loginDetails: { password, ...loginDetailsWithoutPassword }, ...restUser } = user;
     const sanitizedUser = {
       ...restUser,
-      userDetails: {
-        ...otherUserDetails,
-        loginDetails: loginDetailsWithoutPassword
-      }
+      loginDetails: loginDetailsWithoutPassword,
     };
     return sanitizedUser;
   }
@@ -174,7 +170,7 @@ export function getUserWithoutPassword(user: IUser) {
 export function editUserCache(id: number, userEdits: IUser) {
   try {
     // Find the user
-    const user = cache.users.find(user => user.userDetails.id === id);
+    const user = cache.users.find(user => user.id === id);
     if (!user) {
       return { success: false, message: 'User not found' };
     }
@@ -182,12 +178,12 @@ export function editUserCache(id: number, userEdits: IUser) {
     // Update the user
     const updatedUser = deepMerge(user, userEdits);
 
-    if (updatedUser.userDetails) {
-      updatedUser.userDetails.id = id;
+    if (updatedUser) {
+      updatedUser.id = id;
     }
 
     // Update user
-    cache.users = cache.users.map(u => u.userDetails.id === id ? updatedUser : u);
+    cache.users = cache.users.map(u => u.id === id ? updatedUser : u);
 
     // Write back to the database file
     saveUsersToFile(cache.users);

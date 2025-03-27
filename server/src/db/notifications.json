@@ -3,21 +3,21 @@
     "id": 1,
     "userId": 5,
     "message": "Sarah accepted your booking request for dog walking",
-    "read": false,
+    "read": true,
     "type": "booking",
     "linkId": 101,
     "createdAt": "2025-03-21T08:15:00.000Z",
-    "updatedAt": "2025-03-21T08:15:00.000Z"
+    "updatedAt": "2025-03-26T22:25:24.688Z"
   },
   {
     "id": 2,
     "userId": 5,
     "message": "Alex sent you a new message",
-    "read": false,
+    "read": true,
     "type": "message",
     "linkId": 2,
     "createdAt": "2025-03-21T10:20:00.000Z",
-    "updatedAt": "2025-03-21T10:20:00.000Z"
+    "updatedAt": "2025-03-25T17:21:35.810Z"
   },
   {
     "id": 3,
@@ -27,17 +27,17 @@
     "type": "booking",
     "linkId": 102,
     "createdAt": "2025-03-20T14:45:00.000Z",
-    "updatedAt": "2025-03-20T16:30:00.000Z"
+    "updatedAt": "2025-03-25T04:59:10.635Z"
   },
   {
     "id": 4,
     "userId": 5,
     "message": "John rated your service 5 stars!",
-    "read": false,
+    "read": true,
     "type": "review",
     "linkId": 201,
     "createdAt": "2025-03-19T09:10:00.000Z",
-    "updatedAt": "2025-03-19T09:10:00.000Z"
+    "updatedAt": "2025-03-26T23:52:05.897Z"
   },
   {
     "id": 5,
@@ -48,5 +48,15 @@
     "linkId": 301,
     "createdAt": "2025-03-18T11:25:00.000Z",
     "updatedAt": "2025-03-18T12:00:00.000Z"
+  },
+  {
+    "id": 6,
+    "userId": 5,
+    "message": "Sup",
+    "type": "message",
+    "linkId": 120,
+    "read": true,
+    "createdAt": "2025-03-26T16:06:08.667Z",
+    "updatedAt": "2025-03-26T22:49:18.481Z"
   }
 ]

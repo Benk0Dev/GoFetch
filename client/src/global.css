@@ -14,7 +14,7 @@
     --border-radius: 10px;
 
     /* Menu Colors */
-    --menu-card-background-color: #f9f9f9;
+    --menu-card-background-color: #f3f3f3;
     --menu-card-border-color: #d1d1d1;
 
     /* Other */
@@ -85,7 +85,7 @@ h5 {
 }
 
 h6 {
-    font-size: 1rem;
+    font-size: 1.125rem;
 }
 
 /* Paragraphs */
@@ -96,14 +96,17 @@ p {
 }
 
 /* Buttons */
+.btn, .btn2, .btn-round, .btn-link {
+    cursor: pointer;
+    transition: background 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
 .btn, .btn-round, .btn-link {
     display: inline-block;
     border: none;
     font-size: 18px;
     font-weight: 500;
-    cursor: pointer;
     text-align: center;
-    transition: background 0.1s ease-in-out, color 0.1s ease-in-out;
 }
 
 .btn {
@@ -129,7 +132,7 @@ p {
 }
 
 .btn-round {
-    padding: 10px;
+    padding: 10px 20px;
     border-radius: 100px;
     height: 40px;
     width: 40px;
@@ -199,6 +202,8 @@ input, textarea, select {
     border: 1px solid var(--menu-card-border-color);
     border-radius: var(--border-radius);
     font-size: 16px;
+    font-family: var(--font-family);
+    transition: border-color 0.1s;
 }
 
 input[type="range"] {

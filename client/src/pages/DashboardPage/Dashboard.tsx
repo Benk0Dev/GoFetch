@@ -9,6 +9,7 @@ import styles from "./Dashboard.module.css";
 import { Role } from "../../models/IUser";
 import Pets from "./Pets/Pets";
 import { useAuth } from "../../context/AuthContext";
+import Reviews from "./Reviews/Reviews";
 
 function DashboardPage() {
     const navigate = useNavigate();
@@ -58,6 +59,14 @@ function DashboardPage() {
                     <Route
                         path="bookings"
                         element={<Bookings />}
+                    />
+                    <Route
+                        path="reviews"
+                        element={role === Role.MINDER ? (
+                            <Reviews />
+                        ) : (
+                            <Navigate to="/dashboard" replace />
+                        )}
                     />
                     <Route path="*" element={<Navigate to="/dashboard" replace />} />
                 </Routes>

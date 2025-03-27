@@ -3,53 +3,40 @@ import { useAuth } from "../../../context/AuthContext";
 import styles from "./Services.module.css";
 import dashboardStyles from "../Dashboard.module.css";
 import { IService, INewService } from "../../../models/IService";
-import { Clock, PoundSterling, SquarePen, Trash2, Plus } from "lucide-react";
+import { Clock, PoundSterling, Trash2, Plus } from "lucide-react";
 import NewService from "./NewService";
+import { addService, deleteService, getUserByIdWithPictures } from "../../../services/Registry";
 
 function Services() {
     const { user, setUser } = useAuth();
-    const [services, setServices] = useState<IService[]>(user.minderRoleInfo.services);
     const [showNewService, setShowNewService] = useState(false);
 
-    // const addService = () => {
-    //     const updated = [
-    //         ...services,
-    //         {
-    //             id: Date.now(),
-    //             type: "New Service",
-    //             price: 0,
-    //             availability: "Flexible"
-    //         }
-    //     ];
-    //     setServices(updated);
-
-    //     // Update global user context with new services
-    //     setUser({
-    //         ...user,
-    //         minderRoleInfo: {
-    //             ...user.minderRoleInfo,
-    //             services: updated
-    //         }
-    //     });
-    // };
-
-    const addService = () => {
-        setShowNewService(true);
+    const deleteUserService = async (id: number) => {
+        const deleted = await deleteService(id);
+        if (deleted) {
+            const updatedUser = await getUserByIdWithPictures(user.id);
+            if (!updatedUser) {
+                console.error("Error updating user");
+                return;
+            }
+            setUser(updatedUser);
+        } else {
+            console.error("Error deleting service");
+        }
     }
 
-    const editService = (id: number) => {
-
-    }
-
-    const deleteService = (id: number) => {
-
-    }
-
-    const handleAdd = (service: INewService) => {
-        
-    }
-
-    const handleCancel = () => {
+    const handleAdd = async (service: INewService) => {
+        const added = await addService(user.id, service);
+        if (added) {
+            const updatedUser = await getUserByIdWithPictures(user.id);
+            if (!updatedUser) {
+                console.error("Error updating user");
+                return;
+            }
+            setUser(updatedUser);
+        } else {
+            console.error("Error adding service");
+        }
         setShowNewService(false);
     }
 
@@ -64,25 +51,20 @@ function Services() {
                     <div>Price</div>
                     <div>Actions</div>
                 </div>
-                {services.map((service) => (
+                {user.minderRoleInfo.services.map((service: IService) => (
                     <div key={service.id} className={styles.servicesTableRow}>
                         <div className={styles.columnData}>{service.type}</div>
                         <div className={styles.columnData}><Clock size={16} strokeWidth={2.25} />{service.duration}</div>
                         <div className={styles.columnData}><PoundSterling size={16} strokeWidth={2.25} />{service.price}</div>
-                        <div className={styles.actions}>
-                            <button className="btn-link" onClick={() => editService(service.id)}>
-                                <SquarePen size={16} strokeWidth={2.25} />
-                            </button>
-                            <button className="btn-link" onClick={() => deleteService(service.id)}>
-                                <Trash2 size={16} strokeWidth={2.25} />
-                            </button>
-                        </div>
+                        <button className={`btn-link ${styles.deleteButton}`} onClick={() => deleteUserService(service.id)}>
+                            <Trash2 size={16} strokeWidth={2.25} />
+                        </button>
                     </div>
                 ))}
 
             </div>
-            {!showNewService && <button className={`btn btn-primary ${styles.addService}`} onClick={() => addService()}><Plus size={18} strokeWidth={2.25} />Add New Service</button>}
-            {showNewService && <NewService onCancel={handleCancel} onAdd={handleAdd} />}
+            {!showNewService && <button className={`btn btn-primary ${styles.addService}`} onClick={() => setShowNewService(true)}><Plus size={18} strokeWidth={2.25} />Add New Service</button>}
+            {showNewService && <NewService onCancel={() => setShowNewService(false)} onAdd={handleAdd} />}
         </div>
     );
 }

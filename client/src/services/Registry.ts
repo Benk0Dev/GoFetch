@@ -1,10 +1,16 @@
-import { IRegisterUser } from "../models/IUser";
-import { INewBooking } from "../models/IBooking";
+import { IRegisterdUser, IUser } from "../models/IUser";
+import { BookingStatus, INewBooking } from "../models/IBooking";
 import { clearUser, getUserId, setUserId } from "../utils/StorageManager";
 import imageCompression from 'browser-image-compression';
+import defaultProfile from "../assets/images/default-profile-picture.svg"
+import defaultPet from "../assets/images/default-pet-picture.svg"
+import { IPet } from "../models/IPet";
+import { IService } from "../models/IService";
+import { IReview } from "../models/IReview";
 
 const API_URL = "http://localhost:3001";
 
+//#region User
 export async function login(credentials: string, password: string) {
     try {
         const response = await fetch(`${API_URL}/login`, { 
@@ -16,7 +22,7 @@ export async function login(credentials: string, password: string) {
         });
         if (response.ok) {
             const user = await response.json();
-            setUserId(user.userDetails.id);
+            setUserId(user.id);
             return user;
         } else {
             const text = await response.text();
@@ -33,17 +39,16 @@ export function logout() {
     clearUser();
 }
 
-export async function verifyUniqueEmailAndUsername(email: string, username: string) {
+export async function verifyUniqueEmail(email: string) {
     const allUsers = await getAllUsers();
     if (allUsers) {
-        const existingEmail = allUsers.find((user: any) => user.userDetails.loginDetails.email === email);
-        const existingUsername = allUsers.find((user: any) => user.userDetails.loginDetails.username === username);
-        return { email: existingEmail, username: existingUsername };
+        const existingEmail = allUsers.find((user: IUser) => user.loginDetails.email === email);
+        return { email: existingEmail };
     }
     return null;
 }
 
-export async function registerUser(user: IRegisterUser) {
+export async function registerUser(user: IRegisterdUser) {
     try {
         const response = await fetch(`${API_URL}/registerUser`, { 
             method: "POST",
@@ -54,8 +59,9 @@ export async function registerUser(user: IRegisterUser) {
         });
         if (response.ok) {
             const user = await response.json();
-            setUserId(user.userDetails.id);
-            return user;
+            setUserId(user.id);
+            const completeUser = await getUserById(user.id);
+            return completeUser;
         } else {
             const text = await response.text();
             console.error(text);
@@ -104,12 +110,38 @@ export async function getUserById(id: number) {
     }
 }
 
-export async function getUserByUsername(username: string) {
+export async function getUserByIdWithPictures(id: number) {
     try {
-        const response = await fetch(`${API_URL}/user/username/${username}`);
+        const response = await fetch(`${API_URL}/user/${id}`);
         if (response.ok) {
             const user = await response.json();
-            return user;
+
+            // Get profile picture
+            const profilePicURL = user.primaryUserInfo.profilePic ? await getImageByFilename(user.primaryUserInfo.profilePic) : defaultProfile;
+
+            // Get minder pictures
+            const minderPictures = user.minderRoleInfo.pictures;
+            const minderPictureURLs = await Promise.all(
+                minderPictures.map(async (filename: string) => {
+                    return filename ? await getImageByFilename(filename) : null;
+                })
+            );
+
+            // Get pet pictures
+            const pets = user.ownerRoleInfo.pets;
+            const petsWithPictures = await Promise.all(
+                pets.map(async (pet: IPet) => {
+                    const petPicURL = pet.picture ? await getImageByFilename(pet.picture) : defaultPet;
+                    return { ...pet, picture: petPicURL };
+                })
+            );            
+
+            return { 
+                ...user, 
+                primaryUserInfo: { ...user.primaryUserInfo, profilePic: profilePicURL },
+                minderRoleInfo: { ...user.minderRoleInfo, pictures: minderPictureURLs },
+                ownerRoleInfo: { ...user.ownerRoleInfo, pets: petsWithPictures }
+            };
         } else {
             const text = await response.text();
             console.error(text);
@@ -137,7 +169,9 @@ export async function getAllUsers() {
         return null;
     }
 }
+//#endregion
 
+//#region Minder
 export async function getAllMinders() {
     try {
         const response = await fetch(`${API_URL}/minders`);
@@ -155,6 +189,53 @@ export async function getAllMinders() {
     }
 }
 
+export async function getAllMindersWithPictures() {
+    try {
+        const response = await fetch(`${API_URL}/minders`);
+        if (!response.ok) {
+            const text = await response.text();
+            console.error(text);
+            return null;
+        }
+
+        const users = await response.json();
+
+        const usersWithPictures = await Promise.all(users.map(async (user: IUser) => {
+            // Fetch minder role pictures
+            const rawPictures = user.minderRoleInfo.pictures || [];
+            const pictureURLs = await Promise.all(
+                rawPictures.map(async (filename: string) =>
+                    filename ? await getImageByFilename(filename) : null
+                )
+            );
+
+            // Fetch profile picture if valid
+            const profilePicURL = user.primaryUserInfo.profilePic
+                ? await getImageByFilename(user.primaryUserInfo.profilePic)
+                : rawPictures.length ? pictureURLs[0] : defaultProfile;
+
+            return {
+                ...user,
+                primaryUserInfo: {
+                    ...user.primaryUserInfo,
+                    profilePic: profilePicURL
+                },
+                minderRoleInfo: {
+                    ...user.minderRoleInfo,
+                    pictures: pictureURLs.filter(Boolean) // Remove nulls if any
+                }
+            };
+        }));
+
+        return usersWithPictures;
+    } catch (e) {
+        console.error("Failed to fetch minders with pictures:", e);
+        return null;
+    }
+}
+//#endregion
+
+//#region Chats
 export async function getUserChats() {
     try {
         const userId = getUserId();
@@ -178,43 +259,50 @@ export async function getUserChats() {
 }
 
 export async function getChatById(chatId: number) {
-    const response = await fetch(`${API_URL}/chat/${chatId}`);
-    if (response.ok) {
-        const data = await response.json();
-        return data.chat;
-    } else {
-        const text = await response.text();
-        console.error(text);
-        return null;
+    try {
+        const response = await fetch(`${API_URL}/chat/${chatId}`);
+        return await response.json();
+    } catch (error) {
+        console.error('Error getting chat:', error);
+        return { success: false, error: 'Failed to get chat' };
     }
 }
 
-export async function sendMessage(chatId: number, message: string) {
+export async function sendMessage(chatId: number, message: { senderId: number, message: string }) {
     try {
         const response = await fetch(`${API_URL}/chat/message`, {
-            method: "POST",
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 chatId,
-                message: {
-                    userId: Number(getUserId()),
-                    message
-                }
+                message
             })
         });
-        if (response.ok) {
-            const data = await response.json();
-            return data.message;
-        } else {
-            const text = await response.text();
-            console.error(text);
-            return null;
-        }
-    } catch (e) {
-        console.error(e);
-        return null;
+        return await response.json();
+    } catch (error) {
+        console.error('Error sending message:', error);
+        return { success: false, error: 'Failed to send message' };
+    }
+}
+
+export async function createChat(users: number[]) {
+    try {
+        const response = await fetch(`${API_URL}/chat/create`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                users,
+                lastMessage: ''
+            })
+        });
+        return await response.json();
+    } catch (error) {
+        console.error('Error creating chat:', error);
+        return { success: false, error: 'Failed to create chat' };
     }
 }
 
@@ -243,7 +331,27 @@ export async function createNewChat(users: number[], initialMessage: string = ""
         return null;
     }
 }
+// Creates a new chat if one does not exist between the two users, otherwise returns the existing chat
+export async function startChat(withUserId: number) {
+    const userId = getUserId();
+    if (!userId) {
+        return null;
+    }
+    const chatsResponse = await getUserChats();
+    const userChats = chatsResponse.chats;
+    const existingChat = userChats.find((chat: any) => 
+        chat.users.includes(withUserId) && chat.users.includes(userId)
+);
+if (existingChat) {
+    return existingChat;
+} else {
+    const newChatResponse = await createNewChat([userId, withUserId]);
+    return newChatResponse;
+}
+}
+//#endregion
 
+//#region Notifications
 export async function getUserNotifications() {
     try {
         const userId = getUserId();
@@ -285,6 +393,31 @@ export async function markNotificationAsRead(notificationId: number) {
     }
 }
 
+export async function createNotification(notification: { userId: number, message: string, type: string, link: string }) {
+    try {
+        const response = await fetch(`${API_URL}/notifications`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(notification)
+        });
+        if (response.ok) {
+            const data = await response.json();
+            return data.notification;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return null;
+        }
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+}
+//#endregion
+
+//#region Images
 export async function uploadImage(file: File) {
     try {
         const compressedFile = await imageCompression(file, {
@@ -317,23 +450,25 @@ export async function uploadImage(file: File) {
     }
 }
 
-export async function getImageByFilename(filename: string) {
+export async function getImageByFilename(filename: string | undefined | null) {
+    if (!filename || filename.startsWith("blob:")) return null;
+
     try {
         const response = await fetch(`${API_URL}/image/${filename}`);
         if (response.ok) {
             const data = await response.blob();
             return URL.createObjectURL(data);
         } else {
-            const text = await response.text();
-            console.error(text);
             return null;
         }
     } catch (e) {
-        console.error(e);
+        console.error("Failed to fetch image:", filename, e);
         return null;
     }
 }
+//#endregion
 
+//#region Bookings
 export const createBooking = async (bookingData: INewBooking) => {
     try {
         const response = await fetch(`${API_URL}/booking`, { 
@@ -350,7 +485,7 @@ export const createBooking = async (bookingData: INewBooking) => {
 
             const editMinder = await editUser(booking.minderId, {
                 minderRoleInfo: {
-                    bookingIDs: [booking.id, ...minder.minderRoleInfo.bookings.map((b: any) => b.id)],
+                    bookingIds: [booking.id, ...minder.minderRoleInfo.bookings.map((b: any) => b.id)],
                 }
             });
 
@@ -362,7 +497,7 @@ export const createBooking = async (bookingData: INewBooking) => {
 
             const editOwner = await editUser(booking.ownerId, {
                 ownerRoleInfo: {
-                    bookingIDs: [booking.id, ...petOwner.ownerRoleInfo.bookings.map((b: any) => b.id)],
+                    bookingIds: [booking.id, ...petOwner.ownerRoleInfo.bookings.map((b: any) => b.id)],
                 }
             });
 
@@ -382,4 +517,206 @@ export const createBooking = async (bookingData: INewBooking) => {
     }
 };
 
+export async function setBookingStatus(bookingId: number, status: BookingStatus) {
+    try {
+        const response = await fetch(`${API_URL}/booking/${bookingId}/status`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ status })
+        });
+        if (response.ok) {
+            const booking = await response.json();
+            return booking;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return null;
+        }
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+}
+//#endregion
 
+//#region Services
+export async function addService(userId: number, service: IService) {
+    try {
+        const response = await fetch(`${API_URL}/newservice/${userId}`, { 
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(service)
+        });
+        if (response.ok) {
+            return true;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return false;
+        }
+    } catch (e) {
+        console.error(e);
+        return false;
+    }
+}
+
+export async function editService(serviceId: number, service: IService) {
+    try {
+        const response = await fetch(`${API_URL}/editservice/${serviceId}`, { 
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(service)
+        });
+        if (response.ok) {
+            return true;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return false;
+        }
+    } catch (e) {
+        console.error(e);
+        return false;
+    }
+}
+export async function deleteService(serviceId: number) {
+    try {
+        const response = await fetch(`${API_URL}/deleteservice/${serviceId}`, { 
+            method: "DELETE"
+        });
+        if (response.ok) {
+            return true;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return false;
+        }
+    } catch (e) {
+        console.error(e);
+        return false;
+    }
+}
+
+export async function getAllServices() {
+    try {
+        const response = await fetch(`${API_URL}/services`);
+        if (response.ok) {
+            const services = await response.json();
+            return services;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return null;
+        }
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+}
+
+export async function getServiceById(serviceId: number) {
+    try {
+        const response = await fetch(`${API_URL}/service/${serviceId}`);
+        if (response.ok) {
+            const service = await response.json();
+            return service;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return null;
+        }
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+}
+//#endregion
+
+//#region Pets
+export async function addPetForUser(userId: number, pet: IPet) {
+    try {
+        const response = await fetch(`${API_URL}/user/${userId}/pet`, { 
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(pet)
+        });
+        if (response.ok) {
+            return true;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return false;
+        }
+    } catch (e) {
+        console.error(e);
+        return false;
+    }
+}
+
+export async function removePetForUser(petId: number) {
+    try {
+        const response = await fetch(`${API_URL}/removePet/${petId}`, { 
+            method: "DELETE"
+        });
+        if (response.ok) {
+            return true;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return false;
+        }
+    } catch (e) {
+        console.error(e);
+        return false;
+    }
+}
+//#endregion
+
+//#region Reviews
+export async function addReviewForUser(userId: number, review: IReview) {
+    try {
+        const response = await fetch(`${API_URL}/user/${userId}/review`, { 
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(review)
+        });
+        if (response.ok) {
+            const review = await response.json();
+            return review;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return false;
+        }
+    } catch (e) {
+        console.error(e);
+        return false;
+    }
+}
+
+export async function getReviewById(reviewId: number) {
+    try {
+        const response = await fetch(`${API_URL}/review/${reviewId}`);
+        if (response.ok) {
+            const review = await response.json();
+            return review;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return null;
+        }
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+}

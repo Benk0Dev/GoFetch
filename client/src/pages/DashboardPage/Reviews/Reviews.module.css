@@ -1,0 +1,127 @@
+.reviewsBreakdown {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    column-gap: 20px;
+    border: 1px solid var(--text-color);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    margin-bottom: 20px;
+}
+
+.reviewScore {
+    background-color: var(--highlight-color);
+    color: white;
+    border-radius: 100px;
+    height: 100px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.breakdownText {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 10px;
+}
+
+.breakdownText h5 {
+    line-height: 1;
+}
+
+.starRating {
+    display: flex;
+    align-items: center;
+    column-gap: 0px;
+}
+
+.breakdownText p {
+    margin: 0;
+}
+
+.percentageBreakdown {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    row-gap: 2px;
+}
+
+.percentageBreakdown p {
+    margin: 0;
+}
+
+.percentage {
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+}
+
+.percentage span {
+    display: flex;
+    align-items: center;
+    column-gap: 2px;
+}
+
+.percentage span svg {
+    margin-bottom: 2px;
+    fill: var(--text-color);
+}
+
+.percentageBar {
+    width: 120px;
+    height: 10px;
+    background-color: var(--menu-card-border-color);
+    border-radius: 100px;
+    position: relative;
+}
+
+.percentageBarFill {
+    height: 100%;
+    background-color: var(--highlight-color);
+    border-radius: 100px;
+    z-index: 1;
+    position: absolute;
+}
+
+.reviewsList {
+    display: grid;
+    row-gap: 20px;
+}
+
+.review {
+    padding: 20px;
+    border: 1px solid var(--text-color);
+    border-radius: var(--border-radius);
+}
+
+.reviewHeader {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.reviewHeader img {
+    width: 30px;
+    height: 30px;
+    border-radius: 100px;
+    object-fit: cover;
+    margin-bottom: 5px;
+}
+
+.solidStar {
+    fill: black;
+}
+
+.reviewsBreakdown p, .reviewsList p {
+    opacity: 0.7;
+    font-size: 16px;
+    margin: 0;
+}
+
+p.date {
+    font-size: 14px;
+    opacity: 0.5;
+}

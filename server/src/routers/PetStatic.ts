@@ -1,6 +1,6 @@
 import { IPet } from '../models/IPet';
 import { Role } from '../models/IUser';
-import { getCachedPets, removePetCahce } from '../services/PetCached';
+import { addPetCached, getCachedPets, removePetCached } from '../services/PetCached';
 import { cache } from '../services/Cache';
 import { DB_PATH } from '../services/Cache';
 import fs from 'fs';
@@ -22,20 +22,20 @@ export function PetByID(id: number) {
 }
 
 export function registerPet(pet: IPet) {
-    const result = registerPet(pet);
+    const result = addPetCached(pet);
     if (!result.success) {
         return { success: false, message: 'Pet not registered' };
     }
-    return { success: true, message: 'Pet registered successfully!' };
+    return { success: true, message: 'Pet registered successfully!', pet: result.pet };
 }
 
 export function removePet(id: number) {
-    return {success: true, message: removePetCahce(id)}
+    return {success: true, message: removePetCached(id)}
 }
 
 export function addPetForUser(userId: number, pet: IPet) {
     // Find user in cache
-    const userIndex = cache.users.findIndex(user => user.userDetails.id === userId);
+    const userIndex = cache.users.findIndex(user => user.id === userId);
     if (userIndex === -1) {
         return { success: false, message: 'User not found' };
     }
@@ -52,7 +52,7 @@ export function addPetForUser(userId: number, pet: IPet) {
         dob: pet.dob,
         gender: pet.gender,
         breed: pet.breed,
-        weight: pet.weight,
+        size: pet.size,
         neutered: pet.neutered,
         behaviour: pet.behaviour,
         allergies: pet.allergies || "",
@@ -64,9 +64,9 @@ export function addPetForUser(userId: number, pet: IPet) {
 
     // Add pet ID to user's pet list
     if (!cache.users[userIndex].ownerRoleInfo) {
-        cache.users[userIndex].ownerRoleInfo = { petIDs: [], bookingIDs: [] };
+        cache.users[userIndex].ownerRoleInfo = { petIds: [], bookingIds: [] };
     }
-    cache.users[userIndex].ownerRoleInfo.petIDs.push(newPet.id);
+    cache.users[userIndex].ownerRoleInfo.petIds.push(newPet.id);
 
     // Write updated data to files
     try {
@@ -81,7 +81,7 @@ export function addPetForUser(userId: number, pet: IPet) {
 
 export function removePetFromUser(userId: number, petId: number) {
     // Find user in cache
-    const userIndex = cache.users.findIndex(user => user.userDetails.id === userId);
+    const userIndex = cache.users.findIndex(user => user.id === userId);
     if (userIndex === -1) {
         return { success: false, message: 'User not found' };
     }
@@ -92,13 +92,13 @@ export function removePetFromUser(userId: number, petId: number) {
     }
 
     // Check if pet is associated with user
-    const petIndex = cache.users[userIndex].ownerRoleInfo.petIDs.indexOf(petId);
+    const petIndex = cache.users[userIndex].ownerRoleInfo.petIds.indexOf(petId);
     if (petIndex === -1) {
         return { success: false, message: 'Pet not found for this user' };
     }
 
     // Remove pet from user's list
-    cache.users[userIndex].ownerRoleInfo.petIDs.splice(petIndex, 1);
+    cache.users[userIndex].ownerRoleInfo.petIds.splice(petIndex, 1);
 
     // Write updated data
     try {

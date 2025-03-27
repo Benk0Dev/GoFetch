@@ -51,7 +51,7 @@ function ProfileIcon() {
   return (
     <div className={styles.dropdownContainer} ref={menuRef}>
       <button ref={iconRef} className={styles.profileIcon} onClick={toggleMenu}>
-        {user.userDetails.fname.charAt(0)}
+        <img src={user.primaryUserInfo.profilePic} alt="Profile" />
       </button>
 
       {menuOpen && (
@@ -67,7 +67,7 @@ function ProfileIcon() {
                   switchRole();
                   navigate("/dashboard");
                 } else {
-                  navigate(role === Role.OWNER ? "/register-minder" : "/register-owner");
+                  navigate(role === Role.OWNER ? "/become-minder" : "/become-owner");
                 }
                 toggleMenu();
               }}

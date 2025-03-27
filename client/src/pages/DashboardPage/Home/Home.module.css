@@ -1,24 +1,26 @@
-.stats {
+.statsGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+}
+
+.statistic {
     display: flex;
-    gap: 15px;
-    justify-content: space-around;
-    margin-bottom: 20px;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid var(--text-color);
+    border-radius: var(--border-radius);
+    padding: 10px;
 }
 
-.stats div {
-    background: #1abc9c;
-    color: white;
-    padding: 15px;
-    border-radius: 10px;
-    text-align: center;
-    width: 100px;
-}
-
-.stats h3 {
-    font-size: 22px;
+.statisticContent p, .statisticContent h3 {
     margin: 0;
 }
 
-.stats p {
-    font-size: 14px;
+.statistic svg {
+    margin-top: 5px;
+}
+
+.note {
+    margin-top: 20px;
 }

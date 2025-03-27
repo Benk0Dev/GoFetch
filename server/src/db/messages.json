@@ -23,204 +23,240 @@
         4
       ],
       "lastMessage": "Hi there! I'm interested in your pet sitting services."
+    },
+    {
+      "id": 4,
+      "users": [
+        5,
+        7
+      ],
+      "lastMessage": "I'm very excited to meet her"
     }
   ],
   "messages": [
     {
       "id": 1,
       "chatId": 1,
-      "userId": 5,
+      "senderId": 5,
       "message": "Hi! I'm looking for someone to walk my dog this weekend.",
       "timestamp": "2025-03-20T14:30:20.000Z"
     },
     {
       "id": 2,
       "chatId": 1,
-      "userId": 2,
+      "senderId": 2,
       "message": "Hello! I'd be happy to help. What breed is your dog?",
       "timestamp": "2025-03-20T14:32:45.000Z"
     },
     {
       "id": 3,
       "chatId": 1,
-      "userId": 5,
+      "senderId": 5,
       "message": "He's a golden retriever named Max. Very friendly!",
       "timestamp": "2025-03-20T14:35:12.000Z"
     },
     {
       "id": 4,
       "chatId": 1,
-      "userId": 2,
+      "senderId": 2,
       "message": "I love golden retrievers! When would you need the walk?",
       "timestamp": "2025-03-20T14:37:30.000Z"
     },
     {
       "id": 5,
       "chatId": 1,
-      "userId": 5,
+      "senderId": 5,
       "message": "Saturday around 2pm if possible?",
       "timestamp": "2025-03-20T14:39:45.000Z"
     },
     {
       "id": 6,
       "chatId": 1,
-      "userId": 2,
+      "senderId": 2,
       "message": "That works for me! How long would you like me to walk him?",
       "timestamp": "2025-03-20T14:42:10.000Z"
     },
     {
       "id": 7,
       "chatId": 1,
-      "userId": 5,
+      "senderId": 5,
       "message": "About 45 minutes would be great. He loves the park nearby.",
       "timestamp": "2025-03-20T14:44:30.000Z"
     },
     {
       "id": 8,
       "chatId": 1,
-      "userId": 2,
+      "senderId": 2,
       "message": "Perfect! I'll bring some treats if that's okay?",
       "timestamp": "2025-03-20T14:47:15.000Z"
     },
     {
       "id": 9,
       "chatId": 1,
-      "userId": 5,
+      "senderId": 5,
       "message": "That would be wonderful! Max loves treats.",
       "timestamp": "2025-03-20T14:49:40.000Z"
     },
     {
       "id": 10,
       "chatId": 1,
-      "userId": 2,
+      "senderId": 2,
       "message": "When can you come by to walk Max?",
       "timestamp": "2025-03-21T09:15:22.000Z"
     },
     {
       "id": 11,
       "chatId": 2,
-      "userId": 3,
+      "senderId": 3,
       "message": "Hello! I noticed you're looking for pet care services.",
       "timestamp": "2025-03-19T11:20:30.000Z"
     },
     {
       "id": 12,
       "chatId": 2,
-      "userId": 5,
+      "senderId": 5,
       "message": "Yes! I have a 2-year-old beagle who needs some company during the day.",
       "timestamp": "2025-03-19T11:25:45.000Z"
     },
     {
       "id": 13,
       "chatId": 2,
-      "userId": 3,
+      "senderId": 3,
       "message": "I specialize in daytime pet sitting. Does your dog get along with other dogs?",
       "timestamp": "2025-03-19T11:28:15.000Z"
     },
     {
       "id": 14,
       "chatId": 2,
-      "userId": 5,
+      "senderId": 5,
       "message": "He's very social and loves other dogs. Do you have pets of your own?",
       "timestamp": "2025-03-19T11:32:40.000Z"
     },
     {
       "id": 15,
       "chatId": 2,
-      "userId": 3,
+      "senderId": 3,
       "message": "I have a friendly labrador. They should get along great!",
       "timestamp": "2025-03-19T11:36:20.000Z"
     },
     {
       "id": 16,
       "chatId": 2,
-      "userId": 5,
+      "senderId": 5,
       "message": "That sounds perfect! Could we arrange a meet-and-greet first?",
       "timestamp": "2025-03-19T11:39:10.000Z"
     },
     {
       "id": 17,
       "chatId": 2,
-      "userId": 3,
+      "senderId": 3,
       "message": "Your dog is so adorable! Is he good with other pets?",
       "timestamp": "2025-03-19T11:45:30.000Z"
     },
     {
       "id": 18,
       "chatId": 3,
-      "userId": 5,
+      "senderId": 5,
       "message": "Hi there! I'm looking for someone to watch my cat for a week in April.",
       "timestamp": "2025-03-18T16:10:15.000Z"
     },
     {
       "id": 19,
       "chatId": 3,
-      "userId": 4,
+      "senderId": 4,
       "message": "Hello! I'd be happy to help with your cat. What's their name?",
       "timestamp": "2025-03-18T16:15:30.000Z"
     },
     {
       "id": 20,
       "chatId": 3,
-      "userId": 5,
+      "senderId": 5,
       "message": "Her name is Luna. She's very independent but needs someone to feed her and clean her litter.",
       "timestamp": "2025-03-18T16:20:45.000Z"
     },
     {
       "id": 21,
       "chatId": 3,
-      "userId": 4,
+      "senderId": 4,
       "message": "I've cared for many cats and understand their needs. What dates in April?",
       "timestamp": "2025-03-18T16:25:10.000Z"
     },
     {
       "id": 22,
       "chatId": 3,
-      "userId": 5,
+      "senderId": 5,
       "message": "April 10-17. Would you be able to visit twice daily or stay at my place?",
       "timestamp": "2025-03-18T16:30:25.000Z"
     },
     {
       "id": 23,
       "chatId": 3,
-      "userId": 4,
+      "senderId": 4,
       "message": "I could do either option. What would you prefer for Luna?",
       "timestamp": "2025-03-18T16:35:40.000Z"
     },
     {
       "id": 24,
       "chatId": 3,
-      "userId": 5,
+      "senderId": 5,
       "message": "Probably visits twice a day would be best. She gets anxious with new people staying over.",
       "timestamp": "2025-03-18T16:40:55.000Z"
     },
     {
       "id": 25,
       "chatId": 3,
-      "userId": 4,
+      "senderId": 4,
       "message": "That makes sense. I can definitely do morning and evening visits.",
       "timestamp": "2025-03-18T16:45:10.000Z"
     },
     {
       "id": 26,
       "chatId": 3,
-      "userId": 5,
+      "senderId": 5,
       "message": "Great! Would you like to meet Luna beforehand?",
       "timestamp": "2025-03-18T16:50:25.000Z"
     },
     {
       "id": 27,
       "chatId": 3,
-      "userId": 4,
+      "senderId": 4,
       "message": "Hi there! I'm interested in your pet sitting services.",
       "timestamp": "2025-03-18T16:55:40.000Z"
     },
     {
       "id": 28,
-      "userId": 5,
+      "senderId": 5,
       "message": "Hello",
       "chatId": 1,
       "timestamp": "2025-03-23T00:12:05.529Z"
+    },
+    {
+      "id": 29,
+      "senderId": 5,
+      "message": "Hello Ben!",
+      "chatId": 4,
+      "timestamp": "2025-03-26T16:04:53.258Z"
+    },
+    {
+      "id": 30,
+      "senderId": 5,
+      "message": "I am happy to train Pipa to do a barrel roll",
+      "chatId": 4,
+      "timestamp": "2025-03-26T16:06:56.757Z"
+    },
+    {
+      "id": 31,
+      "senderId": 7,
+      "message": "Hello, perfect!",
+      "chatId": 4,
+      "timestamp": "2025-03-26T16:07:22.305Z"
+    },
+    {
+      "id": 32,
+      "senderId": 5,
+      "message": "I'm very excited to meet her",
+      "chatId": 4,
+      "timestamp": "2025-03-26T16:08:08.623Z"
     }
   ]
 }

@@ -1,1 +1,3 @@
-export type { IBooking, EBookingStatus, INewBooking } from "../../../server/src/models/IBooking";
+import { BookingStatus } from "../../../server/src/models/IBooking";
+export type { IBooking, INewBooking } from "../../../server/src/models/IBooking";
+export { BookingStatus };

@@ -9,6 +9,6 @@ export function log(endpoint: string, req: Request) {
   const hours = now.getHours().toString().padStart(2, '0');
   const minutes = now.getMinutes().toString().padStart(2, '0');
   const seconds = now.getSeconds().toString().padStart(2, '0');
-  const ip = req.ip == '::1' ? 'localhost' : req.ip;
+  const ip = req.ip?.startsWith('::') ? 'localhost' : req.ip;
   console.log(`[${hours}:${minutes}:${seconds}] [${ip}] [${endpoint}]`);
 }

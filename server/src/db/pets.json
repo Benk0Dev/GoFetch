@@ -1,50 +1,74 @@
 [
   {
     "id": 1,
-    "name": "Buddy",
-    "dob": "2020-03-10",
+    "name": "Rex",
+    "dob": "2019-06-30T00:00:00.000Z",
     "gender": "male",
-    "breed": "Golden Retriever",
-    "weight": 30,
+    "breed": "German Shepherd",
+    "size": "Large (30kg+)",
     "neutered": true,
-    "behaviour": "Friendly and playful",
-    "allergies": "",
-    "picture": "buddy.jpg"
+    "behaviour": "He is very well-behaved, protective and intelligent.",
+    "allergies": "None",
+    "picture": "4"
   },
   {
     "id": 2,
-    "name": "Bella",
-    "dob": "2018-07-21",
+    "name": "Luna",
+    "dob": "2021-02-14T00:00:00.000Z",
     "gender": "female",
-    "breed": "Labrador Retriever",
-    "weight": 28,
-    "neutered": false,
-    "behaviour": "Loyal and energetic",
-    "allergies": ["Chicken"],
-    "picture": "bella.jpg"
+    "breed": "Siberian Husky",
+    "size": "Medium (15-30kg)",
+    "neutered": true,
+    "behaviour": "She is very energetic and vocal.",
+    "allergies": "Dairy",
+    "picture": "5"
   },
   {
     "id": 3,
-    "name": "Rex",
-    "dob": "2019-05-30",
-    "gender": "male",
-    "breed": "German Shepherd",
-    "weight": 35,
-    "neutered": true,
-    "behaviour": "Protective and intelligent",
+    "name": "Buddy",
+    "dob": "2020-03-10T00:00:00.000Z",
+    "gender": "female",
+    "breed": "Golden Retriever",
+    "size": "Medium (15-30kg)",
+    "neutered": false,
+    "behaviour": "She is very friendly and playful.",
     "allergies": "",
-    "picture": "rex.jpg"
+    "picture": "6"
   },
   {
     "id": 4,
-    "name": "Luna",
-    "dob": "2021-02-14",
+    "name": "Bella",
+    "dob": "2018-07-21T00:00:00.000Z",
     "gender": "female",
-    "breed": "Siberian Husky",
-    "weight": 25,
+    "breed": "Labrador Retriever",
+    "size": "Medium (15-30kg)",
     "neutered": false,
-    "behaviour": "Energetic and vocal",
+    "behaviour": "Loyal and energetic.",
     "allergies": "",
-    "picture": "luna.jpg"
+    "picture": "7"
+  },
+  {
+    "id": 5,
+    "name": "Pipa",
+    "dob": "2020-12-22T00:00:00.000Z",
+    "gender": "female",
+    "breed": "Cocker Spaniel",
+    "size": "Small (0-15kg)",
+    "neutered": false,
+    "behaviour": "She is very friendly to everyone and loves to chase squirrels and catch frisbees. Sometimes she doesn't listen though.",
+    "allergies": "",
+    "picture": "13"
+  },
+  {
+    "id": 6,
+    "name": "Rusty",
+    "dob": "2020-03-25T00:00:00.000Z",
+    "gender": "male",
+    "breed": "Cocker Spaniel",
+    "size": "Medium (15-30kg)",
+    "neutered": false,
+    "behaviour": "He is a very affectionate boy and nice to all people. He is very active and can run for hours. He can however get into fights with other male dogs but this is rare.",
+    "allergies": "",
+    "picture": "14"
   }
 ]

@@ -1,11 +1,11 @@
 export interface IService {
     id: number;
-    type: IType;
-    duration: IDuration;
+    type: Type;
+    duration: Duration;
     price: number;
 }
 
-export enum IType {
+export enum Type {
     WALK = "Dog Walking",
     SIT = "Pet Sitting",
     CARE = "Day Care",
@@ -18,7 +18,7 @@ export enum IType {
     OTHER = "Other Service",
 }
 
-export enum IDuration {
+export enum Duration {
     MINS_15 = "15 minutes",
     MINS_30 = "30 minutes",
     MINS_45 = "45 minutes",
@@ -32,7 +32,7 @@ export enum IDuration {
 }
 
 export interface INewService {
-    type: IType;
-    duration: IDuration;
+    type: Type;
+    duration: Duration;
     price: number;
 }

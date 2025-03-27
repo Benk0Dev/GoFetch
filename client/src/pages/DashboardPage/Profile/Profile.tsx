@@ -4,41 +4,30 @@ import dashboardStyles from "../Dashboard.module.css";
 import ImageViewer from "../../../components/ImageViewer";
 import "react-range-slider-input/dist/style.css";
 import { X, Plus } from "lucide-react";
-import { editUser, getImageByFilename, uploadImage } from "../../../services/Registry";
+import { editUser, getUserById, uploadImage } from "../../../services/Registry";
 import { useAuth } from "../../../context/AuthContext";
+import { Availability } from "../../../models/IUser";
 
 function Profile() {
-    const { user, setUser } = useAuth();
-
+    const { user, refreshUser } = useAuth();
     const [bio, setBio] = useState(user.minderRoleInfo.bio);
     const [availability, setAvailability] = useState(user.minderRoleInfo.availability);
-    const [distanceRange, setDistanceRange] = useState(user.minderRoleInfo.distanceRange);
-    const [pictureFileNames, setPictureFileNames] = useState<string[]>(user.minderRoleInfo.pictures);
-    const [pictures, setPictures] = useState<string[]>([]);
+    const [pictures, setPictures] = useState<string[]>([...user.minderRoleInfo.pictures]);
+    const [pictureFileNames, setPictureFileNames] = useState<string[]>([]);
     const [pendingFiles, setPendingFiles] = useState<File[]>([]);
-    const [originalState, setOriginalState] = useState({ bio, availability, distanceRange, pictureFileNames, pictures });
+    const [originalState, setOriginalState] = useState({ bio, availability, pictures, pictureFileNames });
     const [showImageViewer, setShowImageViewer] = useState<string | null>(null);
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
-    const [picturesLoading, setPicturesLoading] = useState(true);
+    const [pictureIdsLoading, setpictureIdsLoading] = useState(true);
 
     useEffect(() => {
-        async function fetchPictures() {
-            const fetched = await Promise.all(
-                user.minderRoleInfo.pictures.map(async (pic: string) => {
-                    const response = await getImageByFilename(pic);
-                    return response;
-                })
-            );
-            return fetched;
-        }
-
         async function initialize() {
-            const fetchedPictures = await fetchPictures();
-            setPictures(fetchedPictures);
-            setOriginalState({ bio, availability, distanceRange, pictureFileNames, pictures: fetchedPictures });
-            setPicturesLoading(false);
+            const fetchedUser = await getUserById(user.id);
+            const pictureFileNames = [...fetchedUser.minderRoleInfo.pictures];
+            setPictureFileNames(pictureFileNames);
+            setOriginalState({ bio, availability, pictures, pictureFileNames: pictureFileNames });
+            setpictureIdsLoading(false);
         }
-
         initialize();
     }, []);
 
@@ -46,10 +35,9 @@ function Profile() {
         setHasUnsavedChanges(
             bio !== originalState.bio ||
             availability !== originalState.availability ||
-            distanceRange !== originalState.distanceRange ||
             pictures.join() !== originalState.pictures.join()
         );
-    }, [bio, availability, distanceRange, pictures]);
+    }, [bio, availability, pictures]);
 
     useEffect(() => {
         const handleBeforeUnload = (e: BeforeUnloadEvent) => {
@@ -86,7 +74,6 @@ function Profile() {
         if (confirm("Are you sure you want to cancel? Your changes will be lost.")) {
             setBio(originalState.bio);
             setAvailability(originalState.availability);
-            setDistanceRange(originalState.distanceRange);
             setPictures(originalState.pictures);
             setPendingFiles([]);
             setHasUnsavedChanges(false);
@@ -113,24 +100,15 @@ function Profile() {
             minderRoleInfo: {
                 bio,
                 availability,
-                distanceRange,
                 pictures: newPictureFileNames,
             }
         };
 
-        await editUser(user.userDetails.id, updatedData);
+        await editUser(user.id, updatedData);
 
-        const updatedUser = {
-            ...user,
-            minderRoleInfo: {
-                ...user.minderRoleInfo,
-                ...updatedData.minderRoleInfo
-            }
-        };
-
-        setUser(updatedUser);
+        refreshUser();
         setPendingFiles([]);
-        setOriginalState({ bio, availability, distanceRange, pictureFileNames: newPictureFileNames, pictures });
+        setOriginalState({ bio, availability, pictureFileNames: newPictureFileNames, pictures });
         setHasUnsavedChanges(false);
     };
 
@@ -143,24 +121,18 @@ function Profile() {
             <textarea value={bio} onChange={(e) => setBio(e.target.value)} />
 
             <label>Availability</label>
-            <input type="text" value={availability} onChange={(e) => setAvailability(e.target.value)} />
-
-            <label>Travel Distance Range</label>
-            <div className={styles.sliderContainer}>
-                <input
-                    type="range"
-                    min="0"
-                    max="20"
-                    step="0.5"
-                    value={distanceRange}
-                    onChange={(e) => setDistanceRange(Number(e.target.value))}
-                />
-                <span className={styles.sliderValue}>{distanceRange} mi</span>
-            </div>
+            <select
+                value={availability}
+                onChange={(e) => setAvailability(e.target.value as Availability)}
+            >
+                {Object.entries(Availability).map(([key, label]) => (
+                    <option key={key} value={label}>{label}</option>
+                ))}
+            </select>
 
             <label>Photos</label>
             <div className={styles.photoGrid}>
-                {picturesLoading ? (
+                {pictureIdsLoading ? (
                     <div className={styles.loading}>Loading...</div>
                 ) : (
                     pictures.map((pic, index) => (

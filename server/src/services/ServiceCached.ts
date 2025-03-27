@@ -28,26 +28,12 @@ export function addServiceCached(id: number, service: IService) {
     saveServicesToFile(cache.services);
 
     // Add the service to the user
-    const userIndex = cache.users.findIndex(user => user.userDetails.id === id);
+    const userIndex = cache.users.findIndex(user => user.id === id);
     if (userIndex === -1) {
         return { success: false, message: 'User not found' };
     }
     else {
-        if (!cache.users[userIndex].minderRoleInfo) {
-            cache.users[userIndex].minderRoleInfo = {
-                serviceIDs: [],
-                rating: 0,
-                bio: '',
-                pictures: [],
-                availability: '',
-                distanceRange: 0,
-                verified: false,
-                bookingIDs: []
-            };
-        }
-
-        cache.users[userIndex].minderRoleInfo.serviceIDs.push(newService.id);
-
+        cache.users[userIndex].minderRoleInfo.serviceIds.push(newService.id);
         saveUsersToFile(cache.users);
     }
 
@@ -61,6 +47,17 @@ export function removeServiceCached(id: number) {
     }
 
     cache.services.splice(index, 1);
+
+    // Remove the service ID from users who have it
+    cache.users.forEach(user => {
+        const serviceIndex = user.minderRoleInfo.serviceIds.indexOf(id);
+        if (serviceIndex !== -1) {
+            user.minderRoleInfo.serviceIds.splice(serviceIndex, 1);
+        }
+    });
+
+    // Save the updated users
+    saveUsersToFile(cache.users);
 
     // Save the updated services
     try {

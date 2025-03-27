@@ -39,6 +39,12 @@ function Navigation() {
                     >
                         Bookings
                     </button>
+                    <button
+                        className={currentPath === "/dashboard/reviews" ? styles.active : ""}
+                        onClick={() => navigate("/dashboard/reviews")}
+                    >
+                        Reviews
+                    </button>
                 </>
             ) : (
                 <>

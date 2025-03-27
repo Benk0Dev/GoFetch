@@ -1,6 +1,4 @@
 import { getCachedServices, removeServiceCached, addServiceCached } from '../services/ServiceCached';
-import { Role } from '../models/IUser';
-import { IService } from '../models/IService';
 import { cache, DB_PATH } from '../services/Cache';
 import fs from 'fs';
 
@@ -9,7 +7,7 @@ export function AllServices() {
     if (result.length === 0) {
         return { success: false, message: 'No services found' };
     }
-    return { success: true, pets: result };
+    return { success: true, services: result };
 }
 
 export function ServiceByID(id: number) {

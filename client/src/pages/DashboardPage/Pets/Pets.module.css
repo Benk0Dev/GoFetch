@@ -14,8 +14,7 @@
 
 .pet, .addPet {
     margin: 10px;
-    border: 1px solid var(--menu-card-border-color);
-    border-radius: 5px;
+    border-radius: var(--border-radius);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -48,10 +47,14 @@
     aspect-ratio: 1/1;
 }
 
-.buttons {
+.pet .buttons {
     display: flex;
-    justify-content: space-between;
     margin: 20px 0 10px;
+    gap: 10px;
+}
+
+.pet button {
+    width: 100%;
 }
 
 .addPet button {

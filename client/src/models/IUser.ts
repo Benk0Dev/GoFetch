@@ -1,3 +1,3 @@
-import { Role } from '../../../server/src/models/IUser';
-export type { IUser, ILoginDetails, IUserDetails, IPrimaryUserInfo, IMinderRoleInfo, ILocation, IRegisterUser } from '../../../server/src/models/IUser';
-export { Role };
+import { Role, Availability } from '../../../server/src/models/IUser';
+export type { IUser, ILoginDetails, IName, IPrimaryUserInfo, IMinderRoleInfo, IAddress, IRegisterdUser } from '../../../server/src/models/IUser';
+export { Role, Availability };

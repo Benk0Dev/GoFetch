@@ -17,7 +17,7 @@
 }
 
 .servicesTableHeader {
-    font-weight: 700;
+    font-weight: 500;
     background-color: var(--secondary-color);
     color: var(--primary-color);
     padding: 8px 16px;
@@ -42,11 +42,11 @@
     gap: 10px;
 }
 
-.actions button {
+.deleteButton {
     color: var(--highlight-color);
 }
 
-.actions button:hover {
+.deleteButton:hover {
     color: var(--highlight-color-hover);
 }
 

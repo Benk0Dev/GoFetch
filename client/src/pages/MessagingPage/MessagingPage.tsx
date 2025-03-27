@@ -1,124 +1,229 @@
-import { useEffect, useState } from "react";
-import { Link, Outlet, useParams, useNavigate } from "react-router-dom";
-import { IChat } from "../../models/IMessage";
-import { getUserChats, getUserById } from "../../services/Registry";
+import React, { useState, useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
+import { getChatById, sendMessage, getUserById, getUserByIdWithPictures } from '../../services/Registry';
+import { IChat, IMessage } from '../../models/IMessage';
+import { useAuth } from '../../context/AuthContext';
+import { useSocket } from '../../context/SocketContext';
 import styles from './MessagingPage.module.css';
 
-function MessagingPage() {
-    const [chats, setChats] = useState<IChat[]>([]);
+function ChatPage() {
+    const { id } = useParams<{ id: string }>();
+    const [chat, setChat] = useState<IChat | null>(null);
+    const [newMessage, setNewMessage] = useState('');
     const [loading, setLoading] = useState(true);
-    const [chatUserNames, setChatUserNames] = useState<{[chatId: string]: string}>({});
-    const { id } = useParams<{id: string}>();
-    const navigate = useNavigate();
-
-    async function fetchChats() {
-        setLoading(true);
-        const data = await getUserChats();
-        if (data && data.chats) {
-            setChats(data.chats);
-            
-            // If no chat is selected and we have chats, select the first one
-            if (!id && data.chats.length > 0) {
-                navigate(`/chats/${data.chats[0].id}`);
-            }
-        }
-        setLoading(false);
-    }
-
-    useEffect(() => {
-        fetchChats();
-        // Set up polling to refresh chats every 10 seconds
-        const interval = setInterval(fetchChats, 10000);
-        return () => clearInterval(interval);
-    }, []);
-
-    // Fetch user names for all chats
-    useEffect(() => {
-        async function fetchChatUserNames() {
-            const currentUserId = parseInt(localStorage.getItem('userID') || '0');
-            const namesMap: {[chatId: string]: string} = {};
-            
-            for (const chat of chats) {
-                const otherUserId = chat.users.find(userId => userId !== currentUserId) || null;
-                
-                if (otherUserId) {
-                    try {
-                        const otherUser = await getUserById(otherUserId);
-                        if (otherUser && otherUser.userDetails) {
-                            namesMap[chat.id.toString()] = 
-                                `${otherUser.userDetails.fname} ${otherUser.userDetails.sname}`;
-                        } else {
-                            namesMap[chat.id.toString()] = "Unknown User";
-                        }
-                    } catch (error) {
-                        console.error("Error fetching user:", error);
-                        namesMap[chat.id.toString()] = "Unknown User";
-                    }
-                } else {
-                    namesMap[chat.id.toString()] = "Unknown User";
-                }
-            }
-            
-            setChatUserNames(namesMap);
-        }
+    const [error, setError] = useState<string | null>(null);
+    const messagesEndRef = useRef<HTMLDivElement>(null);
+    const { user } = useAuth();
+    const { socket } = useSocket();
+    const [chatName, setChatName] = useState('Chat');
+    const [userPicture, setUserPicture] = useState<string>("");
+    
+    // Format timestamp to readable format
+    const formatMessageTime = (timestamp: Date | string) => {
+        const messageDate = new Date(timestamp);
+        const today = new Date();
         
-        if (chats.length > 0) {
-            fetchChatUserNames();
+        // Check if the message is from today
+        const isToday = messageDate.getDate() === today.getDate() &&
+                        messageDate.getMonth() === today.getMonth() &&
+                        messageDate.getFullYear() === today.getFullYear();
+        
+        if (isToday) {
+            // Just show time for today's messages
+            return messageDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        } else {
+            // Show date and time for older messages
+            return `${messageDate.toLocaleDateString([], { 
+                month: 'short', 
+                day: 'numeric',
+                year: messageDate.getFullYear() !== today.getFullYear() ? 'numeric' : undefined
+            })} ${messageDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
         }
-    }, [chats]);
+    };
+    
+    // Scroll to bottom of messages
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ block: 'end' });
+    };
+    
+    // Fetch chat data
+    const fetchChat = async () => {
+        if (!id) return;
+        
+        try {
+            setLoading(true);
+            setError(null);
+            const response = await getChatById(parseInt(id));
+            
+            if (response.success && response.chat) {
+                setChat(response.chat);
+            } else {
+                setError('Failed to load chat');
+            }
+        } catch (err) {
+            console.error('Error fetching chat:', err);
+            setError('Failed to load chat');
+        } finally {
+            setLoading(false);
+        }
+    };
+    
+    // Handle sending a new message
+    const handleSendMessage = async (e: React.FormEvent) => {
+        e.preventDefault();
+        
+        if (!newMessage.trim() || !id || !user) return;
 
-    if (loading && chats.length === 0) {
-        return <div>Loading chats...</div>;
+        const messageData = {
+            chatId: parseInt(id),
+            message: {
+                senderId: user.id,
+                message: newMessage.trim(),
+            }
+        };
+        
+        // Use socket to send message
+        if (socket) {
+            socket.emit('send-message', messageData);
+            setNewMessage('');
+        } else {
+            // Fallback to REST API if socket is not available
+            try {
+                await sendMessage(parseInt(id), messageData.message);
+                fetchChat(); // Refresh chat to see the new message
+                setNewMessage('');
+            } catch (err) {
+                console.error('Error sending message:', err);
+                setError('Failed to send message');
+            }
+        }
+    };
+    
+    // Join chat room when component mounts or chat ID changes
+    useEffect(() => {
+        if (socket && id) {
+            socket.emit('join-chat', id);
+            
+            return () => {
+                socket.emit('leave-chat', id);
+            };
+        }
+    }, [socket, id]);
+    
+    // Listen for new messages
+    useEffect(() => {
+        if (!socket) return;
+        
+        const handleNewMessage = (message: IMessage) => {
+            // Only update if this message belongs to our current chat
+            if (message.chatId.toString() === id) {
+                setChat(prevChat => {
+                    if (!prevChat) return null;
+                    
+                    return {
+                        ...prevChat,
+                        messages: [...(prevChat.messages || []), message],
+                        lastMessage: message.message
+                    };
+                });
+            }
+        };
+        
+        socket.on('new-message', handleNewMessage);
+        
+        return () => {
+            socket.off('new-message', handleNewMessage);
+        };
+    }, [socket, id]);
+    
+    // Initial fetch
+    useEffect(() => {
+        fetchChat();
+    }, [id]);
+    
+    // Scroll to bottom when messages change
+    useEffect(() => {
+        scrollToBottom();
+    }, [chat?.messages]);
+
+    useEffect(() => {
+        const fetchOtherUserInfo = async () => {
+            if (!chat) return;
+            const otherUserId = chat.users.find(userId => userId !== user.id) || null;
+            if (otherUserId) {
+                const otherUserName = await getUserByIdWithPictures(otherUserId);
+                setChatName(otherUserName ? `${otherUserName.name.fname} ${otherUserName.name.sname}` : 'Chat');
+                setUserPicture(otherUserName && otherUserName.primaryUserInfo.profilePic);
+            }
+        };
+        fetchOtherUserInfo();
+    }, [chat, user]);
+    
+    if (loading) {
+        return <div className={styles.chatLoading}>Loading chat...</div>;
     }
-
+    
+    if (error) {
+        return <div className={styles.chatError}>{error}</div>;
+    }
+    
+    if (!chat) {
+        return <div className={styles.chatError}>Chat not found</div>;
+    }
+    
     return (
-        <div className={styles.messagingContainer}>
-            {/* Chat list sidebar */}
-            <div className={styles.chatsSidebar}>
-                <h2>Chats</h2>
-                
-                {chats.length > 0 ? (
-                    <div className={styles.chatsList}>
-                        {chats.map((chat: IChat) => (
-                            <Link 
-                                to={`/chats/${chat.id}`} 
-                                key={chat.id} 
-                                className={`${styles.chatListItem} ${id === chat.id?.toString() ? styles.activeChatItem : ''}`}
-                            >
-                                <div className={styles.chatPreview}>
-                                    <h3>
-                                        {chatUserNames[chat.id.toString()] || 
-                                            <span className={styles.loadingName}>Loading...</span>}
-                                    </h3>
-                                    <p className={styles.previewMessage}>
-                                        {chat.lastMessage || "No messages yet"}
-                                    </p>
-                                </div>
-                            </Link>
-                        ))}
-                    </div>
-                ) : (
-                    <div className={styles.noChats}>
-                        <p>No conversations yet</p>
-                        <Link to="/browse" className={styles.browseButton}>
-                            Browse Pet Minders
-                        </Link>
-                    </div>
-                )}
+        <div className={styles.chatContainer}>
+            <div className={styles.chatHeader}>
+                <img 
+                    src={userPicture} 
+                    alt="User" 
+                />
+                <h2>{chatName}</h2>
             </div>
             
-            {/* Chat window - will display the Outlet (ChatPage) */}
-            <div className={styles.chatWindowContainer}>
-                {id ? (
-                    <Outlet />
+            <div className={styles.messagesContainer}>
+                {chat.messages && chat.messages.length > 0 ? (
+                    chat.messages.map((message, index) => (
+                        <div 
+                            key={index}
+                            className={`${styles.message} ${
+                                message.senderId === user.id
+                                    ? styles.sentMessage 
+                                    : styles.receivedMessage
+                            }`}
+                        >
+                            <p className={styles.messageContent}>{message.message}</p>
+                            <span className={styles.messageTime}>
+                                {formatMessageTime(message.timestamp)}
+                            </span>
+                        </div>
+                    ))
                 ) : (
-                    <div className={styles.noChatSelected}>
-                        <p>Select a conversation</p>
+                    <div className={styles.noMessages}>
+                        No messages yet. Start the conversation!
                     </div>
                 )}
+                <div ref={messagesEndRef} />
             </div>
+            
+            <form className={styles.messageForm} onSubmit={handleSendMessage}>
+                <input
+                    type="text"
+                    className={styles.messageInput}
+                    placeholder="Type a message..."
+                    value={newMessage}
+                    onChange={(e) => setNewMessage(e.target.value)}
+                />
+                <button 
+                    type="submit" 
+                    className={`btn btn-primary ${styles.sendButton}`}
+                    disabled={!newMessage.trim()}
+                >
+                    Send
+                </button>
+            </form>
         </div>
     );
 }
 
-export default MessagingPage;
+export default ChatPage;

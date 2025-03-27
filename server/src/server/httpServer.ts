@@ -2,8 +2,10 @@ import express, { Express, Request, Response, NextFunction } from 'express';
 import http from 'http';
 import multer from 'multer';
 import path from 'path';
+import cors from 'cors';
 
-import { AllUsersData, getUserByID, getUserByUsername, RegisterUser, loginUser, removeUser, getMinders, editUser } from '../routers/UserStatic';
+import { setupWebSocketServer } from '../server/wsServer';
+import { AllUsersData, getUserByID, RegisterUser, loginUser, removeUser, getMinders, editUser } from '../routers/UserStatic';
 import { AllPets, PetByID, registerPet, removePet, addPetForUser, removePetFromUser } from '../routers/PetStatic';
 import { AllServices, ServiceByID, addServiceForUser, editService, removeService } from '../routers/ServiceStatic';
 import { getBookingsForUser, getAllBookings, getBookingById, getBookingsForPet, getBookingsForMinder, createBooking, updateBookingDetails, updateBookingStatus, deleteBooking } from '../routers/BookingStatic';
@@ -12,11 +14,22 @@ import { getChatsForUser, getChatById, addMessage, createChat } from '../routers
 import { getNotificationsForUser, markNotificationAsRead, addNotification } from '../routers/NotificationStatic';
 
 import { log } from '../utils/utils';
-import cors from 'cors';
+import { addReviewForUser, ReviewByID } from '../routers/ReviewStatic';
 
 const app: Express = express();
 const port = process.env.PORT || 3001;
 const server = http.createServer(app);
+
+// Initialize Socket.IO server
+const io = setupWebSocketServer(server);
+
+// Important CORS setup for Express
+app.use(cors({
+  origin: ["http://localhost:3000", "http://localhost:5173"], // Add all your frontend URLs
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 //#region Multer configuration
 // Configure multer storage for image uploads
@@ -49,7 +62,6 @@ const upload = multer({
 });
 //#endregion
 
-//#region Middleware for checking if user is logged in
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -60,9 +72,7 @@ app.use((req: Request, res: Response, next) => {
     log(req.url, req);
     next();
 });
-//#endregion
 
-//#region Middleware for checking if user is logged in
 // Routes
 app.get('/', (req: Request, res: Response) => {
     res.status(200).send('Hello World!');
@@ -71,7 +81,6 @@ app.get('/', (req: Request, res: Response) => {
 app.get('/ping', (req: Request, res: Response) => {
     res.status(200).send('pong!');
 });
-//#endregion
 
 //#region User Routes
 // Get all users
@@ -83,12 +92,6 @@ app.get('/users', (req: Request, res: Response) => {
 // Get user by ID
 app.get('/user/:id', (req: Request, res: Response) => {
     const result = getUserByID(parseInt(req.params.id));
-    res.status(result.success ? 200 : 404).send(result.user);
-});
-
-// Get user by username
-app.get('/user/username/:username', (req: Request, res: Response) => {
-    const result = getUserByUsername(req.params.username);
     res.status(result.success ? 200 : 404).send(result.user);
 });
 
@@ -156,21 +159,21 @@ app.post('/user/:userId/pet', (req: Request, res: Response) => {
 });
 
 // Remove pet from a specific user
-app.delete('/user/:userId/pet/:petId', (req: Request, res: Response) => {
-    const result = removePetFromUser(parseInt(req.params.userId), parseInt(req.params.petId));
-    res.status(result.success ? 200 : 404).send(result.message);
-});
+// app.delete('/user/:userId/pet/:petId', (req: Request, res: Response) => {
+//     const result = removePetFromUser(parseInt(req.params.userId), parseInt(req.params.petId));
+//     res.status(result.success ? 200 : 404).send(result.message);
+// });
 //#endregion
 
 //#region Service Routes
 app.get('/services', (req: Request, res: Response) => {
     const result = AllServices();
-    res.status(result.success ? 200 : 404).send(result.message);
+    res.status(result.success ? 200 : 404).send(result.services);
 });
 
 app.get('/service/:id', (req: Request, res: Response) => {
     const result = ServiceByID(parseInt(req.params.id));
-    res.status(result.success ? 200 : 404).send(result.message);
+    res.status(result.success ? 200 : 404).send(result.service);
 });
 
 
@@ -236,7 +239,7 @@ app.post('/booking', (req: Request, res: Response) => {
 // Update booking status
 app.put('/booking/:id/status', (req: Request, res: Response) => {
     const result = updateBookingStatus(parseInt(req.params.id),req.body.status);
-    res.json(result);
+    res.json(result.booking);
 });
 
 // Update booking details
@@ -294,21 +297,45 @@ app.delete('/image/:filename', (req: Request, res: Response) => {
 //#region Message Routes and Chat routes
 
 // Get messages for a user
-app.get('/chats/:userId', (req, res) => {
+app.get('/chats/:userId', (req: Request, res: Response) => {
     const result = getChatsForUser(parseInt(req.params.userId))
     res.json(result);
 });
 
 // Get chat by ID
-app.get('/chat/:chatId', (req, res) => {
+app.get('/chat/:chatId', (req: Request, res: Response) => {
     const result = getChatById(parseInt(req.params.chatId));
     res.json(result);
 });
 
 // Add message to a chat
-app.post('/chat/message', (req, res) => {
+app.post('/chat/message', (req: Request, res: Response): void => {
+  try {
+    console.log('Received message request via HTTP:', req.body);
+    
+    // Make sure chatId and message are provided
+    if (!req.body.chatId || !req.body.message) {
+      res.status(400).json({ 
+        success: false, 
+        error: 'Missing chatId or message data' 
+      });
+      return;
+    }
+    
+    // Call the same addMessage function that the WebSocket uses
     const result = addMessage(req.body.chatId, req.body.message);
+    
+    // The message is emitted in the addMessage function,
+    // so we don't need to emit it again here
+    
     res.json(result);
+  } catch (error) {
+    console.error('Error in chat message endpoint:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Failed to send message' 
+    });
+  }
 });
 
 // Create a new chat
@@ -334,6 +361,21 @@ app.post('/notifications', (req, res) => {
 
 // #endregion
 
+// #region Reviews Routes
+// Get reviews by ID
+app.get('/reviews/:reviewId', (req, res) => {
+    const result = ReviewByID(parseInt(req.params.reviewId));
+    res.status(result.success ? 200 : 404).send(result.review);
+});
+
+// Add a review for a user
+app.post('/user/:userId/review', (req, res) => {
+    const result = addReviewForUser(parseInt(req.params.userId), req.body);
+    res.status(result.success ? 201 : 400).send(result.review);
+});
+
+// #endregion
+
 // Error handling middleware
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     console.error(err.stack);
@@ -343,8 +385,9 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 export function startHttpServer() {
     server.listen(port, () => {
         console.log(`Server is running on http://localhost:${port}`);
+        console.log(`Socket.IO server is running`);
     });
     return server;
 }
 
-export { app, server };
+export { app, server, io };

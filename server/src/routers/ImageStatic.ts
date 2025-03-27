@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import { editUser, getUserByID, getUserImages, isUserMinder } from './UserStatic';
-import { IUser } from '../models/IUser';
 
 // Define the upload directory path
 const uploadDir = path.join(__dirname, '../images');

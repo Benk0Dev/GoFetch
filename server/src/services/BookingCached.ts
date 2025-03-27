@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { EBookingStatus, IBooking, INewBooking } from '../models/IBooking';
+import { BookingStatus, IBooking, INewBooking } from '../models/IBooking';
 import { DB_PATH, cache } from './Cache';
 import path from 'path';
 
@@ -33,7 +33,7 @@ export function addBookingCached(bookingData: INewBooking): IBooking {
   const newBooking: IBooking = {
     id: newId,
     ...bookingData,
-    status: EBookingStatus.Pending,
+    status: BookingStatus.Pending,
     createdAt: now,
     updatedAt: now
   };
@@ -47,7 +47,7 @@ export function addBookingCached(bookingData: INewBooking): IBooking {
   return newBooking;
 }
 
-export function updateBookingStatusCached(bookingId: number, status: EBookingStatus): IBooking | null {
+export function updateBookingStatusCached(bookingId: number, status: BookingStatus): IBooking | null {
   const booking = cache.bookings.find(b => b.id === bookingId);
   if (booking) {
     booking.status = status;
@@ -95,7 +95,7 @@ export function deleteBookingCached(bookingId: number): boolean {
 
 function saveBookingsToFile() {
   try {
-    fs.writeFileSync(path.join(DB_PATH, 'booking.json'),JSON.stringify(cache.bookings, null, 2),'utf8'
+    fs.writeFileSync(path.join(DB_PATH, 'bookings.json'),JSON.stringify(cache.bookings, null, 2),'utf8'
     );
   } catch (error) {
     console.error('Error saving booking data:', error);

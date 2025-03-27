@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { getUserById } from "../../services/Registry";
+import { getUserByIdWithPictures } from "../../services/Registry";
 import { IUser } from "../../models/IUser";
 import styles from "./MinderCard.module.css";
-
+import defaultUser from "../../assets/images/default-profile-picture.svg";
 
 interface MinderCardProps {
   minderId: number;
@@ -14,7 +14,7 @@ const MinderCard: React.FC<MinderCardProps> = ({ minderId }) => {
   useEffect(() => {
     const fetchMinder = async () => {
       try {
-        const fetched = await getUserById(minderId);
+        const fetched = await getUserByIdWithPictures(minderId);
         if (fetched) setMinder(fetched);
       } catch (error) {
         console.error("Failed to fetch minder:", error);
@@ -29,17 +29,15 @@ const MinderCard: React.FC<MinderCardProps> = ({ minderId }) => {
   return (
     <div className={styles.card}>
       <h1 className={styles.name}>
-        {minder.userDetails?.fname || "Pet Minder"}
+        {minder.name.fname || "Pet Minder"}
       </h1>
 
       <div className="minder-image">
         <img
           src={
-            minder.minderRoleInfo && minder.minderRoleInfo.pictures?.length > 0
-              ? `/images/user_images/${minder.minderRoleInfo.pictures[0]}`
-              : "/images/user_images/default-profile.png"
+              minder.primaryUserInfo.profilePic === defaultUser ? minder.minderRoleInfo.pictures.length > 0 ? minder.minderRoleInfo.pictures[0] : defaultUser : minder.primaryUserInfo.profilePic
           }
-          alt={minder.userDetails.fname}
+          alt={minder.name.fname}
           width="400"
         />
       </div>
@@ -49,15 +47,7 @@ const MinderCard: React.FC<MinderCardProps> = ({ minderId }) => {
       </p>
 
       <div className={styles.infoLine}>
-        🗓️ <strong>Availability:</strong> {minder.minderRoleInfo?.availability || "N/A"}
-      </div>
-
-      <div className={styles.infoLine}>
-        <strong>📏 Range:</strong> {minder.minderRoleInfo?.distanceRange} miles
-      </div>
-
-      <div className={styles.infoLine}>
-        ✅ <strong>Verified:</strong> {minder.minderRoleInfo?.verified ? "Yes" : "No"}
+        🗓️ <strong>Availability:</strong> {minder.minderRoleInfo.availability || "N/A"}
       </div>
     </div>
   );

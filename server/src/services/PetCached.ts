@@ -1,6 +1,7 @@
 import fs from 'fs';
 import { IPet } from '../models/IPet';
 import { cache, DB_PATH } from './Cache';
+import { saveUsersToFile } from './UserCached';
 
 // Get cached pets
 export function getCachedPets(): IPet[] {
@@ -21,7 +22,7 @@ export function addPetCached(pet: IPet) {
         dob: pet.dob,
         gender: pet.gender,
         breed: pet.breed,
-        weight: pet.weight,
+        size: pet.size,
         neutered: pet.neutered,
         behaviour: pet.behaviour,
         allergies: pet.allergies || "",
@@ -32,16 +33,32 @@ export function addPetCached(pet: IPet) {
 
     savePetsToFile(cache.pets);
 
-    return { success: true, message: 'Pet registered successfully!' };
+    return { success: true, message: 'Pet registered successfully!', pet: newPet };
 }
 
-export function removePetCahce(id: number) {
+export function removePetCached(id: number) {
     const index = cache.pets.findIndex(pet => pet.id === id);
     if (index === -1) {
         return { success: false, message: 'Pet not found!' };
     }
     cache.pets.splice(index, 1);
-    return { success: true, message: 'Pet removed successfully!' };
+
+    cache.users.forEach(user => {
+        const petIndex = user.ownerRoleInfo.petIds.indexOf(id);
+        if (petIndex !== -1) {
+            user.ownerRoleInfo.petIds.splice(petIndex, 1);
+        }
+    });
+
+    saveUsersToFile(cache.users);
+
+    try {
+        savePetsToFile(cache.pets);
+        return { success: true, message: 'Pet removed successfully!' };
+    } catch (error) {
+        console.error('Error saving pets file:', error);
+        return { success: false, message: 'Error removing pet' };
+    }
 }
 
 function savePetsToFile(pets: IPet[]) {

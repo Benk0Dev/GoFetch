@@ -1,9 +1,12 @@
 import { IBooking } from './IBooking';
 import { IPet } from './IPet';
+import { IReview } from './IReview';
 import { IService } from './IService';
 
 export interface IUser {
-  userDetails: IUserDetails;
+  id: number;
+  name: IName;
+  loginDetails: ILoginDetails;
   roles: Role[];
   currentRole: Role;
   primaryUserInfo: IPrimaryUserInfo;
@@ -11,17 +14,56 @@ export interface IUser {
   minderRoleInfo: IMinderRoleInfo;
 }
 
+export interface IName {
+  fname: string;
+  sname: string;
+}
+
 export interface ILoginDetails {
   email: string;
-  username: string;
   password: string;
 }
 
-export interface IUserDetails {
-  id: number;
-  fname: string;
-  sname: string;
-  loginDetails: ILoginDetails;
+export interface IPrimaryUserInfo {
+  profilePic: string;
+  dob: Date;
+  address: IAddress;
+}
+
+export interface IOwnerRoleInfo {
+  petIds: number[];
+  pets?: IPet[];
+  bookingIds: number[];
+  bookings?: IBooking[];
+}
+
+export interface IMinderRoleInfo {
+  serviceIds: number[];
+  services?: IService[];
+  rating: number;
+  bio: string;
+  pictures: string[];
+  availability: Availability;
+  bookingIds: number[];
+  bookings?: IBooking[];
+  reviewIds: number[];
+  reviews?: IReview[];
+}
+
+export interface IAddress {
+  street: string;
+  city: string;
+  postcode: string;
+  country: string;
+}
+
+export interface IRegisterdUser {
+  fname: string, 
+  sname: string, 
+  email: string, 
+  password: string, 
+  dob: Date, 
+  role: Role
 }
 
 export enum Role {
@@ -30,47 +72,8 @@ export enum Role {
   ADMIN = 'admin'
 }
 
-export interface IPrimaryUserInfo {
-  profilePic: string;
-  dob: Date;
-  location: ILocation;
-  suspended: boolean;
-  suspendReason?: string | null;
-  suspendEndsAt?: Date | null;
-}
-
-export interface IOwnerRoleInfo {
-  petIDs: number[];
-  pets?: IPet[];
-  bookingIDs: number[];
-  bookings?: IBooking[];
-}
-
-export interface IMinderRoleInfo {
-  serviceIDs: number[];
-  services?: IService[];
-  rating: number;
-  bio: string;
-  pictures: string[];
-  availability: string;
-  distanceRange: number;
-  verified: boolean;
-  bookingIDs: number[];
-  bookings?: IBooking[];
-}
-
-export interface ILocation {
-  name: string;
-  longitude: number;
-  latitude: number;
-}
-
-export interface IRegisterUser {
-  fname: string, 
-  sname: string, 
-  email: string, 
-  username: string, 
-  password: string, 
-  dob: Date, 
-  role: Role
+export enum Availability {
+  FLEXIBLE = 'Flexible',
+  WEEKDAYS = 'Weekdays',
+  WEEKENDS = 'Weekends',
 }

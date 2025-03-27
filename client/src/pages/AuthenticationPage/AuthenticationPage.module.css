@@ -1,12 +1,21 @@
+.authentication {
+    display: flex;
+    margin-bottom: auto;
+    padding: 40px 20px;
+    justify-content: center;
+}
+
 .authenticationContainer {
     display: flex;
-    justify-content: center;
-    padding: 40px 0;
-    margin-bottom: auto;
+    flex-direction: column;
+}
+
+.authenticationContainer > button {
+    margin-bottom: 10px;
 }
 
 .authenticationBox {
-    background: white;
+    background: var(--primary-color);
     padding: calc(var(--padding) * 2) var(--padding);
     border-radius: var(--border-radius);
     border: 1px solid var(--text-color);
@@ -91,4 +100,52 @@ form button {
 
 input[type="date"] {
     font-family: var(--font-family);
+}
+
+.becomeRole {
+    display: flex;
+    margin-bottom: auto;
+    padding: 40px 20px;
+    justify-content: center;
+}
+
+.becomeRoleContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.becomeRoleContainer > button {
+    margin-bottom: 10px;
+}
+
+.becomeRoleContent {
+    background-color: var(--primary-color);
+    border: 1px solid var(--text-color);
+    border-radius: var(--border-radius);
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: fit-content;
+    text-align: center;
+}
+
+.becomeRoleContent button {
+    margin-top: 10px;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.becomeRoleContainer .icon {
+    background-color: var(--highlight-color);
+    color: var(--primary-color);
+    border-radius: 100px;
+    height: 64px;
+    width: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
 }
