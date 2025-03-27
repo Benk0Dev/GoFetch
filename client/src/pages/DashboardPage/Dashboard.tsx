@@ -10,10 +10,13 @@ import { Role } from "@gofetch/models/IUser";
 import Pets from "@client/pages/DashboardPage/Pets/Pets";
 import { useAuth } from "@client/context/AuthContext";
 import Reviews from "@client/pages/DashboardPage/Reviews/Reviews";
+import Reports from "@client/pages/DashboardPage/Reports/Reports";
 
 function DashboardPage() {
     const navigate = useNavigate();
     const { user, role, loading } = useAuth();
+
+    console.log(user);
 
     useEffect(() => {
         if (!role) {
@@ -64,6 +67,14 @@ function DashboardPage() {
                         path="reviews"
                         element={role === Role.MINDER ? (
                             <Reviews />
+                        ) : (
+                            <Navigate to="/dashboard" replace />
+                        )}
+                    />
+                    <Route
+                        path="reports"
+                        element={role === Role.ADMIN ? (
+                            <Reports />
                         ) : (
                             <Navigate to="/dashboard" replace />
                         )}

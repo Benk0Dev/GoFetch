@@ -13,6 +13,7 @@ import { saveUploadedImage, saveUserImage, saveUserProfileImage, getImageByFilen
 import { getChatsForUser, getChatById, addMessage, createChat } from '@server/routers/MessageStatic';
 import { getNotificationsForUser, markNotificationAsRead, addNotification } from '@server/routers/NotificationStatic';
 import { addReviewForUser, ReviewByID } from '@server/routers/ReviewStatic';
+import { addReport, getAllReports, getReportByID } from '@server/routers/ReportStatic';
 
 import { log } from '@server/utils/utils';
 
@@ -380,6 +381,27 @@ app.get('/reviews/:reviewId', (req, res) => {
 app.post('/user/:userId/review', (req, res) => {
     const result = addReviewForUser(parseInt(req.params.userId), req.body);
     res.status(result.success ? 201 : 400).send(result.review);
+});
+
+// #endregion
+
+// #region Reports Routes
+// Add a report
+app.post('/report', (req, res) => {
+    const result = addReport(req.body);
+    res.status(result.success ? 201 : 400).send(result.report);
+});
+
+// Get all reports
+app.get('/reports', (req, res) => {
+    const result = getAllReports();
+    res.status(result.success ? 200 : 404).send(result.reports);
+});
+
+// Get report by ID
+app.get('/report/:reportId', (req, res) => {
+    const result = getReportByID(parseInt(req.params.reportId));
+    res.status(result.success ? 200 : 404).send(result.report);
 });
 
 // #endregion

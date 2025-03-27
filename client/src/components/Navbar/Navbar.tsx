@@ -6,12 +6,13 @@ import ProfileIcon from "@client/components/Navbar/ProfileIcon";
 import NotificationIcon from "@client/components/Navbar/NotificationIcon";
 import logo from "@client/assets/images/logo.svg";
 import { useAuth } from "@client/context/AuthContext";
+import { Role } from "@gofetch/models/IUser";
 
 function Navbar() {
   const { role, loading } = useAuth();
   const location = useLocation();
 
-  const homeLink = role ? "/dashboard" : "/";
+  const homeLink = role === Role.OWNER || role === Role.MINDER ? "/dashboard" : "/";
 
   return (
     <nav className={styles.navbar} id="navbar">

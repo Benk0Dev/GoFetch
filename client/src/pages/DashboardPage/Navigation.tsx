@@ -46,7 +46,7 @@ function Navigation() {
                         Reviews
                     </button>
                 </>
-            ) : (
+            ) : role === Role.OWNER ? (
                 <>
                     <button
                         className={currentPath === "/dashboard/pets" ? styles.active : ""}
@@ -59,6 +59,15 @@ function Navigation() {
                         onClick={() => navigate("/dashboard/bookings")}
                     >
                         Bookings
+                    </button>
+                </>
+            ) : (
+                <>
+                    <button
+                        className={currentPath === "/dashboard/reports" ? styles.active : ""}
+                        onClick={() => navigate("/dashboard/reports")}
+                    >
+                        Reports
                     </button>
                 </>
             )}

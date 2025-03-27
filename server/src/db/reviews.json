@@ -34,5 +34,14 @@
     "reviewerId": 7,
     "revieweeId": 5,
     "bookingId": 6
+  },
+  {
+    "id": 9,
+    "rating": 5,
+    "review": "Amazing service!",
+    "date": "2025-03-27T12:56:13.463Z",
+    "reviewerId": 7,
+    "revieweeId": 7,
+    "bookingId": 8
   }
 ]
