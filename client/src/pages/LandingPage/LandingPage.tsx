@@ -3,8 +3,12 @@ import styles from "./LandingPage.module.css";
 import "../../global.css";
 import hero from "../../assets/images/hero.jpg";
 import { Search, Calendar, MessageCircle } from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
+import { Role } from "../../models/IUser";
 
 function LandingPage() {
+  const { role } = useAuth();
+
   return (
     <>
       <div className="container">
@@ -57,8 +61,17 @@ function LandingPage() {
         <h2>Ready to Get Started?</h2>
         <p>Join GoFetch today and connect with trusted pet minders in your area.</p>
         <div className={styles.buttons}>
-          <Link to="/login" className="btn btn-secondary">Login</Link>
-          <Link to="/register" className="btn btn-primary">Sign Up</Link>
+          {role === Role.ADMIN ? (
+            <>
+              <button className="btn btn-secondary" disabled={true}>Login</button>
+              <button className="btn btn-primary" disabled={true}>Sign Up</button>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="btn btn-secondary">Login</Link>
+              <Link to="/register" className="btn btn-primary">Sign Up</Link>
+            </>
+          )}
         </div>
         </div>
       </div>

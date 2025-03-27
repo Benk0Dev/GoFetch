@@ -6,12 +6,13 @@ import NotificationIcon from "./NotificationIcon";
 import logo from "../../assets/images/logo.svg";
 import { Mail } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
+import { Role } from "../../models/IUser";
 
 function Navbar() {
   const { role, loading } = useAuth();
   const location = useLocation();
 
-  const homeLink = role ? "/dashboard" : "/";
+  const homeLink = role === Role.OWNER || role === Role.MINDER ? "/dashboard" : "/";
 
   return (
     <nav className={styles.navbar} id="navbar">

@@ -15,6 +15,7 @@ import { getNotificationsForUser, markNotificationAsRead, addNotification } from
 
 import { log } from '../utils/utils';
 import { addReviewForUser, ReviewByID } from '../routers/ReviewStatic';
+import { addReport, getAllReports, getReportByID } from '../routers/ReportStatic';
 
 const app: Express = express();
 const port = process.env.PORT || 3001;
@@ -372,6 +373,27 @@ app.get('/reviews/:reviewId', (req, res) => {
 app.post('/user/:userId/review', (req, res) => {
     const result = addReviewForUser(parseInt(req.params.userId), req.body);
     res.status(result.success ? 201 : 400).send(result.review);
+});
+
+// #endregion
+
+// #region Reports Routes
+// Add a report
+app.post('/report', (req, res) => {
+    const result = addReport(req.body);
+    res.status(result.success ? 201 : 400).send(result.report);
+});
+
+// Get all reports
+app.get('/reports', (req, res) => {
+    const result = getAllReports();
+    res.status(result.success ? 200 : 404).send(result.reports);
+});
+
+// Get report by ID
+app.get('/report/:reportId', (req, res) => {
+    const result = getReportByID(parseInt(req.params.reportId));
+    res.status(result.success ? 200 : 404).send(result.report);
 });
 
 // #endregion

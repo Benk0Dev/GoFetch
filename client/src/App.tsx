@@ -30,7 +30,7 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={isGuest ? <LandingPage /> : <Navigate to="/dashboard" replace />}
+            element={isGuest || role === Role.ADMIN ? <LandingPage /> : <Navigate to="/dashboard" replace />}
           />
           <Route
             path="/login"

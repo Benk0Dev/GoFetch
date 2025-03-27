@@ -7,6 +7,7 @@ import { IBooking } from '../models/IBooking';
 import { IMessage, IChat } from '../models/IMessage';
 import { INotification } from '../models/INotification';
 import { IReview } from '../models/IReview';
+import { IReport } from '../models/IReport';
 
 // DB path
 export const DB_PATH = path.join(__dirname, './../db');
@@ -21,6 +22,7 @@ export interface DbCache {
   chats: IChat[];
   notifications: INotification[];
   reviews: IReview[];
+  reports: IReport[];
 }
 
 // Initialize empty cache
@@ -33,6 +35,7 @@ export const cache: DbCache = {
   chats: [],
   notifications: [],
   reviews: [],
+  reports: [],
 };
 
 // Initialize cache by loading data from files
@@ -46,6 +49,7 @@ export function initCache(): void {
     const messagesData = fs.readFileSync(`${DB_PATH}/messages.json`, 'utf8');
     const notificationsData = fs.readFileSync(`${DB_PATH}/notifications.json`, 'utf8');
     const reviewsData = fs.readFileSync(`${DB_PATH}/reviews.json`, 'utf8');
+    const reportsData = fs.readFileSync(`${DB_PATH}/reports.json`, 'utf8');
 
     cache.users = JSON.parse(usersData);
     cache.pets = JSON.parse(petsData);
@@ -56,6 +60,7 @@ export function initCache(): void {
     cache.messages = parsedMessagesData.messages;
     cache.chats = parsedMessagesData.chats;
     cache.reviews = JSON.parse(reviewsData);
+    cache.reports = JSON.parse(reportsData);
 
     console.log('Database cache initialized successfully');
   } catch (error) {
