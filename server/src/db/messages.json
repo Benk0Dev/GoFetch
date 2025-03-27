@@ -38,7 +38,15 @@
         8,
         7
       ],
-      "lastMessage": ""
+      "lastMessage": "hello"
+    },
+    {
+      "id": 6,
+      "users": [
+        8,
+        5
+      ],
+      "lastMessage": "That's it you are getting banned!"
     }
   ],
   "messages": [
@@ -265,6 +273,41 @@
       "message": "I'm very excited to meet her",
       "chatId": 4,
       "timestamp": "2025-03-26T16:08:08.623Z"
+    },
+    {
+      "id": 33,
+      "senderId": 7,
+      "message": "hello",
+      "chatId": 5,
+      "timestamp": "2025-03-27T21:57:24.000Z"
+    },
+    {
+      "id": 34,
+      "senderId": 8,
+      "message": "Hello Eve. You are in trouble for stealing someones dog!",
+      "chatId": 6,
+      "timestamp": "2025-03-27T22:03:51.383Z"
+    },
+    {
+      "id": 35,
+      "senderId": 5,
+      "message": "Oh no!",
+      "chatId": 6,
+      "timestamp": "2025-03-27T22:04:01.326Z"
+    },
+    {
+      "id": 36,
+      "senderId": 5,
+      "message": "womp womp",
+      "chatId": 6,
+      "timestamp": "2025-03-27T22:04:03.444Z"
+    },
+    {
+      "id": 37,
+      "senderId": 8,
+      "message": "That's it you are getting banned!",
+      "chatId": 6,
+      "timestamp": "2025-03-27T22:11:45.657Z"
     }
   ]
 }

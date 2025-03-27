@@ -1,15 +1,22 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, JSX } from "react";
 import { useNavigate } from "react-router-dom";
 import DropdownMenu from "@client/components/Dropdown/DropdownMenu";
 import DropdownItem from "@client/components/Dropdown/DropdownItem";
 import styles from "@client/components/Navbar/Navbar.module.css";
 import { Role } from "@gofetch/models/IUser";
 import { useAuth } from "@client/context/AuthContext";
+import { UserRound, LayoutDashboard, ArrowLeftRight, UserRoundPlus, Settings, LogOut } from "lucide-react";
+
+enum OtherAccountOption {
+  Switch = "Switch to",
+  Become = "Become a"
+}
 
 function ProfileIcon() {
   const { user, role, logout, switchRole } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [otherAccountOption, setOtherAccountOption] = useState("");
+  const [otherAccountOption, setOtherAccountOption] = useState<JSX.Element | "">("");
+  const [otherAccountOptionOperation, setOtherAccountOptionOperation] = useState<OtherAccountOption | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const iconRef = useRef<HTMLButtonElement>(null);
   const navigate = useNavigate();
@@ -23,9 +30,19 @@ function ProfileIcon() {
   const getOtherAccountOption = () => {
     if (role === Role.ADMIN) return "";
     const hasBothRoles = user.roles.includes(Role.OWNER) && user.roles.includes(Role.MINDER);
+    hasBothRoles ? setOtherAccountOptionOperation(OtherAccountOption.Switch) : setOtherAccountOptionOperation(OtherAccountOption.Become);
     return hasBothRoles
-      ? `Switch to ${role === Role.OWNER ? "Pet Minder" : "Pet Owner"}`
-      : `Become a ${role === Role.OWNER ? "Pet Minder" : "Pet Owner"}`;
+      ? (
+        <>
+          <ArrowLeftRight size={12} />
+          <span>{`Switch to ${role === Role.OWNER ? "Pet Minder" : "Pet Owner"}`}</span>
+        </>
+      ) : (
+        <>
+          <UserRoundPlus size={12} />
+          <span>{`Become a ${role === Role.OWNER ? "Pet Minder" : "Pet Owner"}`}</span>
+        </>
+      );
   };
 
   useEffect(() => {
@@ -56,14 +73,19 @@ function ProfileIcon() {
 
       {menuOpen && (
         <DropdownMenu onClose={toggleMenu}>
-          <DropdownItem text="Profile" onClick={() => { navigate("/profile"); toggleMenu(); }} />
-          <DropdownItem text="Dashboard" onClick={() => { navigate("/dashboard"); toggleMenu(); }} />
+          <DropdownItem onClick={() => { navigate("/profile"); toggleMenu(); }} button={true}>
+            <UserRound size={14} />
+            <span>Profile</span>
+          </DropdownItem>
+          <DropdownItem onClick={() => { navigate("/dashboard"); toggleMenu(); }} button={true}>
+            <LayoutDashboard size={14} />
+            <span>Dashboard</span>
+          </DropdownItem>
           <hr />
           {otherAccountOption && (
             <DropdownItem
-              text={otherAccountOption}
               onClick={() => {
-                if (otherAccountOption.startsWith("Switch")) {
+                if (otherAccountOptionOperation === OtherAccountOption.Switch) {
                   switchRole();
                   navigate("/dashboard");
                 } else {
@@ -71,14 +93,26 @@ function ProfileIcon() {
                 }
                 toggleMenu();
               }}
-            />
+              button={true}
+            >
+              {otherAccountOption}
+            </DropdownItem>
+
           )}
-          <DropdownItem text="Settings" onClick={() => { navigate("/settings"); toggleMenu(); }} />
+          <DropdownItem onClick={() => { navigate("/settings"); toggleMenu(); }} button={true}>
+            <Settings size={14} />
+            <span>Settings</span>
+          </DropdownItem>
           <hr />
-          <DropdownItem text="Logout" onClick={() => {
+          <DropdownItem onClick={() => {
             logout();
             navigate("/");
-          }} />
+          }} 
+          button={true}
+          >
+            <LogOut size={14} />
+            <span>Logout</span>
+          </DropdownItem>
         </DropdownMenu>
       )}
     </div>

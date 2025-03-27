@@ -20,6 +20,12 @@ function NotificationIcon() {
     const { socket, isConnected } = useSocket();
     const { user } = useAuth();
 
+    useEffect(() => {
+        if (user) {
+            fetchNotifications();
+        }
+    }, [user]);
+
     const toggleMenu = () => {
         setMenuOpen((prev) => !prev);
     };
@@ -136,11 +142,13 @@ function NotificationIcon() {
                 {menuOpen && (
                     <DropdownMenu onClose={toggleMenu}>
                         <div className={styles.notificationHeader}>
-                            <h4>Notifications</h4>
+                            <h6>Notifications</h6>
                         </div>
                         
                         {loading ? (
-                            <DropdownItem text="Loading notifications..." onClick={() => {}} />
+                            <DropdownItem onClick={() => {}} button={false}>
+                                <span>Loading notifications...</span>
+                            </DropdownItem>
                         ) : notifications.length > 0 ? (
                             <>
                                 {notifications.map(notification => (
@@ -161,7 +169,9 @@ function NotificationIcon() {
                                 ))}
                             </>
                         ) : (
-                            <DropdownItem text="You have no notifications" onClick={() => {}} />
+                            <DropdownItem onClick={() => {}} button={false}>
+                                <span>No notifications</span>
+                            </DropdownItem>
                         )}
                     </DropdownMenu>
                 )}

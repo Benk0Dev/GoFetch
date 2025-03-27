@@ -5,6 +5,7 @@ import { IChat, IMessage } from '@gofetch/models/IMessage';
 import { useAuth } from '@client/context/AuthContext';
 import { useSocket } from '@client/context/SocketContext';
 import styles from '@client/pages/MessagingPage/MessagingPage.module.css';
+import { Role } from '@gofetch/models/IUser';
 
 function ChatPage() {
     const { id } = useParams<{ id: string }>();
@@ -153,6 +154,7 @@ function ChatPage() {
             if (otherUserId) {
                 const otherUser = await getUserByIdWithPictures(otherUserId);
                 setChatName(otherUser ? `${otherUser.name.fname} ${otherUser.name.sname}` : 'Chat');
+                otherUser && otherUser.roles.includes(Role.ADMIN) ? setChatName(prev => prev + ' (Admin)') : null;
                 setUserPicture(otherUser && otherUser.primaryUserInfo.profilePic);
             }
         };

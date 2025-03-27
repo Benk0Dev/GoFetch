@@ -58,5 +58,55 @@
     "read": true,
     "createdAt": "2025-03-26T16:06:08.667Z",
     "updatedAt": "2025-03-26T22:49:18.481Z"
+  },
+  {
+    "id": 7,
+    "userId": 8,
+    "message": "New message: hello",
+    "type": "message",
+    "linkId": 5,
+    "read": false,
+    "createdAt": "2025-03-27T21:57:24.008Z",
+    "updatedAt": "2025-03-27T21:57:24.008Z"
+  },
+  {
+    "id": 8,
+    "userId": 5,
+    "message": "New message: Hello Eve. You are in trouble ...",
+    "type": "message",
+    "linkId": 6,
+    "read": true,
+    "createdAt": "2025-03-27T22:03:51.386Z",
+    "updatedAt": "2025-03-27T22:03:54.940Z"
+  },
+  {
+    "id": 9,
+    "userId": 8,
+    "message": "New message: Oh no!",
+    "type": "message",
+    "linkId": 6,
+    "read": true,
+    "createdAt": "2025-03-27T22:04:01.327Z",
+    "updatedAt": "2025-03-27T22:16:31.413Z"
+  },
+  {
+    "id": 10,
+    "userId": 8,
+    "message": "New message: womp womp",
+    "type": "message",
+    "linkId": 6,
+    "read": true,
+    "createdAt": "2025-03-27T22:04:03.447Z",
+    "updatedAt": "2025-03-27T22:16:26.572Z"
+  },
+  {
+    "id": 11,
+    "userId": 5,
+    "message": "New message: That's it you are getting bann...",
+    "type": "message",
+    "linkId": 6,
+    "read": false,
+    "createdAt": "2025-03-27T22:11:45.663Z",
+    "updatedAt": "2025-03-27T22:11:45.663Z"
   }
 ]
