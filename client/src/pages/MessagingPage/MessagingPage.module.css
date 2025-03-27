@@ -1,11 +1,7 @@
-.pageContainer {
-    max-width: 75rem;
-    margin: 0 auto;
-    padding: 1.25rem;
-}
-
-.pageContainer>h1 {
-    text-align: center;
+.messagingPage {
+    padding: 40px 0;
+    display: flex;
+    justify-content: center;
 }
 
 .chatsContainer {
