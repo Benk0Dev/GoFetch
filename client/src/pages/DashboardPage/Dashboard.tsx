@@ -1,16 +1,16 @@
 import { useEffect } from "react";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
-import Navigation from "./Navigation";
-import Home from "./Home/Home";
-import Services from "./Services/Services";
-import Profile from "./Profile/Profile";
-import Bookings from "./Bookings/Bookings";
-import styles from "./Dashboard.module.css";
-import { Role } from "../../models/IUser";
-import Pets from "./Pets/Pets";
-import { useAuth } from "../../context/AuthContext";
-import Reviews from "./Reviews/Reviews";
-import Reports from "./Reports/Reports";
+import Navigation from "@client/pages/DashboardPage/Navigation";
+import Home from "@client/pages/DashboardPage/Home/Home";
+import Services from "@client/pages/DashboardPage/Services/Services";
+import Profile from "@client/pages/DashboardPage/Profile/Profile";
+import Bookings from "@client/pages/DashboardPage/Bookings/Bookings";
+import styles from "@client/pages/DashboardPage/Dashboard.module.css";
+import { Role } from "@gofetch/models/IUser";
+import Pets from "@client/pages/DashboardPage/Pets/Pets";
+import { useAuth } from "@client/context/AuthContext";
+import Reviews from "@client/pages/DashboardPage/Reviews/Reviews";
+import Reports from "@client/pages/DashboardPage/Reports/Reports";
 
 function DashboardPage() {
     const navigate = useNavigate();

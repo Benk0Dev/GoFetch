@@ -1,13 +1,13 @@
 import fs from 'fs';
 import path from 'path';
-import { IUser } from '../models/IUser';
-import { IPet } from '../models/IPet';
-import { IService } from '../models/IService';
-import { IBooking } from '../models/IBooking';
-import { IMessage, IChat } from '../models/IMessage';
-import { INotification } from '../models/INotification';
-import { IReview } from '../models/IReview';
-import { IReport } from '../models/IReport';
+import { IUser } from '@gofetch/models/IUser';
+import { IPet } from '@gofetch/models/IPet';
+import { IService } from '@gofetch/models/IService';
+import { IBooking } from '@gofetch/models/IBooking';
+import { IMessage, IChat } from '@gofetch/models/IMessage';
+import { INotification } from '@gofetch/models/INotification';
+import { IReview } from '@gofetch/models/IReview';
+import { IReport } from '@gofetch/models/IReport';
 
 // DB path
 export const DB_PATH = path.join(__dirname, './../db');

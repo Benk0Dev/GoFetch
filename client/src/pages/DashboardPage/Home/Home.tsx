@@ -1,10 +1,10 @@
-import { useAuth } from "../../../context/AuthContext";
-import styles from "./Home.module.css";
-import dashboardStyles from "../Dashboard.module.css";
-import { Role } from "../../../models/IUser";
-import Statistic from "./Statistic";
-import { PawPrint, Calendar, Star, Briefcase, UserRound, Flag, User } from "lucide-react";
-import { BookingStatus, IBooking } from "../../../models/IBooking";
+import { PawPrint, Calendar, Star, Briefcase, UserRound, Flag } from "lucide-react";
+import { useAuth } from "@client/context/AuthContext";
+import styles from "@client/pages/DashboardPage/Home/Home.module.css";
+import dashboardStyles from "@client/pages/DashboardPage/Dashboard.module.css";
+import { Role } from "@gofetch/models/IUser";
+import Statistic from "@client/pages/DashboardPage/Home/Statistic";
+import { BookingStatus, IBooking } from "@gofetch/models/IBooking";
 
 function Home() {
     const { user, role } = useAuth();

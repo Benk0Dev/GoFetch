@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./AuthenticationPage.module.css";
-import { registerUser, verifyUniqueEmail } from "../../services/Registry";
-import { IRegisterdUser, Role } from "../../models/IUser";
-import { useAuth } from "../../context/AuthContext";
+import styles from "@client/pages/AuthenticationPage/AuthenticationPage.module.css";
+import { registerUser, verifyUniqueEmail } from "@client/services/Registry";
+import { IRegisterdUser, Role } from "@gofetch/models/IUser";
+import { useAuth } from "@client/context/AuthContext";
 
 function RegisterForm() {
     const { loginUser } = useAuth();

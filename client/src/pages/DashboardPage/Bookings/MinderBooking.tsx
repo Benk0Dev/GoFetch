@@ -1,8 +1,8 @@
-import { BookingStatus } from "../../../models/IBooking";
-import BookingInfo from "./BookingInfo";
-import styles from "./Bookings.module.css";
-import { Booking } from "./Bookings";
 import { MessageSquare, Check } from "lucide-react";
+import { BookingStatus } from "@gofetch/models/IBooking";
+import BookingInfo from "@client/pages/DashboardPage/Bookings/BookingInfo";
+import styles from "@client/pages/DashboardPage/Bookings/Bookings.module.css";
+import { Booking } from "@client/pages/DashboardPage/Bookings/Bookings";
 
 function MinderBooking({ booking, status, onMessage, onAccept, onDecline, onComplete }: { booking: Booking, status: BookingStatus, onMessage: (bookingId: number) => void, onAccept: (bookingId: number) => void, onDecline: (bookingId: number) => void, onComplete: (bookingId: number) => void }) {
   return (

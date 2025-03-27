@@ -1,9 +1,9 @@
-import styles from "./Pets.module.css";
-import "../../../global.css";
-import { IPet } from "../../../models/IPet";
 import { useNavigate } from "react-router-dom";
-import { removePetForUser } from "../../../services/Registry";
-import { useAuth } from "../../../context/AuthContext";
+import styles from "@client/pages/DashboardPage/Pets/Pets.module.css";
+import "@client/global.css";
+import { IPet } from "@gofetch/models/IPet";
+import { removePetForUser } from "@client/services/Registry";
+import { useAuth } from "@client/context/AuthContext";
 
 function Pet({ pet }: { pet: IPet }) {
     const navigate = useNavigate();

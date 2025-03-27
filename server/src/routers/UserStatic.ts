@@ -1,5 +1,5 @@
-import { getCachedUsersWithAllInfo, getUserWithoutPassword, RegisterUserCache, removeUserCache, editUserCache } from '../services/UserCached';
-import { IRegisterdUser, IUser, Role } from '../models/IUser';
+import { getCachedUsersWithAllInfo, getUserWithoutPassword, RegisterUserCache, removeUserCache, editUserCache } from '@server/services/UserCached';
+import { IRegisterdUser, IUser, Role } from '@gofetch/models/IUser';
 
 export function AllUsersData() {
   const result = getCachedUsersWithAllInfo();

@@ -1,14 +1,15 @@
-import { IRegisterdUser, IUser } from "../models/IUser";
-import { BookingStatus, INewBooking } from "../models/IBooking";
-import { clearUser, getUserId, setUserId } from "../utils/StorageManager";
+import { IPet } from "@gofetch/models/IPet";
+import { IChat } from "@gofetch/models/IMessage";
+import { IReview } from "@gofetch/models/IReview";
+import { IService } from "@gofetch/models/IService";
+import { IRegisterdUser, IUser } from "@gofetch/models/IUser";
+import { BookingStatus, INewBooking } from "@gofetch/models/IBooking";
+import { clearUser, getUserId, setUserId } from "@client/utils/StorageManager";
+import defaultProfile from "@client/assets/images/default-profile-picture.svg";
+import defaultPet from "@client/assets/images/default-pet-picture.svg";
 import imageCompression from 'browser-image-compression';
-import defaultProfile from "../assets/images/default-profile-picture.svg"
-import defaultPet from "../assets/images/default-pet-picture.svg"
-import { IPet } from "../models/IPet";
-import { IService } from "../models/IService";
-import { IReview } from "../models/IReview";
 
-const API_URL = "http://localhost:3001";
+const API_URL = import.meta.env.VITE_SERVER_HOST_URL || "http://localhost:3001";
 
 //#region User
 export async function login(credentials: string, password: string) {
@@ -73,7 +74,7 @@ export async function registerUser(user: IRegisterdUser) {
     }
 }
 
-export async function editUser(id: number, user: any) {
+export async function editUser(id: number, user: IUser) {
     try {
         const response = await fetch(`${API_URL}/editUser/${id}`, { 
             method: "POST",
@@ -339,7 +340,7 @@ export async function startChat(withUserId: number) {
     }
     const chatsResponse = await getUserChats();
     const userChats = chatsResponse.chats;
-    const existingChat = userChats.find((chat: any) => 
+    const existingChat = userChats.find((chat: IChat) => 
         chat.users.includes(withUserId) && chat.users.includes(userId)
 );
 if (existingChat) {

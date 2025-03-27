@@ -1,6 +1,6 @@
 import fs from 'fs';
-import { IReport, Status } from '../models/IReport';
-import { cache, DB_PATH } from './Cache';
+import { IReport, Status } from '@gofetch/models/IReport';
+import { cache, DB_PATH } from '@server/services/Cache';
 
 export function getCachedReports(): IReport[] {
     try {

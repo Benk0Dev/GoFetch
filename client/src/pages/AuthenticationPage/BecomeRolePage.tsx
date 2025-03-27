@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import styles from "./AuthenticationPage.module.css";
-import { Role } from "../../models/IUser";
-import { useAuth } from "../../context/AuthContext";
-import BackButton from "../../components/BackButton";
 import { UserRound, Check } from "lucide-react";
+import styles from "@client/pages/AuthenticationPage/AuthenticationPage.module.css";
+import { Role } from "@gofetch/models/IUser";
+import { useAuth } from "@client/context/AuthContext";
+import BackButton from "@client/components/BackButton";
 
 function BecomeRolePage({ role }: { role: Role }) {
     const { switchRole } = useAuth();

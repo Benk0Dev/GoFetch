@@ -1,7 +1,7 @@
-import { BookingStatus } from "../../../models/IBooking";
-import BookingInfo from "./BookingInfo";
-import styles from "./Bookings.module.css";
-import { Booking } from "./Bookings";
+import { BookingStatus } from "@gofetch/models/IBooking";
+import BookingInfo from "@client/pages/DashboardPage/Bookings/BookingInfo";
+import styles from "@client/pages/DashboardPage/Bookings/Bookings.module.css";
+import { Booking } from "@client/pages/DashboardPage/Bookings/Bookings";
 import { MessageSquare, MessageSquareText as Review } from "lucide-react";
 
 function OwnerBooking({ booking, status, onMessage, onCancel, onReview }: { booking: Booking, status: BookingStatus, onMessage: (bookingId: number) => void, onCancel: (bookingId: number) => void, onReview: (bookingId: number) => void }) {

@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import styles from "./LandingPage.module.css";
-import "../../global.css";
-import hero from "../../assets/images/hero.jpg";
 import { Search, Calendar, MessageCircle } from "lucide-react";
-import { useAuth } from "../../context/AuthContext";
-import { Role } from "../../models/IUser";
+import styles from "@client/pages/LandingPage/LandingPage.module.css";
+import "@client/global.css";
+import hero from "@client/assets/images/hero.jpg";
+import { useAuth } from "@client/context/AuthContext";
+import { Role } from "@gofetch/models/IUser";
 
 function LandingPage() {
   const { role } = useAuth();

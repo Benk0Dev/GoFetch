@@ -1,5 +1,5 @@
-import styles from "./Footer.module.css";
-import "../global.css";
+import styles from "@client/components/Footer.module.css";
+import "@client/global.css";
 
 function Footer() {
   return (

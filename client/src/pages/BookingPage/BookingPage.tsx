@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getUserById } from "../../services/Registry";
-import { Availability, IUser } from "../../models/IUser";
-import { IPet } from "../../models/IPet";
-import { IService } from "../../models/IService";
-import PetSelector from "./PetSelector";
-import ServiceSelector from "./ServiceSelector";
-import styles from "./BookingPage.module.css";
-import MinderCard from "./MinderCard";
-import BookSubmit from "./BookSubmit"; // Import the BookSubmit component
-import { useAuth } from "../../context/AuthContext";
+import { getUserById } from "@client/services/Registry";
+import { Availability, IUser } from "@gofetch/models/IUser";
+import { IPet } from "@gofetch/models/IPet";
+import { IService } from "@gofetch/models/IService";
+import PetSelector from "@client/pages/BookingPage/PetSelector";
+import ServiceSelector from "@client/pages/BookingPage/ServiceSelector";
+import styles from "@client/pages/BookingPage/BookingPage.module.css";
+import MinderCard from "@client/pages/BookingPage/MinderCard";
+import BookSubmit from "@client/pages/BookingPage/BookSubmit"; // Import the BookSubmit component
+import { useAuth } from "@client/context/AuthContext";
 
 const BookingPage: React.FC = () => {
   const { user } = useAuth();

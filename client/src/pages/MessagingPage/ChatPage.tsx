@@ -1,11 +1,11 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { Link, Outlet, useParams, useNavigate } from "react-router-dom";
-import { IChat } from "../../models/IMessage";
-import { getUserChats, getUserByIdWithPictures } from "../../services/Registry";
-import styles from './MessagingPage.module.css';
-import { useAuth } from "../../context/AuthContext";
-import { useSocket } from "../../context/SocketContext";
-import { Role } from "../../models/IUser";
+import { IChat } from "@gofetch/models/IMessage";
+import { Role } from "@gofetch/models/IUser";
+import { getUserChats, getUserByIdWithPictures } from "@client/services/Registry";
+import styles from '@client/pages/MessagingPage/MessagingPage.module.css';
+import { useAuth } from "@client/context/AuthContext";
+import { useSocket } from "@client/context/SocketContext";
 
 function MessagingPage() {
     const [chats, setChats] = useState<IChat[]>([]);

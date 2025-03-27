@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { getChatById, sendMessage, getUserById, getUserByIdWithPictures } from '../../services/Registry';
-import { IChat, IMessage } from '../../models/IMessage';
-import { useAuth } from '../../context/AuthContext';
-import { useSocket } from '../../context/SocketContext';
-import styles from './MessagingPage.module.css';
+import { getChatById, sendMessage, getUserByIdWithPictures } from '@client/services/Registry';
+import { IChat, IMessage } from '@gofetch/models/IMessage';
+import { useAuth } from '@client/context/AuthContext';
+import { useSocket } from '@client/context/SocketContext';
+import styles from '@client/pages/MessagingPage/MessagingPage.module.css';
 
 function ChatPage() {
     const { id } = useParams<{ id: string }>();
