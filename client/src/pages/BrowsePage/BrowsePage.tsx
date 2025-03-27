@@ -12,9 +12,8 @@ const BrowsePage: React.FC = () => {
   useEffect(() => {
     const fetchMinders = async () => {
       try {
-        const minders = await getAllMindersWithPictures(); // ✅ Should include userDetails & minderRoleInfo
+        const minders = await getAllMindersWithPictures();
         if (!minders) throw new Error("Failed to fetch minders.");
-        console.log("Fetched minders:", minders);
         setAllMinders(minders);
         setFilteredMinders(minders);
       } catch (error) {
@@ -28,43 +27,61 @@ const BrowsePage: React.FC = () => {
   }, []);
 
   const handleFilterChange = (filters: any) => {
-    console.log("Filters applied:", filters);
+    let filtered = allMinders.filter((minder) => {
+      const searchText = filters.location.toLowerCase() || "";
+      const availabilityText = filters.availability?.toLowerCase() || "";
 
-    const filtered = allMinders.filter((minder) => {
-    const searchText = filters.location.toLowerCase() || "";
-    const availabilityText = filters.availability.toLowerCase() || "";
+      const fullName =
+        `${minder.name.fname} ${minder.name.sname}`.toLowerCase();
+      const location = minder.primaryUserInfo.address.city.toLowerCase() || "";
+      const rating = minder.minderRoleInfo.rating || 0;
+      const availability =
+        minder.minderRoleInfo.availability.toLowerCase() || "";
 
-    // ✅ Use correct nested paths
-    const fullName =
-      `${minder.name.fname} ${minder.name.lname}`.toLowerCase();
-    const location =
-      minder.primaryUserInfo.address.city.toLowerCase() || "";
-    const rating = minder.minderRoleInfo.rating || 0;
-    const availability =
-      minder.minderRoleInfo.availability?.toLowerCase() || "";
+      const nameMatch = fullName.includes(searchText);
+      const locationMatch = location.includes(searchText);
+      const ratingMatch = rating >= (filters.rating || 0);
+      const availabilityMatch = availability.includes(availabilityText);
+      return (
+        (nameMatch || locationMatch) &&
+        ratingMatch &&
+        (availabilityText === "" || availabilityMatch)
+      );
+    });
 
-    const nameMatch = fullName.includes(searchText);
-    const locationMatch = location.includes(searchText);
-    const ratingMatch = rating >= (filters.rating || 0);
-    const availabilityMatch = availability.includes(availabilityText);
+    // 🧠 Sorting logic
+    switch (filters.sort) {
+      case "rating":
+        filtered.sort(
+          (a, b) => b.minderRoleInfo.rating - a.minderRoleInfo.rating
+        );
+        break;
 
-    return (
-      (nameMatch || locationMatch) &&
-      ratingMatch &&
-      (availabilityText === "" || availabilityMatch)
-    );
-  });
+      case "price":
+        filtered.sort((a, b) => {
+          const priceA = a.minderRoleInfo.services?.[0]?.price || 0;
+          const priceB = b.minderRoleInfo.services?.[0]?.price || 0;
+          return priceA - priceB;
+        });
+        break;
+
+      case "distance":
+        filtered.sort(
+          (a, b) =>
+            a.minderRoleInfo.distanceRange - b.minderRoleInfo.distanceRange
+        );
+        break;
+
+      default:
+        break;
+    }
 
     setFilteredMinders(filtered);
   };
 
-  console.log("Rendering Filtered Minders:", filteredMinders);
-
   return (
     <div className="browse-page">
       <h1>Available Pet Minders</h1>
-
-      {/* FilterBar calls handleFilterChange when "Search" is clicked */}
       <FilterBar onFilterChange={handleFilterChange} />
 
       {loading ? (

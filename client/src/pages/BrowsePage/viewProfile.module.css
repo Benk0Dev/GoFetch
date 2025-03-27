@@ -1,0 +1,142 @@
+.minder-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+    padding: 20px;
+    width: 100%;
+}
+
+.minder-header {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.profile-info {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+}
+
+.profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+.minder-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.rating, .location {
+    font-size: 18px;
+    color: var(--secondary-color);
+    margin-bottom: 5px;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    border: none;
+    width: 120px; /* Fixed width for uniform button sizes */
+}
+
+.message-btn {
+    background-color: white; /* Changed to white */
+    color: var(--highlight-color);
+    border: 1px solid var(--highlight-color); /* Added border */
+}
+
+.book-btn {
+    background-color: var(--highlight-color); /* A cream-like color you need to define */
+    color: white;
+}
+
+.book-btn:hover, .message-btn:hover {
+    background-color: var(--highlight-color-hover);
+}
+.profile-tabs {
+    display: flex;
+    justify-content: space-between; /* Adjusts children to have equal space between */
+    width: 100%; /* Ensures it takes the full width of its parent */
+    box-sizing: border-box; /* Ensures padding and border are included in the width */
+}
+
+.tab {
+    flex-grow: 1;
+    text-align: center;
+    padding: 14px 0;
+    margin: 0 2px;
+    background: none;
+    border: 1px solid var(--highlight-color);
+    border-radius: 0; /* Remove rounded corners */
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--highlight-color);
+    box-sizing: border-box;
+  }
+  
+
+
+.tab:hover {
+    background-color: #666; /* Darker background on hover for better contrast */
+    border-bottom: 2px solid #fff; /* Highlight bottom border on hover */
+}
+
+.tab.active {
+    border-bottom: 2px solid #fff; /* White bottom border for active tab */
+    background-color: #444; /* Darker background for active tab */
+}
+
+.tab-content {
+    border: 1px solid black;
+    padding: 20px;
+    margin-top: 20px; /* <-- adds space between tabs and content */
+    width: 100%;
+    text-align: left;
+  }
+  
+  .tab-content h2 {
+    margin-bottom: 10px;
+    font-size: 20px;
+    color: var(--text-color);
+  }
+  
+  .bio {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .back-button {
+    align-self: flex-start;
+    margin-bottom: 20px;
+    background: none;
+    border: none;
+    color: var(--secondary-color);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+  }
+  
+  .back-button:hover {
+    color: var(--highlight-color);
+  }
+  
+  
+
+
