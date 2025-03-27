@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { getChatById, sendMessage, getUserById, getUserByIdWithPictures } from '../../services/Registry';
 import { IChat, IMessage } from '../../models/IMessage';
 import { useAuth } from '../../context/AuthContext';
@@ -151,9 +151,9 @@ function ChatPage() {
             if (!chat) return;
             const otherUserId = chat.users.find(userId => userId !== user.id) || null;
             if (otherUserId) {
-                const otherUserName = await getUserByIdWithPictures(otherUserId);
-                setChatName(otherUserName ? `${otherUserName.name.fname} ${otherUserName.name.sname}` : 'Chat');
-                setUserPicture(otherUserName && otherUserName.primaryUserInfo.profilePic);
+                const otherUser = await getUserByIdWithPictures(otherUserId);
+                setChatName(otherUser ? `${otherUser.name.fname} ${otherUser.name.sname}` : 'Chat');
+                setUserPicture(otherUser && otherUser.primaryUserInfo.profilePic);
             }
         };
         fetchOtherUserInfo();
@@ -174,11 +174,13 @@ function ChatPage() {
     return (
         <div className={styles.chatContainer}>
             <div className={styles.chatHeader}>
-                <img 
-                    src={userPicture} 
-                    alt="User" 
-                />
-                <h2>{chatName}</h2>
+                <Link to={`/users/${chat.users.find(userId => userId !== user.id)}`} className={styles.backButton}>
+                    <img 
+                        src={userPicture} 
+                        alt="User" 
+                    />
+                    <h2>{chatName}</h2>
+                </Link>
             </div>
             
             <div className={styles.messagesContainer}>

@@ -20,7 +20,7 @@
         "street": "",
         "city": "Bristol",
         "postcode": "",
-        "country": ""
+        "country": "United Kingdom"
       }
     },
     "ownerRoleInfo": {
@@ -60,7 +60,7 @@
         "street": "",
         "city": "Leeds",
         "postcode": "",
-        "country": ""
+        "country": "United Kingdom"
       }
     },
     "ownerRoleInfo": {
@@ -101,7 +101,7 @@
         "street": "",
         "city": "Manchester",
         "postcode": "",
-        "country": ""
+        "country": "United Kingdom"
       }
     },
     "ownerRoleInfo": {
@@ -150,7 +150,7 @@
         "street": "",
         "city": "Brighton",
         "postcode": "",
-        "country": ""
+        "country": "United Kingdom"
       }
     },
     "ownerRoleInfo": {
@@ -190,7 +190,7 @@
       "petminder",
       "petowner"
     ],
-    "currentRole": "petowner",
+    "currentRole": "petminder",
     "primaryUserInfo": {
       "profilePic": "",
       "dob": "1995-08-25T00:00:00.000Z",
@@ -198,7 +198,7 @@
         "street": "",
         "city": "Nottingham",
         "postcode": "",
-        "country": ""
+        "country": "United Kingdom"
       }
     },
     "ownerRoleInfo": {
@@ -304,7 +304,7 @@
         "street": "",
         "city": "London",
         "postcode": "",
-        "country": ""
+        "country": "United Kingdom"
       }
     },
     "ownerRoleInfo": {
@@ -359,7 +359,7 @@
         "street": "",
         "city": "London",
         "postcode": "",
-        "country": ""
+        "country": "United Kingdom"
       }
     },
     "ownerRoleInfo": {

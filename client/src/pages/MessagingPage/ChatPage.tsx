@@ -147,7 +147,7 @@ function MessagingPage() {
     }, [chats, fetchChatUserNames]);
 
     if (loading && chats.length === 0) {
-        return <div>Loading chats...</div>;
+        return null;
     }
 
     return (

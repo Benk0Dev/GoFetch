@@ -6,6 +6,7 @@ import LoginPage from "./pages/AuthenticationPage/LoginPage";
 import RegisterPage from "./pages/AuthenticationPage/RegisterPage";
 import BecomeRolePage from "./pages/AuthenticationPage/BecomeRolePage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
+import UserPage from "./pages/UserPage/UserPage";
 import BrowsePage from "./pages/BrowsePage/BrowsePage";
 import DashboardPage from "./pages/DashboardPage/Dashboard";
 import MessagingPage from "./pages/MessagingPage/MessagingPage";
@@ -72,6 +73,7 @@ function App() {
             <Route path=":id" element={<MessagingPage />} />
           </Route>
           <Route path="/dashboard/pets/:id" element={role === Role.OWNER ? <PetDetailsPage /> : <Navigate to="/" replace />} />
+          <Route path="/users/:id" element={<UserPage />} />
         </Routes>
         <Footer />
       </Router>

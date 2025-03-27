@@ -312,3 +312,15 @@
 .chatError {
     color: var(--error-color);
 }
+
+.chatHeader a {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.chatsSidebar h2, .chatHeader {
+    height: 74px;
+    display: flex;
+    align-items: center;
+}

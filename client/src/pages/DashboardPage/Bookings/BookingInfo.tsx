@@ -1,10 +1,11 @@
 import styles from "./Bookings.module.css";
 import { useAuth } from "../../../context/AuthContext";
-import { Calendar, Clock, MapPin, PawPrint, ArrowDown, UserRound, NotebookPen } from "lucide-react";
+import { Link as UserLink, UserRound, Calendar, Clock, MapPin, PawPrint, ArrowDown, NotebookPen } from "lucide-react";
 import { Role } from "../../../models/IUser";
 import { Booking } from "./Bookings";
 import { useState } from "react";
 import { Gender } from "../../../models/IPet";
+import { Link } from "react-router";
 
 function BookingInfo({ booking }: { booking: Booking }) {
     const { user } = useAuth();
@@ -22,8 +23,14 @@ function BookingInfo({ booking }: { booking: Booking }) {
     return (
         <div className={styles.bookingInfo}>
             <div className={styles.bookingHeading}>
-                <h5>{booking.service.type} {user.currentRole === Role.OWNER ? "with " + getFullName(booking.minder) : "for " + getFullName(booking.owner)}</h5>
+                <h5>{booking.service.type} {user.currentRole === Role.OWNER ? "with " : "for "}{getFullName(booking.owner)}</h5>
                 <h5>£{booking.service.price}</h5>
+            </div>
+            <div className={styles.bookingDetail}>
+                <Link to={`/users/${booking.owner.id}`}>
+                    <UserLink size={16} strokeWidth={2} />
+                    <span>{getFullName(booking.owner)}</span>
+                </Link>
             </div>
             <div className={styles.bookingDetail}>
                 <Calendar size={16} strokeWidth={2} />

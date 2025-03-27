@@ -31,6 +31,14 @@
         7
       ],
       "lastMessage": "I'm very excited to meet her"
+    },
+    {
+      "id": 5,
+      "users": [
+        8,
+        7
+      ],
+      "lastMessage": ""
     }
   ],
   "messages": [

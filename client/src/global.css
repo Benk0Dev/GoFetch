@@ -178,12 +178,16 @@ p {
 
 .btn-transparent {
     background-color: transparent;
-    color: var(--highlight-color);
+    color: var(--text-color);
     border-color: transparent;
 }
 
 .btn-transparent:hover {
     background-color: #ff88002A;
+}
+
+.black-hover:hover {
+    background-color: #2727272a;
 }
 
 .btn-link:hover {

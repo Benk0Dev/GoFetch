@@ -139,3 +139,14 @@
 span.petTitle {
     font-weight: 400;
 }
+
+.booking a {
+    transition: color 0.1s ease-in-out;
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+}
+
+.booking a:hover {
+    color: var(--highlight-color);
+}
