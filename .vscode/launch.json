@@ -1,0 +1,43 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      // Configuration for the Server
+      "name": "Run Server Dev",           // Descriptive name
+      "type": "node-terminal",            // Runs the command in the integrated terminal
+      "request": "launch",
+      "command": "npm run dev",           // The command to execute
+      "cwd": "${workspaceFolder}/server", // Set the working directory to /server
+      "skipFiles": ["<node_internals>/**"],
+      "presentation": {
+        "group": "devServers",            // Optional: group terminals
+        "panel": "dedicated",             // Use a dedicated terminal panel
+        "reveal": "always",               // Always show the terminal
+        "clear": true                     // Clear the terminal before running
+      }
+    },
+    {
+      // Configuration for the Client
+      "name": "Run Client Dev",             // Descriptive name
+      "type": "node-terminal",              // Runs the command in the integrated terminal
+      "request": "launch",
+      "command": "npm run dev",             // The command to execute
+      "cwd": "${workspaceFolder}/client",   // Set the working directory to /client
+      "skipFiles": ["<node_internals>/**"],
+      "presentation": {
+        "group": "devServers",              // Optional: group terminals
+        "panel": "dedicated",               // Use a dedicated terminal panel
+        "reveal": "always",                 // Always show the terminal
+        "clear": true                       // Clear the terminal before running
+      }
+    }
+  ],
+  "compounds": [
+    {
+      // Compound configuration to run both server and client
+      "name": "Run Server + Client Dev",    // Name for the compound configuration
+      "configurations": ["Run Server Dev", "Run Client Dev"], // Names of the configs to run
+      "stopAll": true                       // Stop both if one is stopped manually
+    }
+  ]
+}
