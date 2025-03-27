@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { BookingStatus, IBooking, INewBooking } from '@gofetch/models/IBooking';
-import { DB_PATH, cache } from './Cache';
+import { DB_PATH, cache } from '@server/services/Cache';
 import path from 'path';
 
 // Get all bookings

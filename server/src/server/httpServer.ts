@@ -4,17 +4,17 @@ import multer from 'multer';
 import path from 'path';
 import cors from 'cors';
 
-import { setupWebSocketServer } from '../server/wsServer';
-import { AllUsersData, getUserByID, RegisterUser, loginUser, removeUser, getMinders, editUser } from '../routers/UserStatic';
-import { AllPets, PetByID, registerPet, removePet, addPetForUser, removePetFromUser } from '../routers/PetStatic';
-import { AllServices, ServiceByID, addServiceForUser, editService, removeService } from '../routers/ServiceStatic';
-import { getBookingsForUser, getAllBookings, getBookingById, getBookingsForPet, getBookingsForMinder, createBooking, updateBookingDetails, updateBookingStatus, deleteBooking } from '../routers/BookingStatic';
-import { saveUploadedImage, saveUserImage, saveUserProfileImage, getImageByFilename, getUploadDir, deleteImageByFilename } from '../routers/ImageStatic';
-import { getChatsForUser, getChatById, addMessage, createChat } from '../routers/MessageStatic';
-import { getNotificationsForUser, markNotificationAsRead, addNotification } from '../routers/NotificationStatic';
+import { setupWebSocketServer } from '@server/server/wsServer';
+import { AllUsersData, getUserByID, RegisterUser, loginUser, removeUser, getMinders, editUser } from '@server/routers/UserStatic';
+import { AllPets, PetByID, registerPet, removePet, addPetForUser, removePetFromUser } from '@server/routers/PetStatic';
+import { AllServices, ServiceByID, addServiceForUser, editService, removeService } from '@server/routers/ServiceStatic';
+import { getBookingsForUser, getAllBookings, getBookingById, getBookingsForPet, getBookingsForMinder, createBooking, updateBookingDetails, updateBookingStatus, deleteBooking } from '@server/routers/BookingStatic';
+import { saveUploadedImage, saveUserImage, saveUserProfileImage, getImageByFilename, getUploadDir, deleteImageByFilename } from '@server/routers/ImageStatic';
+import { getChatsForUser, getChatById, addMessage, createChat } from '@server/routers/MessageStatic';
+import { getNotificationsForUser, markNotificationAsRead, addNotification } from '@server/routers/NotificationStatic';
+import { addReviewForUser, ReviewByID } from '@server/routers/ReviewStatic';
 
-import { log } from '../utils/utils';
-import { addReviewForUser, ReviewByID } from '../routers/ReviewStatic';
+import { log } from '@server/utils/utils';
 
 const app: Express = express();
 const PORT = process.env.PORT || 3001;

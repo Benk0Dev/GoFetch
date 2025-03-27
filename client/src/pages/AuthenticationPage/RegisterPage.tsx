@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import styles from "./AuthenticationPage.module.css";
-import "../../global.css";
-import RegisterForm from "./RegisterForm";
-import BackButton from "../../components/BackButton";
+import styles from "@client/pages/AuthenticationPage/AuthenticationPage.module.css";
+import "@client/global.css"
+import RegisterForm from "@client/pages/AuthenticationPage/RegisterForm";
+import BackButton from "@client/components/BackButton";
 
 function RegisterPage() {
     const navigate = useNavigate();

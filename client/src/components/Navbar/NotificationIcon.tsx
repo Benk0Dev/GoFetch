@@ -1,14 +1,14 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import DropdownMenu from "../Dropdown/DropdownMenu";
-import DropdownItem from "../Dropdown/DropdownItem";
-import styles from "./Navbar.module.css";
 import { Bell } from "lucide-react";
-import { getUserNotifications, markNotificationAsRead } from "../../services/Registry";
-import { INotification } from "../../models/INotification";
-import { useSocket } from "../../context/SocketContext";
-import { useAuth } from "../../context/AuthContext";
-import NotificationContainer from "../Notifications/NotificationContainer";
+import DropdownMenu from "@client/components/Dropdown/DropdownMenu";
+import DropdownItem from "@client/components/Dropdown/DropdownItem";
+import styles from "@client/components/Navbar/Navbar.module.css";
+import { getUserNotifications, markNotificationAsRead } from "@client/services/Registry";
+import { INotification } from "@gofetch/models/INotification";
+import { useSocket } from "@client/context/SocketContext";
+import { useAuth } from "@client/context/AuthContext";
+import NotificationContainer from "@client/components/Notifications/NotificationContainer";
 
 function NotificationIcon() {
     const [menuOpen, setMenuOpen] = useState(false);

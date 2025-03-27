@@ -1,7 +1,7 @@
-import { Role } from "../../models/IUser";
-import styles from "./Navigation.module.css";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
+import { Role } from "@gofetch/models/IUser";
+import styles from "@client/pages/DashboardPage/Navigation.module.css";
+import { useAuth } from "@client/context/AuthContext";
 
 function Navigation() {
     const navigate = useNavigate();

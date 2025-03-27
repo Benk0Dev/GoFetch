@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
-import styles from './NotificationPopup.module.css';
-import { INotification } from '../../models/INotification';
 import { useNavigate } from 'react-router-dom';
-import { markNotificationAsRead } from '../../services/Registry';
+import styles from '@client/components/Notifications/NotificationPopup.module.css';
+import { INotification } from '@gofetch/models/INotification';
+import { markNotificationAsRead } from '@client/services/Registry';
 
 interface NotificationPopupProps {
   notification: INotification;

@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import path from 'path';
+import path from 'path'
 
 const expressPort = 3001;
 const expressHost = 'localhost';
@@ -19,7 +19,8 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@gofetch': path.resolve(__dirname, '../shared/src/*')
+      '@gofetch': path.resolve(__dirname, '../shared/src'),
+      '@client': path.resolve(__dirname, './src'),
     },
   },
 })

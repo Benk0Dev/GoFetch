@@ -1,12 +1,12 @@
 import { useState } from "react";
-import styles from "./AddPet.module.css";
-import formStyles from "../../AuthenticationPage/AuthenticationPage.module.css";
-import BackButton from "../../../components/BackButton";
-import { Gender, Size } from "../../../models/IPet";
-import { useAuth } from "../../../context/AuthContext";
-import { addPetForUser, getUserByIdWithPictures, uploadImage } from "../../../services/Registry";
 import { useNavigate } from "react-router-dom";
-import defaultPet from "../../../assets/images/default-pet-picture.svg";
+import styles from "@client/pages/DashboardPage/Pets/AddPet.module.css";
+import formStyles from "@client/pages/AuthenticationPage/AuthenticationPage.module.css";
+import BackButton from "@client/components/BackButton";
+import { Gender, Size } from "@gofetch/models/IPet";
+import { useAuth } from "@client/context/AuthContext";
+import { addPetForUser, getUserByIdWithPictures, uploadImage } from "@client/services/Registry";
+import defaultPet from "@client/assets/images/default-pet-picture.svg";
 
 function capitalizeWords(str: string): string {
     return str

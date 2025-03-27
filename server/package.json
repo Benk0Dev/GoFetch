@@ -27,5 +27,9 @@
     "@types/socket.io": "^3.0.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2"
+  },
+  "_moduleAliases": {
+    "@server": "dist",
+    "@gofetch": "../shared/dist"
   }
 }

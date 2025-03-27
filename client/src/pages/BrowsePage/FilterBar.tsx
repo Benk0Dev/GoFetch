@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./FilterBar.css";
+import "@client/pages/BrowsePage/FilterBar.css";
 
 interface FilterBarProps {
   onFilterChange: (filters: {

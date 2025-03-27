@@ -1,10 +1,10 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import DropdownMenu from "../Dropdown/DropdownMenu";
-import DropdownItem from "../Dropdown/DropdownItem";
-import styles from "./Navbar.module.css";
-import { Role } from "../../models/IUser";
-import { useAuth } from "../../context/AuthContext";
+import DropdownMenu from "@client/components/Dropdown/DropdownMenu";
+import DropdownItem from "@client/components/Dropdown/DropdownItem";
+import styles from "@client/components/Navbar/Navbar.module.css";
+import { Role } from "@gofetch/models/IUser";
+import { useAuth } from "@client/context/AuthContext";
 
 function ProfileIcon() {
   const { user, role, logout, switchRole } = useAuth();

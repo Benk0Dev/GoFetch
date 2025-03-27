@@ -1,6 +1,6 @@
 import { ArrowLeft } from "lucide-react";
-import styles from "./BackButton.module.css";
 import { useNavigate } from "react-router-dom";
+import styles from "@client/components/BackButton.module.css";
 
 function BackButton() {
     const navigate = useNavigate();

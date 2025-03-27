@@ -16,7 +16,8 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
-      "@gofetch": ["../shared/src/*"],
+      "@gofetch/*": ["../shared/src/*"],
+      "@client/*": ["./src/*"]
     },
 
     /* Linting */

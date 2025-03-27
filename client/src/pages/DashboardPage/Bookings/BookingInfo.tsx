@@ -1,10 +1,10 @@
-import styles from "./Bookings.module.css";
-import { useAuth } from "../../../context/AuthContext";
-import { Calendar, Clock, MapPin, PawPrint, ArrowDown, UserRound, NotebookPen } from "lucide-react";
-import { Role } from "../../../models/IUser";
-import { Booking } from "./Bookings";
 import { useState } from "react";
-import { Gender } from "../../../models/IPet";
+import { Calendar, Clock, MapPin, PawPrint, ArrowDown, UserRound, NotebookPen } from "lucide-react";
+import styles from "@client/pages/DashboardPage/Bookings/Bookings.module.css";
+import { useAuth } from "@client/context/AuthContext";
+import { Role } from "@gofetch/models/IUser";
+import { Booking } from "@client/pages/DashboardPage/Bookings/Bookings";
+import { Gender } from "@gofetch/models/IPet";
 
 function BookingInfo({ booking }: { booking: Booking }) {
     const { user } = useAuth();

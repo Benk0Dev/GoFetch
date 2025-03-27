@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { INotification } from '../../models/INotification';
-import NotificationPopup from './NotificationPopup';
-import styles from './NotificationContainer.module.css';
+import { INotification } from '@gofetch/models/INotification';
+import NotificationPopup from '@client/components/Notifications/NotificationPopup';
+import styles from '@client/components/Notifications/NotificationContainer.module.css';
 
 // Import notification sound
 import notificationSound from '../../assets/sounds/notification.mp3';

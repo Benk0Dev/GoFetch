@@ -1,1 +1,0 @@
-export type { IReview } from "../../../server/src/models/IReview";

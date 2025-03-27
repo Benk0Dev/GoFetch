@@ -1,13 +1,13 @@
-import { IRegisterdUser, IUser } from "../models/IUser";
-import { BookingStatus, INewBooking } from "../models/IBooking";
-import { clearUser, getUserId, setUserId } from "../utils/StorageManager";
+import { IPet } from "@gofetch/models/IPet";
+import { IChat } from "@gofetch/models/IMessage";
+import { IReview } from "@gofetch/models/IReview";
+import { IService } from "@gofetch/models/IService";
+import { IRegisterdUser, IUser } from "@gofetch/models/IUser";
+import { BookingStatus, INewBooking } from "@gofetch/models/IBooking";
+import { clearUser, getUserId, setUserId } from "@client/utils/StorageManager";
+import defaultProfile from "@client/assets/images/default-profile-picture.svg";
+import defaultPet from "@client/assets/images/default-pet-picture.svg";
 import imageCompression from 'browser-image-compression';
-import defaultProfile from "../assets/images/default-profile-picture.svg"
-import defaultPet from "../assets/images/default-pet-picture.svg"
-import { IPet } from "../models/IPet";
-import { IService } from "../models/IService";
-import { IReview } from "../models/IReview";
-import { IChat } from "../models/IMessage";
 
 const API_URL = import.meta.env.VITE_SERVER_HOST_URL || "http://localhost:3001";
 
