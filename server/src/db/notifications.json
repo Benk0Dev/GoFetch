@@ -108,5 +108,15 @@
     "read": false,
     "createdAt": "2025-03-27T22:11:45.663Z",
     "updatedAt": "2025-03-27T22:11:45.663Z"
+  },
+  {
+    "id": 12,
+    "userId": 5,
+    "message": "Sup",
+    "type": "message",
+    "linkId": 120,
+    "read": false,
+    "createdAt": "2025-03-28T21:17:10.889Z",
+    "updatedAt": "2025-03-28T21:17:10.889Z"
   }
 ]

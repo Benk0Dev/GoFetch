@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { editUser, getUserByID, getUserImages, isUserMinder } from '@server/routers/UserStatic';
+import { editUser, getUserByID, getUserImages, isUserMinder } from '@server/static/UserStatic';
 
 // Define the upload directory path
 const uploadDir = path.join(__dirname, '../images');
