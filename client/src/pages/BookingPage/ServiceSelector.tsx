@@ -1,7 +1,7 @@
 import React from "react";
 import { Clock } from "lucide-react";
-import { IService } from "../../models/IService";
-import styles from "./ServiceSelector.module.css";
+import { IService } from "@gofetch/models/IService";
+import styles from "@client/pages/BookingPage/ServiceSelector.module.css";
 
 interface ServiceSelectorProps {
   services: IService[];

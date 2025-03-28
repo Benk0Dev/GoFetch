@@ -1,10 +1,10 @@
-import { useAuth } from "../../../context/AuthContext";
-import styles from "./Home.module.css";
-import dashboardStyles from "../Dashboard.module.css";
-import { Role } from "../../../models/IUser";
-import Statistic from "./Statistic";
-import { PawPrint, Calendar, Star, Briefcase } from "lucide-react";
-import { BookingStatus, IBooking } from "../../../models/IBooking";
+import { PawPrint, Calendar, Star, Briefcase, UserRound, Flag } from "lucide-react";
+import { useAuth } from "@client/context/AuthContext";
+import styles from "@client/pages/DashboardPage/Home/Home.module.css";
+import dashboardStyles from "@client/pages/DashboardPage/Dashboard.module.css";
+import { Role } from "@gofetch/models/IUser";
+import Statistic from "@client/pages/DashboardPage/Home/Statistic";
+import { BookingStatus, IBooking } from "@gofetch/models/IBooking";
 
 function Home() {
     const { user, role } = useAuth();
@@ -23,7 +23,7 @@ function Home() {
     return (
         <div className={dashboardStyles.dashboardSection}>
             <h2>Hello, {fname}!</h2>
-            <p>An overview of your account.</p>
+            {role === Role.ADMIN ? <p>An overview of the system.</p> : <p>An overview of your account.</p>}
             <div className={styles.statsGrid}>
 
                 {role === Role.OWNER && (
@@ -62,6 +62,21 @@ function Home() {
                             title="Booking Requests" 
                             value={minderBookingRequests.toString()} 
                             icon={<Calendar size={18} strokeWidth={2} />} 
+                        />
+                    </>
+                )}
+
+                {role === Role.ADMIN && (
+                    <>
+                        <Statistic 
+                            title="Total Users" 
+                            value={"0"} 
+                            icon={<UserRound size={18} strokeWidth={2} />} 
+                        />
+                        <Statistic 
+                            title="Reports" 
+                            value={"0"} 
+                            icon={<Flag size={18} strokeWidth={2} />} 
                         />
                     </>
                 )}

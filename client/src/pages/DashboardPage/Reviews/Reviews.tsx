@@ -1,11 +1,12 @@
-import styles from "./Reviews.module.css";
-import dashboardStyles from "../Dashboard.module.css";
-import { useAuth } from "../../../context/AuthContext";
-import { Star } from "lucide-react";
-import { IReview } from "../../../models/IReview";
 import { useEffect, useState } from "react";
-import { getUserByIdWithPictures } from "../../../services/Registry";
-import defaultProfile from "../../../assets/images/default-profile-picture.svg";
+import { Star } from "lucide-react";
+import styles from "@client/pages/DashboardPage/Reviews/Reviews.module.css";
+import dashboardStyles from "@client/pages/DashboardPage/Dashboard.module.css";
+import { useAuth } from "@client/context/AuthContext";
+import { IReview } from "@gofetch/models/IReview";
+import { getUserByIdWithPictures } from "@client/services/Registry";
+import defaultProfile from "@client/assets/images/default-profile-picture.svg";
+import { Link } from "react-router-dom";
 
 function Reviews() {
     const { user } = useAuth();
@@ -80,11 +81,13 @@ function Reviews() {
                             return (
                                 <div className={styles.review}>
                                     <div className={styles.reviewHeader}>
-                                        <img
-                                            src={reviewer ? reviewer.primaryUserInfo.profilePic : defaultProfile}
-                                            alt={reviewer ? `${reviewer.name.fname} ${reviewer.name.sname}` : "Unknown Reviewer"}
-                                        />
-                                        <h6>{reviewer ? `${reviewer.name.fname} ${reviewer.name.sname}` : "Unknown Reviewer"}</h6>
+                                        <Link to={`/users/${reviewer.id}`} className={styles.reviewer}>
+                                            <img
+                                                src={reviewer ? reviewer.primaryUserInfo.profilePic : defaultProfile}
+                                                alt={reviewer ? `${reviewer.name.fname} ${reviewer.name.sname}` : "Unknown Reviewer"}
+                                            />
+                                            <h6>{reviewer ? `${reviewer.name.fname} ${reviewer.name.sname}` : "Unknown Reviewer"}</h6>
+                                        </Link>
                                         <div className={styles.starRating}>
                                             {[1, 2, 3, 4, 5].map((rating) => (
                                                 <Star size={18} className={review.rating >= rating ? styles.solidStar : ""} />

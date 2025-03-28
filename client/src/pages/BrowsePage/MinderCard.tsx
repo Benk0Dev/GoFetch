@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import "./MinderCard.css";
 import { MapPin } from "lucide-react";
-import { useAuth } from "../../context/AuthContext";
-import { Role } from "../../models/IUser";
+import "@client/pages/BrowsePage/MinderCard.css";
+import { useAuth } from "@client/context/AuthContext";
+import { Role } from "@gofetch/models/IUser";
 
 function MinderCard({ minder }: { minder: any }) {
   const { user } = useAuth();

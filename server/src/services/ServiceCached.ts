@@ -1,6 +1,6 @@
-import { IService } from '../models/IService';
-import { saveUsersToFile } from './UserCached';
-import { cache, DB_PATH } from './Cache';
+import { IService } from '@gofetch/models/IService';
+import { saveUsersToFile } from '@server/services/UserCached';
+import { cache, DB_PATH } from '@server/services/Cache';
 import fs from 'fs';
 
 // Get cached services

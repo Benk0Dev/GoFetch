@@ -20,7 +20,7 @@
         "street": "",
         "city": "Bristol",
         "postcode": "",
-        "country": ""
+        "country": "United Kingdom"
       }
     },
     "ownerRoleInfo": {
@@ -60,7 +60,7 @@
         "street": "",
         "city": "Leeds",
         "postcode": "",
-        "country": ""
+        "country": "United Kingdom"
       }
     },
     "ownerRoleInfo": {
@@ -101,7 +101,7 @@
         "street": "",
         "city": "Manchester",
         "postcode": "",
-        "country": ""
+        "country": "United Kingdom"
       }
     },
     "ownerRoleInfo": {
@@ -150,7 +150,7 @@
         "street": "",
         "city": "Brighton",
         "postcode": "",
-        "country": ""
+        "country": "United Kingdom"
       }
     },
     "ownerRoleInfo": {
@@ -190,7 +190,7 @@
       "petminder",
       "petowner"
     ],
-    "currentRole": "petowner",
+    "currentRole": "petminder",
     "primaryUserInfo": {
       "profilePic": "",
       "dob": "1995-08-25T00:00:00.000Z",
@@ -198,7 +198,7 @@
         "street": "",
         "city": "Nottingham",
         "postcode": "",
-        "country": ""
+        "country": "United Kingdom"
       }
     },
     "ownerRoleInfo": {
@@ -207,11 +207,12 @@
         2
       ],
       "bookingIds": [
-        7,
+        9,
         1,
         2,
         3,
-        4
+        4,
+        7
       ]
     },
     "minderRoleInfo": {
@@ -228,9 +229,10 @@
       ],
       "availability": "Flexible",
       "bookingIds": [
-        7,
+        9,
         4,
-        6
+        6,
+        7
       ],
       "reviewIds": [
         1,
@@ -294,7 +296,7 @@
       "petminder",
       "petowner"
     ],
-    "currentRole": "petowner",
+    "currentRole": "petminder",
     "primaryUserInfo": {
       "profilePic": "15",
       "dob": "2004-12-22T00:00:00.000Z",
@@ -302,7 +304,7 @@
         "street": "",
         "city": "London",
         "postcode": "",
-        "country": ""
+        "country": "United Kingdom"
       }
     },
     "ownerRoleInfo": {
@@ -311,8 +313,9 @@
         6
       ],
       "bookingIds": [
-        6,
-        5
+        8,
+        5,
+        6
       ]
     },
     "minderRoleInfo": {
@@ -320,12 +323,54 @@
         9,
         10
       ],
-      "rating": 0,
+      "rating": 5,
       "bio": "I love taking care of dogs. I have two dogs of my own and have the privilege to walk them everyday. I'm a student so I have quite a flexible schedule, so we can easily arrange a time for any of my services.",
       "pictures": [
         "15",
         "16"
       ],
+      "availability": "Flexible",
+      "bookingIds": [
+        8
+      ],
+      "reviewIds": [
+        9
+      ]
+    }
+  },
+  {
+    "id": 8,
+    "name": {
+      "fname": "Alex",
+      "sname": "Smith"
+    },
+    "loginDetails": {
+      "email": "alex@example.com",
+      "password": "password"
+    },
+    "roles": [
+      "admin"
+    ],
+    "currentRole": "admin",
+    "primaryUserInfo": {
+      "profilePic": "",
+      "dob": "2000-10-10T00:00:00.000Z",
+      "address": {
+        "street": "",
+        "city": "London",
+        "postcode": "",
+        "country": "United Kingdom"
+      }
+    },
+    "ownerRoleInfo": {
+      "petIds": [],
+      "bookingIds": []
+    },
+    "minderRoleInfo": {
+      "serviceIds": [],
+      "rating": 0,
+      "bio": "",
+      "pictures": [],
       "availability": "Flexible",
       "bookingIds": [],
       "reviewIds": []

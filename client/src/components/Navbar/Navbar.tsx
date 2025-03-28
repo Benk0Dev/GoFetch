@@ -1,17 +1,18 @@
 import { useLocation, Link } from "react-router-dom";
-import styles from "./Navbar.module.css";
-import "../../global.css";
-import ProfileIcon from "./ProfileIcon";
-import NotificationIcon from "./NotificationIcon";
-import logo from "../../assets/images/logo.svg";
 import { Mail } from "lucide-react";
-import { useAuth } from "../../context/AuthContext";
+import styles from "@client/components/Navbar/Navbar.module.css";
+import "@client/global.css";
+import ProfileIcon from "@client/components/Navbar/ProfileIcon";
+import NotificationIcon from "@client/components/Navbar/NotificationIcon";
+import logo from "@client/assets/images/logo.svg";
+import { useAuth } from "@client/context/AuthContext";
+import { Role } from "@gofetch/models/IUser";
 
 function Navbar() {
   const { role, loading } = useAuth();
   const location = useLocation();
 
-  const homeLink = role ? "/dashboard" : "/";
+  const homeLink = role === Role.OWNER || role === Role.MINDER ? "/dashboard" : "/";
 
   return (
     <nav className={styles.navbar} id="navbar">

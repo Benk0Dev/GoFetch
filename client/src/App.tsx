@@ -1,21 +1,22 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import Navbar from "./components/Navbar/Navbar";
-import Footer from "./components/Footer";
-import LandingPage from "./pages/LandingPage/LandingPage";
-import LoginPage from "./pages/AuthenticationPage/LoginPage";
-import RegisterPage from "./pages/AuthenticationPage/RegisterPage";
-import BecomeRolePage from "./pages/AuthenticationPage/BecomeRolePage";
-import ProfilePage from "./pages/ProfilePage/ProfilePage";
-import BrowsePage from "./pages/BrowsePage/BrowsePage";
-import DashboardPage from "./pages/DashboardPage/Dashboard";
-import MessagingPage from "./pages/MessagingPage/MessagingPage";
-import ChatPage from "./pages/MessagingPage/ChatPage";
-import BookingPage from "./pages/BookingPage/BookingPage";
-import AddPetPage from "./pages/DashboardPage/Pets/AddPet";
-import PetDetailsPage from "./pages/DashboardPage/Pets/PetDetails";
-import { useAuth } from "./context/AuthContext";
-import { SocketProvider } from "./context/SocketContext";
-import { Role } from "./models/IUser";
+import Navbar from "@client/components/Navbar/Navbar";
+import Footer from "@client/components/Footer";
+import LandingPage from "@client/pages/LandingPage/LandingPage";
+import LoginPage from "@client/pages/AuthenticationPage/LoginPage";
+import RegisterPage from "@client/pages/AuthenticationPage/RegisterPage";
+import BecomeRolePage from "@client/pages/AuthenticationPage/BecomeRolePage";
+import ProfilePage from "@client/pages/ProfilePage/ProfilePage";
+import BrowsePage from "@client/pages/BrowsePage/BrowsePage";
+import UserPage from "@client/pages/UserPage/UserPage";
+import DashboardPage from "@client/pages/DashboardPage/Dashboard";
+import MessagingPage from "@client/pages/MessagingPage/MessagingPage";
+import ChatPage from "@client/pages/MessagingPage/ChatPage";
+import BookingPage from "@client/pages/BookingPage/BookingPage";
+import AddPetPage from "@client/pages/DashboardPage/Pets/AddPet";
+import PetDetailsPage from "@client/pages/DashboardPage/Pets/PetDetails";
+import { useAuth } from "@client/context/AuthContext";
+import { SocketProvider } from "@client/context/SocketContext";
+import { Role } from "@gofetch/models/IUser";
 
 function App() {
   const { role, loading } = useAuth();
@@ -30,7 +31,7 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={isGuest ? <LandingPage /> : <Navigate to="/dashboard" replace />}
+            element={isGuest || role === Role.ADMIN ? <LandingPage /> : <Navigate to="/dashboard" replace />}
           />
           <Route
             path="/login"
@@ -72,6 +73,7 @@ function App() {
             <Route path=":id" element={<MessagingPage />} />
           </Route>
           <Route path="/dashboard/pets/:id" element={role === Role.OWNER ? <PetDetailsPage /> : <Navigate to="/" replace />} />
+          <Route path="/users/:id" element={<UserPage />} />
         </Routes>
         <Footer />
       </Router>

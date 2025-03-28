@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../../../context/AuthContext";
-import styles from "./Bookings.module.css";
-import navigationStyles from "../Navigation.module.css";
-import dashboardStyles from "../Dashboard.module.css";
-import { BookingStatus, IBooking } from "../../../models/IBooking";
-import { Role } from "../../../models/IUser";
-import OwnerBooking from "./OwnerBooking";
-import MinderBooking from "./MinderBooking";
-import { addReviewForUser, getServiceById, getUserById, getUserByIdWithPictures, setBookingStatus, startChat } from "../../../services/Registry";
-import { IPet } from "../../../models/IPet";
 import { useNavigate } from "react-router-dom";
-import CreateReview from "./CreateReview";
-import { IReview } from "../../../models/IReview";
+import { useAuth } from "@client/context/AuthContext"
+import styles from "@client/pages/DashboardPage/Bookings/Bookings.module.css";
+import navigationStyles from "@client/pages/DashboardPage/Navigation.module.css";
+import dashboardStyles from "@client/pages/DashboardPage/Dashboard.module.css";
+import { BookingStatus, IBooking } from "@gofetch/models/IBooking";
+import { Role } from "@gofetch/models/IUser";
+import OwnerBooking from "@client/pages/DashboardPage/Bookings/OwnerBooking";
+import MinderBooking from "@client/pages/DashboardPage/Bookings/MinderBooking";
+import { addReviewForUser, getServiceById, getUserById, getUserByIdWithPictures, setBookingStatus, startChat } from "@client/services/Registry";
+import { IPet } from "@gofetch/models/IPet";
+import CreateReview from "@client/pages/DashboardPage/Bookings/CreateReview";
+import { IReview } from "@gofetch/models/IReview";
 
 export interface Booking {
     id: number;

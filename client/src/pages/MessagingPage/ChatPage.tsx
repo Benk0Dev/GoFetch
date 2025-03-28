@@ -1,11 +1,11 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { Link, Outlet, useParams, useNavigate } from "react-router-dom";
-import { IChat } from "../../models/IMessage";
-import { getUserChats, getUserByIdWithPictures } from "../../services/Registry";
-import styles from './MessagingPage.module.css';
-import { useAuth } from "../../context/AuthContext";
-import { useSocket } from "../../context/SocketContext";
-import { Role } from "../../models/IUser";
+import { IChat } from "@gofetch/models/IMessage";
+import { Role } from "@gofetch/models/IUser";
+import { getUserChats, getUserByIdWithPictures } from "@client/services/Registry";
+import styles from '@client/pages/MessagingPage/MessagingPage.module.css';
+import { useAuth } from "@client/context/AuthContext";
+import { useSocket } from "@client/context/SocketContext";
 
 function MessagingPage() {
     const [chats, setChats] = useState<IChat[]>([]);
@@ -76,8 +76,11 @@ function MessagingPage() {
                 try {
                     const otherUser = await getUserByIdWithPictures(otherUserId);
                     if (otherUser) {
-                        namesMap[chat.id.toString()] = 
-                            `${otherUser.name.fname} ${otherUser.name.sname}`;
+                        let name = `${otherUser.name.fname} ${otherUser.name.sname}`;
+                        if (otherUser.roles.includes(Role.ADMIN)) {
+                            name += " (Admin)";
+                        }
+                        namesMap[chat.id.toString()] = name;
                     } else {
                         namesMap[chat.id.toString()] = "Unknown User";
                     }
@@ -147,55 +150,57 @@ function MessagingPage() {
     }, [chats, fetchChatUserNames]);
 
     if (loading && chats.length === 0) {
-        return <div>Loading chats...</div>;
+        return null;
     }
 
     return (
-        <div className={styles.messagingContainer}>
-            <div className={styles.chatsSidebar}>
-                <h2>Chats</h2>
-                {chats.length > 0 ? (
-                    <div className={styles.chatsList}>
-                        {chats.map((chat: IChat) => (
-                            <Link 
-                                to={`/chats/${chat.id}`} 
-                                key={chat.id} 
-                                className={`${styles.chatListItem} ${id === chat.id?.toString() ? styles.activeChatItem : ''}`}
-                            >
-                                <div className={styles.chatPreview}>
-                                    <h3>
-                                        {chatUserNames[chat.id.toString()] || 
-                                            <span className={styles.loadingName}>Loading...</span>}
-                                    </h3>
-                                    <p className={styles.previewMessage}>
-                                        {chat.lastMessage || "No messages yet"}
-                                    </p>
-                                </div>
-                            </Link>
-                        ))}
-                    </div>
-                ) : (
-                    <div className={styles.noChats}>
-                        <p>No conversations yet</p>
-                        {user.currentRole === Role.OWNER && (
-                            <Link to="/browse" className="btn btn-primary">
-                            Browse Pet Minders
-                            </Link>
-                        )}
-                        
-                    </div>
-                )}
-            </div>
-            
-            {/* Chat window - will display the Outlet (ChatPage) */}
-            <div className={styles.chatWindowContainer}>
-                {id ? (
-                    <Outlet />
-                ) : (
-                    <div className={styles.noChatSelected}>
-                        <p>Select a conversation</p>
-                    </div>
-                )}
+        <div className={`container ${styles.messagingPage}`}>
+            <div className={styles.messagingContainer}>
+                <div className={styles.chatsSidebar}>
+                    <h2>Chats</h2>
+                    {chats.length > 0 ? (
+                        <div className={styles.chatsList}>
+                            {chats.map((chat: IChat) => (
+                                <Link 
+                                    to={`/chats/${chat.id}`} 
+                                    key={chat.id} 
+                                    className={`${styles.chatListItem} ${id === chat.id?.toString() ? styles.activeChatItem : ''}`}
+                                >
+                                    <div className={styles.chatPreview}>
+                                        <h3>
+                                            {chatUserNames[chat.id.toString()] || 
+                                                <span className={styles.loadingName}>Loading...</span>}
+                                        </h3>
+                                        <p className={styles.previewMessage}>
+                                            {chat.lastMessage || "No messages yet"}
+                                        </p>
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className={styles.noChats}>
+                            <p>No conversations yet</p>
+                            {user.currentRole === Role.OWNER && (
+                                <Link to="/browse" className="btn btn-primary">
+                                Browse Pet Minders
+                                </Link>
+                            )}
+                            
+                        </div>
+                    )}
+                </div>
+                
+                {/* Chat window - will display the Outlet (ChatPage) */}
+                <div className={styles.chatWindowContainer}>
+                    {id ? (
+                        <Outlet />
+                    ) : (
+                        <div className={styles.noChatSelected}>
+                            <p>Select a conversation</p>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );

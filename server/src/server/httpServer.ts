@@ -4,20 +4,21 @@ import multer from 'multer';
 import path from 'path';
 import cors from 'cors';
 
-import { setupWebSocketServer } from '../server/wsServer';
-import { AllUsersData, getUserByID, RegisterUser, loginUser, removeUser, getMinders, editUser } from '../routers/UserStatic';
-import { AllPets, PetByID, registerPet, removePet, addPetForUser, removePetFromUser } from '../routers/PetStatic';
-import { AllServices, ServiceByID, addServiceForUser, editService, removeService } from '../routers/ServiceStatic';
-import { getBookingsForUser, getAllBookings, getBookingById, getBookingsForPet, getBookingsForMinder, createBooking, updateBookingDetails, updateBookingStatus, deleteBooking } from '../routers/BookingStatic';
-import { saveUploadedImage, saveUserImage, saveUserProfileImage, getImageByFilename, getUploadDir, deleteImageByFilename } from '../routers/ImageStatic';
-import { getChatsForUser, getChatById, addMessage, createChat } from '../routers/MessageStatic';
-import { getNotificationsForUser, markNotificationAsRead, addNotification } from '../routers/NotificationStatic';
+import { setupWebSocketServer } from '@server/server/wsServer';
+import { AllUsersData, getUserByID, RegisterUser, loginUser, removeUser, getMinders, editUser } from '@server/routers/UserStatic';
+import { AllPets, PetByID, registerPet, removePet, addPetForUser, removePetFromUser } from '@server/routers/PetStatic';
+import { AllServices, ServiceByID, addServiceForUser, editService, removeService } from '@server/routers/ServiceStatic';
+import { getBookingsForUser, getAllBookings, getBookingById, getBookingsForPet, getBookingsForMinder, createBooking, updateBookingDetails, updateBookingStatus, deleteBooking } from '@server/routers/BookingStatic';
+import { saveUploadedImage, saveUserImage, saveUserProfileImage, getImageByFilename, getUploadDir, deleteImageByFilename } from '@server/routers/ImageStatic';
+import { getChatsForUser, getChatById, addMessage, createChat } from '@server/routers/MessageStatic';
+import { getNotificationsForUser, markNotificationAsRead, addNotification } from '@server/routers/NotificationStatic';
+import { addReviewForUser, ReviewByID } from '@server/routers/ReviewStatic';
+import { addReport, getAllReports, getReportByID } from '@server/routers/ReportStatic';
 
-import { log } from '../utils/utils';
-import { addReviewForUser, ReviewByID } from '../routers/ReviewStatic';
+import { log } from '@server/utils/utils';
 
 const app: Express = express();
-const port = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3001;
 const server = http.createServer(app);
 
 // Initialize Socket.IO server
@@ -70,6 +71,14 @@ app.use(express.urlencoded({ extended: true }));
 // Logging middleware
 app.use((req: Request, res: Response, next) => {
     log(req.url, req);
+    next();
+});
+
+// Middleware to strip /v1 prefix from API routes
+app.use((req: Request, res: Response, next) => {
+    if (req.url.startsWith('/v1')) {
+        req.url = req.url.replace('/v1', '');
+    }
     next();
 });
 
@@ -376,6 +385,27 @@ app.post('/user/:userId/review', (req, res) => {
 
 // #endregion
 
+// #region Reports Routes
+// Add a report
+app.post('/report', (req, res) => {
+    const result = addReport(req.body);
+    res.status(result.success ? 201 : 400).send(result.report);
+});
+
+// Get all reports
+app.get('/reports', (req, res) => {
+    const result = getAllReports();
+    res.status(result.success ? 200 : 404).send(result.reports);
+});
+
+// Get report by ID
+app.get('/report/:reportId', (req, res) => {
+    const result = getReportByID(parseInt(req.params.reportId));
+    res.status(result.success ? 200 : 404).send(result.report);
+});
+
+// #endregion
+
 // Error handling middleware
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     console.error(err.stack);
@@ -383,8 +413,8 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 });
 
 export function startHttpServer() {
-    server.listen(port, () => {
-        console.log(`Server is running on http://localhost:${port}`);
+    server.listen(PORT, () => {
+        console.log(`Server is running on http://localhost:${PORT}`);
         console.log(`Socket.IO server is running`);
     });
     return server;

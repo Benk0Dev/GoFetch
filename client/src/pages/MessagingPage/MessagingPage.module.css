@@ -1,11 +1,7 @@
-.pageContainer {
-    max-width: 75rem;
-    margin: 0 auto;
-    padding: 1.25rem;
-}
-
-.pageContainer>h1 {
-    text-align: center;
+.messagingPage {
+    padding: 40px 0;
+    display: flex;
+    justify-content: center;
 }
 
 .chatsContainer {
@@ -311,4 +307,16 @@
 
 .chatError {
     color: var(--error-color);
+}
+
+.chatHeader a {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.chatsSidebar h2, .chatHeader {
+    height: 74px;
+    display: flex;
+    align-items: center;
 }

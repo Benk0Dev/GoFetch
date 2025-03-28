@@ -1,5 +1,5 @@
-import { INotification } from '../models/INotification';
-import { cache, DB_PATH } from './Cache';
+import { INotification } from '@gofetch/models/INotification';
+import { cache, DB_PATH } from '@server/services/Cache';
 import fs from 'fs';
 import path from 'path';
 

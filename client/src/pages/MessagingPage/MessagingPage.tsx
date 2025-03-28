@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
-import { getChatById, sendMessage, getUserById, getUserByIdWithPictures } from '../../services/Registry';
-import { IChat, IMessage } from '../../models/IMessage';
-import { useAuth } from '../../context/AuthContext';
-import { useSocket } from '../../context/SocketContext';
-import styles from './MessagingPage.module.css';
+import { Link, useParams } from 'react-router-dom';
+import { getChatById, sendMessage, getUserByIdWithPictures } from '@client/services/Registry';
+import { IChat, IMessage } from '@gofetch/models/IMessage';
+import { useAuth } from '@client/context/AuthContext';
+import { useSocket } from '@client/context/SocketContext';
+import styles from '@client/pages/MessagingPage/MessagingPage.module.css';
+import { Role } from '@gofetch/models/IUser';
 
 function ChatPage() {
     const { id } = useParams<{ id: string }>();
@@ -151,9 +152,10 @@ function ChatPage() {
             if (!chat) return;
             const otherUserId = chat.users.find(userId => userId !== user.id) || null;
             if (otherUserId) {
-                const otherUserName = await getUserByIdWithPictures(otherUserId);
-                setChatName(otherUserName ? `${otherUserName.name.fname} ${otherUserName.name.sname}` : 'Chat');
-                setUserPicture(otherUserName && otherUserName.primaryUserInfo.profilePic);
+                const otherUser = await getUserByIdWithPictures(otherUserId);
+                setChatName(otherUser ? `${otherUser.name.fname} ${otherUser.name.sname}` : 'Chat');
+                otherUser && otherUser.roles.includes(Role.ADMIN) ? setChatName(prev => prev + ' (Admin)') : null;
+                setUserPicture(otherUser && otherUser.primaryUserInfo.profilePic);
             }
         };
         fetchOtherUserInfo();
@@ -174,11 +176,13 @@ function ChatPage() {
     return (
         <div className={styles.chatContainer}>
             <div className={styles.chatHeader}>
-                <img 
-                    src={userPicture} 
-                    alt="User" 
-                />
-                <h2>{chatName}</h2>
+                <Link to={`/users/${chat.users.find(userId => userId !== user.id)}`} className={styles.backButton}>
+                    <img 
+                        src={userPicture} 
+                        alt="User" 
+                    />
+                    <h2>{chatName}</h2>
+                </Link>
             </div>
             
             <div className={styles.messagesContainer}>

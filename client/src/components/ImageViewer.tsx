@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { X } from "lucide-react";
-import styles from "./ImageViewer.module.css";
+import styles from "@client/components/ImageViewer.module.css";
 
 interface ImageViewerProps {
     imageSrc: string;
