@@ -14,8 +14,6 @@ import ReviewRouter from '@server/routers/ReviewRouter';
 import ServiceRouter from '@server/routers/ServiceRouter';
 import UserRouter from '@server/routers/UserRouter';
 
-
-
 const app: Express = express();
 const PORT = process.env.PORT || 3001;
 const server = http.createServer(app);

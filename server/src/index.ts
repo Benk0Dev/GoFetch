@@ -13,11 +13,11 @@ moduleAlias.addAliases({
 });
 
 import { initCache } from '@server/services/Cache';
-import { server, startHttpServer } from '@server/server/httpServer';
+import { startHttpServer } from '@server/server/httpServer';
 
 initCache();
 
-const httpServer = startHttpServer();
+startHttpServer();
 
 // Graceful shutdown
 process.on('SIGINT', () => {
