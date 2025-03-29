@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { IPayment, Status } from '@gofetch/models/IPayment';
-import { cache, DB_PATH } from '@server/services/Cache';
+import { cache, DB_PATH } from '@server/utils/Cache';
 
 export function getCachedPayments(): IPayment[] {
     try {

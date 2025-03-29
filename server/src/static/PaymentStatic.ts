@@ -1,6 +1,6 @@
 import { IPayment, Status } from '@gofetch/models/IPayment';
 import { addPaymentCached, getCachedPayments } from '@server/services/PaymentCached';
-import { DB_PATH, cache } from '@server/services/Cache';
+import { DB_PATH, cache } from '@server/utils/Cache';
 import fs from 'fs';
 
 export function getPaymentByID(paymentId: number) {
