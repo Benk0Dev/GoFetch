@@ -13,6 +13,7 @@ import ReportRouter from '@server/routers/ReportRouter';
 import ReviewRouter from '@server/routers/ReviewRouter';
 import ServiceRouter from '@server/routers/ServiceRouter';
 import UserRouter from '@server/routers/UserRouter';
+import PaymentRouter from '@server/routers/PaymentRouter';
 
 const app: Express = express();
 const PORT = process.env.PORT || 3001;
@@ -28,7 +29,8 @@ const routers = [
     ReportRouter,
     ReviewRouter,
     ServiceRouter,
-    UserRouter
+    UserRouter,
+    PaymentRouter,
 ];
 
 routers.forEach(router => app.use(router));

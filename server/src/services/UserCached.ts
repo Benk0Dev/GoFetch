@@ -84,7 +84,7 @@ export function RegisterUserCache(user: IRegisterdUser) {
       },
       loginDetails: {
         email: user.email,
-        password: user.password, // Note: In a real app, we should hash passwords(idc for now)
+        password: user.password, // Note: In a real app, we should hash passwords
       },
       roles: [user.role],
       currentRole: user.role,
