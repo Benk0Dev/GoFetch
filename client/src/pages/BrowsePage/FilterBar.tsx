@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import "./FilterBar.css";
-import { IService, IType } from "../../models/IService";
+import { IService, Type } from "../../models/IService";
 
 interface FilterBarProps {
   onFilterChange: (filters: {
     location: string;
     rating: number;
     price: number;
-    service: IType;
+    service: Type;
     sort: string;
   }) => void;
 }
@@ -16,7 +16,7 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
   const [location, setLocation] = useState("");
   const [rating, setRating] = useState(0);
   const [price, setPrice] = useState(0);
-  const [service, setService] = useState<IType>(IType.WALK);
+  const [service, setService] = useState<Type>(Type.WALK);
   const [sortOption, setSortOption] = useState("rating");
   const [showAdvanced, setShowAdvanced] = useState(false);
 
@@ -28,7 +28,7 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
     setLocation("");
     setRating(0);
     setPrice(0);
-    setService(IType.WALK);
+    setService(Type.WALK);
     setSortOption("rating");
   };
 
@@ -79,18 +79,19 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
           <label>Select Service</label>
           <select
             value={service}
-            onChange={(e) => setService(e.target.value as IType)}
+            onChange={(e) => setService(e.target.value as Type)}
           >
-            <option value={IType.WALK}>Dog Walking</option>
-            <option value={IType.SIT}>Pet Sitting</option>
-            <option value={IType.CARE}>Day Care</option>
-            <option value={IType.BOARD}>Overnight Boarding</option>
-            <option value={IType.GROOM}>Grooming</option>
-            <option value={IType.TRAIN}>Training</option>
-            <option value={IType.VISIT}>Home Visit</option>
-            <option value={IType.MEDICATE}>Medication Administration</option>
-            <option value={IType.TRANSPORT}>Pet Transport</option>
-            <option value={IType.OTHER}>Other Service</option>
+            <option value="">All Services</option>{" "}
+            <option value={Type.WALK}>Dog Walking</option>
+            <option value={Type.SIT}>Pet Sitting</option>
+            <option value={Type.CARE}>Day Care</option>
+            <option value={Type.BOARD}>Overnight Boarding</option>
+            <option value={Type.GROOM}>Grooming</option>
+            <option value={Type.TRAIN}>Training</option>
+            <option value={Type.VISIT}>Home Visit</option>
+            <option value={Type.MEDICATE}>Medication Administration</option>
+            <option value={Type.TRANSPORT}>Pet Transport</option>
+            <option value={Type.OTHER}>Other Service</option>
           </select>
 
           <label>Rating</label>

@@ -9,7 +9,7 @@ function MinderCard({ minder }: { minder: any }) {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
-    navigate(`/viewProfile/${minder.userDetails.id}`);
+    navigate(`/viewProfile/${minder.id}`);
   };
 
   const handleBookButtonClick = () => {
@@ -38,10 +38,10 @@ function MinderCard({ minder }: { minder: any }) {
 
         <div className="minder-info">
           <p>
-            <Star /> {minder.minderRoleInfo.rating} / 5
+            <Star /> {parseFloat(minder.minderRoleInfo.rating.toFixed(1))} / 5
           </p>
           <p>
-            <MapPin /> {minder.primaryUserInfo.location.name}
+            <MapPin /> {minder.primaryUserInfo.address.city}
           </p>
           <p>
             <Calendar /> {minder.minderRoleInfo.availability}
