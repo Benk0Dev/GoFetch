@@ -29,7 +29,7 @@
     "typescript": "^5.8.2"
   },
   "_moduleAliases": {
-    "@server": "dist",
-    "@gofetch": "../shared/dist"
+    "@server": "src",
+    "@gofetch": "../shared/src"
   }
 }

@@ -1,6 +1,6 @@
 import { IReport, Result, Status } from '@gofetch/models/IReport';
 import { addReportCached, getCachedReports } from '@server/services/ReportCached';
-import { DB_PATH, cache } from '@server/services/Cache';
+import { DB_PATH, cache } from '@server/utils/Cache';
 import fs from 'fs';
 
 export function getReportByID(reportId: number) {

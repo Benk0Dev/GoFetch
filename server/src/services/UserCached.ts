@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { IUser, IRegisterdUser, Availability } from '@gofetch/models/IUser';
-import { cache, DB_PATH } from '@server/services/Cache';
+import { cache, DB_PATH } from '@server/utils/Cache';
 
 // Get cached users
 export function getCachedUsers(): IUser[] {
