@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@client/context/AuthContext";
 import styles from "@client/pages/AuthenticationPage/AuthenticationPage.module.css";
 import "@client/global.css";
-import { login } from "@client/services/Registry";
+import { login } from "@client/services/UserRegistry";
 
 function LoginForm() {
     const { loginUser } = useAuth();

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import MinderCard from "@client/pages/BrowsePage/MinderCard";
 import FilterBar from "@client/pages/BrowsePage/FilterBar";
 import "@client/pages/BrowsePage/Browse.css";
-import { getAllMindersWithPictures } from "@client/services/Registry";
+import { getAllMindersWithPictures } from "@client/services/MinderRegistry";
 
 const BrowsePage: React.FC = () => {
   const [allMinders, setAllMinders] = useState<any[]>([]);

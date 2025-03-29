@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getUserById } from "@client/services/Registry";
+import { getUserById } from "@client/services/UserRegistry";
 import { Availability, IUser } from "@gofetch/models/IUser";
 import { IPet } from "@gofetch/models/IPet";
 import { IService } from "@gofetch/models/IService";

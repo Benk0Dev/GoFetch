@@ -3,7 +3,7 @@ import { X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import styles from '@client/components/Notifications/NotificationPopup.module.css';
 import { INotification } from '@gofetch/models/INotification';
-import { markNotificationAsRead } from '@client/services/Registry';
+import { markNotificationAsRead } from '@client/services/NotificationRegistry';
 
 interface NotificationPopupProps {
   notification: INotification;

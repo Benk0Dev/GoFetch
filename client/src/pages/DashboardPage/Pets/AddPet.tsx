@@ -5,7 +5,9 @@ import formStyles from "@client/pages/AuthenticationPage/AuthenticationPage.modu
 import BackButton from "@client/components/BackButton";
 import { Gender, Size } from "@gofetch/models/IPet";
 import { useAuth } from "@client/context/AuthContext";
-import { addPetForUser, getUserByIdWithPictures, uploadImage } from "@client/services/Registry";
+import { getUserByIdWithPictures } from "@client/services/UserRegistry";
+import { addPetForUser } from "@client/services/PetRegistry";
+import { uploadImage } from "@client/services/ImageRegistry";
 import defaultPet from "@client/assets/images/default-pet-picture.svg";
 
 function capitalizeWords(str: string): string {

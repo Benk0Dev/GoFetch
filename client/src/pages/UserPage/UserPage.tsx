@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import styles from "./UserPage.module.css";
 import BackButton from "@client/components/BackButton";
 import { IUser, Role } from "@gofetch/models/IUser";
-import { getUserByIdWithPictures, startChat } from "@client/services/Registry";
+import { startChat } from "@client/services/ChatRegistry";
+import { getUserByIdWithPictures} from "@client/services/UserRegistry";
 import { MapPin, Settings, UserRound, MessageSquare, Flag, Ban } from "lucide-react";
 
 function ProfilePage() {
