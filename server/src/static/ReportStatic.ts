@@ -1,6 +1,6 @@
 import { IReport } from '@gofetch/models/IReport';
 import { addReportCached, getCachedReports } from '@server/services/ReportCached';
-import { cache } from '@server/services/Cache';
+import { cache } from '@server/utils/Cache';
 
 export function getReportByID(reportId: number) {
     const report = cache.reports.find(report => report.id === reportId);

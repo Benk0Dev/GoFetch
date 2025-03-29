@@ -1,5 +1,5 @@
 import { IMessage, IChat } from '@gofetch/models/IMessage';
-import { cache, DB_PATH } from '@server/services/Cache';
+import { cache, DB_PATH } from '@server/utils/Cache';
 import fs from 'fs';
 import path from 'path';
 

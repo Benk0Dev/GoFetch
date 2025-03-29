@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { IReview } from '@gofetch/models/IReview';
-import { cache, DB_PATH } from '@server/services/Cache';
+import { cache, DB_PATH } from '@server/utils/Cache';
 
 export function getCachedReviews(): IReview[] {
     try {
