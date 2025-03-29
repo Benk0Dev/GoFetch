@@ -75,13 +75,13 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
       </div>
 
       {showAdvanced && (
-        <div className="advanced-filters-modal">
+        <div className={`advanced-filters-modal ${showAdvanced ? "open" : ""}`}>
           <label>Select Service</label>
           <select
             value={service}
             onChange={(e) => setService(e.target.value as Type)}
           >
-            <option value="">All Services</option>{" "}
+            <option value="">All Services</option>
             <option value={Type.WALK}>Dog Walking</option>
             <option value={Type.SIT}>Pet Sitting</option>
             <option value={Type.CARE}>Day Care</option>

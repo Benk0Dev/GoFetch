@@ -75,6 +75,19 @@
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
   color: var(--text-color);
+
+  position: fixed; /* Position it relative to the viewport */
+  top: 0; /* Align to the top */
+  right: 0; /* Align to the right side */
+  width: 300px; /* Width of the sidebar */
+  height: 100vh; /* Full height of the viewport */
+  transform: translateX(100%); /* Start off-screen */
+  transition: transform 0.3s ease-in-out; /* Smooth slide in and out */
+  z-index: 100; /* Makes sure the sidebar is above other content */
+}
+
+.advanced-filters-modal.open {
+  transform: translateX(0); /* Move into view when open */
 }
 
 .advanced-filters-modal label {
@@ -82,6 +95,7 @@
   margin-bottom: 10px;
   font-weight: 500;
 }
+
 
 .filter-buttons {
   display: flex;
