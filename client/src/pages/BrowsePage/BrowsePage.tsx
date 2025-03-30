@@ -3,8 +3,10 @@ import MinderCard from "@client/pages/BrowsePage/MinderCard";
 import FilterBar from "@client/pages/BrowsePage/FilterBar";
 import styles from "@client/pages/BrowsePage/BrowsePage.module.css";
 import { getAllMindersWithPictures } from "@client/services/MinderRegistry";
+import { useAuth } from "@client/context/AuthContext";
 
 const BrowsePage: React.FC = () => {
+  const { user } = useAuth();
   const [allMinders, setAllMinders] = useState<any[]>([]);
   const [filteredMinders, setFilteredMinders] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -14,11 +16,21 @@ const BrowsePage: React.FC = () => {
       try {
         const minders = await getAllMindersWithPictures();
         if (!minders) throw new Error("Failed to fetch minders.");
-        setAllMinders(minders);
-        const filteredMinders = [...minders];
+
+        let filteredMinders = [...minders];
+        // Remove current user from minders list
+        filteredMinders = filteredMinders.filter(
+          (minder) => minder.id !== user.id
+        );
+        // Filter out minders with no services
+        filteredMinders = filteredMinders.filter(
+          (minder) => minder.minderRoleInfo.services.length > 0
+        );
+        // Sort minders by rating
         filteredMinders.sort(
           (a, b) => b.minderRoleInfo.rating - a.minderRoleInfo.rating
         );
+        setAllMinders(minders);
         setFilteredMinders(filteredMinders);
       } catch (error) {
         console.error("Error fetching minders:", error);

@@ -58,5 +58,11 @@
     "type": "Day Care",
     "duration": "8 hours (Full Day)",
     "price": 80
+  },
+  {
+    "id": 11,
+    "type": "Training",
+    "duration": "1 hour",
+    "price": 30
   }
 ]
