@@ -73,7 +73,7 @@ function Reviews({ minder, sortedReviews, reviewers }: { minder: any, sortedRevi
                     </div>
                     )}
                 </div>
-                <div className={styles.reviewsList} style={{width: "100%"}}>
+                <div className={styles.reviewsList} style={{width: "100%", marginBottom: "10px"}}>
                     {minder.minderRoleInfo.reviews.length > 0 ? (
                         sortedReviews.map((review: IReview) => {
                             const reviewer = reviewers.find(
@@ -127,7 +127,7 @@ function Reviews({ minder, sortedReviews, reviewers }: { minder: any, sortedRevi
                             );
                         })
                     ) : (
-                        <p>No reviews available</p>
+                        <p>No reviews available.</p>
                     )}
                 </div>
             </div>

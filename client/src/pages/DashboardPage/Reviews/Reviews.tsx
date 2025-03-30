@@ -158,7 +158,7 @@ function Reviews() {
               );
             })
           ) : (
-            <p>No reviews available</p>
+            <p>No reviews available.</p>
           )}
         </div>
       )}
