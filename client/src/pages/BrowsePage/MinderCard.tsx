@@ -8,11 +8,13 @@ function MinderCard({ minder }: { minder: any }) {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  const handleViewProfile = () => {
+  const handleViewProfile = (e: React.MouseEvent) => {
+    e.stopPropagation();
     navigate(`/minders/${minder.id}`);
   };
 
-  const handleBook = () => {
+  const handleBook = (e: React.MouseEvent) => {
+    e.stopPropagation();
     if (!user) {
       navigate("/login");
     } else {
