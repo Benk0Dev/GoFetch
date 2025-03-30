@@ -101,37 +101,59 @@ function Reviews() {
           </div>
         )}
       </div>
-            {loading ? <p>Loading...</p> : (
-                <div className={styles.reviewsList}>
-                    {user.minderRoleInfo.reviews.length > 0 ? (
-                        sortedReviews.map((review: IReview) => {
-                            const reviewer = reviewers.find((rev) => rev.id === review.reviewerId);
-                            return (
-                                <div className={styles.review}>
-                                    <div className={styles.reviewHeader}>
-                                        <Link to={`/users/${reviewer.id}`} className={styles.reviewer}>
-                                            <img
-                                                src={reviewer ? reviewer.primaryUserInfo.profilePic : defaultProfile}
-                                                alt={reviewer ? `${reviewer.name.fname} ${reviewer.name.sname}` : "Unknown Reviewer"}
-                                            />
-                                            <h6>{reviewer ? `${reviewer.name.fname} ${reviewer.name.sname}` : "Unknown Reviewer"}</h6>
-                                        </Link>
-                                        <div className={styles.starRating}>
-                                            {[1, 2, 3, 4, 5].map((rating) => (
-                                                <Star size={18} className={review.rating >= rating ? styles.solidStar : ""} />
-                                            ))}
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <p>{review.review ? review.review : "No review message."}</p>
-                                        <p className={styles.date}>{new Date(review.date).toLocaleDateString("en-GB")}</p>
-                                    </div>
-                                </div>
-                            );
-                        })
-                    ) : (
-                        <p>No reviews available</p>
-                    )}
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <div className={styles.reviewsList}>
+          {user.minderRoleInfo.reviews.length > 0 ? (
+            sortedReviews.map((review: IReview) => {
+              const reviewer = reviewers.find(
+                (rev) => rev.id === review.reviewerId
+              );
+              return (
+                <div className={styles.review}>
+                  <div className={styles.reviewHeader}>
+                    <Link
+                      to={`/users/${reviewer.id}`}
+                      className={styles.reviewer}
+                    >
+                      <img
+                        src={
+                          reviewer
+                            ? reviewer.primaryUserInfo.profilePic
+                            : defaultProfile
+                        }
+                        alt={
+                          reviewer
+                            ? `${reviewer.name.fname} ${reviewer.name.sname}`
+                            : "Unknown Reviewer"
+                        }
+                      />
+                      <h6>
+                        {reviewer
+                          ? `${reviewer.name.fname} ${reviewer.name.sname}`
+                          : "Unknown Reviewer"}
+                      </h6>
+                    </Link>
+                    <div className={styles.starRating}>
+                      {[1, 2, 3, 4, 5].map((rating) => (
+                        <Star
+                          size={18}
+                          className={
+                            review.rating >= rating ? styles.solidStar : ""
+                          }
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <p>
+                      {review.review ? review.review : "No review message."}
+                    </p>
+                    <p className={styles.date}>
+                      {new Date(review.date).toLocaleDateString("en-GB")}
+                    </p>
+                  </div>
                 </div>
               );
             })

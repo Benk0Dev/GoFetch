@@ -9,7 +9,7 @@ function MinderCard({ minder }: { minder: any }) {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
-    navigate(`/viewProfile/${minder.id}`);
+    navigate(`/minders/${minder.id}`);
   };
 
   const handleBookButtonClick = () => {

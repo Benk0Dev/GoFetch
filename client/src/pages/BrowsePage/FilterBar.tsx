@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "@client/pages/BrowsePage/FilterBar.css";
-import { IService, Type } from "../../models/IService";
+import { Type } from "@gofetch/models/IService";
 
 interface FilterBarProps {
   onFilterChange: (filters: {

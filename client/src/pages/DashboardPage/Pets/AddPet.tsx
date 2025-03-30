@@ -129,7 +129,7 @@ function AddPet() {
                     <label>Pet Photo</label>
                     <div className={styles.photoContainer}>
                         {getPhoto()}
-                        <input type="file" accept="image/*" onChange={handleAddPicture} />
+                        <input type="file" accept="image/jpeg, image/png, image/gif" onChange={handleAddPicture} />
                     </div>
                     <p>Upload a photo of your pet.</p>
                 </div>

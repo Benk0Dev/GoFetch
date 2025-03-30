@@ -17,6 +17,7 @@ import PetDetailsPage from "@client/pages/DashboardPage/Pets/PetDetails";
 import { useAuth } from "@client/context/AuthContext";
 import { SocketProvider } from "@client/context/SocketContext";
 import { Role } from "@gofetch/models/IUser";
+import ViewProfile from "./pages/BrowsePage/viewProfile";
 
 function App() {
   const { role, loading } = useAuth();
@@ -96,7 +97,7 @@ function App() {
           >
             <Route path=":id" element={<MessagingPage />} />
           </Route>
-          <Route path="/viewProfile/:minderId" element={<ViewProfile />} />
+          <Route path="/minders/:minderId" element={<ViewProfile />} />
           <Route path="/dashboard/pets/:id" element={role === Role.OWNER ? <PetDetailsPage /> : <Navigate to="/" replace />} />
           <Route path="/users/:id" element={<UserPage />} />
         </Routes>

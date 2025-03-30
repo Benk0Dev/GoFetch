@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { IUser } from "../../models/IUser";
-import {
-  getReviewById,
-  getUserByIdWithPictures,
-  startChat,
-  getUserById,
-} from "../../services/Registry";
+import { IUser } from "@gofetch/models/IUser";
+import { getUserByIdWithPictures, getUserById } from "@client/services/UserRegistry";
+import { startChat } from "@client/services/ChatRegistry";
 import styles from "./viewProfile.module.css";
-import { MapPin, Calendar, Star, Check, Ruler } from "lucide-react";
+import { MapPin, Star } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
-import { IReview } from "../../models/IReview";
+import { IReview } from "@gofetch/models/IReview";
 
 // This component is responsible for displaying the profile of a specific minder.
 const ViewProfile = () => {

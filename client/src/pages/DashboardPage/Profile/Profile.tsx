@@ -145,7 +145,7 @@ function Profile() {
                 )}
                 <label className={styles.addImage}>
                     <Plus strokeWidth={1} size={50} />
-                    <input type="file" accept="image/*" className={styles.fileInput} onChange={handleAddPicture} />
+                    <input type="file" accept="image/jpeg, image/png, image/gif" className={styles.fileInput} onChange={handleAddPicture} />
                 </label>
             </div>
 
