@@ -19,9 +19,11 @@ const BrowsePage: React.FC = () => {
 
         let filteredMinders = [...minders];
         // Remove current user from minders list
-        filteredMinders = filteredMinders.filter(
-          (minder) => minder.id !== user.id
-        );
+        if (user) {
+          filteredMinders = filteredMinders.filter(
+            (minder) => minder.id !== user.id
+          );
+        }
         // Filter out minders with no services
         filteredMinders = filteredMinders.filter(
           (minder) => minder.minderRoleInfo.services.length > 0
