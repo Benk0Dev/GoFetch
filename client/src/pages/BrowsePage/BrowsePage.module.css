@@ -1,12 +1,6 @@
-.browse-page-container {
+.browse-page {
     margin-bottom: auto;
     padding: 40px 20px;
-}
-
-.browse-page {
-    /* background-color: var(--primary-color);
-    border: 1px solid var(--text-color);
-    border-radius: var(--border-radius); */
 }
 
 .minders-grid {
@@ -193,9 +187,8 @@
 }
 
 .advanced-filters-modal {
-    background-color: var(--menu-card-background-color);
+    background-color: var(--primary-color);
     padding: 20px;
-    box-shadow: var(--box-shadow);
     color: var(--text-color);
     border-left: 1px solid var(--text-color);
     position: fixed;
