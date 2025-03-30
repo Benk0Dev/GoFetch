@@ -1,6 +1,7 @@
 import fs from 'fs';
 import { IUser, IRegisterdUser, Availability } from '@gofetch/models/IUser';
 import { cache, DB_PATH } from '@server/utils/Cache';
+import { saveUploadedImage } from '@server/static/ImageStatic';
 
 // Get cached users
 export function getCachedUsers(): IUser[] {
@@ -89,14 +90,9 @@ export function RegisterUserCache(user: IRegisterdUser) {
       roles: [user.role],
       currentRole: user.role,
       primaryUserInfo: {
-        profilePic: '',
+        profilePic: user.profilePic || '',
         dob: user.dob,
-        address: {
-          street: '',
-          city: '',
-          postcode: '',
-          country: '',
-        },
+        address: user.address,
       },
       ownerRoleInfo: {
         petIds: [],

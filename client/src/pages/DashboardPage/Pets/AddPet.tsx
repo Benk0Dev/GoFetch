@@ -65,7 +65,7 @@ function AddPet() {
             neutered,
             behaviour: behaviour || undefined,
             allergies: allergies || undefined,
-            picture: filename || undefined,
+            picture: filename,
         };
 
         console.log("Submitting new pet:", newPet);
@@ -97,13 +97,13 @@ function AddPet() {
         if (picture) {
         return (
             <div className={styles.photo}>
-            <img src={picture} alt={name} />
+                <img src={picture} alt={name} />
             </div>
         );
         } else {
         return (
             <div className={styles.photo}>
-            <img src={defaultPet} alt={name} />
+                <img src={defaultPet} alt={name} />
             </div>
         );
         }

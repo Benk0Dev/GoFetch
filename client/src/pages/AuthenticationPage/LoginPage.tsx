@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import LoginForm from "@client/pages/AuthenticationPage/LoginForm";
 import styles from "@client/pages/AuthenticationPage/AuthenticationPage.module.css";
-import "@client/global.css";
 import BackButton from "@client/components/BackButton";
 
 function LoginPage() {
