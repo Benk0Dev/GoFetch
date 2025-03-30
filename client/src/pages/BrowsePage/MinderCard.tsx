@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { MapPin, Calendar, Star } from "lucide-react";
-import "@client/pages/BrowsePage/MinderCard.css";
+import { MapPin, Star } from "lucide-react";
+import styles from "@client/pages/BrowsePage/BrowsePage.module.css";
 import { useAuth } from "@client/context/AuthContext";
 import { Role } from "@gofetch/models/IUser";
 
@@ -8,15 +8,15 @@ function MinderCard({ minder }: { minder: any }) {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  const handleCardClick = () => {
+  const handleViewProfile = () => {
     navigate(`/minders/${minder.id}`);
   };
 
-  const handleBookButtonClick = () => {
+  const handleBook = () => {
     if (!user) {
       navigate("/login");
     } else {
-      navigate("/booking", { state: { minderId: minder.id } }); // ✅ Redirect to booking if logged in
+      navigate("/booking", { state: { minderId: minder.id } });
     }
   };
 
@@ -26,34 +26,68 @@ function MinderCard({ minder }: { minder: any }) {
       ? minder.primaryUserInfo.profilePic
       : "/images/user_images/default-profile.png";
 
+  const cheapestPrice = Math.min(...minder.minderRoleInfo.services.map((service: any) => service.price));
+
+  const services = minder.minderRoleInfo.services.map((service: any) => service.type);
+
   return (
     <div>
-      <div className="minder-card" onClick={handleCardClick}>
-        <div className="minder-image">
-          <img src={profileImage} alt={minder.name.fname} width="150" />
-        </div>
+      <div className={styles["minder-card"]}>
+        <img src={profileImage} alt={minder.name.fname} width="150" />
 
-        <h2>{minder.name.fname}</h2>
-        <p className="bio">{minder.minderRoleInfo.bio}</p>
+        <div className={styles["minder-card-body"]}>
 
-        <div className="minder-info">
-          <p>
-            <Star /> {parseFloat(minder.minderRoleInfo.rating.toFixed(1))} / 5
-          </p>
-          <p>
-            <MapPin /> {minder.primaryUserInfo.address.city}
-          </p>
-          <p>
-            <Calendar /> {minder.minderRoleInfo.availability}
-          </p>
+          <h4>{minder.name.fname}</h4>
+
+          <div className={styles["distance-rating"]}>
+            <div className={styles["metric"] + " " + styles["distance"]}>
+              <MapPin size={18} />
+              <p>0.7 miles away</p>
+            </div>
+            <div className={styles["metric"] + " " + styles["rating"]}>
+              <Star size={18} />
+              <span>{parseFloat(minder.minderRoleInfo.rating.toFixed(1))}</span>
+              <p style={{display: "flex", alignContent: "center", gap: "7px", marginLeft: "2px"}}><strong>•</strong>{minder.minderRoleInfo.reviews.length} {minder.minderRoleInfo.reviews.length === 1 ? "review" : "reviews"}</p>
+            </div>
+          </div>
+
+          <div className={styles["services-container"]}>
+            <span>Services:</span>
+            <div className={styles["services"]}>
+              {services.map((service: any, index: number) => (
+                <span key={index} className={styles["service"]}>
+                  {service}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className={styles["price-availability"]}>
+            <div className={styles["metric"]}>
+              <span>Price:</span>
+              <p>From £{cheapestPrice}</p>
+            </div>
+            <div className={styles["metric"]}>
+              <span>Availbility:</span>
+              <p>{minder.minderRoleInfo.availability}</p>
+            </div>
+          </div>
+
+          <div className={styles["buttons"]}>
+            {(!user || user.currentRole === Role.OWNER) ? (
+              <>
+                <button className="btn btn-secondary" onClick={handleViewProfile}>View Profile</button>
+                <button className="btn btn-primary" onClick={handleBook}>Book Now</button>
+              </>
+            ) : (
+              <button className="btn btn-primary" onClick={handleViewProfile}>View Profile</button>
+            )}
+          </div>
+
         </div>
       </div>
 
-      {(!user || user.currentRole === Role.OWNER) && (
-        <button className="book-button" onClick={handleBookButtonClick}>
-          Book
-        </button>
-      )}
+      
     </div>
   );
 }

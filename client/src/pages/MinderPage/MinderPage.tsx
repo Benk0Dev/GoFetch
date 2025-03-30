@@ -4,10 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { IUser } from "@gofetch/models/IUser";
 import { getUserByIdWithPictures, getUserById } from "@client/services/UserRegistry";
 import { startChat } from "@client/services/ChatRegistry";
-import styles from "./viewProfile.module.css";
+import styles from "./MinderPage.module.css";
 import { MapPin, Star } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { IReview } from "@gofetch/models/IReview";
+import BackButton from "@client/components/BackButton";
 
 // This component is responsible for displaying the profile of a specific minder.
 const ViewProfile = () => {
@@ -106,9 +107,7 @@ const ViewProfile = () => {
 
   return (
     <div className={styles["minder-profile"]}>
-      <button onClick={() => navigate(-1)} className={styles.backButton}>
-        ← Back to Browse
-      </button>
+      <BackButton />
 
       <div className={styles["profile-main-content"]}>
         <div className={styles["profile-left"]}>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import MinderCard from "@client/pages/BrowsePage/MinderCard";
 import FilterBar from "@client/pages/BrowsePage/FilterBar";
-import "@client/pages/BrowsePage/Browse.css";
+import styles from "@client/pages/BrowsePage/BrowsePage.module.css";
 import { getAllMindersWithPictures } from "@client/services/MinderRegistry";
 
 const BrowsePage: React.FC = () => {
@@ -15,7 +15,11 @@ const BrowsePage: React.FC = () => {
         const minders = await getAllMindersWithPictures();
         if (!minders) throw new Error("Failed to fetch minders.");
         setAllMinders(minders);
-        setFilteredMinders(minders);
+        const filteredMinders = [...minders];
+        filteredMinders.sort(
+          (a, b) => b.minderRoleInfo.rating - a.minderRoleInfo.rating
+        );
+        setFilteredMinders(filteredMinders);
       } catch (error) {
         console.error("Error fetching minders:", error);
       } finally {
@@ -49,7 +53,6 @@ const BrowsePage: React.FC = () => {
       );
     });
 
-    // 🧠 Sorting logic
     switch (filters.sort) {
       case "rating":
         filtered.sort(
@@ -59,17 +62,17 @@ const BrowsePage: React.FC = () => {
 
       case "price":
         filtered.sort((a, b) => {
-          const priceA = a.minderRoleInfo.services?.[0]?.price || 0;
-          const priceB = b.minderRoleInfo.services?.[0]?.price || 0;
+          const priceA = Math.min(...a.minderRoleInfo.services.map((service: any) => service.price)) || 1000000;
+          const priceB = Math.min(...b.minderRoleInfo.services.map((service: any) => service.price)) || 1000000;
           return priceA - priceB;
         });
         break;
 
       case "distance":
-        filtered.sort(
-          (a, b) =>
-            a.minderRoleInfo.distanceRange - b.minderRoleInfo.distanceRange
-        );
+        // filtered.sort(
+        //   (a, b) =>
+        //     a.minderRoleInfo.distanceRange - b.minderRoleInfo.distanceRange
+        // );
         break;
 
       default:
@@ -80,23 +83,24 @@ const BrowsePage: React.FC = () => {
   };
 
   return (
-    <div className="browse-page">
-      <h1>Available Pet Minders</h1>
-      <FilterBar onFilterChange={handleFilterChange} />
+    <div className={`container ${styles["browse-page-container"]}`}>
+      <div className={styles["browse-page"]}>
+        <FilterBar onFilterChange={handleFilterChange} />
 
-      {loading ? (
-        <p>Loading minders...</p>
-      ) : (
-        <div className="minder-grid">
-          {filteredMinders.length > 0 ? (
-            filteredMinders.map((minder, index) => (
-              <MinderCard key={index} minder={minder} />
-            ))
-          ) : (
-            <p>No minders available.</p>
-          )}
-        </div>
-      )}
+        {loading ? (
+          <p>Loading minders...</p>
+        ) : (
+          <div className={styles["minders-grid"]}>
+            {filteredMinders.length > 0 ? (
+              filteredMinders.map((minder, index) => (
+                <MinderCard key={index} minder={minder} />
+              ))
+            ) : (
+              <p>No minders available.</p>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
