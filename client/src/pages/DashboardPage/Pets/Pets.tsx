@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { PawPrint, Plus } from "lucide-react";
+import { PawPrint } from "lucide-react";
 import { useAuth } from "@client/context/AuthContext";
 import dashboardStyles from "@client/pages/DashboardPage/Dashboard.module.css";
 import Pet from "@client/pages/DashboardPage/Pets/Pet";

@@ -334,5 +334,43 @@
       "bookingIds": [],
       "reviewIds": []
     }
+  },
+  {
+    "id": 9,
+    "name": {
+      "fname": "Max",
+      "sname": "Evans"
+    },
+    "loginDetails": {
+      "email": "max@example.com",
+      "password": "password"
+    },
+    "roles": [
+      "petowner"
+    ],
+    "currentRole": "petowner",
+    "primaryUserInfo": {
+      "profilePic": "17",
+      "dob": "2005-06-09T00:00:00.000Z",
+      "address": {
+        "street": "2 Westbury Road",
+        "city": "London",
+        "postcode": "E7 8BU",
+        "country": "United Kingdom"
+      }
+    },
+    "ownerRoleInfo": {
+      "petIds": [],
+      "bookingIds": []
+    },
+    "minderRoleInfo": {
+      "serviceIds": [],
+      "rating": 0,
+      "bio": "",
+      "pictures": [],
+      "availability": "Flexible",
+      "bookingIds": [],
+      "reviewIds": []
+    }
   }
 ]
