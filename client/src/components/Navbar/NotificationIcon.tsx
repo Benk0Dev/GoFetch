@@ -1,14 +1,14 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import DropdownMenu from "../Dropdown/DropdownMenu";
-import DropdownItem from "../Dropdown/DropdownItem";
-import styles from "./Navbar.module.css";
 import { Bell } from "lucide-react";
-import { getUserNotifications, markNotificationAsRead } from "../../services/Registry";
-import { INotification } from "../../models/INotification";
-import { useSocket } from "../../context/SocketContext";
-import { useAuth } from "../../context/AuthContext";
-import NotificationContainer from "../Notifications/NotificationContainer";
+import DropdownMenu from "@client/components/Dropdown/DropdownMenu";
+import DropdownItem from "@client/components/Dropdown/DropdownItem";
+import styles from "@client/components/Navbar/Navbar.module.css";
+import { getUserNotifications, markNotificationAsRead } from "@client/services/NotificationRegistry";
+import { INotification } from "@gofetch/models/INotification";
+import { useSocket } from "@client/context/SocketContext";
+import { useAuth } from "@client/context/AuthContext";
+import NotificationContainer from "@client/components/Notifications/NotificationContainer";
 
 function NotificationIcon() {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -19,6 +19,12 @@ function NotificationIcon() {
     const navigate = useNavigate();
     const { socket, isConnected } = useSocket();
     const { user } = useAuth();
+
+    useEffect(() => {
+        if (user) {
+            fetchNotifications();
+        }
+    }, [user]);
 
     const toggleMenu = () => {
         setMenuOpen((prev) => !prev);
@@ -95,17 +101,7 @@ function NotificationIcon() {
         return () => {
             socket.off('new-notification', handleNewNotification);
         };
-    }, [socket, isConnected, user]);
-
-    // Initial fetch and periodic refresh as a fallback
-    useEffect(() => {
-        fetchNotifications();
-        
-        // Poll for new notifications every 60 seconds as a fallback
-        // This ensures notifications aren't missed if socket connection fails
-        const interval = setInterval(fetchNotifications, 60000);
-        return () => clearInterval(interval);
-    }, []);
+    }, [socket, isConnected, user]);    
 
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
@@ -146,11 +142,13 @@ function NotificationIcon() {
                 {menuOpen && (
                     <DropdownMenu onClose={toggleMenu}>
                         <div className={styles.notificationHeader}>
-                            <h4>Notifications</h4>
+                            <h6>Notifications</h6>
                         </div>
                         
                         {loading ? (
-                            <DropdownItem text="Loading notifications..." onClick={() => {}} />
+                            <DropdownItem onClick={() => {}} button={false}>
+                                <span>Loading notifications...</span>
+                            </DropdownItem>
                         ) : notifications.length > 0 ? (
                             <>
                                 {notifications.map(notification => (
@@ -171,7 +169,9 @@ function NotificationIcon() {
                                 ))}
                             </>
                         ) : (
-                            <DropdownItem text="You have no notifications" onClick={() => {}} />
+                            <DropdownItem onClick={() => {}} button={false}>
+                                <span>No notifications</span>
+                            </DropdownItem>
                         )}
                     </DropdownMenu>
                 )}

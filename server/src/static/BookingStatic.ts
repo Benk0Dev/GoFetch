@@ -2,7 +2,7 @@ import {
     IBooking,
     BookingStatus,
     INewBooking
-} from '../models/IBooking';
+} from '@gofetch/models/IBooking';
 import {
     getAllBookingsCached,
     getBookingByIdCached,
@@ -13,7 +13,7 @@ import {
     updateBookingStatusCached,
     updateBookingDetailsCached,
     deleteBookingCached
-} from '../services/BookingCached';
+} from '@server/services/BookingCached';
 
 export function getAllBookings() {
     const bookings = getAllBookingsCached();

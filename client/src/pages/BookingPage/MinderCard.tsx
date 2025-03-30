@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { getUserByIdWithPictures } from "../../services/Registry";
-import { IUser } from "../../models/IUser";
-import styles from "./MinderCard.module.css";
-import defaultUser from "../../assets/images/default-profile-picture.svg";
+import { getUserByIdWithPictures } from "@client/services/UserRegistry";
+import { IUser } from "@gofetch/models/IUser";
+import styles from "@client/pages/BookingPage/MinderCard.module.css";
+import defaultUser from "@client/assets/images/default-profile-picture.svg";
 
 interface MinderCardProps {
   minderId: number;

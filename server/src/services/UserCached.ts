@@ -1,6 +1,7 @@
 import fs from 'fs';
-import { IUser, IRegisterdUser, Availability } from '../models/IUser';
-import { cache, DB_PATH } from './Cache';
+import { IUser, IRegisterdUser, Availability } from '@gofetch/models/IUser';
+import { cache, DB_PATH } from '@server/utils/Cache';
+import { saveUploadedImage } from '@server/static/ImageStatic';
 
 // Get cached users
 export function getCachedUsers(): IUser[] {
@@ -84,19 +85,14 @@ export function RegisterUserCache(user: IRegisterdUser) {
       },
       loginDetails: {
         email: user.email,
-        password: user.password, // Note: In a real app, we should hash passwords(idc for now)
+        password: user.password, // Note: In a real app, we should hash passwords
       },
       roles: [user.role],
       currentRole: user.role,
       primaryUserInfo: {
-        profilePic: '',
+        profilePic: user.profilePic || '',
         dob: user.dob,
-        address: {
-          street: '',
-          city: '',
-          postcode: '',
-          country: '',
-        },
+        address: user.address,
       },
       ownerRoleInfo: {
         petIds: [],

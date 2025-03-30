@@ -1,4 +1,4 @@
-import styles from "./Home.module.css";
+import styles from "@client/pages/DashboardPage/Home/Home.module.css";
 
 function Statistic({ icon, title, value }: { icon: any, title: string, value: string }) {
     return (

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import "./FilterBar.css";
+import { useState } from "react";
+import "@client/pages/BrowsePage/FilterBar.css";
 import { IService, Type } from "../../models/IService";
 
 interface FilterBarProps {

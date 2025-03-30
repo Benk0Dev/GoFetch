@@ -1,12 +1,13 @@
+import 'module-alias/register';
 import dotenv from 'dotenv';
 dotenv.config();
 
-import { initCache } from './services/Cache';
-import { server, startHttpServer } from './server/httpServer';
+import { initCache } from '@server/utils/Cache';
+import { startHttpServer } from '@server/server/httpServer';
 
 initCache();
 
-const httpServer = startHttpServer();
+startHttpServer();
 
 // Graceful shutdown
 process.on('SIGINT', () => {

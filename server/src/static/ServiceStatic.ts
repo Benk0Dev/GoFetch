@@ -1,5 +1,5 @@
-import { getCachedServices, removeServiceCached, addServiceCached } from '../services/ServiceCached';
-import { cache, DB_PATH } from '../services/Cache';
+import { getCachedServices, removeServiceCached, addServiceCached } from '@server/services/ServiceCached';
+import { cache, DB_PATH } from '@server/utils/Cache';
 import fs from 'fs';
 
 export function AllServices() {

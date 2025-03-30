@@ -1,9 +1,9 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { useAuth } from "../../../context/AuthContext";
 import { useEffect, useMemo } from "react";
-import { Gender, IPet } from "../../../models/IPet";
-import styles from "./PetDetails.module.css";
-import BackButton from "../../../components/BackButton";
+import { useNavigate, useParams } from "react-router-dom";
+import { useAuth } from "@client/context/AuthContext";
+import { Gender, IPet } from "@gofetch/models/IPet";
+import styles from "@client/pages/DashboardPage/Pets/PetDetails.module.css";
+import BackButton from "@client/components/BackButton";
 
 function PetDetails() {
     const { id } = useParams<{ id: string }>();

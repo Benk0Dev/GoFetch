@@ -1,8 +1,7 @@
-import { IPet } from '../models/IPet';
-import { Role } from '../models/IUser';
-import { addPetCached, getCachedPets, removePetCached } from '../services/PetCached';
-import { cache } from '../services/Cache';
-import { DB_PATH } from '../services/Cache';
+import { IPet } from '@gofetch/models/IPet';
+import { Role } from '@gofetch/models/IUser';
+import { addPetCached, getCachedPets, removePetCached } from '@server/services/PetCached';
+import { DB_PATH, cache } from '@server/utils/Cache';
 import fs from 'fs';
 
 export function AllPets() {

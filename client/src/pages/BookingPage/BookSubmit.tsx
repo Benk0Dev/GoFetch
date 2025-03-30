@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
-import { INewBooking } from "../../models/IBooking";
-import { IPet } from "../../models/IPet";
-import { IUser } from "../../models/IUser";
-import { IService } from "../../models/IService";
+import { INewBooking } from "@gofetch/models/IBooking";
+import { IPet } from "@gofetch/models/IPet";
+import { IUser } from "@gofetch/models/IUser";
+import { IService } from "@gofetch/models/IService";
 
 // Assuming you have a POST function in your service file
-import { createBooking } from "../../services/Registry";
+import { createBooking } from "@client/services/BookingRegistry";
 
 interface IBookSubmitProps {
   pet: IPet;

@@ -1,9 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { PawPrint } from "lucide-react";
-import { IPet } from "../../models/IPet";
-import styles from "./PetSelector.module.css";
-import { useAuth } from "../../context/AuthContext";
+import { IPet } from "@gofetch/models/IPet";
+import styles from "@client/pages/BookingPage/PetSelector.module.css";
+import { useAuth } from "@client/context/AuthContext";
 
 interface PetSelectorProps {
   selectedPet: IPet | null;

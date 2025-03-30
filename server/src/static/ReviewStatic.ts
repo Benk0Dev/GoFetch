@@ -1,9 +1,8 @@
-import { IReview } from '../models/IReview';
-import { addReviewCached, getCachedReviews } from '../services/ReviewCached';
-import { cache } from '../services/Cache';
-import { DB_PATH } from '../services/Cache';
+import { IReview } from '@gofetch/models/IReview';
+import { addReviewCached, getCachedReviews } from '@server/services/ReviewCached';
+import { cache, DB_PATH } from '@server/utils/Cache';
+import { Role } from '@gofetch/models/IUser';
 import fs from 'fs';
-import { Role } from '../models/IUser';
 
 export function ReviewByID(reviewId: number) {
     const review = cache.reviews.find(review => review.id === reviewId);
@@ -28,8 +27,8 @@ export function addReviewForUser(userId: number, review: IReview) {
     cache.users[userIndex].minderRoleInfo.reviewIds.push(newReview.id);
 
     const updatedRating = cache.users[userIndex].minderRoleInfo.reviewIds
-        .map(reviewId => cache.reviews.find(review => review.id === reviewId)?.rating || 0)
-        .reduce((acc, rating, _, arr) => acc + rating / arr.length, 0);
+        .map((reviewId: any) => cache.reviews.find(review => review.id === reviewId)?.rating || 0)
+        .reduce((acc: number, rating: number, _: any, arr: string | any[]) => acc + rating / arr.length, 0);
 
     cache.users[userIndex].minderRoleInfo.rating = updatedRating;
 

@@ -1,9 +1,9 @@
-import { useAuth } from "../../context/AuthContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./AuthenticationPage.module.css";
-import "../../global.css";
-import { login } from "../../services/Registry";
+import { useAuth } from "@client/context/AuthContext";
+import styles from "@client/pages/AuthenticationPage/AuthenticationPage.module.css";
+import "@client/global.css";
+import { login } from "@client/services/UserRegistry";
 
 function LoginForm() {
     const { loginUser } = useAuth();

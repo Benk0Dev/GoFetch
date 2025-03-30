@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Type, Duration, INewService } from '../../../models/IService';
-import styles from './Services.module.css';
+import { Type, Duration, INewService } from '@gofetch/models/IService';
+import styles from '@client/pages/DashboardPage/Services/Services.module.css';
 
 function NewService( { onCancel, onAdd }: { onCancel: () => void, onAdd: (service: INewService) => void } ) {
     const [serviceType, setServiceType] = useState<Type | "">("");

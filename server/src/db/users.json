@@ -17,10 +17,10 @@
       "profilePic": "",
       "dob": "1990-06-15T00:00:00.000Z",
       "address": {
-        "street": "",
+        "street": "Unit 2 Barton Manor",
         "city": "Bristol",
-        "postcode": "",
-        "country": ""
+        "postcode": "BS2 ORL",
+        "country": "United Kingdom"
       }
     },
     "ownerRoleInfo": {
@@ -57,10 +57,10 @@
       "profilePic": "",
       "dob": "1985-09-20T00:00:00.000Z",
       "address": {
-        "street": "",
+        "street": "WoodHouse",
         "city": "Leeds",
-        "postcode": "",
-        "country": ""
+        "postcode": "LS6 2TU",
+        "country": "United Kingdom"
       }
     },
     "ownerRoleInfo": {
@@ -98,10 +98,10 @@
       "profilePic": "",
       "dob": "1992-04-10T00:00:00.000Z",
       "address": {
-        "street": "",
+        "street": "53 Edward Street",
         "city": "Manchester",
-        "postcode": "",
-        "country": ""
+        "postcode": "M9 4JD",
+        "country": "United Kingdom"
       }
     },
     "ownerRoleInfo": {
@@ -147,10 +147,10 @@
       "profilePic": "",
       "dob": "1988-12-05T00:00:00.000Z",
       "address": {
-        "street": "",
+        "street": "6 Tintern Close",
         "city": "Brighton",
-        "postcode": "",
-        "country": ""
+        "postcode": "BN1 7EF",
+        "country": "United Kingdom"
       }
     },
     "ownerRoleInfo": {
@@ -190,15 +190,15 @@
       "petminder",
       "petowner"
     ],
-    "currentRole": "petowner",
+    "currentRole": "petminder",
     "primaryUserInfo": {
       "profilePic": "",
       "dob": "1995-08-25T00:00:00.000Z",
       "address": {
-        "street": "",
+        "street": "3 Hayling Drive",
         "city": "Nottingham",
-        "postcode": "",
-        "country": ""
+        "postcode": "NG8 5EY",
+        "country": "United Kingdom"
       }
     },
     "ownerRoleInfo": {
@@ -207,11 +207,12 @@
         2
       ],
       "bookingIds": [
-        7,
+        9,
         1,
         2,
         3,
-        4
+        4,
+        7
       ]
     },
     "minderRoleInfo": {
@@ -228,9 +229,10 @@
       ],
       "availability": "Flexible",
       "bookingIds": [
-        7,
+        9,
         4,
-        6
+        6,
+        7
       ],
       "reviewIds": [
         1,
@@ -240,51 +242,10 @@
     }
   },
   {
-    "id": 6,
-    "name": {
-      "fname": "Mark",
-      "sname": "Robert"
-    },
-    "loginDetails": {
-      "email": "mark@example.com",
-      "password": "password"
-    },
-    "roles": [
-      "petminder"
-    ],
-    "currentRole": "petminder",
-    "primaryUserInfo": {
-      "profilePic": "",
-      "dob": "2000-05-03T00:00:00.000Z",
-      "address": {
-        "street": "",
-        "city": "",
-        "postcode": "",
-        "country": ""
-      }
-    },
-    "ownerRoleInfo": {
-      "petIds": [],
-      "bookingIds": []
-    },
-    "minderRoleInfo": {
-      "serviceIds": [
-        7,
-        8
-      ],
-      "rating": 0,
-      "bio": "",
-      "pictures": [],
-      "availability": "",
-      "bookingIds": [],
-      "reviewIds": []
-    }
-  },
-  {
     "id": 7,
     "name": {
       "fname": "Ben",
-      "sname": "Kul"
+      "sname": "Kodev"
     },
     "loginDetails": {
       "email": "ben@example.com",
@@ -294,15 +255,15 @@
       "petminder",
       "petowner"
     ],
-    "currentRole": "petowner",
+    "currentRole": "petminder",
     "primaryUserInfo": {
       "profilePic": "15",
       "dob": "2004-12-22T00:00:00.000Z",
       "address": {
-        "street": "",
+        "street": "Pooley House",
         "city": "London",
-        "postcode": "",
-        "country": ""
+        "postcode": "E1 4PU",
+        "country": "United Kingdom"
       }
     },
     "ownerRoleInfo": {
@@ -311,8 +272,9 @@
         6
       ],
       "bookingIds": [
-        6,
-        5
+        8,
+        5,
+        6
       ]
     },
     "minderRoleInfo": {
@@ -320,12 +282,92 @@
         9,
         10
       ],
-      "rating": 0,
+      "rating": 5,
       "bio": "I love taking care of dogs. I have two dogs of my own and have the privilege to walk them everyday. I'm a student so I have quite a flexible schedule, so we can easily arrange a time for any of my services.",
       "pictures": [
         "15",
         "16"
       ],
+      "availability": "Flexible",
+      "bookingIds": [
+        8
+      ],
+      "reviewIds": [
+        9
+      ]
+    }
+  },
+  {
+    "id": 8,
+    "name": {
+      "fname": "Alex",
+      "sname": "Smith"
+    },
+    "loginDetails": {
+      "email": "alex@example.com",
+      "password": "password"
+    },
+    "roles": [
+      "admin"
+    ],
+    "currentRole": "admin",
+    "primaryUserInfo": {
+      "profilePic": "",
+      "dob": "2000-10-10T00:00:00.000Z",
+      "address": {
+        "street": "2 Dukes Avenue",
+        "city": "London",
+        "postcode": "HA1 1XP",
+        "country": "United Kingdom"
+      }
+    },
+    "ownerRoleInfo": {
+      "petIds": [],
+      "bookingIds": []
+    },
+    "minderRoleInfo": {
+      "serviceIds": [],
+      "rating": 0,
+      "bio": "",
+      "pictures": [],
+      "availability": "Flexible",
+      "bookingIds": [],
+      "reviewIds": []
+    }
+  },
+  {
+    "id": 9,
+    "name": {
+      "fname": "Max",
+      "sname": "Evans"
+    },
+    "loginDetails": {
+      "email": "max@example.com",
+      "password": "password"
+    },
+    "roles": [
+      "petowner"
+    ],
+    "currentRole": "petowner",
+    "primaryUserInfo": {
+      "profilePic": "17",
+      "dob": "2005-06-09T00:00:00.000Z",
+      "address": {
+        "street": "2 Westbury Road",
+        "city": "London",
+        "postcode": "E7 8BU",
+        "country": "United Kingdom"
+      }
+    },
+    "ownerRoleInfo": {
+      "petIds": [],
+      "bookingIds": []
+    },
+    "minderRoleInfo": {
+      "serviceIds": [],
+      "rating": 0,
+      "bio": "",
+      "pictures": [],
       "availability": "Flexible",
       "bookingIds": [],
       "reviewIds": []

@@ -1,8 +1,8 @@
 import { Server, Socket } from 'socket.io';
 import http from 'http';
-import { addMessage } from '../routers/MessageStatic';
-import { addNotification } from '../routers/NotificationStatic';
-import { NotificationType } from '../models/INotification';
+import { addMessage } from '@server/static/MessageStatic';
+import { addNotification } from '@server/static/NotificationStatic';
+import { NotificationType } from '@gofetch/models/INotification';
 
 // Initialize Socket.IO server
 export function setupWebSocketServer(httpServer: http.Server) {

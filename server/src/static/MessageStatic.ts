@@ -1,6 +1,6 @@
-import { IMessage, IChat } from '../models/IMessage';
-import { addMessageCached, getChatByIdCached, getChatsForUserCached, createChatCached } from '../services/MessagesCached';
-import { io } from '../server/httpServer';
+import { IMessage, IChat } from '@gofetch/models/IMessage';
+import { addMessageCached, getChatByIdCached, getChatsForUserCached, createChatCached } from '@server/services/MessagesCached';
+import { io } from '@server/server/httpServer';
 
 // Function to get chats for a user
 export function getChatsForUser(userId: number) {

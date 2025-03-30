@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { useAuth } from "../../../context/AuthContext";
-import styles from "./Services.module.css";
-import dashboardStyles from "../Dashboard.module.css";
-import { IService, INewService } from "../../../models/IService";
 import { Clock, PoundSterling, Trash2, Plus } from "lucide-react";
-import NewService from "./NewService";
-import { addService, deleteService, getUserByIdWithPictures } from "../../../services/Registry";
+import { useAuth } from "@client/context/AuthContext";
+import styles from "@client/pages/DashboardPage/Services/Services.module.css";
+import dashboardStyles from "@client/pages/DashboardPage/Dashboard.module.css";
+import { IService, INewService } from "@gofetch/models/IService";
+import NewService from "@client/pages/DashboardPage/Services/NewService";
+import { getUserByIdWithPictures } from "@client/services/UserRegistry";
+import { addService, deleteService } from "@client/services/ServiceRegistry";
 
 function Services() {
     const { user, setUser } = useAuth();

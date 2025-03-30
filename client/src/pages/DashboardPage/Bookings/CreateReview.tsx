@@ -1,4 +1,4 @@
-import styles from "./CreateReview.module.css";
+import styles from "@client/pages/DashboardPage/Bookings/CreateReview.module.css";
 import { useEffect, useState } from "react";
 import { Star } from "lucide-react";
 

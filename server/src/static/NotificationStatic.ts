@@ -1,6 +1,6 @@
-import { INotification } from '../models/INotification';
-import { getNotificationsForUserCached, markNotificationAsReadCached, addNotificationCached } from '../services/NotificationsCached';
-import { io } from '../server/httpServer';
+import { INotification } from '@gofetch/models/INotification';
+import { getNotificationsForUserCached, markNotificationAsReadCached, addNotificationCached } from '@server/services/NotificationsCached';
+import { io } from '@server/server/httpServer';
 
 export function getNotificationsForUser(userId: number) {
     return { success: true, notifications: getNotificationsForUserCached(userId) };

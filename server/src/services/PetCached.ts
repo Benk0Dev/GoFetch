@@ -1,7 +1,7 @@
 import fs from 'fs';
-import { IPet } from '../models/IPet';
-import { cache, DB_PATH } from './Cache';
-import { saveUsersToFile } from './UserCached';
+import { IPet } from '@gofetch/models/IPet';
+import { cache, DB_PATH } from '@server/utils/Cache';
+import { saveUsersToFile } from '@server/services/UserCached';
 
 // Get cached pets
 export function getCachedPets(): IPet[] {

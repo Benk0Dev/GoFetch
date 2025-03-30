@@ -97,13 +97,19 @@
 }
 
 .reviewHeader {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 10px;
+}
+
+.reviewer {
+    display: flex;
     align-items: center;
     column-gap: 10px;
 }
 
-.reviewHeader img {
+.reviewer img {
     width: 30px;
     height: 30px;
     border-radius: 100px;

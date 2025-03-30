@@ -1,10 +1,10 @@
-import { useAuth } from "../../../context/AuthContext";
-import dashboardStyles from "../Dashboard.module.css";
-import Pet from "./Pet";
-import styles from "./Pets.module.css";
-import { PawPrint } from "lucide-react";
-import "../../../global.css";
 import { useNavigate } from "react-router-dom";
+import { PawPrint } from "lucide-react";
+import { useAuth } from "@client/context/AuthContext";
+import dashboardStyles from "@client/pages/DashboardPage/Dashboard.module.css";
+import Pet from "@client/pages/DashboardPage/Pets/Pet";
+import styles from "@client/pages/DashboardPage/Pets/Pets.module.css";
+import "@client/global.css";
 
 function Pets() {
     const { user } = useAuth();

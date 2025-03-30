@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import styles from "./DropdownMenu.module.css";
+import styles from "@client/components/Dropdown/DropdownMenu.module.css";
 
 interface DropdownMenuProps {
   onClose: () => void;

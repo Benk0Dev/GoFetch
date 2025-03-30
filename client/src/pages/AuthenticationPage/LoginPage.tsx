@@ -1,8 +1,7 @@
-import LoginForm from "./LoginForm";
 import { useNavigate } from "react-router-dom";
-import styles from "./AuthenticationPage.module.css";
-import "../../global.css";
-import BackButton from "../../components/BackButton";
+import LoginForm from "@client/pages/AuthenticationPage/LoginForm";
+import styles from "@client/pages/AuthenticationPage/AuthenticationPage.module.css";
+import BackButton from "@client/components/BackButton";
 
 function LoginPage() {
     const navigate = useNavigate();

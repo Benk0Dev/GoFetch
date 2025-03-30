@@ -80,30 +80,16 @@
 }
 
 .notificationHeader {
-    padding: 0.5em 0.8em;
+    padding: 0 0.8em 0.5em;
     border-bottom: 1px solid var(--menu-card-border-color);
-}
-
-.notificationHeader h4 {
-    margin: 0;
-    font-size: 1em;
-    color: #555;
-}
-
-.notificationItem {
-    cursor: pointer;
-    padding: 0;
-    transition: background-color 0.2s;
-}
-
-.notificationItem:hover {
-    background-color: var(--menu-card-background-color);
 }
 
 .notificationContent {
     padding: 0.5em 0.8em;
     border-bottom: 1px solid var(--menu-card-border-color);
-    color: black;
+    color: rgb(0, 0, 0);
+    border-left: 3px solid transparent;
+    padding-right: calc(0.8em + 3px);
 }
 
 .notificationContent p {
@@ -117,16 +103,7 @@
 }
 
 .unread {
-    background-color: #f0f7ff;
+    background-color: #fff9f0;
     position: relative;
-}
-
-.unread::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 0.2em;
-    background-color: var(--highlight-color);
+    border-left: 3px solid var(--highlight-color);
 }

@@ -1,12 +1,14 @@
 import { useState } from "react";
-import styles from "./AddPet.module.css";
-import formStyles from "../../AuthenticationPage/AuthenticationPage.module.css";
-import BackButton from "../../../components/BackButton";
-import { Gender, Size } from "../../../models/IPet";
-import { useAuth } from "../../../context/AuthContext";
-import { addPetForUser, getUserByIdWithPictures, uploadImage } from "../../../services/Registry";
 import { useNavigate } from "react-router-dom";
-import defaultPet from "../../../assets/images/default-pet-picture.svg";
+import styles from "@client/pages/DashboardPage/Pets/AddPet.module.css";
+import formStyles from "@client/pages/AuthenticationPage/AuthenticationPage.module.css";
+import BackButton from "@client/components/BackButton";
+import { Gender, Size } from "@gofetch/models/IPet";
+import { useAuth } from "@client/context/AuthContext";
+import { getUserByIdWithPictures } from "@client/services/UserRegistry";
+import { addPetForUser } from "@client/services/PetRegistry";
+import { uploadImage } from "@client/services/ImageRegistry";
+import defaultPet from "@client/assets/images/default-pet-picture.svg";
 
 function capitalizeWords(str: string): string {
     return str
@@ -63,7 +65,7 @@ function AddPet() {
             neutered,
             behaviour: behaviour || undefined,
             allergies: allergies || undefined,
-            picture: filename || undefined,
+            picture: filename,
         };
 
         console.log("Submitting new pet:", newPet);
@@ -95,13 +97,13 @@ function AddPet() {
         if (picture) {
         return (
             <div className={styles.photo}>
-            <img src={picture} alt={name} />
+                <img src={picture} alt={name} />
             </div>
         );
         } else {
         return (
             <div className={styles.photo}>
-            <img src={defaultPet} alt={name} />
+                <img src={defaultPet} alt={name} />
             </div>
         );
         }
