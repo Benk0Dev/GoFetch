@@ -17,8 +17,9 @@ const BookingPage: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const minderId = location.state?.minderId;
+  const service = location.state?.service;
 
-  const [selectedService, setSelectedService] = useState<IService | null>(null);
+  const [selectedService, setSelectedService] = useState<IService>(service);
   const [minder, setMinder] = useState<IUser | null>(null);
   const [selectedPet, setSelectedPet] = useState<IPet | null>(
     user.ownerRoleInfo.pets[0]
@@ -35,9 +36,6 @@ const BookingPage: React.FC = () => {
         const fetchedMinder = await getUserById(minderId);
         if (fetchedMinder) {
           setMinder(fetchedMinder);
-          if (fetchedMinder.minderRoleInfo.services.length > 0) {
-            setSelectedService(fetchedMinder.minderRoleInfo.services[0]);
-          }
         }
       } catch (error) {
         console.error("Failed to fetch minder:", error);
@@ -103,9 +101,7 @@ const BookingPage: React.FC = () => {
           {minder?.minderRoleInfo.services && (
             <ServiceSelector
               services={minder.minderRoleInfo.services}
-              selectedService={
-                selectedService || minder.minderRoleInfo.services[0]
-              }
+              selectedService={selectedService}
               setSelectedService={setSelectedService}
             />
           )}
