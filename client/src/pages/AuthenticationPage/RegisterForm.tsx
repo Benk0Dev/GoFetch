@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import styles from "@client/pages/AuthenticationPage/AuthenticationPage.module.css";
-import { editUser, registerUser, uploadImage, verifyUniqueEmail } from "@client/services/Registry";
+import { editUser, registerUser, verifyUniqueEmail } from "@client/services/UserRegistry";
+import { uploadImage } from "@client/services/ImageRegistry";
 import { IRegisterdUser, Role } from "@gofetch/models/IUser";
 import { useAuth } from "@client/context/AuthContext";
 import { loadGooglePlacesScript, geocodeAddress } from "@client/services/googleApi";

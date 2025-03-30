@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { getChatById, sendMessage, getUserByIdWithPictures } from '@client/services/Registry';
+import { getChatById, sendMessage } from '@client/services/ChatRegistry';
+import { getUserByIdWithPictures } from '@client/services/UserRegistry';
 import { IChat, IMessage } from '@gofetch/models/IMessage';
 import { useAuth } from '@client/context/AuthContext';
 import { useSocket } from '@client/context/SocketContext';

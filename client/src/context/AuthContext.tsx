@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { editUser, getUserByIdWithPictures, login as performLogin } from "@client/services/Registry";
+import { editUser, getUserByIdWithPictures, login as performLogin } from "@client/services/UserRegistry";
 import { getUserId, clearUser, setUserId as storeUser } from "@client/utils/StorageManager";
 import { Role } from "@gofetch/models/IUser";
 

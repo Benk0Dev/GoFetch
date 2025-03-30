@@ -4,7 +4,7 @@ import styles from "@client/pages/DashboardPage/Reviews/Reviews.module.css";
 import dashboardStyles from "@client/pages/DashboardPage/Dashboard.module.css";
 import { useAuth } from "@client/context/AuthContext";
 import { IReview } from "@gofetch/models/IReview";
-import { getUserByIdWithPictures } from "@client/services/Registry";
+import { getUserByIdWithPictures } from "@client/services/UserRegistry";
 import defaultProfile from "@client/assets/images/default-profile-picture.svg";
 import { Link } from "react-router-dom";
 
