@@ -26,11 +26,11 @@ const BrowsePage: React.FC = () => {
         filteredMinders = filteredMinders.filter(
           (minder) => minder.minderRoleInfo.services.length > 0
         );
+        setAllMinders(filteredMinders);
         // Sort minders by rating
         filteredMinders.sort(
           (a, b) => b.minderRoleInfo.rating - a.minderRoleInfo.rating
         );
-        setAllMinders(minders);
         setFilteredMinders(filteredMinders);
       } catch (error) {
         console.error("Error fetching minders:", error);
