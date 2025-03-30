@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { IUser, Role } from "@gofetch/models/IUser";
 import { getUserByIdWithPictures } from "@client/services/UserRegistry";
 import { startChat } from "@client/services/ChatRegistry";
@@ -13,6 +12,10 @@ import About from "./About";
 import Services from "./Services";
 import Reviews from "./Reviews";
 import { IService } from "@gofetch/models/IService";
+import {
+  getDistanceBetweenAddresses,
+  loadGooglePlacesScript,
+} from "@client/services/googleApi";
 
 const MinderPage = () => {
   const { user } = useAuth();
@@ -21,6 +24,7 @@ const MinderPage = () => {
   const [minder, setMinder] = useState<IUser | null>(null);
   const [sortedReviews, setSortedReviews] = useState<any[]>([]);
   const [reviewers, setReviewers] = useState<any[]>([]);
+  const [distance, setDistance] = useState<string>("Loading...");
   const [loading, setLoading] = useState(true);
 
   const [selectedTab, setSelectedTab] = useState("about");
@@ -32,11 +36,13 @@ const MinderPage = () => {
         setLoading(false);
         return;
       }
+
       const reviewersData = await Promise.all(
         minder.minderRoleInfo.reviews.map(async (review: IReview) => {
           return await getUserByIdWithPictures(review.reviewerId);
         })
       );
+
       setMinder(minder);
       setReviewers(reviewersData);
       setSortedReviews(
@@ -44,13 +50,34 @@ const MinderPage = () => {
           (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
         )
       );
+
+      // Load distance if user exists
+      if (user) {
+        try {
+          await loadGooglePlacesScript();
+          const distInMeters = await getDistanceBetweenAddresses(
+            user.primaryUserInfo.address,
+            minder.primaryUserInfo.address
+          );
+          const distInMiles = (distInMeters / 1609.34).toFixed(1);
+          setDistance(`${distInMiles} miles away`);
+        } catch (err) {
+          console.error("Failed to get distance:", err);
+          setDistance("Distance unknown");
+        }
+      } else {
+        setDistance("Login to see distance");
+      }
+
       setLoading(false);
     };
 
     initialize();
   }, [minderId]);
 
-  const handleBooking = (service: IService | undefined = minder?.minderRoleInfo?.services?.[0]) => {
+  const handleBooking = (
+    service: IService | undefined = minder?.minderRoleInfo?.services?.[0]
+  ) => {
     if (!user) {
       navigate("/login");
     } else {
@@ -72,11 +99,11 @@ const MinderPage = () => {
   };
 
   if (loading) {
-    return <div style={{margin: "auto"}}>Loading...</div>;
+    return <div style={{ margin: "auto" }}>Loading...</div>;
   }
 
   if (!minder) {
-    return <div style={{margin: "auto"}}>Minder not found.</div>;
+    return <div style={{ margin: "auto" }}>Minder not found.</div>;
   }
 
   return (
@@ -102,12 +129,27 @@ const MinderPage = () => {
                 <div className={styles["distance-rating"]}>
                   <div className={styles["metric"] + " " + styles["distance"]}>
                     <MapPin size={18} />
-                    <p>0.7 miles away</p>
+                    <p>{distance}</p>
                   </div>
                   <div className={styles["metric"] + " " + styles["rating"]}>
                     <Star size={18} />
-                    <span>{parseFloat(minder.minderRoleInfo.rating.toFixed(1))}</span>
-                    <p style={{display: "flex", alignContent: "center", gap: "7px", marginLeft: "2px"}}><strong>•</strong>{minder.minderRoleInfo.reviews?.length} {minder.minderRoleInfo.reviews?.length === 1 ? "review" : "reviews"}</p>
+                    <span>
+                      {parseFloat(minder.minderRoleInfo.rating.toFixed(1))}
+                    </span>
+                    <p
+                      style={{
+                        display: "flex",
+                        alignContent: "center",
+                        gap: "7px",
+                        marginLeft: "2px",
+                      }}
+                    >
+                      <strong>•</strong>
+                      {minder.minderRoleInfo.reviews?.length}{" "}
+                      {minder.minderRoleInfo.reviews?.length === 1
+                        ? "review"
+                        : "reviews"}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -118,17 +160,20 @@ const MinderPage = () => {
                   className={"btn btn-secondary" + " " + styles["iconBtn"]}
                   onClick={handleMessage}
                 >
-                  <MessageSquare size={18} />Message
+                  <MessageSquare size={18} />
+                  Message
                 </button>
               )}
-              {user && user.currentRole === Role.OWNER && user.id !== minder.id && (
-                <button
-                  className="btn btn-primary"
-                  onClick={() => handleBooking()}
-                >
-                  Book Now
-                </button>
-              )}
+              {user &&
+                user.currentRole === Role.OWNER &&
+                user.id !== minder.id && (
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => handleBooking()}
+                  >
+                    Book Now
+                  </button>
+                )}
             </div>
           </div>
 
@@ -153,16 +198,16 @@ const MinderPage = () => {
             </button>
           </div>
 
-          {selectedTab === "about" && (
-            <About minder={minder} />
-          )}
-
+          {selectedTab === "about" && <About minder={minder} />}
           {selectedTab === "services" && (
             <Services minder={minder} onBooking={handleBooking} />
           )}
-
           {selectedTab === "reviews" && (
-            <Reviews minder={minder} sortedReviews={sortedReviews} reviewers={reviewers} />
+            <Reviews
+              minder={minder}
+              sortedReviews={sortedReviews}
+              reviewers={reviewers}
+            />
           )}
         </div>
       </div>

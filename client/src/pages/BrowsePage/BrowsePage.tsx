@@ -4,6 +4,10 @@ import FilterBar from "@client/pages/BrowsePage/FilterBar";
 import styles from "@client/pages/BrowsePage/BrowsePage.module.css";
 import { getAllMindersWithPictures } from "@client/services/MinderRegistry";
 import { useAuth } from "@client/context/AuthContext";
+import {
+  getDistanceBetweenAddresses,
+  loadGooglePlacesScript,
+} from "@client/services/googleApi";
 
 const BrowsePage: React.FC = () => {
   const { user } = useAuth();
@@ -18,18 +22,15 @@ const BrowsePage: React.FC = () => {
         if (!minders) throw new Error("Failed to fetch minders.");
 
         let filteredMinders = [...minders];
-        // Remove current user from minders list
         if (user) {
           filteredMinders = filteredMinders.filter(
             (minder) => minder.id !== user.id
           );
         }
-        // Filter out minders with no services
         filteredMinders = filteredMinders.filter(
           (minder) => minder.minderRoleInfo.services.length > 0
         );
         setAllMinders(filteredMinders);
-        // Sort minders by rating
         filteredMinders.sort(
           (a, b) => b.minderRoleInfo.rating - a.minderRoleInfo.rating
         );
@@ -44,28 +45,59 @@ const BrowsePage: React.FC = () => {
     fetchMinders();
   }, []);
 
-  const handleFilterChange = (filters: any) => {
-    let filtered = allMinders.filter((minder) => {
-      const searchText = filters.location.toLowerCase() || "";
-      const availabilityText = filters.availability?.toLowerCase() || "";
+  const handleFilterChange = async (filters: any) => {
+    if (!user) return;
 
-      const fullName =
-        `${minder.name.fname} ${minder.name.sname}`.toLowerCase();
-      const location = minder.primaryUserInfo.address.city.toLowerCase() || "";
-      const rating = minder.minderRoleInfo.rating || 0;
-      const availability =
-        minder.minderRoleInfo.availability.toLowerCase() || "";
+    await loadGooglePlacesScript();
 
-      const nameMatch = fullName.includes(searchText);
-      const locationMatch = location.includes(searchText);
-      const ratingMatch = rating >= (filters.rating || 0);
-      const availabilityMatch = availability.includes(availabilityText);
-      return (
-        (nameMatch || locationMatch) &&
-        ratingMatch &&
-        (availabilityText === "" || availabilityMatch)
-      );
-    });
+    const searchText = filters.location.toLowerCase();
+    const filteredWithDistance = await Promise.all(
+      allMinders.map(async (minder) => {
+        try {
+          const distInMeters = await getDistanceBetweenAddresses(
+            user.primaryUserInfo.address,
+            minder.primaryUserInfo.address
+          );
+          const distInMiles = distInMeters / 1609.34;
+          return { minder, distance: distInMiles };
+        } catch (err) {
+          return { minder, distance: Infinity }; // treat failure as far away
+        }
+      })
+    );
+
+    let filtered = filteredWithDistance
+      .filter(({ minder, distance }) => {
+        const fullName =
+          `${minder.name.fname} ${minder.name.sname}`.toLowerCase();
+        const location = minder.primaryUserInfo.address.city.toLowerCase();
+        const rating = minder.minderRoleInfo.rating || 0;
+
+        const nameMatch = fullName.includes(searchText);
+        const locationMatch = location.includes(searchText);
+        const ratingMatch = rating >= (filters.rating || 0);
+        const priceMatch = minder.minderRoleInfo.services.some(
+          (s: any) => s.price <= filters.price
+        );
+        const serviceMatch =
+          !filters.service ||
+          minder.minderRoleInfo.services.some(
+            (s: any) => s.type === filters.service
+          );
+        const distanceMatch = distance <= filters.distance;
+
+        return (
+          (nameMatch || locationMatch) &&
+          ratingMatch &&
+          priceMatch &&
+          serviceMatch &&
+          distanceMatch
+        );
+      })
+      .map(({ minder, distance }) => ({
+        ...minder,
+        __distance: distance,
+      }));
 
     switch (filters.sort) {
       case "rating":
@@ -76,17 +108,18 @@ const BrowsePage: React.FC = () => {
 
       case "price":
         filtered.sort((a, b) => {
-          const priceA = Math.min(...a.minderRoleInfo.services.map((service: any) => service.price)) || 1000000;
-          const priceB = Math.min(...b.minderRoleInfo.services.map((service: any) => service.price)) || 1000000;
+          const priceA = Math.min(
+            ...a.minderRoleInfo.services.map((s: any) => s.price)
+          );
+          const priceB = Math.min(
+            ...b.minderRoleInfo.services.map((s: any) => s.price)
+          );
           return priceA - priceB;
         });
         break;
 
       case "distance":
-        // filtered.sort(
-        //   (a, b) =>
-        //     a.minderRoleInfo.distanceRange - b.minderRoleInfo.distanceRange
-        // );
+        filtered.sort((a, b) => a.__distance - b.__distance);
         break;
 
       default:
