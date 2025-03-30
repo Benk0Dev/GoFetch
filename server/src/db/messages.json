@@ -47,6 +47,14 @@
         5
       ],
       "lastMessage": "That's it you are getting banned!"
+    },
+    {
+      "id": 7,
+      "users": [
+        1,
+        7
+      ],
+      "lastMessage": "Hi Ben!"
     }
   ],
   "messages": [
@@ -308,6 +316,13 @@
       "message": "That's it you are getting banned!",
       "chatId": 6,
       "timestamp": "2025-03-27T22:11:45.657Z"
+    },
+    {
+      "id": 38,
+      "senderId": 1,
+      "message": "Hi Ben!",
+      "chatId": 7,
+      "timestamp": "2025-03-30T04:41:48.609Z"
     }
   ]
 }
