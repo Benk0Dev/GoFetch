@@ -101,7 +101,7 @@ const BookingPage: React.FC = () => {
           {minder?.minderRoleInfo.services && (
             <ServiceSelector
               services={minder.minderRoleInfo.services}
-              selectedService={selectedService}
+              selectedService={selectedService || minder.minderRoleInfo.services[0]}
               setSelectedService={setSelectedService}
             />
           )}
