@@ -9,70 +9,98 @@ import defaultProfile from "@client/assets/images/default-profile-picture.svg";
 import { Link } from "react-router-dom";
 
 function Reviews() {
-    const { user } = useAuth();
-    const [sortedReviews, setSortedReviews] = useState<any[]>([]);
-    const [reviewers, setReviewers] = useState<any[]>([]);
-    const [loading, setLoading] = useState(true);
+  const { user } = useAuth();
+  const [sortedReviews, setSortedReviews] = useState<any[]>([]);
+  const [reviewers, setReviewers] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchReviewers = async () => {
-            const reviewersData = await Promise.all(user.minderRoleInfo.reviews.map(async (review: IReview) => {
-                return await getUserByIdWithPictures(review.reviewerId);
-            }));
+  useEffect(() => {
+    const fetchReviewers = async () => {
+      const reviewersData = await Promise.all(
+        user.minderRoleInfo.reviews.map(async (review: IReview) => {
+          return await getUserByIdWithPictures(review.reviewerId);
+        })
+      );
 
-            setReviewers(reviewersData);
-            setLoading(false);
-        };
-        
-        setSortedReviews([...user.minderRoleInfo.reviews].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()));
+      setReviewers(reviewersData);
+      setLoading(false);
+    };
 
-        fetchReviewers();
-    }, [user.minderRoleInfo.reviews]);
+    setSortedReviews(
+      [...user.minderRoleInfo.reviews].sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+      )
+    );
 
-    const percentages = [5, 4, 3, 2, 1].map((rating) => {
-        return Math.round(user.minderRoleInfo.reviews.filter((review: IReview) => review.rating === rating).length / user.minderRoleInfo.reviews.length * 100);
-    });
+    fetchReviewers();
+  }, [user.minderRoleInfo.reviews]);
 
-    return (
-        <div className={dashboardStyles.dashboardSection}>
-            <h2>Your Reviews</h2>
-            <p>See what pet owners are saying about your services.</p>
-            <div className={styles.reviewsBreakdown}>
-                <div className={styles.reviewScore}>
-                    <h1>{user.minderRoleInfo.rating.toFixed(1)}</h1>
-                </div>
-                <div className={styles.breakdownText}>
-                    <h5>Overall Rating</h5>
-                    <div className={styles.starRating}>
-                        {[1, 2, 3, 4, 5].map((rating) => {
-                            return (
-                                <Star size={24} className={user.minderRoleInfo.rating + 0.5 >= rating ? styles.solidStar : ""} />
-                            );
-                        })}
+  const percentages = [5, 4, 3, 2, 1].map((rating) => {
+    return Math.round(
+      (user.minderRoleInfo.reviews.filter(
+        (review: IReview) => review.rating === rating
+      ).length /
+        user.minderRoleInfo.reviews.length) *
+        100
+    );
+  });
+
+  return (
+    <div className={dashboardStyles.dashboardSection}>
+      <h2>Your Reviews</h2>
+      <p>See what pet owners are saying about your services.</p>
+      <div className={styles.reviewsBreakdown}>
+        <div className={styles.reviewScore}>
+          <h1>{user.minderRoleInfo.rating.toFixed(1)}</h1>
+        </div>
+        <div className={styles.breakdownText}>
+          <h5>Overall Rating</h5>
+          <div className={styles.starRating}>
+            {[1, 2, 3, 4, 5].map((rating) => {
+              return (
+                <Star
+                  size={24}
+                  className={
+                    user.minderRoleInfo.rating + 0.5 >= rating
+                      ? styles.solidStar
+                      : ""
+                  }
+                />
+              );
+            })}
+          </div>
+          <p>
+            Based on {user.minderRoleInfo.reviews.length} review
+            {user.minderRoleInfo.reviews.length === 1 ? "" : "s"}
+          </p>
+        </div>
+        {user.minderRoleInfo.reviews.length > 0 && (
+          <div className={styles.percentageBreakdown}>
+            <p>Rating Breakdown</p>
+            {[5, 4, 3, 2, 1].map((rating, index) => {
+              return (
+                percentages[index] > 0 && (
+                  <div className={styles.percentage}>
+                    <span>
+                      {rating}
+                      <Star size={18} strokeWidth={2} />
+                    </span>
+                    <div className={styles.percentageBar}>
+                      <div className={styles.percentageBarBackground}>
+                        <div
+                          className={styles.percentageBarFill}
+                          style={{ width: percentages[index] + "%" }}
+                        ></div>
+                      </div>
                     </div>
-                    <p>Based on {user.minderRoleInfo.reviews.length} review{user.minderRoleInfo.reviews.length === 1 ? "" : "s"}</p>
-                </div>
-                {user.minderRoleInfo.reviews.length > 0 && (
-                    <div className={styles.percentageBreakdown}>
-                        <p>Rating Breakdown</p>
-                        {[5, 4, 3, 2, 1].map((rating, index) => {
-                            return percentages[index] > 0 && (
-                                <div className={styles.percentage}>
-                                    <span>{rating}<Star size={18} strokeWidth={2} /></span>
-                                    <div className={styles.percentageBar}>
-                                        <div className={styles.percentageBarBackground}>
-                                            <div className={styles.percentageBarFill} style={{ width: percentages[index] + "%" }}></div>
-                                        </div>
-                                        
-                                    </div>
-                                    <span>{percentages[index]}%</span>
-                                </div>
-                            );
-                        })}
-                    </div>
-                )}
-            </div>
-
+                    <span>{percentages[index]}%</span>
+                  </div>
+                )
+              );
+            })}
+          </div>
+        )}
+      </div>
             {loading ? <p>Loading...</p> : (
                 <div className={styles.reviewsList}>
                     {user.minderRoleInfo.reviews.length > 0 ? (
@@ -105,9 +133,15 @@ function Reviews() {
                         <p>No reviews available</p>
                     )}
                 </div>
-            )}
+              );
+            })
+          ) : (
+            <p>No reviews available</p>
+          )}
         </div>
-    );
+      )}
+    </div>
+  );
 }
 
 export default Reviews;

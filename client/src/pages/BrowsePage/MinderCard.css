@@ -1,38 +1,113 @@
 .minder-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 30px;
+  padding: 0 16px;
+}
+
+.minder-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 420px;
+}
+
+.minder-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.minder-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.minder-card h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 15px 0 6px;
+  color: #222;
+}
+
+.minder-card p {
+  color: #555;
+  font-size: 0.95rem;
+  margin: 4px 0;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.minder-info {
+  margin-top: 12px;
+  width: 100%;
+}
+
+.minder-info p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.9rem;
+}
+
+.book-button {
+  background-color: var(--highlight-color);
+  color: #fff;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: auto;
+  font-weight: 600;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+
+.book-button:hover {
+  background-color: #a00d59;
+}
+
+/* Profile image fallback styling */
+.minder-card img[src*="default-profile"] {
+  object-fit: contain;
+  background-color: #f5f5f5;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .minder-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   }
-  
+
   .minder-card {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 8px rgba(0,0,0,0.1);
-    padding: 20px;
-    width: 300px;
-    text-align: center;
+    padding: 16px;
   }
-  
-  .minder-images img {
-    margin-top: 10px;
-    border-radius: 8px;
-    max-width: 100%;
-    height: auto;
+
+  .minder-card img {
+    height: 180px;
   }
-  
+}
+
+@media (max-width: 480px) {
+  .minder-card h2 {
+    font-size: 1.2rem;
+  }
+
   .book-button {
-    background-color: #c1126b; /* GoFetch purple */
-    color: white;
-    padding: 10px 20px;
-    margin-top: 15px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
+    padding: 10px 14px;
+    font-size: 0.95rem;
   }
-  
-  .book-button:hover {
-    background-color: #a00d59;
+
+  .minder-info p {
+    font-size: 0.85rem;
   }
-  
+}

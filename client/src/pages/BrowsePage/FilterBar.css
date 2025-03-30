@@ -1,57 +1,130 @@
 .filter-container {
-    background-color: #f8f8f8;
-    border-radius: 12px;
-    padding: 20px;
-    color: #333;
-  }
-  
-  .filter-container h2 {
-    color: #a02271;  /* GoFetch pink/purple */
-  }
-  
-  .search-input {
-    width: 100%;
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    margin: 15px 0;
-  }
-  
-  .filter-controls {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-  
-  .filter-controls select,
-  .filter-controls .search-button,
-  .filter-controls .filter-button {
-    padding: 10px 16px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-  }
-  
-  .search-button {
-    background-color: #a02271;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .search-button:hover {
-    background-color: #7a1754;
-  }
-  
-  .filter-button {
-    background-color: #eaeaea;
-    cursor: pointer;
-  }
-  
-  .advanced-filters-modal {
-    background-color: #fff;
-    padding: 20px;
-    margin-top: 20px;
-    border-radius: 12px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
+  background-color: var(--primary-color);
+  border-radius: var(--border-radius);
+  padding: 24px;
+  color: var(--text-color);
+  box-shadow: var(--box-shadow);
+}
+
+.filter-container h2 {
+  color: var(--highlight-color); /* GoFetch accent color */
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.filter-container p {
+  margin-bottom: 18px;
+  color: #555;
+}
+
+.search-input {
+  width: 100%;
+  padding: 14px;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--menu-card-border-color);
+  background-color: var(--menu-card-background-color);
+  color: var(--text-color);
+  margin-bottom: 20px;
+}
+
+.filter-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.filter-controls select,
+.filter-controls .search-button,
+.filter-controls .filter-button {
+  padding: 12px 20px;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--menu-card-border-color);
+  background-color: var(--menu-card-background-color);
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+.search-button {
+  background-color: var(--highlight-color);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+  background-color: var(--highlight-color-hover);
+}
+
+.filter-button {
+  background-color: var(--menu-card-background-color);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.filter-button:hover {
+  background-color: var(--hover-color);
+}
+
+.advanced-filters-modal {
+  background-color: var(--menu-card-background-color);
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  color: var(--text-color);
+
+  position: fixed; /* Position it relative to the viewport */
+  top: 0; /* Align to the top */
+  right: 0; /* Align to the right side */
+  width: 300px; /* Width of the sidebar */
+  height: 100vh; /* Full height of the viewport */
+  transform: translateX(100%); /* Start off-screen */
+  transition: transform 0.3s ease-in-out; /* Smooth slide in and out */
+  z-index: 100; /* Makes sure the sidebar is above other content */
+}
+
+.advanced-filters-modal.open {
+  transform: translateX(0); /* Move into view when open */
+}
+
+.advanced-filters-modal label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+
+.filter-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.reset-button,
+.apply-button {
+  padding: 12px 20px;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--menu-card-border-color);
+  background-color: var(--menu-card-background-color);
+  color: var(--text-color);
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.reset-button:hover {
+  background-color: var(--hover-color);
+}
+
+.apply-button {
+  background-color: var(--highlight-color);
+  color: white;
+}
+
+.apply-button:hover {
+  background-color: var(--highlight-color-hover);
+}
+
