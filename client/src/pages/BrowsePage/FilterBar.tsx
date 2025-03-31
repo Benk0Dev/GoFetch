@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import styles from "@client/pages/BrowsePage/BrowsePage.module.css";
 import { Type } from "@gofetch/models/IService";
 import { Search, SlidersVertical, X } from "lucide-react";
+import { useAuth } from "@client/context/AuthContext";
 
 interface FilterBarProps {
   onFilterChange: (filters: {
@@ -15,6 +16,7 @@ interface FilterBarProps {
 }
 
 const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
+  const { user } = useAuth();
   const [location, setLocation] = useState("");
   const [sortOption, setSortOption] = useState("rating");
 
@@ -47,7 +49,6 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
       sort: sortOption,
       distance,
     });
-    setShowAdvanced(false);
   };
 
   const handleReset = () => {
@@ -65,7 +66,6 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
       service: "",
       sort: "rating",
     });
-    setShowAdvanced(false);
   };
 
   const closeModal = () => {
@@ -203,16 +203,18 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
           />
         </div>
 
-        <div>
-          <label>Maximum Distance: {distance} miles</label>
-          <input
-            type="range"
-            min="1"
-            max="200"
-            value={distance}
-            onChange={(e) => setDistance(parseInt(e.target.value))}
-          />
-        </div>
+        {user && (
+          <div>
+            <label>Maximum Distance: {distance} miles</label>
+            <input
+              type="range"
+              min="1"
+              max="200"
+              value={distance}
+              onChange={(e) => setDistance(parseInt(e.target.value))}
+            />
+          </div>
+        )}
 
         <div className={styles["buttons"]}>
           <button className="btn btn-secondary" onClick={handleReset}>
