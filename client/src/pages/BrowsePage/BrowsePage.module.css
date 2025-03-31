@@ -21,6 +21,11 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+}
+
+.minder-card:hover {
+    transform: scale(1.015);
 }
 
 .minder-card img {
