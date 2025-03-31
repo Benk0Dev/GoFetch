@@ -66,7 +66,7 @@ const MinderPage = () => {
           setDistance("Distance unknown");
         }
       } else {
-        setDistance("Login to see distance");
+        setDistance(minder.primaryUserInfo.address.city);
       }
 
       setLoading(false);

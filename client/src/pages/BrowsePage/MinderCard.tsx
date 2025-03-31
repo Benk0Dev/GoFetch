@@ -75,16 +75,29 @@ function MinderCard({ minder }: { minder: IUser }) {
         <div className={styles["distance-rating"]}>
           <div className={styles["metric"] + " " + styles["distance"]}>
             <MapPin size={18} />
-            <p>{distance || "Loading..."}</p>
+            <p>{minder.primaryUserInfo.address.city}</p>
           </div>
-        
+
           <div className={styles["metric"] + " " + styles["rating"]}>
             <Star size={18} />
             <span>{parseFloat(minder.minderRoleInfo.rating.toFixed(1))}</span>
-            <p style={{display: "flex", alignContent: "center", gap: "7px", marginLeft: "2px"}}><strong>•</strong>{minder.minderRoleInfo.reviews?.length} {minder.minderRoleInfo.reviews?.length === 1 ? "review" : "reviews"}</p>
+            <p
+              style={{
+                display: "flex",
+                alignContent: "center",
+                gap: "7px",
+                marginLeft: "2px",
+              }}
+            >
+              <strong>•</strong>
+              {minder.minderRoleInfo.reviews?.length}{" "}
+              {minder.minderRoleInfo.reviews?.length === 1
+                ? "review"
+                : "reviews"}
+            </p>
           </div>
         </div>
-      
+
         <div className={styles["services-container"]}>
           <span>Services:</span>
           <div className={styles["services"]}>
@@ -95,7 +108,7 @@ function MinderCard({ minder }: { minder: IUser }) {
             ))}
           </div>
         </div>
-      
+
         <div className={styles["price-availability"]}>
           <div className={styles["metric"]}>
             <span>Price:</span>
@@ -108,13 +121,19 @@ function MinderCard({ minder }: { minder: IUser }) {
         </div>
 
         <div className={styles["buttons"]}>
-          {(!user || user.currentRole === Role.OWNER) ? (
+          {!user || user.currentRole === Role.OWNER ? (
             <>
-              <button className="btn btn-secondary" onClick={handleViewProfile}>View Profile</button>
-              <button className="btn btn-primary" onClick={handleBook}>Book Now</button>
+              <button className="btn btn-secondary" onClick={handleViewProfile}>
+                View Profile
+              </button>
+              <button className="btn btn-primary" onClick={handleBook}>
+                Book Now
+              </button>
             </>
           ) : (
-            <button className="btn btn-primary" onClick={handleViewProfile}>View Profile</button>
+            <button className="btn btn-primary" onClick={handleViewProfile}>
+              View Profile
+            </button>
           )}
         </div>
       </div>
