@@ -235,14 +235,16 @@ function RegisterForm({ step, onStepChange }: { step: number; onStepChange: (ste
     // Keydown event handler to handle "Enter" key press for next button
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === "Enter") {
-        e.preventDefault();
-        if (step === 0) {
-            handleFirstNext(e);
-        } else if (step === 1) {
-            handleSecondNext(e);
-        } else if (step === 2) {
-            handleSubmit(e);
-        }
+            e.preventDefault();
+            if (step === 0) {
+                handleFirstNext(e);
+            } else if (step === 1) {
+                handleSecondNext(e);
+            } else if (step === 2) {
+                handleThirdNext(e);
+            } else if (step === 3) {
+                handleSubmit(e);
+            }
         }
     };
 
