@@ -192,14 +192,42 @@
     ],
     "currentRole": "petminder",
     "primaryUserInfo": {
-      "profilePic": "blob:http://localhost:5173/41eb20d4-4441-4475-8a2c-ea298996237d",
+      "profilePic": "blob:http://localhost:5173/f49bed35-9bbe-461b-a1a7-bf84ff5e7fec",
       "dob": "1995-08-25T00:00:00.000Z",
       "address": {
-        "street": "",
-        "city": "Nottingham Forest",
-        "postcode": "",
+        "street": "Meadow Grove",
+        "city": "Nottingham",
+        "postcode": "N1 5xy",
         "country": "United Kingdom"
-      }
+      },
+      "name": "Eve White",
+      "email": "eve@example.com",
+      "pictures": [
+        "26",
+        "26",
+        "26",
+        "26",
+        "26",
+        "26",
+        "26",
+        "26",
+        "blob:http://localhost:5173/7c8d464a-181a-4077-8448-707dbae51f7a",
+        "26",
+        "blob:http://localhost:5173/4d5529c6-88e2-4cfa-92d6-869e2ed511a1",
+        "26",
+        "blob:http://localhost:5173/740e5185-b82e-495b-b7ff-1a87779d32dd",
+        "26",
+        "blob:http://localhost:5173/fe29ef3a-617c-474e-9eb8-9ba394c19fb4",
+        "26",
+        "blob:http://localhost:5173/562b52cc-6ed1-4e97-a50f-216f612f7f80",
+        "26",
+        "blob:http://localhost:5173/76e8faf6-20ad-450a-a1e7-275f5c19c7a9",
+        "26",
+        "blob:http://localhost:5173/e0b049d3-5779-4a05-92a2-a7e5233a6bd9",
+        "26",
+        "blob:http://localhost:5173/ac2ab862-6a4b-4097-b7a3-78527edc1c16",
+        "26"
+      ]
     },
     "ownerRoleInfo": {
       "petIds": [
@@ -225,7 +253,7 @@
           "neutered": true,
           "behaviour": "He is very well-behaved, protective and intelligent.",
           "allergies": "None",
-          "picture": "blob:http://localhost:5173/233483bc-bbf0-4df6-a1ec-a480701d7d3e"
+          "picture": "blob:http://localhost:5173/4fc9d367-3b65-4be9-8f25-8d3e71f487c9"
         },
         {
           "id": 2,
@@ -237,7 +265,7 @@
           "neutered": true,
           "behaviour": "She is very energetic and vocal.",
           "allergies": "Dairy",
-          "picture": "blob:http://localhost:5173/9dd3162b-9fba-460b-a15d-9dcc9ce6902f"
+          "picture": "blob:http://localhost:5173/f0dca6c0-397b-4e17-b1ea-2bb2cfcdd776"
         }
       ],
       "bookings": [
