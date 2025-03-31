@@ -2,6 +2,10 @@ import { useState, useEffect, useRef } from "react";
 import styles from "@client/pages/BrowsePage/BrowsePage.module.css";
 import { Type } from "@gofetch/models/IService";
 import { Search, SlidersVertical, X } from "lucide-react";
+import {
+  getDistanceBetweenAddresses,
+  loadGooglePlacesScript,
+} from "@client/services/googleApi";
 
 interface FilterBarProps {
   onFilterChange: (filters: {
@@ -10,6 +14,7 @@ interface FilterBarProps {
     price: number;
     service: Type | "";
     sort: string;
+    distance: number;
   }) => void;
 }
 
@@ -17,27 +22,66 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
   const [location, setLocation] = useState("");
   const [rating, setRating] = useState(0);
   const [price, setPrice] = useState(200);
+  const [distance, setDistance] = useState(200); // NEW
   const [service, setService] = useState<Type | "">("");
   const [sortOption, setSortOption] = useState("rating");
   const [showAdvanced, setShowAdvanced] = useState(false);
 
   const modalRef = useRef<HTMLDivElement | null>(null);
 
+  useEffect(() => {
+    onFilterChange({
+      location,
+      rating,
+      price,
+      service,
+      sort: sortOption,
+      distance,
+    });
+  }, [location, rating, price, service, sortOption, distance]);
+
   const handleSearch = () => {
-    onFilterChange({ location, rating, price, service, sort: sortOption });
+    onFilterChange({
+      location,
+      rating,
+      price,
+      service,
+      sort: sortOption,
+      distance,
+    });
   };
 
   const handleReset = () => {
     setLocation("");
     setRating(0);
     setPrice(200);
-    setService(Type.WALK);
+    setDistance(200); // RESET distance
+    setService("");
     setSortOption("rating");
-    onFilterChange({ location: "", rating: 0, price: 200, service: Type.WALK, sort: "rating" });
+    onFilterChange({
+      location: "",
+      rating: 0,
+      price: 200,
+      distance: 200,
+      service: "",
+      sort: "rating",
+    });
+  };
+
+  const handleServiceChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const newService = event.target.value as Type | "";
+    setService(newService);
+    onFilterChange({
+      location,
+      rating,
+      price,
+      service: newService,
+      sort: sortOption,
+      distance,
+    });
   };
 
   const handleApply = () => {
-    onFilterChange({ location, rating, price, service, sort: sortOption });
     setShowAdvanced(false);
   };
 
@@ -53,16 +97,15 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
     <div className={styles["filter-container"]}>
       <h2>Find a Pet Minder</h2>
-      <p>Search for trusted pet minders in your area based on your preferences.</p>
+      <p>
+        Search for trusted pet minders in your area based on your preferences.
+      </p>
 
       <div className={styles["inputs"]}>
         <div className={styles["search-container"]}>
@@ -81,8 +124,15 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
           <select
             value={sortOption}
             onChange={(e) => {
-              setSortOption(e.target.value)
-              onFilterChange({ location, rating, price, service, sort: e.target.value });
+              setSortOption(e.target.value);
+              onFilterChange({
+                location,
+                rating,
+                price,
+                service,
+                sort: e.target.value,
+                distance,
+              });
             }}
             style={{ width: "fit-content" }}
           >
@@ -105,10 +155,14 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
         </div>
       </div>
 
-      <div className={`${styles["overlay"]} ${showAdvanced ? styles["open"] : ""}`}></div>
+      <div
+        className={`${styles["overlay"]} ${showAdvanced ? styles["open"] : ""}`}
+      ></div>
 
       <div
-        className={`${styles["advanced-filters-modal"]} ${showAdvanced ? styles["open"] : ""}`}
+        className={`${styles["advanced-filters-modal"]} ${
+          showAdvanced ? styles["open"] : ""
+        }`}
         ref={modalRef}
       >
         <button
@@ -119,12 +173,10 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
         </button>
         <h5>Filter Results</h5>
         <p>Refine your search with these filters.</p>
+
         <div>
           <label>Service</label>
-          <select
-            value={service}
-            onChange={(e) => setService(e.target.value as Type)}
-          >
+          <select value={service} onChange={handleServiceChange}>
             <option value="">All Services</option>
             <option value={Type.WALK}>Dog Walking</option>
             <option value={Type.SIT}>Pet Sitting</option>
@@ -138,6 +190,7 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
             <option value={Type.OTHER}>Other Service</option>
           </select>
         </div>
+
         <div>
           <label>Rating</label>
           <select
@@ -150,8 +203,9 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
             <option value={3}>3+ Stars</option>
           </select>
         </div>
+
         <div>
-          <label>Maxiumum Price: £{price}</label>
+          <label>Maximum Price: £{price}</label>
           <input
             type="range"
             min="0"
@@ -160,6 +214,18 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
             onChange={(e) => setPrice(parseInt(e.target.value))}
           />
         </div>
+
+        <div>
+          <label>Maximum Distance: {distance} miles</label>
+          <input
+            type="range"
+            min="1"
+            max="200"
+            value={distance}
+            onChange={(e) => setDistance(parseInt(e.target.value))}
+          />
+        </div>
+
         <div className={styles["buttons"]}>
           <button className="btn btn-secondary" onClick={handleReset}>
             Reset
