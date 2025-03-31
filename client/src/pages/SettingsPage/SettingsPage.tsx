@@ -4,6 +4,7 @@ import styles from "@client/pages/SettingsPage/SettingsPage.module.css";
 import { useAuth } from "@client/context/AuthContext";
 import { deleteUser } from "@client/services/UserRegistry";
 import { Role } from "@gofetch/models/IUser";
+import BackButton from "@client/components/BackButton";
 
 function SettingsPage() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -29,7 +30,7 @@ function SettingsPage() {
             {/* Profile editing form */}
               <h3>Personal Information</h3>
               {/* Name, email, phone inputs */}
-              <button>Change Password</button>
+              <button className="btn btn-primary">Change Password</button>
               {/* Password change form */}
           </div>
         );
@@ -76,7 +77,7 @@ function SettingsPage() {
               <h3>Danger Zone</h3>
               <p>Permanently delete your account and all associated data.</p>
               <button 
-                className={styles.deleteAccountButton}
+                className={`btn btn-primary ${styles.deleteAccountButton}`}
                 onClick={() => setShowDeleteModal(true)}
               >
                 Delete Account
@@ -90,8 +91,9 @@ function SettingsPage() {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.settingsWrapper}>
+    <div className={"container" + " " + styles.settingsPage}>
+      <BackButton />
+      <div className={styles.settings}>
         <div className={styles.sidebar}>
           <h2 className={styles.header}>Settings</h2>
           <nav className={styles.tabNav}>
@@ -155,13 +157,13 @@ function SettingsPage() {
             <p>Are you sure you want to delete your account? This action cannot be undone.</p>
             <div className={styles.modalButtons}>
               <button 
-                className={styles.cancelButton} 
+                className={`btn btn-primary ${styles.cancelButton}`}
                 onClick={() => setShowDeleteModal(false)}
               >
                 Cancel
               </button>
               <button 
-                className={styles.deleteButton} 
+                className={`btn btn-primary ${styles.deleteButton}`} 
                 onClick={handleDeleteAccount}
               >
                 Delete Account

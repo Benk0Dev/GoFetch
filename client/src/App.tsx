@@ -21,8 +21,10 @@ import { Role } from "@gofetch/models/IUser";
 import MinderPage from "@client/pages/MinderPage/MinderPage";
 
 function App() {
-  const { role, loading } = useAuth();
+  const { role, loading, user } = useAuth();
   const isGuest = role === null;
+
+  console.log(user);
 
   if (loading) return <div>Loading...</div>;
 

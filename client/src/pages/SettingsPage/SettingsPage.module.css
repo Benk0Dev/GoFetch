@@ -1,23 +1,24 @@
 /* Main */
-.container {
+.settingsPage {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  margin-bottom: auto;
+  padding: 40px 20px;
 }
 
-.header{
-  align-self: center;
+.settingsPage > button {
+  margin-bottom: 10px;  
 }
 
-.settingsWrapper {
+.settings {
   display: flex;
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto;
-  background-color: var(--menu-card-background-color);
+  background-color: var(--primary-color);
   border-radius: var(--border-radius);
-  overflow: hidden;
   border: 1px solid var(--text-color);
+}
+
+.header {
+  align-self: center;
 }
 
 .sidebar {
@@ -26,9 +27,10 @@
   justify-content: center;
   min-width: 20em;
   max-width: 10em;
-  background-color: var(--menu-card-background-color);
+  background-color: var(--primary-color);
   padding: 2rem 1rem;
   border-right: 1px solid var(--text-color);
+  border-radius: var(--border-radius) 0 0 var(--border-radius);
 }
 
 .tabNav {
@@ -70,21 +72,9 @@
 }
 
 /* Buttons */
-button {
-  width: 20em;
-  color: white;
+.tabButton {
   font-size: 1.1em;
   border-color: transparent;
-  padding: 0.6em;
-  background-color: var(--highlight-color);
-  border-radius: var(--border-radius);
-}
-
-button:hover {
-  background-color: var(--highlight-color-hover);
-}
-
-.tabButton {
   text-align: left;
   padding: 0.8rem 1rem;
   background-color: transparent;
