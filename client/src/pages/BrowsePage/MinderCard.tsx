@@ -16,19 +16,22 @@ function MinderCard({ minder }: { minder: IUser }) {
 
   useEffect(() => {
     const fetchDistance = async () => {
-      if (user) {
-        try {
-          await loadGooglePlacesScript();
-          const distInMeters = await getDistanceBetweenAddresses(
-            user.primaryUserInfo.address,
-            minder.primaryUserInfo.address
-          );
-          const distInMiles = (distInMeters / 1609.34).toFixed(1);
-          setDistance(`${distInMiles} miles away`);
-        } catch (err) {
-          console.error("Failed to fetch distance:", err);
-          setDistance("Distance unknown");
-        }
+      if (!user) {
+        setDistance(minder.primaryUserInfo.address.city); // Show city for guests
+        return;
+      }
+
+      try {
+        await loadGooglePlacesScript();
+        const distInMeters = await getDistanceBetweenAddresses(
+          user.primaryUserInfo.address,
+          minder.primaryUserInfo.address
+        );
+        const distInMiles = (distInMeters / 1609.34).toFixed(1);
+        setDistance(`${distInMiles} miles away`);
+      } catch (err) {
+        console.error("Failed to fetch distance:", err);
+        setDistance(minder.primaryUserInfo.address.city); // fallback to city
       }
     };
 
@@ -75,7 +78,7 @@ function MinderCard({ minder }: { minder: IUser }) {
         <div className={styles["distance-rating"]}>
           <div className={styles["metric"] + " " + styles["distance"]}>
             <MapPin size={18} />
-            <p>{minder.primaryUserInfo.address.city}</p>
+            <p>{distance}</p>
           </div>
 
           <div className={styles["metric"] + " " + styles["rating"]}>
