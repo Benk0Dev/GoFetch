@@ -18,6 +18,7 @@ import { useAuth } from "@client/context/AuthContext";
 import { SocketProvider } from "@client/context/SocketContext";
 import { Role } from "@gofetch/models/IUser";
 import MinderPage from "@client/pages/MinderPage/MinderPage";
+import ReportPage from "./pages/UserPage/ReportPage";
 
 function App() {
   const { role, loading } = useAuth();
@@ -84,6 +85,10 @@ function App() {
           <Route
             path="/profile"
             element={!isGuest ? <ProfilePage /> : <Navigate to="/" replace />}
+          />
+          <Route
+            path="/report"
+            element={!isGuest ? <ReportPage/> : <Navigate to="/" replace/>}
           />
           <Route
             path="/add-pet"
