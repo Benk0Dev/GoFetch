@@ -45,6 +45,7 @@ export function getCachedUsersWithAllInfo(): IUser[] {
 }
 
 export function RegisterUserCache(user: IRegisterdUser) {
+  console.log('Registering user:', user);
   if (!user.fname || !user.sname || !user.email || !user.password || !user.dob) {
     return { success: false, message: 'All fields are required' };
   } 
@@ -65,16 +66,18 @@ export function RegisterUserCache(user: IRegisterdUser) {
     const today = new Date();
     let age = today.getFullYear() - dob.getFullYear();
 
+    
     // Adjust age if birthday hasn't occurred yet this year
-    if (today.getMonth() < dob.getMonth() || 
-      (today.getMonth() === dob.getMonth() && today.getDate() < dob.getDate())) {
-      age--;
+    if (today.getMonth() < dob.getMonth() || (today.getMonth() === dob.getMonth() && today.getDate() < dob.getDate())) {age--}
+    
+    if (age < 0 || age > 120 || isNaN(age)) {
+      return { success: false, message: 'Invalid date of birth' };
     }
 
     if (age < 16) {
       return { success: false, message: 'Must be at least 16 years old' };
     }
-
+    
     const newId = cache.users.length > 0 ? cache.users[cache.users.length - 1].id + 1 : 1;
     // Create new user object
     const newUser: IUser = {

@@ -14,6 +14,7 @@ import ChatPage from "@client/pages/MessagingPage/ChatPage";
 import BookingPage from "@client/pages/BookingPage/BookingPage";
 import AddPetPage from "@client/pages/DashboardPage/Pets/AddPet";
 import PetDetailsPage from "@client/pages/DashboardPage/Pets/PetDetails";
+import SettingsPage from "@client/pages/SettingsPage/SettingsPage";
 import { useAuth } from "@client/context/AuthContext";
 import { SocketProvider } from "@client/context/SocketContext";
 import { Role } from "@gofetch/models/IUser";
@@ -100,6 +101,10 @@ function App() {
           <Route path="/minders/:minderId" element={<MinderPage />} />
           <Route path="/dashboard/pets/:id" element={role === Role.OWNER ? <PetDetailsPage /> : <Navigate to="/" replace />} />
           <Route path="/users/:id" element={<UserPage />} />
+          <Route
+            path="/settings"
+            element={!isGuest ? <SettingsPage /> : <Navigate to="/" replace />}
+          />
         </Routes>
         <Footer />
       </Router>

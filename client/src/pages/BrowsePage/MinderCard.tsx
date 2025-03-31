@@ -9,7 +9,7 @@ import {
   loadGooglePlacesScript,
 } from "@client/services/googleApi";
 
-function MinderCard({ minder }: { minder: IUser }) {
+function MinderCard({ minder }: { minder: IUser & { __distance?: number } }) {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [distance, setDistance] = useState<string>("");

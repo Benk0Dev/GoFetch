@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import styles from "@client/pages/BrowsePage/BrowsePage.module.css";
 import { Type } from "@gofetch/models/IService";
 import { Search, SlidersVertical, X } from "lucide-react";
@@ -20,11 +20,17 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
   const [location, setLocation] = useState("");
   const [sortOption, setSortOption] = useState("rating");
 
-  // Advanced filter temp states (only applied on Apply)
   const [rating, setRating] = useState(0);
   const [price, setPrice] = useState(200);
   const [distance, setDistance] = useState(200);
   const [service, setService] = useState<Type | "">("");
+
+  const [appliedFilters, setAppliedFilters] = useState({
+    rating: 0,
+    price: 200,
+    distance: 200,
+    service: "" as Type | "",
+  });
 
   const [showAdvanced, setShowAdvanced] = useState(false);
   const modalRef = useRef<HTMLDivElement | null>(null);
@@ -32,22 +38,23 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
   const handleSearch = () => {
     onFilterChange({
       location,
-      rating,
-      price,
-      service,
+      ...appliedFilters,
       sort: sortOption,
-      distance,
     });
   };
 
   const handleApply = () => {
-    onFilterChange({
-      location,
+    const newFilters = {
       rating,
       price,
-      service,
-      sort: sortOption,
       distance,
+      service,
+    };
+    setAppliedFilters(newFilters);
+    onFilterChange({
+      location,
+      ...newFilters,
+      sort: sortOption,
     });
   };
 
@@ -58,31 +65,40 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
     setDistance(200);
     setService("");
     setSortOption("rating");
-    onFilterChange({
-      location: "",
+    const resetFilters = {
       rating: 0,
       price: 200,
       distance: 200,
-      service: "",
+      service: "" as Type | "",
+    };
+    setAppliedFilters(resetFilters);
+    onFilterChange({
+      location: "",
+      ...resetFilters,
       sort: "rating",
     });
   };
 
-  const closeModal = () => {
-    setShowAdvanced(false);
+  const handleSortChange = (newSort: string) => {
+    setSortOption(newSort);
+    onFilterChange({
+      location,
+      ...appliedFilters,
+      sort: newSort,
+    });
   };
 
-  const handleClickOutside = (e: MouseEvent) => {
-    if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
-      setShowAdvanced(false);
-    }
-  };
+  const closeModal = () => setShowAdvanced(false);
 
-  // Attach click outside listener
-  useState(() => {
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+        setShowAdvanced(false);
+      }
+    };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  });
+  }, []);
 
   return (
     <div className={styles["filter-container"]}>
@@ -107,18 +123,7 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
         <div className={styles["filter-controls"]}>
           <select
             value={sortOption}
-            onChange={(e) => {
-              const newSort = e.target.value;
-              setSortOption(newSort);
-              onFilterChange({
-                location,
-                rating,
-                price,
-                service,
-                sort: newSort,
-                distance,
-              });
-            }}
+            onChange={(e) => handleSortChange(e.target.value)}
             style={{ width: "fit-content" }}
           >
             <option value="rating">Highest Rating</option>
@@ -142,10 +147,10 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
         </div>
       </div>
 
+      {/* Overlay and Modal */}
       <div
         className={`${styles["overlay"]} ${showAdvanced ? styles["open"] : ""}`}
-      ></div>
-
+      />
       <div
         className={`${styles["advanced-filters-modal"]} ${
           showAdvanced ? styles["open"] : ""
