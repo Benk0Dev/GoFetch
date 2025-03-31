@@ -165,3 +165,21 @@ export async function getAllUsers() {
     return null;
   }
 }
+
+export async function deleteUser(id: number) {
+  try {
+    const response = await fetch(`${API_URL}/user/${id}`, {
+      method: "DELETE",
+    });
+    if (response.ok) {
+      return true;
+    } else {
+      const text = await response.text();
+      console.error(text);
+      return false;
+    }
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+}

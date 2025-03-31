@@ -36,6 +36,10 @@
   column-gap: 5px;
 }
 
+.dropdownItem > span {
+  color: var(--text-color);
+}
+
 button.dropdownItem {
   cursor: pointer;
 }
