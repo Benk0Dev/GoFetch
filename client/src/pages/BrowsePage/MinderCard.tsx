@@ -77,33 +77,15 @@ function MinderCard({ minder }: { minder: IUser }) {
             <MapPin size={18} />
             <p>{distance || "Loading..."}</p>
           </div>
+        
           <div className={styles["metric"] + " " + styles["rating"]}>
             <Star size={18} />
             <span>{parseFloat(minder.minderRoleInfo.rating.toFixed(1))}</span>
-            <p
-              style={{
-                display: "flex",
-                alignContent: "center",
-                gap: "7px",
-                marginLeft: "2px",
-              }}
-            >
-              <strong>•</strong>
-              {(minder.minderRoleInfo.reviews ?? []).length}{" "}
-              {(minder.minderRoleInfo.reviews ?? []).length === 1
-                ? "review"
-                : "reviews"}
-            </p>
+            <p style={{display: "flex", alignContent: "center", gap: "7px", marginLeft: "2px"}}><strong>•</strong>{minder.minderRoleInfo.reviews?.length} {minder.minderRoleInfo.reviews?.length === 1 ? "review" : "reviews"}</p>
           </div>
         </div>
-        <div className={styles["metric"] + " " + styles["rating"]}>
-          <Star size={18} />
-          <span>{parseFloat(minder.minderRoleInfo.rating.toFixed(1))}</span>
-          <p style={{display: "flex", alignContent: "center", gap: "7px", marginLeft: "2px"}}><strong>•</strong>{minder.minderRoleInfo.reviews.length} {minder.minderRoleInfo.reviews.length === 1 ? "review" : "reviews"}</p>
-        </div>
-      </div>
       
-      <div className={styles["services-container"]}>
+        <div className={styles["services-container"]}>
           <span>Services:</span>
           <div className={styles["services"]}>
             {services.map((service: any, index: number) => (
