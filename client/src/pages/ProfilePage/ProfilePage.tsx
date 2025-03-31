@@ -34,6 +34,7 @@ function Profile() {
             setProfilePicture(URL.createObjectURL(file));
         }
     };
+    
 
     const handleSave = async () => {
         let updatedProfilePicture = profilePicture;
