@@ -144,7 +144,6 @@ const BrowsePage: React.FC = () => {
         <p>Loading minders...</p>
       ) : (
         <div className={styles["minders-grid"]}>
-          <p>Showing {filteredMinders.length} minders</p>
           {filteredMinders.length > 0 ? (
             filteredMinders.map((minder, index) => (
               <MinderCard key={index} minder={minder} />
