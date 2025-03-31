@@ -123,7 +123,9 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
           >
             <option value="rating">Highest Rating</option>
             <option value="price">Lowest Price</option>
-            <option value="distance">Nearest</option>
+            {user && (
+              <option value="distance">Closest to You</option>
+            )}
           </select>
 
           <button
