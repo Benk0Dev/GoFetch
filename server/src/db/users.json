@@ -192,12 +192,12 @@
     ],
     "currentRole": "petminder",
     "primaryUserInfo": {
-      "profilePic": "blob:http://localhost:5173/f49bed35-9bbe-461b-a1a7-bf84ff5e7fec",
+      "profilePic": "data:image/svg+xml,%3c?xml%20version='1.0'%20encoding='UTF-8'?%3e%3csvg%20width='100'%20height='100'%20viewBox='0%200%20100%20100'%20xmlns='http://www.w3.org/2000/svg'%3e%3c!--%20White%20background%20square%20--%3e%3crect%20width='100'%20height='100'%20fill='%23fceddc'%20/%3e%3c!--%20Head%20(circle)%20--%3e%3ccircle%20cx='50'%20cy='34'%20r='15'%20fill='%23ff8800'%20/%3e%3c!--%20Shoulders%20(closer%20to%20head%20and%20more%20prominent)%20--%3e%3cpath%20d='M20,80%20C20,58%2080,58%2080,80%20Z'%20fill='%23ff8800'%20/%3e%3c/svg%3e",
       "dob": "1995-08-25T00:00:00.000Z",
       "address": {
-        "street": "Meadow Grove",
+        "street": "The Vale",
         "city": "Nottingham",
-        "postcode": "N1 5xy",
+        "postcode": "nw11 4ed",
         "country": "United Kingdom"
       },
       "name": "Eve White",
@@ -253,7 +253,7 @@
           "neutered": true,
           "behaviour": "He is very well-behaved, protective and intelligent.",
           "allergies": "None",
-          "picture": "blob:http://localhost:5173/4fc9d367-3b65-4be9-8f25-8d3e71f487c9"
+          "picture": "blob:http://localhost:5173/7bd932e6-8f05-4de0-bd3a-6623122a9926"
         },
         {
           "id": 2,
@@ -265,7 +265,7 @@
           "neutered": true,
           "behaviour": "She is very energetic and vocal.",
           "allergies": "Dairy",
-          "picture": "blob:http://localhost:5173/f0dca6c0-397b-4e17-b1ea-2bb2cfcdd776"
+          "picture": "blob:http://localhost:5173/829a1d57-534e-47b1-bd52-034160483a8a"
         }
       ],
       "bookings": [
@@ -460,6 +460,13 @@
           "bookingId": 6
         }
       ]
+    },
+    "email": "eve@example.com",
+    "address": {
+      "street": "Meadow Grove Gardens",
+      "city": "Nottingham",
+      "postcode": "N1 5xy",
+      "country": "United Kingdom"
     }
   },
   {
