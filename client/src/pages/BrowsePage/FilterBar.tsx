@@ -1,11 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import styles from "@client/pages/BrowsePage/BrowsePage.module.css";
 import { Type } from "@gofetch/models/IService";
 import { Search, SlidersVertical, X } from "lucide-react";
-import {
-  getDistanceBetweenAddresses,
-  loadGooglePlacesScript,
-} from "@client/services/googleApi";
 
 interface FilterBarProps {
   onFilterChange: (filters: {
@@ -20,25 +16,16 @@ interface FilterBarProps {
 
 const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
   const [location, setLocation] = useState("");
+  const [sortOption, setSortOption] = useState("rating");
+
+  // Advanced filter temp states (only applied on Apply)
   const [rating, setRating] = useState(0);
   const [price, setPrice] = useState(200);
-  const [distance, setDistance] = useState(200); // NEW
+  const [distance, setDistance] = useState(200);
   const [service, setService] = useState<Type | "">("");
-  const [sortOption, setSortOption] = useState("rating");
+
   const [showAdvanced, setShowAdvanced] = useState(false);
-
   const modalRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    onFilterChange({
-      location,
-      rating,
-      price,
-      service,
-      sort: sortOption,
-      distance,
-    });
-  }, [location, rating, price, service, sortOption, distance]);
 
   const handleSearch = () => {
     onFilterChange({
@@ -51,11 +38,23 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
     });
   };
 
+  const handleApply = () => {
+    onFilterChange({
+      location,
+      rating,
+      price,
+      service,
+      sort: sortOption,
+      distance,
+    });
+    setShowAdvanced(false);
+  };
+
   const handleReset = () => {
     setLocation("");
     setRating(0);
     setPrice(200);
-    setDistance(200); // RESET distance
+    setDistance(200);
     setService("");
     setSortOption("rating");
     onFilterChange({
@@ -66,22 +65,6 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
       service: "",
       sort: "rating",
     });
-  };
-
-  const handleServiceChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const newService = event.target.value as Type | "";
-    setService(newService);
-    onFilterChange({
-      location,
-      rating,
-      price,
-      service: newService,
-      sort: sortOption,
-      distance,
-    });
-  };
-
-  const handleApply = () => {
     setShowAdvanced(false);
   };
 
@@ -89,16 +72,17 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
     setShowAdvanced(false);
   };
 
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
-        setShowAdvanced(false);
-      }
-    };
+  const handleClickOutside = (e: MouseEvent) => {
+    if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+      setShowAdvanced(false);
+    }
+  };
 
+  // Attach click outside listener
+  useState(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  });
 
   return (
     <div className={styles["filter-container"]}>
@@ -124,13 +108,14 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
           <select
             value={sortOption}
             onChange={(e) => {
-              setSortOption(e.target.value);
+              const newSort = e.target.value;
+              setSortOption(newSort);
               onFilterChange({
                 location,
                 rating,
                 price,
                 service,
-                sort: e.target.value,
+                sort: newSort,
                 distance,
               });
             }}
@@ -142,7 +127,7 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
           </select>
 
           <button
-            className={"btn" + " " + styles["advanced-filters-button"]}
+            className={"btn " + styles["advanced-filters-button"]}
             onClick={() => setShowAdvanced(!showAdvanced)}
             style={{ padding: "0 12px" }}
           >
@@ -176,7 +161,10 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
 
         <div>
           <label>Service</label>
-          <select value={service} onChange={handleServiceChange}>
+          <select
+            value={service}
+            onChange={(e) => setService(e.target.value as Type | "")}
+          >
             <option value="">All Services</option>
             <option value={Type.WALK}>Dog Walking</option>
             <option value={Type.SIT}>Pet Sitting</option>
