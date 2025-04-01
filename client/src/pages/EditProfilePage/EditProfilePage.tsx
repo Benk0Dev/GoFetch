@@ -71,6 +71,8 @@ function Profile() {
             setProfilePicture(user.primaryUserInfo.profilePic);
             setSelectedFile(null);
             setHasUnsavedChanges(false);
+            setPersonalInformationError("");
+            setAddressError("");
         }
     };
 
