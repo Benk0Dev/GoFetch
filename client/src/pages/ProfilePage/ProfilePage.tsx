@@ -22,11 +22,13 @@ function Profile() {
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
     const postcodeRegex = /^([A-Z]{1,2}\d[A-Z\d]? \d[A-Z]{2}|[A-Z]{1,2}\d{1,2} \d[A-Z]{2})$/i;
     const [postcodeError, setPostcodeError] = useState<string | null>(null);
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
+    const [emailError, setEmailError] = useState<string | null>(null);
 
     const handlePostcodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
         setAddress({ ...address, postcode: value });
-        setPostcodeError(null); // Reset error on change
+        setPostcodeError(null);
     };
 
     const handlePostcodeBlur = () => {
@@ -34,6 +36,18 @@ function Profile() {
             alert("Invalid postcode format. Please enter a valid UK postcode.");
         }
     };
+
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { value } = e.target;
+        setEmail(value);
+        setEmailError(null); 
+    };
+
+    const handleEmailBlur = () => {
+        if (!emailRegex.test(email)) {
+            alert("Invalid email format. Please enter a valid email address.");
+        }
+    }
 
     useEffect(() => {
         setHasUnsavedChanges(
@@ -71,10 +85,13 @@ function Profile() {
                 return;
             }
         }
-
-        // Validate postcode before saving
         if (address.postcode && !postcodeRegex.test(address.postcode)) {
             setPostcodeError("Invalid postcode format. Please enter a valid UK postcode.");
+            return;
+        }
+
+        if (emailError) {
+            setEmailError("Please fix the errors before saving.");
             return;
         }
 
@@ -164,7 +181,12 @@ function Profile() {
                 </div>
                 <div className={styles.input}>
                     <label>Email</label>
-                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <input type="email"
+                        value={email}
+                        onChange={handleEmailChange}
+                        onBlur={handleEmailBlur}
+                    />
+
                 </div>
                 <div className={styles.input}>
                     <label>Street</label>
@@ -188,9 +210,9 @@ function Profile() {
                         type="text"
                         value={address.postcode}
                         onChange={handlePostcodeChange}
-                        onBlur={handlePostcodeBlur} // Validate on blur
+                        onBlur={handlePostcodeBlur}
                     />
-                    {postcodeError && <div className="error">{postcodeError}</div>} {/* Show error message */}
+                    {postcodeError && <div className="error">{postcodeError}</div>} 
                 </div>
                 <div className={styles.input}>
                     <label>Country</label>
