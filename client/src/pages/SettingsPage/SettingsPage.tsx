@@ -35,6 +35,10 @@ function SettingsPage() {
     };
   }, [showDeleteModal]);
 
+  const handleChangePassword = () => {
+    // Change password modal
+  };
+
   const handleNotificationToggle = () => {
     setNotificationsEnabled(prev => !prev);
     // Add logic to update the backend settings
@@ -61,7 +65,7 @@ function SettingsPage() {
         <div className={styles.settingsContent}>
           <div className={styles.settingsSection}>
             <h5>Account</h5>
-            <button className="btn btn-primary">Change Password</button>
+            <button className="btn btn-primary" onClick={handleChangePassword}>Change Password</button>
           </div>
           <div className={styles.settingsSection}>
             <h5>Notifications</h5>
