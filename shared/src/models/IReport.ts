@@ -1,5 +1,5 @@
 export interface IReport {
-    id: number;
+    id: string;
     reporterId: number;
     reporteeId: number;
     title: string;

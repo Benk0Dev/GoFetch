@@ -49,7 +49,12 @@ function ProfilePage() {
     };
 
     const handleReport = () => {
-        // TODO: Implement reporting
+        navigate("/report", {
+            state: {
+                reporteeId: userBeingDisplayed.id,
+                reporteeName: userBeingDisplayed.name.fname
+            }
+        });
     };
 
     const handleSuspend = () => {
