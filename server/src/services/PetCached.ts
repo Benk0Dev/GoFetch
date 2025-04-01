@@ -61,6 +61,6 @@ export function removePetCached(id: number) {
     }
 }
 
-function savePetsToFile(pets: IPet[]) {
+export function savePetsToFile(pets: IPet[]) {
     fs.writeFileSync(`${DB_PATH}/pets.json`, JSON.stringify(pets, null, 2), 'utf8');
 }

@@ -1,7 +1,15 @@
 import fs from 'fs';
 import { IUser, IRegisterdUser, Availability } from '@gofetch/models/IUser';
 import { cache, DB_PATH } from '@server/utils/Cache';
-import { saveUploadedImage } from '@server/static/ImageStatic';
+import { savePetsToFile } from '@server/services/PetCached';
+import { saveServicesToFile } from './ServiceCached';
+import { saveReviewsToFile } from './ReviewCached';
+import { saveBookingsToFile } from './BookingCached';
+import path from 'path';
+
+const pathToSrc = path.join(__dirname, '../');
+console.log(pathToSrc)
+
 
 // Get cached users
 export function getCachedUsers(): IUser[] {
@@ -138,6 +146,118 @@ export function removeUserCache(id: number): { success: boolean; message: string
     const userIndex = cache.users.findIndex(u => u.id === id);
     if (userIndex < 0) {
       return { success: false, message: 'User not found' };
+    }
+
+    const user = cache.users[userIndex];
+    
+    // Remove all attached pets
+    if (user.ownerRoleInfo) {
+      user.ownerRoleInfo.petIds.forEach(petId => {
+        const petIndex = cache.pets.findIndex(pet => pet.id === petId);
+        if (petIndex >= 0) {
+          cache.pets.splice(petIndex, 1);
+        }
+      });
+      savePetsToFile(cache.pets);
+    }
+
+    // Remove all attached services
+    if (user.minderRoleInfo) {
+      user.minderRoleInfo.serviceIds.forEach(serviceId => {
+        const serviceIndex = cache.services.findIndex(service => service.id === serviceId);
+        if (serviceIndex >= 0) {
+          cache.services.splice(serviceIndex, 1);
+        }
+      });
+      saveServicesToFile(cache.services);
+    }
+
+    // Remove all attached reviews
+    if (user.minderRoleInfo) {
+      user.minderRoleInfo.reviewIds.forEach(reviewId => {
+        const reviewIndex = cache.reviews.findIndex(review => review.id === reviewId);
+        if (reviewIndex >= 0) {
+          cache.reviews.splice(reviewIndex, 1);
+        }
+      });
+      saveReviewsToFile(cache.reviews);
+
+    }
+
+    // Remove all attached bookings
+    if (user.ownerRoleInfo) {
+      user.ownerRoleInfo.bookingIds.forEach(bookingId => {
+        const bookingIndex = cache.bookings.findIndex(booking => booking.id === bookingId);
+        if (bookingIndex >= 0) {
+          cache.bookings.splice(bookingIndex, 1);
+        }
+      });
+      saveBookingsToFile();
+    }
+
+    // Remove all attached notifications
+    if (user.minderRoleInfo) {
+      user.minderRoleInfo.bookingIds.forEach(bookingId => {
+        const bookingIndex = cache.bookings.findIndex(booking => booking.id === bookingId);
+        if (bookingIndex >= 0) {
+          cache.bookings.splice(bookingIndex, 1);
+        }
+      });
+      saveBookingsToFile();
+    }
+
+    // Remove all attached images
+    if (user.primaryUserInfo) {
+      const profilePicPath = user.primaryUserInfo.profilePic;
+      if (profilePicPath) {
+        const profilePicFullPath = `${pathToSrc}\\images\\${profilePicPath}`;
+        if (fs.existsSync(profilePicFullPath)) {
+          fs.unlinkSync(profilePicFullPath);
+        } else {
+          console.log(`Profile image not found: ${profilePicFullPath}`);
+        }
+      }
+    }
+
+    // Remove all attached images from minderRoleInfo
+    if (user.minderRoleInfo) {
+      user.minderRoleInfo.pictures.forEach(picture => {
+        if (picture) {
+          const pictureFullPath = `${pathToSrc}\\images\\${picture}`;
+          if (fs.existsSync(pictureFullPath)) {
+            fs.unlinkSync(pictureFullPath);
+          } else {
+            console.log(`Minder image not found: ${pictureFullPath}`);
+          }
+        }
+      });
+    }
+
+    // Remove all attached images from pets
+    if (user.ownerRoleInfo) {
+      user.ownerRoleInfo.petIds.forEach(petId => {
+        const pet = cache.pets.find(p => p.id === petId);
+        if (pet && pet.picture) {
+          const petPictureFullPath = `${pathToSrc}\\images\\${pet.picture}`;
+          if (fs.existsSync(petPictureFullPath)) {
+            fs.unlinkSync(petPictureFullPath)
+          } else {
+            console.log(`Pet image not found: ${petPictureFullPath}`);
+          }
+        }
+      });
+      savePetsToFile(cache.pets);
+    }
+
+    // Remove all attached reports
+    if (user.minderRoleInfo) {
+      user.minderRoleInfo.bookingIds.forEach(bookingId => {
+        const bookingIndex = cache.bookings.findIndex(booking => booking.id === bookingId);
+        if (bookingIndex >= 0) {
+          cache.bookings.splice(bookingIndex, 1);
+        }
+      });
+      saveBookingsToFile();
     }
 
     // Remove the user

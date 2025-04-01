@@ -93,7 +93,7 @@ export function deleteBookingCached(bookingId: number): boolean {
   return false;
 }
 
-function saveBookingsToFile() {
+export function saveBookingsToFile() {
   try {
     fs.writeFileSync(path.join(DB_PATH, 'bookings.json'),JSON.stringify(cache.bookings, null, 2),'utf8'
     );
