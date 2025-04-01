@@ -30,6 +30,6 @@ export function addReviewCached(review: IReview) {
     return { success: true, message: 'Review added successfully!', review: newReview };
 }
 
-function saveReviewsToFile(reviews: IReview[]) {
+export function saveReviewsToFile(reviews: IReview[]) {
     fs.writeFileSync(`${DB_PATH}/reviews.json`, JSON.stringify(reviews, null, 2), 'utf8');
 }
