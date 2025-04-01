@@ -411,43 +411,5 @@
       "bookingIds": [],
       "reviewIds": []
     }
-  },
-  {
-    "id": 11,
-    "name": {
-      "fname": "ASD",
-      "sname": "Asdf"
-    },
-    "loginDetails": {
-      "email": "asdf@asfd.com",
-      "password": "12345678"
-    },
-    "roles": [
-      "petowner"
-    ],
-    "currentRole": "petowner",
-    "primaryUserInfo": {
-      "profilePic": "31",
-      "dob": "1997-05-07T00:00:00.000Z",
-      "address": {
-        "street": "123 Main Street",
-        "city": "Feltham",
-        "postcode": "TW13",
-        "country": "United Kingdom"
-      }
-    },
-    "ownerRoleInfo": {
-      "petIds": [],
-      "bookingIds": []
-    },
-    "minderRoleInfo": {
-      "serviceIds": [],
-      "rating": 0,
-      "bio": "",
-      "pictures": [],
-      "availability": "Flexible",
-      "bookingIds": [],
-      "reviewIds": []
-    }
   }
 ]
