@@ -1,9 +1,9 @@
-/* Main */
 .settingsPage {
   display: flex;
   flex-direction: column;
   margin-bottom: auto;
   padding: 40px 20px;
+  width: fit-content;
 }
 
 .settingsPage > button {
@@ -12,140 +12,117 @@
 
 .settings {
   display: flex;
+  flex-direction: column;
+  gap: 10px;
   background-color: var(--primary-color);
   border-radius: var(--border-radius);
   border: 1px solid var(--text-color);
+  padding: 20px;
+  width: fit-content;
 }
 
-.header {
-  align-self: center;
-}
-
-.sidebar {
+.settingsContent {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  min-width: 20em;
-  max-width: 10em;
-  background-color: var(--primary-color);
-  padding: 2rem 1rem;
-  border-right: 1px solid var(--text-color);
-  border-radius: var(--border-radius) 0 0 var(--border-radius);
+  gap: 20px;
 }
 
-.tabNav {
+.settingsSection {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  margin-top: 1.5rem;
+  gap: 5px;
 }
 
-.activeTab {
-  background-color: var(--highlight-color);
-  color: white;
-}
-
-.activeTab:hover {
-  background-color: var(--highlight-color-hover);
-}
-
-.content {
+.notificationSetting {
   display: flex;
-  flex: 1;
-  padding: 2rem;
-  max-height: 80vh;
-  overflow-y: auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
 }
 
-.tabContent {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  width: 100%;
+.notificationSetting p {
+  margin: 0;
 }
 
 .dangerZone {
-  margin-top: 3rem;
-  padding: 1.5rem;
+  padding: 15px;
   border: 1px solid var(--error-color, #dc3545);
   border-radius: var(--border-radius);
-}
-
-/* Buttons */
-.tabButton {
-  font-size: 1.1em;
-  border-color: transparent;
-  text-align: left;
-  padding: 0.8rem 1rem;
-  background-color: transparent;
-  border: none;
-  border-radius: var(--border-radius);
-  color: var(--text-color);
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  width: 100%;
-}
-
-.tabButton:hover {
-  background-color: rgba(0, 0, 0, 0.05);
-}
-
-.modalButtons {
   display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 1.5rem;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.cancelButton {
-  background-color: #6c757d;
+.dangerZone p {
+  margin-bottom: 10px;
 }
 
-.deleteButton {
+.deleteBtn {
   background-color: #dc3545;
 }
 
-.cancelButton:hover {
-  background-color: #5a6268;
+.deleteBtn:hover {
+  background-color: #f04f5f;
 }
 
-.deleteButton:hover {
-  background-color: #c82333;
-}
-
-.deleteAccountButton {
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  padding: 0.6em;
-  border-radius: var(--border-radius);
-}
-
-.deleteAccountButton:hover {
-  background-color: #c82333;
-}
-
-/* Modal overlay */
-.modalOverlay {
+.modalBackdrop {
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  animation: fadeIn 0.1s ease-out;
 }
 
-.modalContent {
-  background-color: var(--menu-card-background-color);
-  padding: 2rem;
+.modal {
+  background-color: var(--primary-color);
+  padding: 20px;
   border-radius: var(--border-radius);
   max-width: 500px;
-  width: 90%;
+  width: 100%;
+  border: 1px solid var(--text-color);
+  position: relative;
+  animation: fadeIn 0.1s ease-out;
+}
+
+.modal h3 {
+  margin: 20px 0;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal p {
+  text-align: center;
+}
+
+.modal p:first-of-type {
+  margin: 0;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.modalActions .cancelBtn {
+  background-color: #b5b5b5;
+}
+
+.modalActions .cancelBtn:hover {
+  background-color: #c2c2c2;
+}
+
+/* Animation for modal fade-in */
+@keyframes fadeIn {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
 }
