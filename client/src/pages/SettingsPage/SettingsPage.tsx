@@ -4,11 +4,16 @@ import styles from "@client/pages/SettingsPage/SettingsPage.module.css";
 import { useAuth } from "@client/context/AuthContext";
 import { deleteUser } from "@client/services/UserRegistry";
 import BackButton from "@client/components/BackButton";
+import Switch from "react-switch";
 
 function SettingsPage() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+
+  // Temporary - will need to add settings to backend
+  const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  const [soundEnabled, setSoundEnabled] = useState(true);
 
   useEffect(() => {
     if (!showDeleteModal) return;
@@ -30,6 +35,16 @@ function SettingsPage() {
     };
   }, [showDeleteModal]);
 
+  const handleNotificationToggle = () => {
+    setNotificationsEnabled(prev => !prev);
+    // Add logic to update the backend settings
+  }
+
+  const handleSoundToggle = () => {
+    setSoundEnabled(prev => !prev);
+    // Add logic to update the backend settings
+  }
+
   const handleDeleteAccount = () => {
     deleteUser(user.id);
     logout();
@@ -46,13 +61,41 @@ function SettingsPage() {
         <div className={styles.settingsContent}>
           <div className={styles.settingsSection}>
             <h5>Account</h5>
-            <span>*Change Password*</span>
+            <button className="btn btn-primary">Change Password</button>
           </div>
           <div className={styles.settingsSection}>
             <h5>Notifications</h5>
-            {/* Notification toggles */}
-            <span>*Notifications Enabled Toggle*</span>
-            <span>*Notification Sounds Toggle*</span>
+            <div className={styles.notificationSetting}>
+              <p>Notfications Enabled</p>
+              <Switch 
+                onChange={handleNotificationToggle} 
+                checked={notificationsEnabled} 
+                offColor="#b5b5b5" 
+                onColor="#ff8800"
+                uncheckedIcon={false}
+                checkedIcon={false}
+                height={20}
+                width={40}
+                activeBoxShadow="none"
+                className={styles.toggleSwitch}
+              />
+            </div>
+            <div className={styles.notificationSetting}>
+              <p>Sound Notifications</p>
+              <Switch 
+                onChange={handleSoundToggle} 
+                checked={soundEnabled} 
+                offColor="#b5b5b5" 
+                onColor="#ff8800"
+                uncheckedIcon={false}
+                checkedIcon={false}
+                height={20}
+                width={40}
+                activeBoxShadow="none"
+                disabled={!notificationsEnabled}
+                className={styles.toggleSwitch}
+              />
+            </div>
           </div>
           <div className={styles.settingsSection}>
             <div className={styles.dangerZone}>
