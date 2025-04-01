@@ -14,14 +14,16 @@
     ],
     "currentRole": "petowner",
     "primaryUserInfo": {
-      "profilePic": "",
+      "profilePic": "26",
       "dob": "1990-06-15T00:00:00.000Z",
       "address": {
-        "street": "",
-        "city": "Bristol",
-        "postcode": "",
+        "street": "Portland Avenue",
+        "city": "Cardiff",
+        "postcode": "nw7 2hx",
         "country": "United Kingdom"
-      }
+      },
+      "name": "Alice Smith",
+      "email": "alice@example.com"
     },
     "ownerRoleInfo": {
       "petIds": [

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
-import { IAddress, IUser, Role } from "@gofetch/models/IUser";
+import { IAddress, Role } from "@gofetch/models/IUser";
 import { uploadImage, editUser, getUserById } from "../../services/Registry";
 import styles from "./ProfilePage.module.css";
 import "../../global.css";
@@ -15,6 +15,11 @@ function Profile() {
     const [profilePicture, setProfilePicture] = useState(user.primaryUserInfo.profilePic);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+    const postcodeRegex = /^([A-Z]{1,2}\d[A-Z\d]? \d[A-Z]{2}|[A-Z]{1,2}\d{1,2} \d[A-Z]{2})$/i;
+    const [postcodeError, setPostcodeError] = useState<string | null>(null);
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
+    const [emailError, setEmailError] = useState<string | null>(null);
+
     
     useEffect(() => {
         async function initialize() {
@@ -49,6 +54,18 @@ function Profile() {
                 alert("Failed to upload image.");
                 return;
             }
+        }
+
+        if (address.postcode && !postcodeRegex.test(address.postcode)) {
+            setPostcodeError("Invalid postcode format. Please enter a valid UK postcode.");
+            alert(postcodeError)
+            return;
+        }
+
+        if (!emailRegex.test(email)) {
+            setEmailError("Invalid email format. Please enter a valid email address.");
+            alert(emailError)
+            return;
         }
 
         const updatedUser = {
@@ -98,6 +115,31 @@ function Profile() {
         }
     };
 
+    const handlePostcodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { value } = e.target;
+        setAddress({ ...address, postcode: value });
+        setPostcodeError(null); // Reset error on change
+    };
+
+    const handlePostcodeBlur = () => {
+        if (address.postcode && !postcodeRegex.test(address.postcode)) {
+            setPostcodeError("Invalid postcode format. Please enter a valid UK postcode.");
+        }
+    };
+
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { value } = e.target;
+        setEmail(value);
+        setEmailError(null); 
+    };
+
+    const handleEmailBlur = () => {
+        if (!emailRegex.test(email)) {
+            alert("Invalid email format. Please enter a valid email address.");
+        }
+    }
+
+
     return (
         <div className={styles.page}>
             <h2>Your Profile</h2>
@@ -123,8 +165,14 @@ function Profile() {
                     <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
                 </div>
                 <div className={styles.input}>
-                    <label>Email</label>
-                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                     <label>Email</label>
+                     <input 
+                        type="email" 
+                        value={email} 
+                        onChange={handleEmailChange} 
+                        onBlur={handleEmailBlur} 
+                     />
+
                 </div>
                 <div className={styles.input}>
                     <label>Street</label>
@@ -143,12 +191,14 @@ function Profile() {
                     />
                 </div>
                 <div className={styles.input}>
-                    <label>Postcode</label>
+                     <label>Postcode</label>
                     <input
                         type="text"
                         value={address.postcode}
-                        onChange={(e) => setAddress({ ...address, postcode: e.target.value })}
+                        onChange={handlePostcodeChange}
+                        onBlur={handlePostcodeBlur}
                     />
+
                 </div>
                 <div className={styles.input}>
                     <label>Country</label>
