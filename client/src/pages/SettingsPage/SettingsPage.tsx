@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "@client/pages/SettingsPage/SettingsPage.module.css";
 import { useAuth } from "@client/context/AuthContext";
 import { deleteUser } from "@client/services/UserRegistry";
@@ -8,8 +8,27 @@ import BackButton from "@client/components/BackButton";
 function SettingsPage() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { user, logout } = useAuth();
-
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!showDeleteModal) return;
+    const preventScroll = (e: Event) => e.preventDefault();
+
+    const preventKeys = (e: KeyboardEvent) => {
+        const keys = ["ArrowUp", "ArrowDown", "PageUp", "PageDown", " "];
+        if (keys.includes(e.key)) e.preventDefault();
+    };
+
+    document.addEventListener("wheel", preventScroll, { passive: false });
+    document.addEventListener("touchmove", preventScroll, { passive: false });
+    document.addEventListener("keydown", preventKeys);
+
+    return () => {
+        document.removeEventListener("wheel", preventScroll);
+        document.removeEventListener("touchmove", preventScroll);
+        document.removeEventListener("keydown", preventKeys);
+    };
+  }, [showDeleteModal]);
 
   const handleDeleteAccount = () => {
     deleteUser(user.id);
