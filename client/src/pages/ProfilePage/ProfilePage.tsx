@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { IAddress, Role } from "@gofetch/models/IUser";
-import { uploadImage, editUser, getUserById } from "../../services/Registry";
+import { editUser, getUserById } from "../../services/UserRegistry";
+import { uploadImage } from "../../services/ImageRegistry";
 import styles from "./ProfilePage.module.css";
 import "../../global.css";
 import defaultProfilePic from "../../assets/images/default-profile-picture.svg";
