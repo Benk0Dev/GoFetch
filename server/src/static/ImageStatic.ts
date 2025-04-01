@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { editUser, getUserByID, getUserImages, isUserMinder } from '@server/routers/UserStatic';
+import { editUser, getUserByID, getUserImages, isUserMinder } from '@server/static/UserStatic';
 
 // Define the upload directory path
 const uploadDir = path.join(__dirname, '../images');
@@ -51,8 +51,6 @@ export function saveUploadedImage(file: Express.Multer.File | undefined): ImageU
             imageId: imageId,
             filename: newFilename,
             path: `/images/${newFilename}`
-            // filename: file.filename,
-            // path: `/images/${file.filename}`
         }
     };
 }

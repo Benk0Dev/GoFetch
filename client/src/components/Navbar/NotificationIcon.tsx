@@ -4,7 +4,7 @@ import { Bell } from "lucide-react";
 import DropdownMenu from "@client/components/Dropdown/DropdownMenu";
 import DropdownItem from "@client/components/Dropdown/DropdownItem";
 import styles from "@client/components/Navbar/Navbar.module.css";
-import { getUserNotifications, markNotificationAsRead } from "@client/services/Registry";
+import { getUserNotifications, markNotificationAsRead } from "@client/services/NotificationRegistry";
 import { INotification } from "@gofetch/models/INotification";
 import { useSocket } from "@client/context/SocketContext";
 import { useAuth } from "@client/context/AuthContext";

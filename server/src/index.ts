@@ -1,23 +1,13 @@
+import 'module-alias/register';
 import dotenv from 'dotenv';
 dotenv.config();
 
-// Register module aliases
-import 'module-alias/register';
-import path from 'path';
-import moduleAlias from 'module-alias';
-
-// Add path aliases
-moduleAlias.addAliases({
-    '@server': path.join(__dirname),
-    '@gofetch': path.join(__dirname, '../../shared/src/')
-});
-
-import { initCache } from '@server/services/Cache';
-import { server, startHttpServer } from '@server/server/httpServer';
+import { initCache } from '@server/utils/Cache';
+import { startHttpServer } from '@server/server/httpServer';
 
 initCache();
 
-const httpServer = startHttpServer();
+startHttpServer();
 
 // Graceful shutdown
 process.on('SIGINT', () => {

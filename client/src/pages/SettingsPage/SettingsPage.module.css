@@ -1,0 +1,151 @@
+/* Main */
+.settingsPage {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: auto;
+  padding: 40px 20px;
+}
+
+.settingsPage > button {
+  margin-bottom: 10px;  
+}
+
+.settings {
+  display: flex;
+  background-color: var(--primary-color);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--text-color);
+}
+
+.header {
+  align-self: center;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 20em;
+  max-width: 10em;
+  background-color: var(--primary-color);
+  padding: 2rem 1rem;
+  border-right: 1px solid var(--text-color);
+  border-radius: var(--border-radius) 0 0 var(--border-radius);
+}
+
+.tabNav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.activeTab {
+  background-color: var(--highlight-color);
+  color: white;
+}
+
+.activeTab:hover {
+  background-color: var(--highlight-color-hover);
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  padding: 2rem;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.tabContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.dangerZone {
+  margin-top: 3rem;
+  padding: 1.5rem;
+  border: 1px solid var(--error-color, #dc3545);
+  border-radius: var(--border-radius);
+}
+
+/* Buttons */
+.tabButton {
+  font-size: 1.1em;
+  border-color: transparent;
+  text-align: left;
+  padding: 0.8rem 1rem;
+  background-color: transparent;
+  border: none;
+  border-radius: var(--border-radius);
+  color: var(--text-color);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: 100%;
+}
+
+.tabButton:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.modalButtons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.cancelButton {
+  background-color: #6c757d;
+}
+
+.deleteButton {
+  background-color: #dc3545;
+}
+
+.cancelButton:hover {
+  background-color: #5a6268;
+}
+
+.deleteButton:hover {
+  background-color: #c82333;
+}
+
+.deleteAccountButton {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.6em;
+  border-radius: var(--border-radius);
+}
+
+.deleteAccountButton:hover {
+  background-color: #c82333;
+}
+
+/* Modal overlay */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background-color: var(--menu-card-background-color);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

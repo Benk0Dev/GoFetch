@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getUserById } from "@client/services/Registry";
+import { getUserById } from "@client/services/UserRegistry";
 import { Availability, IUser } from "@gofetch/models/IUser";
 import { IPet } from "@gofetch/models/IPet";
 import { IService } from "@gofetch/models/IService";
@@ -17,10 +17,13 @@ const BookingPage: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const minderId = location.state?.minderId;
+  const service = location.state?.service;
 
-  const [selectedService, setSelectedService] = useState<IService | null>(null);
+  const [selectedService, setSelectedService] = useState<IService>(service);
   const [minder, setMinder] = useState<IUser | null>(null);
-  const [selectedPet, setSelectedPet] = useState<IPet | null>(user.ownerRoleInfo.pets[0]);
+  const [selectedPet, setSelectedPet] = useState<IPet | null>(
+    user.ownerRoleInfo.pets[0]
+  );
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
   const [specialInstructions, setSpecialInstructions] = useState("");
@@ -33,9 +36,6 @@ const BookingPage: React.FC = () => {
         const fetchedMinder = await getUserById(minderId);
         if (fetchedMinder) {
           setMinder(fetchedMinder);
-          if (fetchedMinder.minderRoleInfo.services.length > 0) {
-            setSelectedService(fetchedMinder.minderRoleInfo.services[0]);
-          }
         }
       } catch (error) {
         console.error("Failed to fetch minder:", error);
@@ -46,7 +46,13 @@ const BookingPage: React.FC = () => {
   }, [minderId]);
 
   const handleBooking = () => {
-    if (!selectedPet || !selectedService || !selectedDate || !selectedTime || !specialInstructions) {
+    if (
+      !selectedPet ||
+      !selectedService ||
+      !selectedDate ||
+      !selectedTime ||
+      !specialInstructions
+    ) {
       alert("Please fill out all fields before booking.");
       return;
     }
@@ -54,17 +60,24 @@ const BookingPage: React.FC = () => {
     if (!minder) return;
 
     setIsProcessing(true);
-    const selectedDay = new Date(selectedDate).toLocaleDateString("en-US", { weekday: "long" });
+    const selectedDay = new Date(selectedDate).toLocaleDateString("en-US", {
+      weekday: "long",
+    });
     const availability = minder.minderRoleInfo.availability;
     const isAvailable =
       availability === Availability.FLEXIBLE ||
       (availability === Availability.WEEKDAYS &&
-        ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].includes(selectedDay)) ||
-      (availability === Availability.WEEKENDS && ["Saturday", "Sunday"].includes(selectedDay));
+        ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].includes(
+          selectedDay
+        )) ||
+      (availability === Availability.WEEKENDS &&
+        ["Saturday", "Sunday"].includes(selectedDay));
 
     setTimeout(() => {
       if (!isAvailable) {
-        alert(`Sorry, ${minder.name.fname} is not available on ${selectedDay}.`);
+        alert(
+          `Sorry, ${minder.name.fname} is not available on ${selectedDay}.`
+        );
       } else {
         // Set the submission state and show the BookSubmit component
         setIsSubmitted(true);
@@ -87,15 +100,18 @@ const BookingPage: React.FC = () => {
 
           {minder?.minderRoleInfo.services && (
             <ServiceSelector
-              services={minder?.minderRoleInfo.services}
-              selectedService={selectedService || minder?.minderRoleInfo.services[0]}
+              services={minder.minderRoleInfo.services}
+              selectedService={selectedService || minder.minderRoleInfo.services[0]}
               setSelectedService={setSelectedService}
             />
           )}
         </div>
 
         <div className={styles.section}>
-          <PetSelector selectedPet={selectedPet} setSelectedPet={setSelectedPet} />
+          <PetSelector
+            selectedPet={selectedPet}
+            setSelectedPet={setSelectedPet}
+          />
         </div>
 
         <div className={styles.section}>

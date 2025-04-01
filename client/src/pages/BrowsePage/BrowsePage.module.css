@@ -1,0 +1,269 @@
+.browse-page {
+    margin-bottom: auto;
+    padding: 40px 20px;
+}
+
+.minders-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-gap: 20px;
+    padding-top: 20px;
+}
+
+/* Minder Card Styling */
+.minder-card {
+    background: var(--primary-color);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--text-color);
+    text-align: center;
+    transition: transform 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.minder-card:hover {
+    transform: scale(1.015);
+}
+
+.minder-card img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+.minder-card p {
+    font-size: 16px;
+    opacity: 0.6;
+    margin-bottom: 0;
+}
+
+.minder-card span {
+    font-weight: 500;
+}
+
+.minder-card-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 8px;
+}
+
+.distance-rating, .services-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 5px;
+    width: 100%;
+}
+
+.distance-rating .metric {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.distance svg {
+    opacity: 0.6;
+}
+
+.rating svg {
+    fill: var(--text-color);
+}
+
+.services-container {
+    gap: 2px;
+}
+
+.services {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.service {
+    background-color: var(--highlight-color);
+    color: var(--primary-color);
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.price-availability {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.price-availability .metric {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.buttons button {
+    width: 100%;
+}
+
+/* FilterBar Styling */
+.filter-container {
+    background-color: var(--primary-color);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    color: var(--text-color);
+    border: 1px solid var(--text-color);
+}
+
+.filter-container h2 {
+    color: var(--highlight-color);
+}
+
+.filter-container p {
+    margin-bottom: 30px;
+}
+
+.inputs {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: max-content;
+    gap: 15px;
+}
+
+.search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.search-input {
+    width: 100%;
+    margin-bottom: 20px;
+    padding-left: 35px;
+}
+
+.search-container svg {
+    position: absolute;
+    top: 11px;
+    left: 10px;
+    color: var(--text-color);
+    opacity: 0.5;
+}
+
+.filter-controls {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: max-content;
+    width: fit-content;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-controls button {
+    height: 100%;
+}
+
+.advanced-filters-button {
+    background-color: var(--menu-card-border-color);
+    border-color: transparent;
+}
+
+.advanced-filters-button:hover {
+    background-color: #e5e5e5;
+}
+
+.advanced-filters-modal {
+    background-color: var(--primary-color);
+    padding: 20px;
+    color: var(--text-color);
+    border-left: 1px solid var(--text-color);
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 320px;
+    height: 100vh;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+}
+
+.advanced-filters-modal.open {
+    transform: translateX(0);
+}
+
+.advanced-filters-modal p {
+    font-size: 16px;
+    opacity: 0.7;
+    margin-bottom: 0;
+}
+
+.advanced-filters-modal label {
+    display: block;
+    margin-bottom: 5px;
+    margin-top: 20px;
+    font-weight: 500;
+}
+
+.close-button {
+    width: fit-content;
+    height: fit-content;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    transition: color 0.1s ease-in-out;
+}
+
+.close-button:hover {
+    background-color: transparent;
+    color: var(--highlight-color)
+}
+
+.close-button svg {
+    fill: var(--text-color);
+}
+
+.advanced-filters-modal .buttons {
+    margin-top: 20px;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 50;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.overlay.open {
+    visibility: visible;
+    opacity: 1;
+}

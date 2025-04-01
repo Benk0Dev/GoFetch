@@ -14,13 +14,17 @@ import ChatPage from "@client/pages/MessagingPage/ChatPage";
 import BookingPage from "@client/pages/BookingPage/BookingPage";
 import AddPetPage from "@client/pages/DashboardPage/Pets/AddPet";
 import PetDetailsPage from "@client/pages/DashboardPage/Pets/PetDetails";
+import SettingsPage from "@client/pages/SettingsPage/SettingsPage";
 import { useAuth } from "@client/context/AuthContext";
 import { SocketProvider } from "@client/context/SocketContext";
 import { Role } from "@gofetch/models/IUser";
+import MinderPage from "@client/pages/MinderPage/MinderPage";
 
 function App() {
-  const { role, loading } = useAuth();
+  const { role, loading, user } = useAuth();
   const isGuest = role === null;
+
+  console.log(user);
 
   if (loading) return <div>Loading...</div>;
 
@@ -35,24 +39,46 @@ function App() {
           />
           <Route
             path="/login"
-            element={isGuest ? <LoginPage /> : <Navigate to="/dashboard" replace />}
+            element={
+              isGuest ? <LoginPage /> : <Navigate to="/dashboard" replace />
+            }
           />
           <Route
             path="/register"
-            element={isGuest ? <RegisterPage /> : <Navigate to="/dashboard" replace />}
+            element={
+              isGuest ? <RegisterPage /> : <Navigate to="/dashboard" replace />
+            }
           />
           <Route
             path="/become-minder"
-            element={role === Role.OWNER ? <BecomeRolePage role={Role.MINDER} /> : <Navigate to="/" replace />}
+            element={
+              role === Role.OWNER ? (
+                <BecomeRolePage role={Role.MINDER} />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
           />
           <Route
             path="/become-owner"
-            element={role === Role.MINDER ? <BecomeRolePage role={Role.OWNER} /> : <Navigate to="/" replace />}
+            element={
+              role === Role.MINDER ? (
+                <BecomeRolePage role={Role.OWNER} />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
           />
           <Route path="/browse" element={<BrowsePage />} />
           <Route
             path="/booking"
-            element={role === Role.OWNER ? <BookingPage /> : <Navigate to="/" replace />}
+            element={
+              role === Role.OWNER ? (
+                <BookingPage />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
           />
           <Route
             path="/dashboard/*"
@@ -64,7 +90,9 @@ function App() {
           />
           <Route
             path="/add-pet"
-            element={role === Role.OWNER ? <AddPetPage /> : <Navigate to="/" replace />}
+            element={
+              role === Role.OWNER ? <AddPetPage /> : <Navigate to="/" replace />
+            }
           />
           <Route
             path="/chats"
@@ -72,8 +100,13 @@ function App() {
           >
             <Route path=":id" element={<MessagingPage />} />
           </Route>
+          <Route path="/minders/:minderId" element={<MinderPage />} />
           <Route path="/dashboard/pets/:id" element={role === Role.OWNER ? <PetDetailsPage /> : <Navigate to="/" replace />} />
           <Route path="/users/:id" element={<UserPage />} />
+          <Route
+            path="/settings"
+            element={!isGuest ? <SettingsPage /> : <Navigate to="/" replace />}
+          />
         </Routes>
         <Footer />
       </Router>

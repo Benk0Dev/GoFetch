@@ -17,9 +17,6 @@
       "profilePic": "26",
       "dob": "1990-06-15T00:00:00.000Z",
       "address": {
-        "street": "Portland Avenue",
-        "city": "Cardiff",
-        "postcode": "nw7 2hx",
         "country": "United Kingdom"
       },
       "name": "Alice Smith",
@@ -59,9 +56,9 @@
       "profilePic": "",
       "dob": "1985-09-20T00:00:00.000Z",
       "address": {
-        "street": "",
+        "street": "WoodHouse",
         "city": "Leeds",
-        "postcode": "",
+        "postcode": "LS6 2TU",
         "country": "United Kingdom"
       }
     },
@@ -100,9 +97,9 @@
       "profilePic": "",
       "dob": "1992-04-10T00:00:00.000Z",
       "address": {
-        "street": "",
+        "street": "53 Edward Street",
         "city": "Manchester",
-        "postcode": "",
+        "postcode": "M9 4JD",
         "country": "United Kingdom"
       }
     },
@@ -149,9 +146,9 @@
       "profilePic": "",
       "dob": "1988-12-05T00:00:00.000Z",
       "address": {
-        "street": "",
+        "street": "6 Tintern Close",
         "city": "Brighton",
-        "postcode": "",
+        "postcode": "BN1 7EF",
         "country": "United Kingdom"
       }
     },
@@ -197,9 +194,6 @@
       "profilePic": "data:image/svg+xml,%3c?xml%20version='1.0'%20encoding='UTF-8'?%3e%3csvg%20width='100'%20height='100'%20viewBox='0%200%20100%20100'%20xmlns='http://www.w3.org/2000/svg'%3e%3c!--%20White%20background%20square%20--%3e%3crect%20width='100'%20height='100'%20fill='%23fceddc'%20/%3e%3c!--%20Head%20(circle)%20--%3e%3ccircle%20cx='50'%20cy='34'%20r='15'%20fill='%23ff8800'%20/%3e%3c!--%20Shoulders%20(closer%20to%20head%20and%20more%20prominent)%20--%3e%3cpath%20d='M20,80%20C20,58%2080,58%2080,80%20Z'%20fill='%23ff8800'%20/%3e%3c/svg%3e",
       "dob": "1995-08-25T00:00:00.000Z",
       "address": {
-        "street": "The Vale",
-        "city": "Nottingham",
-        "postcode": "nw11 4ed",
         "country": "United Kingdom"
       },
       "name": "Eve White",
@@ -472,51 +466,10 @@
     }
   },
   {
-    "id": 6,
-    "name": {
-      "fname": "Mark",
-      "sname": "Robert"
-    },
-    "loginDetails": {
-      "email": "mark@example.com",
-      "password": "password"
-    },
-    "roles": [
-      "petminder"
-    ],
-    "currentRole": "petminder",
-    "primaryUserInfo": {
-      "profilePic": "",
-      "dob": "2000-05-03T00:00:00.000Z",
-      "address": {
-        "street": "",
-        "city": "",
-        "postcode": "",
-        "country": ""
-      }
-    },
-    "ownerRoleInfo": {
-      "petIds": [],
-      "bookingIds": []
-    },
-    "minderRoleInfo": {
-      "serviceIds": [
-        7,
-        8
-      ],
-      "rating": 0,
-      "bio": "",
-      "pictures": [],
-      "availability": "",
-      "bookingIds": [],
-      "reviewIds": []
-    }
-  },
-  {
     "id": 7,
     "name": {
       "fname": "Ben",
-      "sname": "Kul"
+      "sname": "Kodev"
     },
     "loginDetails": {
       "email": "ben@example.com",
@@ -526,14 +479,14 @@
       "petminder",
       "petowner"
     ],
-    "currentRole": "petminder",
+    "currentRole": "petowner",
     "primaryUserInfo": {
       "profilePic": "15",
       "dob": "2004-12-22T00:00:00.000Z",
       "address": {
-        "street": "",
+        "street": "Pooley House",
         "city": "London",
-        "postcode": "",
+        "postcode": "E1 4PU",
         "country": "United Kingdom"
       }
     },
@@ -551,7 +504,8 @@
     "minderRoleInfo": {
       "serviceIds": [
         9,
-        10
+        10,
+        11
       ],
       "rating": 5,
       "bio": "I love taking care of dogs. I have two dogs of my own and have the privilege to walk them everyday. I'm a student so I have quite a flexible schedule, so we can easily arrange a time for any of my services.",
@@ -586,9 +540,85 @@
       "profilePic": "",
       "dob": "2000-10-10T00:00:00.000Z",
       "address": {
-        "street": "",
+        "street": "2 Dukes Avenue",
         "city": "London",
-        "postcode": "",
+        "postcode": "HA1 1XP",
+        "country": "United Kingdom"
+      }
+    },
+    "ownerRoleInfo": {
+      "petIds": [],
+      "bookingIds": []
+    },
+    "minderRoleInfo": {
+      "serviceIds": [],
+      "rating": 0,
+      "bio": "",
+      "pictures": [],
+      "availability": "Flexible",
+      "bookingIds": [],
+      "reviewIds": []
+    }
+  },
+  {
+    "id": 9,
+    "name": {
+      "fname": "Max",
+      "sname": "Evans"
+    },
+    "loginDetails": {
+      "email": "max@example.com",
+      "password": "password"
+    },
+    "roles": [
+      "petowner"
+    ],
+    "currentRole": "petowner",
+    "primaryUserInfo": {
+      "profilePic": "17",
+      "dob": "2005-06-09T00:00:00.000Z",
+      "address": {
+        "street": "2 Westbury Road",
+        "city": "London",
+        "postcode": "E7 8BU",
+        "country": "United Kingdom"
+      }
+    },
+    "ownerRoleInfo": {
+      "petIds": [],
+      "bookingIds": []
+    },
+    "minderRoleInfo": {
+      "serviceIds": [],
+      "rating": 0,
+      "bio": "",
+      "pictures": [],
+      "availability": "Flexible",
+      "bookingIds": [],
+      "reviewIds": []
+    }
+  },
+  {
+    "id": 10,
+    "name": {
+      "fname": "Test",
+      "sname": "Test"
+    },
+    "loginDetails": {
+      "email": "test@test.com",
+      "password": "password"
+    },
+    "roles": [
+      "petowner"
+    ],
+    "currentRole": "petowner",
+    "primaryUserInfo": {
+      "profilePic": "18",
+      "dob": "1995-06-15T00:00:00.000Z",
+      "address": {
+        "street": "123 Main Street",
+        "city": "Feltham",
+        "postcode": "TW13",
         "country": "United Kingdom"
       }
     },

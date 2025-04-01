@@ -1,7 +1,7 @@
 import { Server, Socket } from 'socket.io';
 import http from 'http';
-import { addMessage } from '@server/routers/MessageStatic';
-import { addNotification } from '@server/routers/NotificationStatic';
+import { addMessage } from '@server/static/MessageStatic';
+import { addNotification } from '@server/static/NotificationStatic';
 import { NotificationType } from '@gofetch/models/INotification';
 
 // Initialize Socket.IO server

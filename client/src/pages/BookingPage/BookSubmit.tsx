@@ -5,7 +5,7 @@ import { IUser } from "@gofetch/models/IUser";
 import { IService } from "@gofetch/models/IService";
 
 // Assuming you have a POST function in your service file
-import { createBooking } from "@client/services/Registry";
+import { createBooking } from "@client/services/BookingRegistry";
 
 interface IBookSubmitProps {
   pet: IPet;

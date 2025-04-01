@@ -5,7 +5,9 @@ import formStyles from "@client/pages/AuthenticationPage/AuthenticationPage.modu
 import BackButton from "@client/components/BackButton";
 import { Gender, Size } from "@gofetch/models/IPet";
 import { useAuth } from "@client/context/AuthContext";
-import { addPetForUser, getUserByIdWithPictures, uploadImage } from "@client/services/Registry";
+import { getUserByIdWithPictures } from "@client/services/UserRegistry";
+import { addPetForUser } from "@client/services/PetRegistry";
+import { uploadImage } from "@client/services/ImageRegistry";
 import defaultPet from "@client/assets/images/default-pet-picture.svg";
 
 function capitalizeWords(str: string): string {
@@ -63,7 +65,7 @@ function AddPet() {
             neutered,
             behaviour: behaviour || undefined,
             allergies: allergies || undefined,
-            picture: filename || undefined,
+            picture: filename,
         };
 
         console.log("Submitting new pet:", newPet);
@@ -95,13 +97,13 @@ function AddPet() {
         if (picture) {
         return (
             <div className={styles.photo}>
-            <img src={picture} alt={name} />
+                <img src={picture} alt={name} />
             </div>
         );
         } else {
         return (
             <div className={styles.photo}>
-            <img src={defaultPet} alt={name} />
+                <img src={defaultPet} alt={name} />
             </div>
         );
         }
@@ -127,7 +129,7 @@ function AddPet() {
                     <label>Pet Photo</label>
                     <div className={styles.photoContainer}>
                         {getPhoto()}
-                        <input type="file" accept="image/*" onChange={handleAddPicture} />
+                        <input type="file" accept="image/jpeg, image/png, image/gif" onChange={handleAddPicture} />
                     </div>
                     <p>Upload a photo of your pet.</p>
                 </div>

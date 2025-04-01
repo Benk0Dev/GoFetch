@@ -61,9 +61,11 @@ export interface IRegisterdUser {
   fname: string, 
   sname: string, 
   email: string, 
-  password: string, 
   dob: Date, 
+  address: IAddress,
+  password: string, 
   role: Role
+  profilePic?: string,
 }
 
 export enum Role {

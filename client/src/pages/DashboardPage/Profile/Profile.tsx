@@ -4,7 +4,8 @@ import styles from "@client/pages/DashboardPage/Profile/Profile.module.css";
 import dashboardStyles from "@client/pages/DashboardPage/Dashboard.module.css";
 import ImageViewer from "@client/components/ImageViewer";
 import "react-range-slider-input/dist/style.css";
-import { editUser, getUserById, uploadImage } from "@client/services/Registry";
+import { editUser, getUserById } from "@client/services/UserRegistry";
+import { uploadImage } from "@client/services/ImageRegistry";
 import { useAuth } from "@client/context/AuthContext";
 import { Availability } from "@gofetch/models/IUser";
 
@@ -144,7 +145,7 @@ function Profile() {
                 )}
                 <label className={styles.addImage}>
                     <Plus strokeWidth={1} size={50} />
-                    <input type="file" accept="image/*" className={styles.fileInput} onChange={handleAddPicture} />
+                    <input type="file" accept="image/jpeg, image/png, image/gif" className={styles.fileInput} onChange={handleAddPicture} />
                 </label>
             </div>
 
