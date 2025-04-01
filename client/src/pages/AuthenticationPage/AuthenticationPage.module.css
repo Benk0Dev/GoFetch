@@ -183,7 +183,7 @@ span.stepText {
     display: none;
 }
 
-.uploadImage, .uploadedImage {
+.uploadImage {
     width: 180px;
     height: 180px;
     position: relative;

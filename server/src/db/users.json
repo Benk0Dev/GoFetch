@@ -192,7 +192,7 @@
     ],
     "currentRole": "petminder",
     "primaryUserInfo": {
-      "profilePic": "",
+      "profilePic": "19",
       "dob": "1995-08-25T00:00:00.000Z",
       "address": {
         "street": "3 Hayling Drive",
@@ -257,7 +257,7 @@
     ],
     "currentRole": "petowner",
     "primaryUserInfo": {
-      "profilePic": "15",
+      "profilePic": "20",
       "dob": "2004-12-22T00:00:00.000Z",
       "address": {
         "street": "Pooley House",

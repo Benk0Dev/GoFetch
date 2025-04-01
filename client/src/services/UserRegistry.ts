@@ -69,7 +69,7 @@ export async function registerUser(user: IRegisterdUser) {
   }
 }
 
-export async function editUser(id: number, user: IUser) {
+export async function editUser(id: number, user: any) {
   try {
     const response = await fetch(`${API_URL}/editUser/${id}`, {
       method: "POST",

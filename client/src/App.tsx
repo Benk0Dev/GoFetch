@@ -5,7 +5,7 @@ import LandingPage from "@client/pages/LandingPage/LandingPage";
 import LoginPage from "@client/pages/AuthenticationPage/LoginPage";
 import RegisterPage from "@client/pages/AuthenticationPage/RegisterPage";
 import BecomeRolePage from "@client/pages/AuthenticationPage/BecomeRolePage";
-import ProfilePage from "@client/pages/ProfilePage/ProfilePage";
+import EditProfilePage from "@client/pages/EditProfilePage/EditProfilePage";
 import BrowsePage from "@client/pages/BrowsePage/BrowsePage";
 import UserPage from "@client/pages/UserPage/UserPage";
 import DashboardPage from "@client/pages/DashboardPage/Dashboard";
@@ -23,8 +23,6 @@ import MinderPage from "@client/pages/MinderPage/MinderPage";
 function App() {
   const { role, loading, user } = useAuth();
   const isGuest = role === null;
-
-  console.log(user);
 
   if (loading) return <div>Loading...</div>;
 
@@ -85,8 +83,8 @@ function App() {
             element={!isGuest ? <DashboardPage /> : <Navigate to="/" replace />}
           />
           <Route
-            path="/profile"
-            element={!isGuest ? <ProfilePage /> : <Navigate to="/" replace />}
+            path="/edit-profile"
+            element={!isGuest ? <EditProfilePage /> : <Navigate to="/" replace />}
           />
           <Route
             path="/add-pet"

@@ -73,7 +73,7 @@ function ProfileIcon() {
 
       {menuOpen && (
         <DropdownMenu onClose={toggleMenu}>
-          <DropdownItem onClick={() => { navigate("/profile"); toggleMenu(); }} button={true}>
+          <DropdownItem onClick={() => { navigate(`/users/${user.id}`); toggleMenu(); }} button={true}>
             <UserRound size={14} />
             <span>Profile</span>
           </DropdownItem>

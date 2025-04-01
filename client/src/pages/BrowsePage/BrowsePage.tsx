@@ -23,7 +23,7 @@ const BrowsePage: React.FC = () => {
 
         let filteredMinders = [...minders];
 
-        if (user?.currentRole === "petowner") {
+        if (user) {
           filteredMinders = filteredMinders.filter(
             (minder) => minder.id !== user.id
           );
