@@ -160,28 +160,51 @@ function Profile() {
             // Autofill the form with the correct data
             setAddress(newAddress);
 
-            let filename: string | undefined;
+            // Profile picture upload
+            let filename;
+            let changedProfilePic = true;
             if (selectedFile) {
                 filename = await uploadImage(selectedFile);
                 if (!filename) {
                     alert("Failed to upload image.");
                     return;
                 }
+            } else if (profilePicture === defaultProfilePic) {
+                filename = "";
+            } else {
+                changedProfilePic = false;
             }
 
-            const updatedUser = {
-                name: {
-                    fname,
-                    sname,
-                },
-                loginDetails: {
-                    email,
-                },
-                primaryUserInfo: {
-                    profilePic: filename,
-                    address: newAddress,
-                }
-            };
+            let updatedUser;
+
+            if (changedProfilePic) {
+                updatedUser = {
+                    name: {
+                        fname,
+                        sname,
+                    },
+                    loginDetails: {
+                        email,
+                    },
+                    primaryUserInfo: {
+                        profilePic: filename,
+                        address: newAddress,
+                    }
+                };
+            } else {
+                updatedUser = {
+                    name: {
+                        fname,
+                        sname,
+                    },
+                    loginDetails: {
+                        email,
+                    },
+                    primaryUserInfo: {
+                        address: newAddress,
+                    }
+                };
+            }
 
             await editUser(user.id, updatedUser);
             refreshUser();
