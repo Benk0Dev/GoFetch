@@ -9,8 +9,8 @@ import EditProfilePage from "@client/pages/EditProfilePage/EditProfilePage";
 import BrowsePage from "@client/pages/BrowsePage/BrowsePage";
 import UserPage from "@client/pages/UserPage/UserPage";
 import DashboardPage from "@client/pages/DashboardPage/Dashboard";
-import MessagePage from "@client/pages/MessagingPage/MessagePage";
-import ChatPage from "@client/pages/MessagingPage/ChatPage";
+import MessagingPage from "@client/pages/MessagingPage/MessagingPage";
+import Chat from "@client/pages/MessagingPage/Chat";
 import BookingPage from "@client/pages/BookingPage/BookingPage";
 import AddPetPage from "@client/pages/DashboardPage/Pets/AddPet";
 import PetDetailsPage from "@client/pages/DashboardPage/Pets/PetDetails";
@@ -94,9 +94,9 @@ function App() {
           />
           <Route
             path="/chats"
-            element={!isGuest ? <MessagePage /> : <Navigate to="/" replace />}
+            element={!isGuest ? <MessagingPage /> : <Navigate to="/" replace />}
           >
-            <Route path=":id" element={<ChatPage />} />
+            <Route path=":id" element={<Chat />} />
           </Route>
           <Route path="/minders/:minderId" element={<MinderPage />} />
           <Route path="/dashboard/pets/:id" element={role === Role.OWNER ? <PetDetailsPage /> : <Navigate to="/" replace />} />

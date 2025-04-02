@@ -220,7 +220,7 @@ function MessagingPage() {
                     )}
                 </div>
                 
-                {/* Chat window - will display the Outlet (ChatPage) */}
+                {/* Chat window - will display the Outlet (Chat) */}
                 <div className={styles.chatWindowContainer}>
                     {id ? (
                         <Outlet />

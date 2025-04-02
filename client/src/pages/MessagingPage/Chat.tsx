@@ -8,7 +8,7 @@ import { useSocket } from '@client/context/SocketContext';
 import styles from '@client/pages/MessagingPage/MessagingPage.module.css';
 import { Role } from '@gofetch/models/IUser';
 
-function ChatPage() {
+function Chat() {
     const { id } = useParams<{ id: string }>();
     const [chat, setChat] = useState<IChat | null>(null);
     const [newMessage, setNewMessage] = useState('');
@@ -180,7 +180,7 @@ function ChatPage() {
     return (
         <div className={styles.chatContainer}>
             <div className={styles.chatHeader}>
-                <Link to={`/users/${chat.users.find(userId => userId !== user.id)}`} className={styles.backButton}>
+                <Link to={`/users/${chat.users.find(userId => userId !== user.id)}`}>
                     <img 
                         src={userPicture} 
                         alt="User" 
@@ -234,4 +234,4 @@ function ChatPage() {
     );
 }
 
-export default ChatPage;
+export default Chat;
