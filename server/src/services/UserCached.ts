@@ -8,7 +8,6 @@ import { saveBookingsToFile } from './BookingCached';
 import path from 'path';
 
 const pathToSrc = path.join(__dirname, '../');
-console.log(pathToSrc)
 
 
 // Get cached users
