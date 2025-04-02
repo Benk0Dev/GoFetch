@@ -16,8 +16,6 @@ function DashboardPage() {
     const navigate = useNavigate();
     const { user, role, loading } = useAuth();
 
-    console.log(user);
-
     useEffect(() => {
         if (!role) {
             navigate("/", { replace: true });

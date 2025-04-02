@@ -125,7 +125,7 @@
         1
       ],
       "reviewIds": [
-        3
+        1
       ]
     }
   },
@@ -220,7 +220,7 @@
         5,
         6
       ],
-      "rating": 3.666666666666667,
+      "rating": 5,
       "bio": "Pet owner and minder with a passion for animals, especially dogs!",
       "pictures": [
         "1",
@@ -235,9 +235,7 @@
         7
       ],
       "reviewIds": [
-        1,
-        5,
-        7
+        2
       ]
     }
   },
@@ -283,7 +281,7 @@
         10,
         11
       ],
-      "rating": 5,
+      "rating": 0,
       "bio": "I love taking care of dogs. I have two dogs of my own and have the privilege to walk them everyday. I'm a student so I have quite a flexible schedule, so we can easily arrange a time for any of my services.",
       "pictures": [
         "15",
@@ -293,9 +291,7 @@
       "bookingIds": [
         8
       ],
-      "reviewIds": [
-        9
-      ]
+      "reviewIds": []
     }
   },
   {

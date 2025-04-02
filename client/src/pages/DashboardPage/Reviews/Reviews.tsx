@@ -59,6 +59,7 @@ function Reviews() {
             {[1, 2, 3, 4, 5].map((rating) => {
               return (
                 <Star
+                  key={rating}
                   size={24}
                   className={
                     user.minderRoleInfo.rating + 0.5 >= rating
@@ -80,7 +81,7 @@ function Reviews() {
             {[5, 4, 3, 2, 1].map((rating, index) => {
               return (
                 percentages[index] > 0 && (
-                  <div className={styles.percentage}>
+                  <div className={styles.percentage} key={rating}>
                     <span>
                       {rating}
                       <Star size={18} strokeWidth={2} />
@@ -111,7 +112,7 @@ function Reviews() {
                 (rev) => rev.id === review.reviewerId
               );
               return (
-                <div className={styles.review}>
+                <div className={styles.review} key={review.id}>
                   <div className={styles.reviewHeader}>
                     <Link
                       to={`/users/${reviewer.id}`}
@@ -138,6 +139,7 @@ function Reviews() {
                     <div className={styles.starRating}>
                       {[1, 2, 3, 4, 5].map((rating) => (
                         <Star
+                          key={rating}
                           size={18}
                           className={
                             review.rating >= rating ? styles.solidStar : ""

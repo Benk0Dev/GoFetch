@@ -23,13 +23,13 @@ function BookingInfo({ booking }: { booking: Booking }) {
     return (
         <div className={styles.bookingInfo}>
             <div className={styles.bookingHeading}>
-                <h5>{booking.service.type} {user.currentRole === Role.OWNER ? "with " : "for "}{getFullName(booking.owner)}</h5>
+                <h5>{booking.service.type} {user.currentRole === Role.OWNER ? `with ${getFullName(booking.minder)}` : `for ${getFullName(booking.owner)}`}</h5>
                 <h5>£{booking.service.price}</h5>
             </div>
             <div className={styles.bookingDetail}>
-                <Link to={`/users/${booking.owner.id}`}>
+                <Link to={`/users/${user.currentRole === Role.OWNER ? booking.minder.id : booking.owner.id}`}>
                     <UserLink size={16} strokeWidth={2} />
-                    <span>{getFullName(booking.owner)}</span>
+                    <span>{user.currentRole === Role.OWNER ? getFullName(booking.minder) : getFullName(booking.owner)}</span>
                 </Link>
             </div>
             <div className={styles.bookingDetail}>
