@@ -2,7 +2,7 @@ import fs from 'fs';
 import { BookingStatus, IBooking, INewBooking } from '@gofetch/models/IBooking';
 import { DB_PATH, cache } from '@server/utils/Cache';
 import path from 'path';
-import { chatWith2UsersCached } from './MessagesCached';
+import { chatWith2UsersCached, createChatCached } from './MessagesCached';
 import { addMessage } from '@server/static/MessageStatic';
 import { addNotification } from '@server/static/NotificationStatic';
 import { NotificationType } from '@gofetch/models/INotification';
@@ -63,13 +63,30 @@ export function updateBookingStatusCached(bookingId: number, status: BookingStat
 
     if (BookingStatus.Confirmed === status) {
       console.log('Booking confirmed:', booking);
-      const chatId = chatWith2UsersCached(booking.ownerId, booking.minderId)?.chatId;
+      let chatId = chatWith2UsersCached(booking.ownerId, booking.minderId)?.chatId;
       if (!chatId) {
-        console.error('Chat not found');
-        return booking;
+        console.log('Chat not found between users, creating a new one');
+        // Create a new chat between owner and minder
+        try {
+          // Create new chat with the two users
+          const newChat = createChatCached({
+            users: [booking.ownerId, booking.minderId],
+            lastMessage: '',
+            lastMessageDate: new Date()
+          });
+          chatId = newChat.id;
+        }
+        catch (error) {
+          console.error('Error creating chat:', error);
+        }
       }
 
       const messageContent = `Booking #${booking.id} has been accepted!`;
+
+      if (!chatId) {
+        console.error('Chat ID is undefined. Cannot send message.');
+        return booking;
+      }
 
       // Create message object with consistent structure
       const messageObj = {
@@ -78,6 +95,8 @@ export function updateBookingStatusCached(bookingId: number, status: BookingStat
         chatId: chatId,
         timestamp: new Date()
       };
+
+      
 
       // Add message to database
       const result = addMessage(chatId, messageObj);
