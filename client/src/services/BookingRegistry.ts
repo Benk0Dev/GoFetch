@@ -1,4 +1,4 @@
-import { BookingStatus, INewBooking } from "@gofetch/models/IBooking";
+import { BookingStatus, IBooking, INewBooking } from "@gofetch/models/IBooking";
 import { editUser, getUserById } from "@client/services/UserRegistry";
 
 import { API_URL } from "@client/services/Registry";
@@ -19,7 +19,7 @@ export const createBooking = async (bookingData: INewBooking) => {
 
       const editMinder = await editUser(booking.minderId, {
         minderRoleInfo: {
-          bookingIds: [booking.id, ...minder.minderRoleInfo.bookings.map((b: any) => b.id)],
+          bookingIds: [booking.id, ...minder.minderRoleInfo.bookings.map((b: IBooking) => b.id)],
         }
       });
 
@@ -31,7 +31,7 @@ export const createBooking = async (bookingData: INewBooking) => {
 
       const editOwner = await editUser(booking.ownerId, {
         ownerRoleInfo: {
-          bookingIds: [booking.id, ...petOwner.ownerRoleInfo.bookings.map((b: any) => b.id)],
+          bookingIds: [booking.id, ...petOwner.ownerRoleInfo.bookings.map((b: IBooking) => b.id)],
         }
       });
 

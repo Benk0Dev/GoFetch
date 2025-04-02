@@ -129,6 +129,15 @@
     margin-right: auto;
 }
 
+.systemMessage {
+    background-color: #f0f0f0;
+    color: #888;
+    align-self: center;
+    font-style: italic;
+    text-align: center;
+    margin: 1rem 0;
+}
+
 .messageContent {
     margin: 0;
     word-break: break-word;

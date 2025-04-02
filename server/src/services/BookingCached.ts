@@ -2,6 +2,11 @@ import fs from 'fs';
 import { BookingStatus, IBooking, INewBooking } from '@gofetch/models/IBooking';
 import { DB_PATH, cache } from '@server/utils/Cache';
 import path from 'path';
+import { chatWith2UsersCached } from './MessagesCached';
+import { addMessage } from '@server/static/MessageStatic';
+import { addNotification } from '@server/static/NotificationStatic';
+import { NotificationType } from '@gofetch/models/INotification';
+import { getIO } from '@server/server/wsServer';
 
 // Get all bookings
 export function getAllBookingsCached(): IBooking[] {
@@ -47,7 +52,7 @@ export function addBookingCached(bookingData: INewBooking): IBooking {
   return newBooking;
 }
 
-export function updateBookingStatusCached(bookingId: number, status: BookingStatus): IBooking | null {
+export function updateBookingStatusCached(bookingId: number, status: BookingStatus): IBooking | undefined {
   const booking = cache.bookings.find(b => b.id === bookingId);
   if (booking) {
     booking.status = status;
@@ -56,9 +61,48 @@ export function updateBookingStatusCached(bookingId: number, status: BookingStat
     // Save to file
     saveBookingsToFile();
 
+    if (BookingStatus.Confirmed === status) {
+      console.log('Booking confirmed:', booking);
+      const chatId = chatWith2UsersCached(booking.ownerId, booking.minderId)?.chatId;
+      if (!chatId) {
+        console.error('Chat not found');
+        return booking;
+      }
+
+      const messageContent = `Booking #${booking.id} has been accepted!`;
+
+      // Create message object with consistent structure
+      const messageObj = {
+        senderId: -1, // System message (not from a user)
+        message: messageContent,
+        chatId: chatId,
+        timestamp: new Date()
+      };
+
+      // Add message to database
+      const result = addMessage(chatId, messageObj);
+
+      if (result.success) {
+        const io = getIO();
+        if (io) {
+          [booking.ownerId, booking.minderId].forEach(userId => {
+            const notificationData = {
+              userId: userId,
+              message: messageContent,
+              type: NotificationType.System,
+              linkId: booking.id
+            };
+
+            addNotification(notificationData);
+
+            io.to(`user-${userId}`).emit('notification', notificationData);
+          });
+        }
+      }
+    }
     return booking;
   }
-  return null;
+  return undefined; // No booking found with that ID
 }
 
 export function updateBookingDetailsCached(
