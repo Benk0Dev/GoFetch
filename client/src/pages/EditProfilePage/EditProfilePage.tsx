@@ -87,7 +87,7 @@ function Profile() {
         const nameRegex = /^[A-Za-z]+$/;
         
         if (!nameRegex.test(fname) || !nameRegex.test(sname)) {
-            setPersonalInformationError("First name should contain only letters.");
+            setPersonalInformationError("Name should contain only letters.");
             isValid = false;
         }
 
