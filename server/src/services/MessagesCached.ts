@@ -90,6 +90,16 @@ export function createChatCached(chatData: Omit<IChat, 'id' | 'messages'>): ICha
     return newChat;
 }
 
+export function chatWith2UsersCached(userId1: number, userId2: number): { chatId: number } | null {
+    const chat = cache.chats.find(c => c.users.includes(userId1) && c.users.includes(userId2));
+    if (chat) {
+        return {
+            chatId: chat.id,
+        };
+    }
+    return null;
+}
+
 function saveMessagesToFile() {
     try {
         fs.writeFileSync(

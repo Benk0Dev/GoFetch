@@ -4,9 +4,17 @@ import { addMessage } from '@server/static/MessageStatic';
 import { addNotification } from '@server/static/NotificationStatic';
 import { NotificationType } from '@gofetch/models/INotification';
 
+// Add a variable to store the IO instance
+let io: Server;
+
+// Add a function to get the IO instance
+export function getIO() {
+    return io;
+}
+
 // Initialize Socket.IO server
 export function setupWebSocketServer(httpServer: http.Server) {
-    const io = new Server(httpServer, {
+    io = new Server(httpServer, {
         cors: {
             origin: ["http://localhost:3000", "http://localhost:5173"],
             methods: ["GET", "POST", "OPTIONS"],
@@ -43,13 +51,10 @@ export function setupWebSocketServer(httpServer: http.Server) {
         socket.on('send-message', (messageData) => {
             console.log(`Received message from ${messageData.message.senderId} in chat ${messageData.chatId}`);
             
-            // Use the same addMessage function that the REST API uses
-            // This will save the message to the database AND emit the socket event
             const result = addMessage(messageData.chatId, messageData.message);
             
             if (result.success) {
-                // Create a notification for each user in the chat except the sender
-                const chat = io.sockets.adapter.rooms.get(`chat-${messageData.chatId}`);
+                const chat = io?.sockets.adapter.rooms.get(`chat-${messageData.chatId}`);
                 if (chat) {
                     // Get the chat details to find the other user
                     const chatDetails = require('../services/MessagesCached').getChatByIdCached(messageData.chatId);
