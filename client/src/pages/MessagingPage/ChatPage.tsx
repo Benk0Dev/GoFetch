@@ -3,7 +3,7 @@ import { Link, Outlet, useParams, useNavigate } from "react-router-dom";
 import { IChat } from "@gofetch/models/IMessage";
 import { Role } from "@gofetch/models/IUser";
 import { getUserByIdWithPictures } from "@client/services/UserRegistry";
-import { getUserChats } from "@client/services/ChatRegistry";
+import { getSortedUserChats } from "@client/services/ChatRegistry";
 import styles from '@client/pages/MessagingPage/MessagingPage.module.css';
 import { useAuth } from "@client/context/AuthContext";
 import { useSocket } from "@client/context/SocketContext";
@@ -46,7 +46,7 @@ function MessagingPage() {
     const fetchChats = useCallback(async () => {
         setLoading(true);
         try {
-            const data = await getUserChats();
+            const data = await getSortedUserChats(); // Changed from getUserChats to getSortedUserChats
             if (data && data.chats) {
                 setChats(data.chats);
                 

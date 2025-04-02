@@ -25,6 +25,21 @@ export async function getUserChats() {
     }
 }
 
+export async function getSortedUserChats() {
+    const result = await getUserChats();
+    
+    if (result.chats && result.chats.length > 0) {
+        // Sort chats by lastMessageDate in descending order (newest first)
+        result.chats.sort((a: IChat, b: IChat) => {
+            const dateA = new Date(a.lastMessageDate).getTime();
+            const dateB = new Date(b.lastMessageDate).getTime();
+            return dateB - dateA;
+        });
+    }
+    
+    return result;
+}
+
 export async function getChatById(chatId: number) {
     try {
         const response = await fetch(`${API_URL}/chat/${chatId}`);

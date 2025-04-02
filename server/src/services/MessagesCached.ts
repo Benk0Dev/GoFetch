@@ -59,6 +59,9 @@ export function addMessageCached(chatID: number, messageData: Omit<IMessage, 'id
 
     // Update last message in chat
     chat.lastMessage = newMessage.message;
+    
+    // Update last message date in chat
+    chat.lastMessageDate = newMessage.timestamp;
 
     // Save to file
     saveMessagesToFile();
@@ -74,6 +77,7 @@ export function createChatCached(chatData: Omit<IChat, 'id' | 'messages'>): ICha
         id: newId,
         users: chatData.users,
         lastMessage: chatData.lastMessage || '',
+        lastMessageDate: chatData.lastMessageDate || new Date(),
         messages: []
     };
 
