@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { Link, Outlet, useParams, useNavigate } from "react-router-dom";
-import { IChat } from "@gofetch/models/IMessage";
+import { IChat, IMessage } from "@gofetch/models/IMessage";
 import { Role } from "@gofetch/models/IUser";
 import { getUserByIdWithPictures } from "@client/services/UserRegistry";
 import { getSortedUserChats } from "@client/services/ChatRegistry";
@@ -134,12 +134,39 @@ function MessagingPage() {
             });
         };
 
+        const handleNewMessage = (message: IMessage) => {
+            console.log("New message received, resorting chats:", message);
+            
+            setChats(prevChats => {
+                // First update the chat that received the message
+                const updatedChats = prevChats.map(chat => {
+                    if (chat.id === message.chatId) {
+                        // Find the chat that received this message and ensure it has the latest timestamp
+                        return {
+                            ...chat,
+                            lastMessageDate: message.timestamp || new Date()
+                        };
+                    }
+                    return chat;
+                });
+                
+                // Then create a new sorted array (crucial for React to detect the state change)
+                return [...updatedChats].sort((a, b) => {
+                    const aDate = a.lastMessageDate ? new Date(a.lastMessageDate).getTime() : 0;
+                    const bDate = b.lastMessageDate ? new Date(b.lastMessageDate).getTime() : 0;
+                    return bDate - aDate; // Sort by last message date, most recent first
+                });
+            });
+        }
+
         socket.on('chat-updated', handleChatUpdated);
         socket.on('new-chat', handleNewChat);
+        socket.on('new-message', handleNewMessage);
 
         return () => {
             socket.off('chat-updated', handleChatUpdated);
             socket.off('new-chat', handleNewChat);
+            socket.off('new-message', handleNewMessage);
         };
     }, [socket]);
 

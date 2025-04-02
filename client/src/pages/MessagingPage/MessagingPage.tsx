@@ -125,7 +125,8 @@ function ChatPage() {
                     return {
                         ...prevChat,
                         messages: [...(prevChat.messages || []), message],
-                        lastMessage: message.message
+                        lastMessage: message.message,
+                        lastMessageDate: message.timestamp,
                     };
                 });
             }
@@ -155,7 +156,9 @@ function ChatPage() {
             if (otherUserId) {
                 const otherUser = await getUserByIdWithPictures(otherUserId);
                 setChatName(otherUser ? `${otherUser.name.fname} ${otherUser.name.sname}` : 'Chat');
-                otherUser && otherUser.roles.includes(Role.ADMIN) ? setChatName(prev => prev + ' (Admin)') : null;
+                if (otherUser && otherUser.roles.includes(Role.ADMIN)) {
+                    setChatName(prev => prev + ' (Admin)');
+                }
                 setUserPicture(otherUser && otherUser.primaryUserInfo.profilePic);
             }
         };
