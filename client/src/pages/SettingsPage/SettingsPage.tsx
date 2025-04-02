@@ -70,7 +70,7 @@ function SettingsPage() {
           <div className={styles.settingsSection}>
             <h5>Notifications</h5>
             <div className={styles.notificationSetting}>
-              <p>Notfications Enabled</p>
+              <p>Notfication Alerts</p>
               <Switch 
                 onChange={handleNotificationToggle} 
                 checked={notificationsEnabled} 
@@ -85,7 +85,7 @@ function SettingsPage() {
               />
             </div>
             <div className={styles.notificationSetting}>
-              <p>Sound Notifications</p>
+              <p>Notification Sound</p>
               <Switch 
                 onChange={handleSoundToggle} 
                 checked={soundEnabled} 
@@ -96,7 +96,6 @@ function SettingsPage() {
                 height={20}
                 width={40}
                 activeBoxShadow="none"
-                disabled={!notificationsEnabled}
                 className={styles.toggleSwitch}
               />
             </div>
