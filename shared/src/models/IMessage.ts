@@ -11,4 +11,5 @@ export interface IChat {
     users: number[];        // Array of unique identifiers for the users in the chat
     messages?: IMessage[];  // Array of messages in the chat
     lastMessage: string;    // The content of the last message in the chat
+    lastMessageDate: Date; // The date and time the last message was sent
 }
