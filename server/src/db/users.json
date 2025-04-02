@@ -90,8 +90,7 @@
       "password": "password"
     },
     "roles": [
-      "petminder",
-      "petowner"
+      "petminder"
     ],
     "currentRole": "petminder",
     "primaryUserInfo": {
@@ -190,7 +189,7 @@
       "petminder",
       "petowner"
     ],
-    "currentRole": "petminder",
+    "currentRole": "petowner",
     "primaryUserInfo": {
       "profilePic": "19",
       "dob": "1995-08-25T00:00:00.000Z",
