@@ -2,8 +2,6 @@ import {IReport} from "@gofetch/models/IReport"
 
 import { API_URL } from "@client/services/Registry";
 
-// remember to set basic report data with the form
-
 export const addReport = async (reportData: IReport) => {
     try {
         const response = await fetch (`${API_URL}/report`, {
@@ -28,4 +26,15 @@ export const addReport = async (reportData: IReport) => {
         console.error(e);
         return null;
       }
+};
+
+export const getAllReports = async () => {
+    try {
+        const response = await fetch(`${API_URL}/reports`);
+        if (!response.ok) throw new Error("Failed to fetch reports");
+        return await response.json();
+    } catch (error) {
+        console.error(error);
+        return [];
+    }
 };

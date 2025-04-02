@@ -46,5 +46,15 @@
     "status": "Pending",
     "createdAt": "2025-04-01T10:16:10.334Z",
     "updatedAt": "2025-04-01T10:16:10.334Z"
+  },
+  {
+    "id": 11,
+    "reporterId": 5,
+    "reporteeId": 4,
+    "title": "New test report",
+    "description": "Terrible",
+    "status": "Pending",
+    "createdAt": "2025-04-02T11:55:09.232Z",
+    "updatedAt": "2025-04-02T11:55:09.232Z"
   }
 ]

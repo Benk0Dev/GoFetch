@@ -5,7 +5,6 @@ import "@client/global.css";
 import ReportSubmit from "./ReportSubmit";
 import { useAuth } from "@client/context/AuthContext";
 import { Status } from "@gofetch/models/IReport";
-import { v4 as uuidv4 } from 'uuid';
 
 function ReportForm () {
     const {user} = useAuth();
@@ -93,7 +92,7 @@ function ReportForm () {
             </button>
             {isSubmitted && (
                 <ReportSubmit
-                    id={uuidv4()}
+                    id={0} // This is just a placeholder essentially
                     reporterId={user.id}
                     reporteeId={reporteeId}
                     title={title}

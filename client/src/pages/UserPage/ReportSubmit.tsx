@@ -4,7 +4,7 @@ import { addReport } from "@client/services/ReportRegistry";
 import { Status, Result } from "@gofetch/models/IReport";
 
 interface IReportSubmitProps {
-    id: string;
+    id: number;
     reporterId: number;
     reporteeId: number;
     title: string;

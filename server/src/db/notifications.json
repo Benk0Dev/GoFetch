@@ -115,9 +115,9 @@
     "message": "Sup",
     "type": "message",
     "linkId": 120,
-    "read": false,
+    "read": true,
     "createdAt": "2025-03-28T21:17:10.889Z",
-    "updatedAt": "2025-03-28T21:17:10.889Z"
+    "updatedAt": "2025-04-02T11:54:39.083Z"
   },
   {
     "id": 13,
