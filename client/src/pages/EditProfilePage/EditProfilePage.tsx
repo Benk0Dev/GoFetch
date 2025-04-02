@@ -150,13 +150,15 @@ function Profile() {
                 return;
             }
 
-            // Autofill the form with the correct data
-            setAddress({
+            const newAddress = {
                 street: streetNumberComponent && streetNameComponent ? streetNumberComponent.long_name + " " + streetNameComponent.long_name : streetComponent ? streetComponent.long_name : "",
                 city: cityComponent?.long_name || "",
                 postcode: postcodeComponent?.long_name || "",
                 country: countryComponent?.long_name || "",
-            });
+            };
+
+            // Autofill the form with the correct data
+            setAddress(newAddress);
 
             let filename: string | undefined;
             if (selectedFile) {
@@ -177,7 +179,7 @@ function Profile() {
                 },
                 primaryUserInfo: {
                     profilePic: filename,
-                    address,
+                    address: newAddress,
                 }
             };
 
