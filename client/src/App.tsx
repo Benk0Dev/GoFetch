@@ -9,7 +9,7 @@ import EditProfilePage from "@client/pages/EditProfilePage/EditProfilePage";
 import BrowsePage from "@client/pages/BrowsePage/BrowsePage";
 import UserPage from "@client/pages/UserPage/UserPage";
 import DashboardPage from "@client/pages/DashboardPage/Dashboard";
-import MessagingPage from "@client/pages/MessagingPage/MessagingPage";
+import MessagePage from "@client/pages/MessagingPage/MessagePage";
 import ChatPage from "@client/pages/MessagingPage/ChatPage";
 import BookingPage from "@client/pages/BookingPage/BookingPage";
 import AddPetPage from "@client/pages/DashboardPage/Pets/AddPet";
@@ -21,7 +21,7 @@ import { Role } from "@gofetch/models/IUser";
 import MinderPage from "@client/pages/MinderPage/MinderPage";
 
 function App() {
-  const { role, loading, user } = useAuth();
+  const { role, loading } = useAuth();
   const isGuest = role === null;
 
   if (loading) return <div>Loading...</div>;
@@ -94,9 +94,9 @@ function App() {
           />
           <Route
             path="/chats"
-            element={!isGuest ? <ChatPage /> : <Navigate to="/" replace />}
+            element={!isGuest ? <MessagePage /> : <Navigate to="/" replace />}
           >
-            <Route path=":id" element={<MessagingPage />} />
+            <Route path=":id" element={<ChatPage />} />
           </Route>
           <Route path="/minders/:minderId" element={<MinderPage />} />
           <Route path="/dashboard/pets/:id" element={role === Role.OWNER ? <PetDetailsPage /> : <Navigate to="/" replace />} />
