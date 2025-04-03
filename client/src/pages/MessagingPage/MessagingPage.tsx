@@ -142,10 +142,14 @@ function MessagingPage() {
                 const updatedChats = prevChats.map(chat => {
                     if (chat.id === message.chatId) {
                         // Find the chat that received this message and ensure it has the latest timestamp
+                        // Also increment unread count if message is not from current user
                         return {
                             ...chat,
                             lastMessage: message.message,
-                            lastMessageDate: message.timestamp || new Date()
+                            lastMessageDate: message.timestamp || new Date(),
+                            unreadCount: message.senderId !== currentUserId ? 
+                                (chat.unreadCount || 0) + 1 : chat.unreadCount,
+                            isRead: message.senderId === currentUserId
                         };
                     }
                     return chat;
@@ -158,16 +162,34 @@ function MessagingPage() {
                     return bDate - aDate; // Sort by last message date, most recent first
                 });
             });
-        }
+        };
+
+        const handleMessageRead = (data: {chatId: number, messageId: number, userId: number}) => {
+            setChats(prevChats => {
+                return prevChats.map(chat => {
+                    if (chat.id === data.chatId) {
+                        // Update the unread count and read status
+                        return {
+                            ...chat,
+                            unreadCount: 0,
+                            isRead: true
+                        };
+                    }
+                    return chat;
+                });
+            });
+        };
 
         socket.on('chat-updated', handleChatUpdated);
         socket.on('new-chat', handleNewChat);
         socket.on('new-message', handleNewMessage);
+        socket.on('message-read', handleMessageRead);
 
         return () => {
             socket.off('chat-updated', handleChatUpdated);
             socket.off('new-chat', handleNewChat);
             socket.off('new-message', handleNewMessage);
+            socket.off('message-read', handleMessageRead);
         };
     }, [socket]);
 
@@ -199,9 +221,15 @@ function MessagingPage() {
                                         <h3>
                                             {chatUserNames[chat.id.toString()] || 
                                                 <span className={styles.loadingName}>Loading...</span>}
+                                            {chat.unreadCount > 0 && (
+                                                <span className={styles.unreadBadge}>{chat.unreadCount}</span>
+                                            )}
                                         </h3>
                                         <p className={styles.previewMessage}>
                                             {chat.lastMessage || "No messages yet"}
+                                            {!chat.isRead && chat.lastMessage && (
+                                                <span className={styles.unreadDot}></span>
+                                            )}
                                         </p>
                                     </div>
                                 </Link>

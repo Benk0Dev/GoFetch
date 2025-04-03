@@ -51,7 +51,8 @@ export function addMessageCached(chatID: number, messageData: Omit<IMessage, 'id
         id: newId,
         ...messageData,
         chatId: chatID,
-        timestamp: new Date()
+        timestamp: new Date(),
+        isRead: false
     };
 
     // Add to messages array
@@ -78,7 +79,9 @@ export function createChatCached(chatData: Omit<IChat, 'id' | 'messages'>): ICha
         users: chatData.users,
         lastMessage: chatData.lastMessage || '',
         lastMessageDate: chatData.lastMessageDate || new Date(),
-        messages: []
+        messages: [],
+        unreadCount: 0,
+        isRead: false
     };
 
     // Add to chats array
@@ -98,6 +101,24 @@ export function chatWith2UsersCached(userId1: number, userId2: number): { chatId
         };
     }
     return null;
+}
+
+export function messageReadCached(chatId: number, messageId: number, userId: number): void {
+    const chat = cache.chats.find(c => c.id === chatId);
+    if (!chat) {
+        throw new Error(`Chat with ID ${chatId} not found`);
+    }
+
+    const message = cache.messages.find(m => m.id === messageId && m.chatId === chatId);
+    if (!message) {
+        throw new Error(`Message with ID ${messageId} not found in chat ${chatId}`);
+    }
+
+    // Mark the message as read
+    message.isRead = true;
+
+    // Save to file
+    saveMessagesToFile();
 }
 
 function saveMessagesToFile() {

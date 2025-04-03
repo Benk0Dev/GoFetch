@@ -1,6 +1,6 @@
 import { Server, Socket } from 'socket.io';
 import http from 'http';
-import { addMessage } from '@server/static/MessageStatic';
+import { addMessage, messageRead } from '@server/static/MessageStatic';
 import { addNotification } from '@server/static/NotificationStatic';
 import { NotificationType } from '@gofetch/models/INotification';
 
@@ -82,6 +82,11 @@ export function setupWebSocketServer(httpServer: http.Server) {
                     originalMessage: messageData
                 });
             }
+        });
+
+        socket.on('read-message', (messageData) => {
+            messageRead(messageData.chatId, messageData.messageId, messageData.userId);
+            socket.to(`chat-${messageData.chatId}`).emit('message-read', messageData);
         });
 
         socket.on('leave-chat', (chatId) => {

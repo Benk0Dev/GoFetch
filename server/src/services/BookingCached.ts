@@ -72,7 +72,9 @@ export function updateBookingStatusCached(bookingId: number, status: BookingStat
           const newChat = createChatCached({
             users: [booking.ownerId, booking.minderId],
             lastMessage: '',
-            lastMessageDate: new Date()
+            lastMessageDate: new Date(),
+            unreadCount: 0,
+            isRead: false,
           });
           chatId = newChat.id;
         }
@@ -93,10 +95,9 @@ export function updateBookingStatusCached(bookingId: number, status: BookingStat
         senderId: -1, // System message (not from a user)
         message: messageContent,
         chatId: chatId,
-        timestamp: new Date()
+        timestamp: new Date(),
+        isRead: false
       };
-
-      
 
       // Add message to database
       const result = addMessage(chatId, messageObj);

@@ -1,5 +1,5 @@
 import { IMessage, IChat } from '@gofetch/models/IMessage';
-import { addMessageCached, getChatByIdCached, getChatsForUserCached, createChatCached } from '@server/services/MessagesCached';
+import { addMessageCached, getChatByIdCached, getChatsForUserCached, createChatCached, messageReadCached } from '@server/services/MessagesCached';
 import { io } from '@server/server/httpServer';
 
 // Function to get chats for a user
@@ -79,6 +79,23 @@ export function createChat(chatData: Omit<IChat, 'id' | 'messages'>) {
         return {
             success: false,
             error: 'Failed to create chat'
+        };
+    }
+}
+
+export function messageRead(chatId: number, messageId: number, userId: number){
+    try {
+        // Mark the message as read in the database
+        const result = messageReadCached(chatId, messageId, userId);
+        return {
+            success: true,
+            result: result
+        };
+    } catch (error) {
+        console.error('Error marking message as read:', error);
+        return {
+            success: false,
+            error: 'Failed to mark message as read'
         };
     }
 }
