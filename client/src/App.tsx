@@ -12,6 +12,8 @@ import DashboardPage from "@client/pages/DashboardPage/Dashboard";
 import MessagingPage from "@client/pages/MessagingPage/MessagingPage";
 import Chat from "@client/pages/MessagingPage/Chat";
 import BookingPage from "@client/pages/BookingPage/BookingPage";
+import PaymentPage from "@client/pages/PaymentPage/PaymentPage";
+import SuccessPage from "@client/pages/SuccessPage/SuccessPage";
 import AddPetPage from "@client/pages/DashboardPage/Pets/AddPet";
 import PetDetailsPage from "@client/pages/DashboardPage/Pets/PetDetails";
 import SettingsPage from "@client/pages/SettingsPage/SettingsPage";
@@ -78,6 +80,8 @@ function App() {
               )
             }
           />
+          <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/success" element={<SuccessPage />} />
           <Route
             path="/dashboard/*"
             element={!isGuest ? <DashboardPage /> : <Navigate to="/" replace />}
