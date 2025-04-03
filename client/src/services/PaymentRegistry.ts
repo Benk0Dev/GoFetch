@@ -5,7 +5,7 @@ import { API_URL } from "@client/services/Registry";
 export const createPayment = async (paymentData: Omit<IPayment, "id" | "status" | "createdAt" | "updatedAt">) => {
     try {
       // Step 1: Send a POST request to create the payment
-      const response = await fetch(`${API_URL}/payments`, {
+      const response = await fetch(`${API_URL}/payment`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

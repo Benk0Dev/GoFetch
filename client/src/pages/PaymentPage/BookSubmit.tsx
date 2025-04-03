@@ -78,12 +78,13 @@ const BookSubmit: React.FC<IBookSubmitProps> = ({
 
         const secondResponse = await createPayment(paymentDetails);
 
-        if (response.success && secondResponse.success) {
+        if (response && secondResponse) {
           navigate("/success", { state: { minderName: minder.name.fname}});
         } else {
           setError("An error occurred while creating your booking.");
         }
       } catch (error) {
+        console.error("Error:", error);
         setError("An error occurred while creating your booking.");
       } finally {
         setIsSubmitting(false);
