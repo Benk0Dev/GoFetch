@@ -11,7 +11,7 @@ export function getCachedPayments(): IPayment[] {
     }
 }
 
-export function addPaymentCached(report: IPayment) {
+export function addPaymentCached(report: Omit<IPayment, "id" | "status" | "createdAt" | "updatedAt">) {
     try {
         const newId = cache.payments.length > 0 ? cache.payments[cache.payments.length - 1].id + 1 + 1 : 1;
         const newPayment: IPayment = {
