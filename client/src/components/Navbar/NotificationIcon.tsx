@@ -150,7 +150,7 @@ function NotificationIcon() {
                                 <span>Loading notifications...</span>
                             </DropdownItem>
                         ) : notifications.length > 0 ? (
-                            <>
+                            <div className={styles.container}>
                                 {notifications.map(notification => (
                                     <div 
                                         key={notification.id} 
@@ -167,7 +167,7 @@ function NotificationIcon() {
                                         </div>
                                     </div>
                                 ))}
-                            </>
+                            </div>
                         ) : (
                             <DropdownItem onClick={() => {}} button={false}>
                                 <span>No notifications</span>
