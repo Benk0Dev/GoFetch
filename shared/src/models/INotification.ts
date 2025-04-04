@@ -11,9 +11,16 @@ export interface INotification {
 
 export enum NotificationType {
     Message = "message",
-    Booking = "booking",
+    BookingRequest = "booking request",
+    BookingAccepted = "booking accepted",
+    BookingDeclined = "booking declined",
+    BookingCancelled = "booking cancelled",
+    BookingCompleteRequest = "booking complete request",
+    BookingCompleted = "booking completed",
+    BookingExpired = "booking expired",
     Review = "review",
-    Payment = "payment",
+    PaymentRefunded = "payment refunded",
+    PaymentReceived = "payment received",
     System = "system",
     Other = "other"
 }

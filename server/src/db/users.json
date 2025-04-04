@@ -27,7 +27,9 @@
       "petIds": [
         3
       ],
-      "bookingIds": []
+      "bookingIds": [
+        7
+      ]
     },
     "minderRoleInfo": {
       "serviceIds": [],
@@ -189,7 +191,7 @@
       "petminder",
       "petowner"
     ],
-    "currentRole": "petowner",
+    "currentRole": "petminder",
     "primaryUserInfo": {
       "profilePic": "19",
       "dob": "1995-08-25T00:00:00.000Z",
@@ -227,8 +229,7 @@
       ],
       "availability": "Flexible",
       "bookingIds": [
-        9,
-        4,
+        7,
         6,
         7
       ],
@@ -251,7 +252,7 @@
       "petminder",
       "petowner"
     ],
-    "currentRole": "petowner",
+    "currentRole": "petminder",
     "primaryUserInfo": {
       "profilePic": "20",
       "dob": "2004-12-22T00:00:00.000Z",

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import styles from '@client/components/Notifications/NotificationPopup.module.css';
-import { INotification } from '@gofetch/models/INotification';
+import { INotification, NotificationType } from '@gofetch/models/INotification';
 import { markNotificationAsRead } from '@client/services/NotificationRegistry';
 
 interface NotificationPopupProps {
@@ -38,17 +38,38 @@ const NotificationPopup: React.FC<NotificationPopupProps> = ({ notification, onC
     
     // Navigate based on notification type
     switch (notification.type) {
-      case "message":
+      case NotificationType.Message:
         navigate(`/chats/${notification.linkId}`);
         break;
-      case "booking":
-        navigate(`/dashboard?booking=${notification.linkId}`);
+      case NotificationType.BookingRequest:
+        navigate(`/dashboard/bookings/pending`);
         break;
-      case "review":
-        navigate(`/profile#reviews`);
+      case NotificationType.BookingAccepted:
+        navigate(`/dashboard/bookings/upcoming`);
         break;
-      case "payment":
-        navigate(`/dashboard?payment=${notification.linkId}`);
+      case NotificationType.BookingDeclined:
+        navigate(`/dashboard/bookings`);
+        break;
+      case NotificationType.BookingCancelled:
+        navigate(`/dashboard/bookings`);
+        break;
+      case NotificationType.BookingCompleteRequest:
+        navigate(`/dashboard/in-progress`);
+        break;
+      case NotificationType.BookingCompleted:
+        navigate(`/dashboard/bookings/past`);
+        break
+      case NotificationType.BookingExpired:
+        navigate(`/dashboard/bookings`);
+        break;
+      case NotificationType.Review:
+        navigate(`/dashboard/reviews`);
+        break;
+      case NotificationType.PaymentRefunded:
+        navigate(`/dashboard`);
+        break;
+      case NotificationType.PaymentReceived:
+        navigate(`/dashboard`);
         break;
       default:
         navigate('/dashboard');
