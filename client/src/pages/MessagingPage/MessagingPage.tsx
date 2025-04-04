@@ -46,7 +46,7 @@ function MessagingPage() {
     const fetchChats = useCallback(async () => {
         setLoading(true);
         try {
-            const data = await getSortedUserChats(); // Changed from getUserChats to getSortedUserChats
+            const data = await getSortedUserChats();
             if (data && data.chats) {
                 setChats(data.chats);
                 
@@ -114,12 +114,21 @@ function MessagingPage() {
                 
                 if (chatIndex !== -1) {
                     const newChats = [...prevChats];
-                    newChats[chatIndex] = updatedChat;
+                    // Only update the unread count for the current user
+                    newChats[chatIndex] = {
+                        ...updatedChat,
+                        unreadCount: updatedChat.unreadCounts?.[currentUserId] || 0,
+                        isRead: updatedChat.userReadStatus?.[currentUserId] || false
+                    };
                     return newChats;
                 }
                 
-                // If it's a new chat, add it
-                return [...prevChats, updatedChat];
+                // If it's a new chat, add it with the correct unread count
+                return [...prevChats, {
+                    ...updatedChat,
+                    unreadCount: updatedChat.unreadCounts?.[currentUserId] || 0,
+                    isRead: updatedChat.userReadStatus?.[currentUserId] || false
+                }];
             });
         };
 
@@ -128,56 +137,64 @@ function MessagingPage() {
             setChats(prevChats => {
                 // Check if this chat already exists
                 if (!prevChats.some(chat => chat.id === newChat.id)) {
-                    return [...prevChats, newChat];
+                    return [...prevChats, {
+                        ...newChat,
+                        unreadCount: newChat.unreadCounts?.[currentUserId] || 0,
+                        isRead: newChat.userReadStatus?.[currentUserId] || false
+                    }];
                 }
                 return prevChats;
             });
         };
 
         const handleNewMessage = (message: IMessage) => {
-            console.log("New message received, resorting chats:", message);
+            console.log("New message received:", message);
             
             setChats(prevChats => {
                 // First update the chat that received the message
                 const updatedChats = prevChats.map(chat => {
                     if (chat.id === message.chatId) {
-                        // Find the chat that received this message and ensure it has the latest timestamp
-                        // Also increment unread count if message is not from current user
+                        // Only increment unread count if message is not from current user
+                        const unreadCount = message.senderId !== currentUserId ? 
+                            (chat.unreadCount || 0) + 1 : chat.unreadCount;
+                            
                         return {
                             ...chat,
                             lastMessage: message.message,
                             lastMessageDate: message.timestamp || new Date(),
-                            unreadCount: message.senderId !== currentUserId ? 
-                                (chat.unreadCount || 0) + 1 : chat.unreadCount,
+                            unreadCount: unreadCount,
                             isRead: message.senderId === currentUserId
                         };
                     }
                     return chat;
                 });
                 
-                // Then create a new sorted array (crucial for React to detect the state change)
+                // Then create a new sorted array
                 return [...updatedChats].sort((a, b) => {
                     const aDate = a.lastMessageDate ? new Date(a.lastMessageDate).getTime() : 0;
                     const bDate = b.lastMessageDate ? new Date(b.lastMessageDate).getTime() : 0;
-                    return bDate - aDate; // Sort by last message date, most recent first
+                    return bDate - aDate; // Most recent first
                 });
             });
         };
 
         const handleMessageRead = (data: {chatId: number, messageId: number, userId: number}) => {
-            setChats(prevChats => {
-                return prevChats.map(chat => {
-                    if (chat.id === data.chatId) {
-                        // Update the unread count and read status
-                        return {
-                            ...chat,
-                            unreadCount: 0,
-                            isRead: true
-                        };
-                    }
-                    return chat;
+            // Only update the UI if the current user is the one who read the message
+            if (data.userId === currentUserId) {
+                setChats(prevChats => {
+                    return prevChats.map(chat => {
+                        if (chat.id === data.chatId) {
+                            // Update the unread count and read status
+                            return {
+                                ...chat,
+                                unreadCount: 0,
+                                isRead: true
+                            };
+                        }
+                        return chat;
+                    });
                 });
-            });
+            }
         };
 
         socket.on('chat-updated', handleChatUpdated);
@@ -191,7 +208,7 @@ function MessagingPage() {
             socket.off('new-message', handleNewMessage);
             socket.off('message-read', handleMessageRead);
         };
-    }, [socket]);
+    }, [socket, currentUserId]);
 
     // Fetch user names only when we have new chats without names
     useEffect(() => {

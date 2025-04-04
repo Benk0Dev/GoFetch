@@ -194,17 +194,19 @@ function Chat() {
             msg => !msg.isRead && msg.senderId !== user.id
         ) || [];
         
-        // Mark each message as read
-        unreadMessages.forEach(message => {
-            socket.emit('read-message', {
-                chatId: parseInt(id),
-                messageId: message.id,
-                userId: user.id
-            });
-        });
-        
-        // Update local chat state to mark messages as read
         if (unreadMessages.length > 0) {
+            console.log(`Marking ${unreadMessages.length} messages as read in chat ${id}`);
+            
+            // Mark each message as read via socket
+            unreadMessages.forEach(message => {
+                socket.emit('read-message', {
+                    chatId: parseInt(id),
+                    messageId: message.id,
+                    userId: user.id
+                });
+            });
+            
+            // Update local chat state to mark messages as read
             setChat(prevChat => {
                 if (!prevChat) return null;
                 
@@ -216,6 +218,12 @@ function Chat() {
                     unreadCount: 0,
                     isRead: true
                 };
+            });
+
+            // Also notify parent components that this chat is now read
+            socket.emit('chat-read', {
+                chatId: parseInt(id),
+                userId: user.id
             });
         }
     }, [chat?.messages, socket, user, id]);

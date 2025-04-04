@@ -7,7 +7,17 @@
         2
       ],
       "lastMessage": "Hello",
-      "lastMessageDate": "2025-03-23T00:12:05.529Z"
+      "lastMessageDate": "2025-03-23T00:12:05.529Z",
+      "unreadCount": 0,
+      "isRead": true,
+      "unreadCounts": {
+        "5": 0,
+        "2": 0
+      },
+      "userReadStatus": {
+        "5": true,
+        "2": true
+      }
     },
     {
       "id": 2,
@@ -16,7 +26,17 @@
         3
       ],
       "lastMessage": "Your dog is so adorable! Is he good with other pets?",
-      "lastMessageDate": "2025-03-19T11:45:30.000Z"
+      "lastMessageDate": "2025-03-19T11:45:30.000Z",
+      "unreadCount": 0,
+      "isRead": true,
+      "unreadCounts": {
+        "5": 0,
+        "3": 0
+      },
+      "userReadStatus": {
+        "5": true,
+        "3": true
+      }
     },
     {
       "id": 3,
@@ -25,7 +45,17 @@
         4
       ],
       "lastMessage": "Hi there! I'm interested in your pet sitting services.",
-      "lastMessageDate": "2025-03-18T16:55:40.000Z"
+      "lastMessageDate": "2025-03-18T16:55:40.000Z",
+      "unreadCount": 0,
+      "isRead": true,
+      "unreadCounts": {
+        "5": 0,
+        "4": 0
+      },
+      "userReadStatus": {
+        "5": true,
+        "4": true
+      }
     },
     {
       "id": 4,
@@ -34,7 +64,17 @@
         7
       ],
       "lastMessage": "I'm very excited to meet her",
-      "lastMessageDate": "2025-03-26T16:08:08.623Z"
+      "lastMessageDate": "2025-03-26T16:08:08.623Z",
+      "unreadCount": 1,
+      "isRead": false,
+      "unreadCounts": {
+        "5": 0,
+        "7": 1
+      },
+      "userReadStatus": {
+        "5": true,
+        "7": false
+      }
     },
     {
       "id": 5,
@@ -43,7 +83,17 @@
         7
       ],
       "lastMessage": "hello",
-      "lastMessageDate": "2025-03-27T21:57:24.000Z"
+      "lastMessageDate": "2025-03-27T21:57:24.000Z",
+      "unreadCount": 1,
+      "isRead": false,
+      "unreadCounts": {
+        "8": 1,
+        "7": 0
+      },
+      "userReadStatus": {
+        "8": false,
+        "7": true
+      }
     },
     {
       "id": 6,
@@ -52,7 +102,17 @@
         5
       ],
       "lastMessage": "hi",
-      "lastMessageDate": "2025-04-03T11:34:49.095Z"
+      "lastMessageDate": "2025-04-03T11:34:49.095Z",
+      "unreadCount": 1,
+      "isRead": false,
+      "unreadCounts": {
+        "8": 1,
+        "5": 0
+      },
+      "userReadStatus": {
+        "8": false,
+        "5": true
+      }
     },
     {
       "id": 7,
@@ -61,7 +121,17 @@
         7
       ],
       "lastMessage": "Hi Ben!",
-      "lastMessageDate": "2025-03-30T04:41:48.609Z"
+      "lastMessageDate": "2025-03-30T04:41:48.609Z",
+      "unreadCount": 1,
+      "isRead": false,
+      "unreadCounts": {
+        "1": 0,
+        "7": 1
+      },
+      "userReadStatus": {
+        "1": true,
+        "7": false
+      }
     }
   ],
   "messages": [
@@ -70,7 +140,8 @@
       "chatId": 1,
       "senderId": 5,
       "message": "Hi! I'm looking for someone to walk my dog this weekend.",
-      "timestamp": "2025-03-20T14:30:20.000Z"
+      "timestamp": "2025-03-20T14:30:20.000Z",
+      "isRead": true
     },
     {
       "id": 2,
@@ -85,7 +156,8 @@
       "chatId": 1,
       "senderId": 5,
       "message": "He's a golden retriever named Max. Very friendly!",
-      "timestamp": "2025-03-20T14:35:12.000Z"
+      "timestamp": "2025-03-20T14:35:12.000Z",
+      "isRead": true
     },
     {
       "id": 4,
@@ -100,7 +172,8 @@
       "chatId": 1,
       "senderId": 5,
       "message": "Saturday around 2pm if possible?",
-      "timestamp": "2025-03-20T14:39:45.000Z"
+      "timestamp": "2025-03-20T14:39:45.000Z",
+      "isRead": true
     },
     {
       "id": 6,
@@ -115,7 +188,8 @@
       "chatId": 1,
       "senderId": 5,
       "message": "About 45 minutes would be great. He loves the park nearby.",
-      "timestamp": "2025-03-20T14:44:30.000Z"
+      "timestamp": "2025-03-20T14:44:30.000Z",
+      "isRead": true
     },
     {
       "id": 8,
@@ -130,7 +204,8 @@
       "chatId": 1,
       "senderId": 5,
       "message": "That would be wonderful! Max loves treats.",
-      "timestamp": "2025-03-20T14:49:40.000Z"
+      "timestamp": "2025-03-20T14:49:40.000Z",
+      "isRead": true
     },
     {
       "id": 10,
@@ -145,56 +220,64 @@
       "chatId": 2,
       "senderId": 3,
       "message": "Hello! I noticed you're looking for pet care services.",
-      "timestamp": "2025-03-19T11:20:30.000Z"
+      "timestamp": "2025-03-19T11:20:30.000Z",
+      "isRead": true
     },
     {
       "id": 12,
       "chatId": 2,
       "senderId": 5,
       "message": "Yes! I have a 2-year-old beagle who needs some company during the day.",
-      "timestamp": "2025-03-19T11:25:45.000Z"
+      "timestamp": "2025-03-19T11:25:45.000Z",
+      "isRead": true
     },
     {
       "id": 13,
       "chatId": 2,
       "senderId": 3,
       "message": "I specialize in daytime pet sitting. Does your dog get along with other dogs?",
-      "timestamp": "2025-03-19T11:28:15.000Z"
+      "timestamp": "2025-03-19T11:28:15.000Z",
+      "isRead": true
     },
     {
       "id": 14,
       "chatId": 2,
       "senderId": 5,
       "message": "He's very social and loves other dogs. Do you have pets of your own?",
-      "timestamp": "2025-03-19T11:32:40.000Z"
+      "timestamp": "2025-03-19T11:32:40.000Z",
+      "isRead": true
     },
     {
       "id": 15,
       "chatId": 2,
       "senderId": 3,
       "message": "I have a friendly labrador. They should get along great!",
-      "timestamp": "2025-03-19T11:36:20.000Z"
+      "timestamp": "2025-03-19T11:36:20.000Z",
+      "isRead": true
     },
     {
       "id": 16,
       "chatId": 2,
       "senderId": 5,
       "message": "That sounds perfect! Could we arrange a meet-and-greet first?",
-      "timestamp": "2025-03-19T11:39:10.000Z"
+      "timestamp": "2025-03-19T11:39:10.000Z",
+      "isRead": true
     },
     {
       "id": 17,
       "chatId": 2,
       "senderId": 3,
       "message": "Your dog is so adorable! Is he good with other pets?",
-      "timestamp": "2025-03-19T11:45:30.000Z"
+      "timestamp": "2025-03-19T11:45:30.000Z",
+      "isRead": true
     },
     {
       "id": 18,
       "chatId": 3,
       "senderId": 5,
       "message": "Hi there! I'm looking for someone to watch my cat for a week in April.",
-      "timestamp": "2025-03-18T16:10:15.000Z"
+      "timestamp": "2025-03-18T16:10:15.000Z",
+      "isRead": true
     },
     {
       "id": 19,
@@ -209,7 +292,8 @@
       "chatId": 3,
       "senderId": 5,
       "message": "Her name is Luna. She's very independent but needs someone to feed her and clean her litter.",
-      "timestamp": "2025-03-18T16:20:45.000Z"
+      "timestamp": "2025-03-18T16:20:45.000Z",
+      "isRead": true
     },
     {
       "id": 21,
@@ -224,7 +308,8 @@
       "chatId": 3,
       "senderId": 5,
       "message": "April 10-17. Would you be able to visit twice daily or stay at my place?",
-      "timestamp": "2025-03-18T16:30:25.000Z"
+      "timestamp": "2025-03-18T16:30:25.000Z",
+      "isRead": true
     },
     {
       "id": 23,
@@ -239,7 +324,8 @@
       "chatId": 3,
       "senderId": 5,
       "message": "Probably visits twice a day would be best. She gets anxious with new people staying over.",
-      "timestamp": "2025-03-18T16:40:55.000Z"
+      "timestamp": "2025-03-18T16:40:55.000Z",
+      "isRead": true
     },
     {
       "id": 25,
@@ -254,7 +340,8 @@
       "chatId": 3,
       "senderId": 5,
       "message": "Great! Would you like to meet Luna beforehand?",
-      "timestamp": "2025-03-18T16:50:25.000Z"
+      "timestamp": "2025-03-18T16:50:25.000Z",
+      "isRead": true
     },
     {
       "id": 27,
@@ -269,21 +356,24 @@
       "senderId": 5,
       "message": "Hello",
       "chatId": 1,
-      "timestamp": "2025-03-23T00:12:05.529Z"
+      "timestamp": "2025-03-23T00:12:05.529Z",
+      "isRead": true
     },
     {
       "id": 29,
       "senderId": 5,
       "message": "Hello Ben!",
       "chatId": 4,
-      "timestamp": "2025-03-26T16:04:53.258Z"
+      "timestamp": "2025-03-26T16:04:53.258Z",
+      "isRead": true
     },
     {
       "id": 30,
       "senderId": 5,
       "message": "I am happy to train Pipa to do a barrel roll",
       "chatId": 4,
-      "timestamp": "2025-03-26T16:06:56.757Z"
+      "timestamp": "2025-03-26T16:06:56.757Z",
+      "isRead": true
     },
     {
       "id": 31,
@@ -298,14 +388,16 @@
       "senderId": 5,
       "message": "I'm very excited to meet her",
       "chatId": 4,
-      "timestamp": "2025-03-26T16:08:08.623Z"
+      "timestamp": "2025-03-26T16:08:08.623Z",
+      "isRead": false
     },
     {
       "id": 33,
       "senderId": 7,
       "message": "hello",
       "chatId": 5,
-      "timestamp": "2025-03-27T21:57:24.000Z"
+      "timestamp": "2025-03-27T21:57:24.000Z",
+      "isRead": false
     },
     {
       "id": 34,
@@ -320,14 +412,16 @@
       "senderId": 5,
       "message": "Oh no!",
       "chatId": 6,
-      "timestamp": "2025-03-27T22:04:01.326Z"
+      "timestamp": "2025-03-27T22:04:01.326Z",
+      "isRead": true
     },
     {
       "id": 36,
       "senderId": 5,
       "message": "womp womp",
       "chatId": 6,
-      "timestamp": "2025-03-27T22:04:03.444Z"
+      "timestamp": "2025-03-27T22:04:03.444Z",
+      "isRead": true
     },
     {
       "id": 37,
@@ -342,7 +436,8 @@
       "senderId": 1,
       "message": "Hi Ben!",
       "chatId": 7,
-      "timestamp": "2025-03-30T04:41:48.609Z"
+      "timestamp": "2025-03-30T04:41:48.609Z",
+      "isRead": false
     },
     {
       "id": 39,

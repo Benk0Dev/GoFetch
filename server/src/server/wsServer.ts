@@ -1,8 +1,9 @@
 import { Server, Socket } from 'socket.io';
 import http from 'http';
-import { addMessage, messageRead } from '@server/static/MessageStatic';
+import { addMessage, messageRead, markChatAsRead } from '@server/static/MessageStatic';
 import { addNotification } from '@server/static/NotificationStatic';
 import { NotificationType } from '@gofetch/models/INotification';
+import { getChatByIdCached, incrementUnreadCount } from '@server/services/MessagesCached';
 
 // Add a variable to store the IO instance
 let io: Server;
@@ -54,17 +55,42 @@ export function setupWebSocketServer(httpServer: http.Server) {
             const result = addMessage(messageData.chatId, messageData.message);
             
             if (result.success) {
-                const chat = io?.sockets.adapter.rooms.get(`chat-${messageData.chatId}`);
-                if (chat) {
-                    // Get the chat details to find the other user
-                    const chatDetails = require('../services/MessagesCached').getChatByIdCached(messageData.chatId);
-                    if (chatDetails) {
-                        // Notify other users in this chat
-                        const otherUsers = chatDetails.users.filter(
-                            (userId: number) => userId !== messageData.message.senderId
-                        );
+                const chatRoom = `chat-${messageData.chatId}`;
+                
+                // Get the chat details to find the other user
+                const chatDetails = getChatByIdCached(messageData.chatId);
+                if (chatDetails) {
+                    // Notify other users in this chat
+                    const otherUsers = chatDetails.users.filter(
+                        (userId: number) => userId !== messageData.message.senderId
+                    );
+                    
+                    otherUsers.forEach((recipientId: number) => {
+                        const userRoom = `user-${recipientId}`;
                         
-                        otherUsers.forEach((recipientId: number) => {
+                        // Check if recipient is already actively viewing the chat
+                        // by checking if any socket with their user ID is in this chat room
+                        let isRecipientInChat = false;
+                        const recipientSockets = io.sockets.adapter.rooms.get(userRoom);
+                        
+                        if (recipientSockets) {
+                            // Check each socket belonging to this user
+                            for (const socketId of recipientSockets) {
+                                const socket = io.sockets.sockets.get(socketId);
+                                if (socket && socket.rooms.has(chatRoom)) {
+                                    isRecipientInChat = true;
+                                    break;
+                                }
+                            }
+                        }
+                        
+                        // Only send notification if recipient is not already in the chat
+                        if (!isRecipientInChat) {
+                            console.log(`Sending notification to user ${recipientId} - not viewing chat`);
+                            
+                            // Update unread count in the chat for this specific user only
+                            incrementUnreadCount(messageData.chatId, recipientId);
+                            
                             // Create a notification for the message
                             addNotification({
                                 userId: recipientId,
@@ -72,8 +98,15 @@ export function setupWebSocketServer(httpServer: http.Server) {
                                 type: NotificationType.Message,
                                 linkId: messageData.chatId
                             });
-                        });
-                    }
+                        } else {
+                            console.log(`User ${recipientId} is actively viewing chat - no notification needed`);
+                            
+                            // Mark the message as read immediately since user is viewing the chat
+                            if (result.message) {
+                                messageRead(messageData.chatId, result.message.id, recipientId);
+                            }
+                        }
+                    });
                 }
             } else {
                 // If there was an error, send it back to the sender
@@ -86,7 +119,29 @@ export function setupWebSocketServer(httpServer: http.Server) {
 
         socket.on('read-message', (messageData) => {
             messageRead(messageData.chatId, messageData.messageId, messageData.userId);
-            socket.to(`chat-${messageData.chatId}`).emit('message-read', messageData);
+            
+            // Get updated chat to send correct unread counts to all users
+            const updatedChat = getChatByIdCached(messageData.chatId);
+            if (updatedChat) {
+                // Emit the message read event
+                socket.to(`chat-${messageData.chatId}`).emit('message-read', messageData);
+
+                // Emit updated chat with per-user unread counts
+                io.to(`chat-${messageData.chatId}`).emit('chat-updated', updatedChat);
+            }
+        });
+
+        socket.on('chat-read', (data) => {
+            console.log(`Chat ${data.chatId} marked as read by user ${data.userId}`);
+            // Update the chat read status for this specific user
+            markChatAsRead(data.chatId, data.userId);
+            
+            // Get updated chat to send correct unread counts to all users
+            const updatedChat = getChatByIdCached(data.chatId);
+            if (updatedChat) {
+                // Broadcast to all users in this chat the updated chat with per-user counts
+                io.to(`chat-${data.chatId}`).emit('chat-updated', updatedChat);
+            }
         });
 
         socket.on('leave-chat', (chatId) => {

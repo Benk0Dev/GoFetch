@@ -10,6 +10,24 @@ if (!cache.chats) {
         const parsed = JSON.parse(messagesData);
         cache.chats = parsed.chats || [];
         cache.messages = parsed.messages || [];
+        
+        // Add unreadCounts and userReadStatus to existing chats if they don't exist
+        cache.chats.forEach(chat => {
+            if (!chat.unreadCounts) {
+                chat.unreadCounts = {};
+                chat.users.forEach(userId => {
+                    chat.unreadCounts = chat.unreadCounts || {};
+                    chat.unreadCounts[userId] = chat.unreadCount || 0;
+                });
+            }
+            if (!chat.userReadStatus) {
+                chat.userReadStatus = {};
+                chat.users.forEach(userId => {
+                    chat.userReadStatus = chat.userReadStatus || {};
+                    chat.userReadStatus[userId] = chat.isRead || false;
+                });
+            }
+        });
     } catch (error) {
         console.error('Error loading messages data:', error);
         cache.chats = [];
@@ -21,7 +39,14 @@ if (!cache.chats) {
 }
 
 export function getChatsForUserCached(userId: number): IChat[] {
-    return cache.chats.filter(chat => chat.users.includes(userId));
+    return cache.chats.filter(chat => chat.users.includes(userId)).map(chat => {
+        // Return a copy of chat with unread count specific to this user
+        return {
+            ...chat,
+            unreadCount: chat.unreadCounts?.[userId] || 0,
+            isRead: chat.userReadStatus?.[userId] || false
+        };
+    });
 }
 
 export function getChatByIdCached(chatId: number): IChat | null {
@@ -81,8 +106,16 @@ export function createChatCached(chatData: Omit<IChat, 'id' | 'messages'>): ICha
         lastMessageDate: chatData.lastMessageDate || new Date(),
         messages: [],
         unreadCount: 0,
-        isRead: false
+        isRead: false,
+        unreadCounts: {},
+        userReadStatus: {}
     };
+
+    // Initialize unread counts and read status for all users
+    chatData.users.forEach(userId => {
+        newChat.unreadCounts![userId] = 0;
+        newChat.userReadStatus![userId] = true;
+    });
 
     // Add to chats array
     cache.chats.push(newChat);
@@ -117,7 +150,82 @@ export function messageReadCached(chatId: number, messageId: number, userId: num
     // Mark the message as read
     message.isRead = true;
 
+    // If this is the user that didn't send the message, reduce their unread count
+    if (message.senderId !== userId && chat.unreadCounts) {
+        chat.unreadCounts[userId] = Math.max(0, (chat.unreadCounts[userId] || 0) - 1);
+    }
+
+    // Update legacy property for backward compatibility
+    chat.unreadCount = Object.values(chat.unreadCounts || {}).reduce((acc, count) => acc + count, 0);
+
     // Save to file
+    saveMessagesToFile();
+}
+
+export function markChatAsReadCached(chatId: number, userId: number): void {
+    const chat = cache.chats.find(c => c.id === chatId);
+    if (!chat) {
+        throw new Error(`Chat with ID ${chatId} not found`);
+    }
+
+    // Mark all messages as read for this user
+    cache.messages.forEach(message => {
+        if (message.chatId === chatId && message.senderId !== userId && !message.isRead) {
+            message.isRead = true;
+        }
+    });
+
+    // Update chat read status for this specific user
+    if (chat.userReadStatus) {
+        chat.userReadStatus[userId] = true;
+    }
+    
+    // Reset unread count for this specific user
+    if (chat.unreadCounts) {
+        chat.unreadCounts[userId] = 0;
+    }
+
+    // Update legacy properties for backward compatibility
+    chat.isRead = Object.values(chat.userReadStatus || {}).every(status => status);
+    chat.unreadCount = Object.values(chat.unreadCounts || {}).reduce((acc, count) => acc + count, 0);
+
+    // Save to file
+    saveMessagesToFile();
+}
+
+export function incrementUnreadCount(chatId: number, userId: number): void {
+    const chat = cache.chats.find(c => c.id === chatId);
+    if (!chat) {
+        throw new Error(`Chat with ID ${chatId} not found`);
+    }
+
+    // Initialize the unreadCounts object if it doesn't exist
+    if (!chat.unreadCounts) {
+        chat.unreadCounts = {};
+        chat.users.forEach(id => {
+            chat.unreadCounts![id] = 0;
+        });
+    }
+
+    // Initialize the userReadStatus object if it doesn't exist
+    if (!chat.userReadStatus) {
+        chat.userReadStatus = {};
+        chat.users.forEach(id => {
+            chat.userReadStatus![id] = true;
+        });
+    }
+
+    // Increment unread count for this specific user
+    chat.unreadCounts[userId] = (chat.unreadCounts[userId] || 0) + 1;
+    
+    // Mark the chat as unread for this specific user
+    chat.userReadStatus[userId] = false;
+
+    // Update legacy properties for backward compatibility
+    chat.unreadCount = Object.values(chat.unreadCounts).reduce((acc, count) => acc + count, 0);
+    chat.isRead = false;
+
+    // Save changes to file
     saveMessagesToFile();
 }
 

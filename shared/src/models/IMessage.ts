@@ -12,7 +12,9 @@ export interface IChat {
     users: number[];        // Array of unique identifiers for the users in the chat
     messages?: IMessage[];  // Array of messages in the chat
     lastMessage: string;    // The content of the last message in the chat
-    lastMessageDate: Date; // The date and time the last message was sent
-    unreadCount: number;   // Number of unread messages in the chat
-    isRead: boolean;       // Indicates if the chat has been read
+    lastMessageDate: Date;  // The date and time the last message was sent
+    unreadCount: number;    // Number of unread messages in the chat (deprecated, use unreadCounts)
+    unreadCounts?: {[userId: number]: number}; // Number of unread messages per user
+    isRead: boolean;        // Indicates if the chat has been read (deprecated, use userReadStatus)
+    userReadStatus?: {[userId: number]: boolean}; // Read status per user
 }
