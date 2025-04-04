@@ -8,6 +8,8 @@ import { BookingStatus, IBooking } from "@gofetch/models/IBooking";
 import { useEffect, useState } from "react";
 import { IReport } from "@gofetch/models/IReport";
 import { getAllReports } from "@client/services/ReportRegistry";
+import { getAllUsers } from "@client/services/UserRegistry";
+import { IUser } from "@gofetch/models/IUser";
 
 function Home() {
     const { user, role } = useAuth();
@@ -25,6 +27,7 @@ function Home() {
 
     // Some of this code should be moved elsewhere
     const [reports, setReports] = useState<IReport[]>([]);
+    const [users, setUsers] = useState<IUser[]>([]);
     
         useEffect(() => {
             const loadReports = async () => {
@@ -35,7 +38,15 @@ function Home() {
                     console.error("Failed to load reports:", error);
                 } 
             }
-            loadReports();
+            const loadUsers = async () => {
+                try {
+                    const data = await getAllUsers();
+                    setUsers(data);
+                } catch (error) {
+                    console.error("Failed to load users:", error);
+                } 
+            }
+            loadReports(), loadUsers();
         }, []);
     
 
@@ -89,7 +100,7 @@ function Home() {
                     <>
                         <Statistic 
                             title="Total Users" 
-                            value={"0"} 
+                            value={users.length.toString()} 
                             icon={<UserRound size={18} strokeWidth={2} />} 
                         />
                         <Statistic 

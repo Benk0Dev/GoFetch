@@ -55,6 +55,22 @@
         7
       ],
       "lastMessage": "Hi Ben!"
+    },
+    {
+      "id": 8,
+      "users": [
+        8,
+        3
+      ],
+      "lastMessage": ""
+    },
+    {
+      "id": 9,
+      "users": [
+        8,
+        4
+      ],
+      "lastMessage": ""
     }
   ],
   "messages": [

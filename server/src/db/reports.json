@@ -2,6 +2,7 @@
   {
     "id": 1,
     "reporterId": 5,
+    "reporteeId": 7,
     "title": "Bad Minder!",
     "description": "Ben was a terrible minder",
     "status": "Pending",
@@ -31,6 +32,7 @@
   {
     "id": 7,
     "reporterId": 5,
+    "reporteeId": 7,
     "title": "test2",
     "description": "This is another test",
     "status": "Pending",
@@ -56,5 +58,15 @@
     "status": "Pending",
     "createdAt": "2025-04-02T11:55:09.232Z",
     "updatedAt": "2025-04-02T11:55:09.232Z"
+  },
+  {
+    "id": 13,
+    "reporterId": 5,
+    "reporteeId": 7,
+    "title": "testingb3",
+    "description": "hbhbybuybuyi",
+    "status": "Pending",
+    "createdAt": "2025-04-03T11:24:42.696Z",
+    "updatedAt": "2025-04-03T11:24:42.696Z"
   }
 ]

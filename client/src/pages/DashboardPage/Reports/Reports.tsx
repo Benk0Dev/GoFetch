@@ -9,7 +9,7 @@ import ReportsModal from './ReportsModal';
 function Reports() {
     const [reports, setReports] = useState<IReport[]>([]);
     const [selectedReport, setSelectedReport] = useState<IReport | null>(null);
-
+    
     useEffect(() => {
         const loadReports = async () => {
             try {
@@ -36,8 +36,7 @@ function Reports() {
                                 <tr>
                                     <th>ID</th>
                                     <th>Title</th>
-                                    <th>Reporter ID</th>
-                                    <th>Reportee</th>
+                                    <th>Reported User ID</th>
                                     <th>Status</th>
                                     <th>Created</th>
                                     <th>Actions</th>
@@ -48,7 +47,6 @@ function Reports() {
                                     <tr key={report.id}>
                                         <td>{report.id}</td>
                                         <td>{report.title}</td>
-                                        <td>{report.reporterId}</td>
                                         <td>{report.reporteeId}</td>
                                         <td>{report.status}</td>
                                         <td>{new Date(report.createdAt).toLocaleDateString()}</td>
