@@ -34,13 +34,24 @@ const NotificationContainer: React.FC<NotificationContainerProps> = ({ notificat
     };
   }, []);
 
+  // Check if notifications and sounds are enabled
+  const getNotificationSettings = useCallback(() => {
+    const notificationsEnabled = localStorage.getItem("notificationsEnabled");
+    const soundEnabled = localStorage.getItem("soundEnabled");
+    
+    return {
+      notifications: notificationsEnabled === null ? true : JSON.parse(notificationsEnabled),
+      sound: soundEnabled === null ? true : JSON.parse(soundEnabled)
+    };
+  }, []);
+
   // Play notification sound
   const playNotificationSound = useCallback(() => {
-    if (audioRef.current) {
+    const { sound } = getNotificationSettings();
+    if (audioRef.current && sound) {
       // Reset the audio to the beginning
       audioRef.current.currentTime = 0;
-      
-      // Create a play promise and handle any errors
+
       const playPromise = audioRef.current.play();
       
       if (playPromise !== undefined) {
@@ -49,11 +60,7 @@ const NotificationContainer: React.FC<NotificationContainerProps> = ({ notificat
             console.log('Notification sound played successfully');
           })
           .catch(error => {
-            // Auto-play was prevented (common in browsers)
             console.warn('Notification sound failed to play:', error);
-            
-            // For browsers that require user interaction before playing audio
-            // You could show a UI element here that allows users to enable sound
           });
       }
     }
