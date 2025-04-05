@@ -62,6 +62,9 @@ const NotificationPopup: React.FC<NotificationPopupProps> = ({ notification, onC
       case NotificationType.BookingExpired:
         navigate(`/dashboard/bookings`);
         break;
+      case NotificationType.BookingInProgress:
+        navigate(`/dashboard/bookings/in-progress`);
+        break;
       case NotificationType.Review:
         navigate(`/dashboard/reviews`);
         break;

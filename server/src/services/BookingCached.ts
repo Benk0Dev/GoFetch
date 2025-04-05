@@ -39,6 +39,8 @@ export function addBookingCached(bookingData: INewBooking): IBooking {
     id: newId,
     ...bookingData,
     status: BookingStatus.Pending,
+    ownerCompleted: false,
+    minderCompleted: false,
     createdAt: now,
     updatedAt: now
   };

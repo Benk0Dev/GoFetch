@@ -191,7 +191,7 @@
       "petminder",
       "petowner"
     ],
-    "currentRole": "petminder",
+    "currentRole": "petowner",
     "primaryUserInfo": {
       "profilePic": "19",
       "dob": "1995-08-25T00:00:00.000Z",
@@ -208,7 +208,7 @@
         2
       ],
       "bookingIds": [
-        7,
+        8,
         1,
         2,
         3,
@@ -234,7 +234,8 @@
         7
       ],
       "reviewIds": [
-        2
+        2,
+        4
       ]
     }
   },
@@ -288,6 +289,7 @@
       ],
       "availability": "Flexible",
       "bookingIds": [
+        8,
         7
       ],
       "reviewIds": []

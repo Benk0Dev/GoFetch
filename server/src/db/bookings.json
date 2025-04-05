@@ -8,6 +8,8 @@
     "time": "2025-03-28T13:00:00.000Z",
     "notes": "He loves tennis balls!",
     "status": "Completed",
+    "ownerCompleted": true,
+    "minderCompleted": true,
     "createdAt": "2025-03-25T02:15:08.717Z",
     "updatedAt": "2025-03-25T02:18:29.113Z"
   },
@@ -19,9 +21,11 @@
     "serviceId": 3,
     "time": "2025-03-30T11:00:00.000Z",
     "notes": "She needs company at night.",
-    "status": "Confirmed",
+    "status": "In Progress",
+    "ownerCompleted": true,
+    "minderCompleted": false,
     "createdAt": "2025-03-25T02:16:18.154Z",
-    "updatedAt": "2025-03-27T18:49:07.562Z"
+    "updatedAt": "2025-04-05T00:13:12.553Z"
   },
   {
     "id": 3,
@@ -31,9 +35,11 @@
     "serviceId": 2,
     "time": "2025-03-26T15:30:00.000Z",
     "notes": " She will not leave your side.",
-    "status": "Pending",
+    "status": "Rejected",
+    "ownerCompleted": false,
+    "minderCompleted": false,
     "createdAt": "2025-03-25T02:17:32.807Z",
-    "updatedAt": "2025-03-25T02:17:32.807Z"
+    "updatedAt": "2025-04-04T23:21:00.321Z"
   },
   {
     "id": 5,
@@ -43,9 +49,11 @@
     "serviceId": 3,
     "time": "2025-03-29T08:00:00.000Z",
     "notes": "Rusty always needs to be with someone or he gets very paranoid. He's a very well-behaved boy though and is extremely active.",
-    "status": "Pending",
+    "status": "Rejected",
+    "ownerCompleted": false,
+    "minderCompleted": false,
     "createdAt": "2025-03-25T23:24:38.951Z",
-    "updatedAt": "2025-03-25T23:24:38.951Z"
+    "updatedAt": "2025-04-04T23:21:00.323Z"
   },
   {
     "id": 6,
@@ -56,19 +64,37 @@
     "time": "2025-03-29T18:00:00.000Z",
     "notes": "Teach her how to do a barrel roll.",
     "status": "Completed",
+    "ownerCompleted": true,
+    "minderCompleted": true,
     "createdAt": "2025-03-26T00:16:33.827Z",
     "updatedAt": "2025-03-27T01:28:55.746Z"
   },
   {
     "id": 7,
-    "petId": 3,
+    "petId": 2,
     "minderId": 5,
-    "ownerId": 1,
+    "ownerId": 5,
     "serviceId": 5,
     "time": "2025-04-19T15:40:00.000Z",
     "notes": "test",
-    "status": "Pending",
+    "status": "Completed",
+    "ownerCompleted": true,
+    "minderCompleted": true,
     "createdAt": "2025-04-04T15:37:46.996Z",
-    "updatedAt": "2025-04-04T15:37:46.996Z"
+    "updatedAt": "2025-04-05T00:13:14.361Z"
+  },
+  {
+    "id": 8,
+    "petId": 1,
+    "minderId": 7,
+    "ownerId": 5,
+    "serviceId": 9,
+    "time": "2025-04-05T00:24:00.000Z",
+    "notes": "fawfawf",
+    "status": "Rejected",
+    "ownerCompleted": false,
+    "minderCompleted": false,
+    "createdAt": "2025-04-05T00:23:04.982Z",
+    "updatedAt": "2025-04-05T00:24:00.406Z"
   }
 ]

@@ -48,7 +48,7 @@ router.put('/booking/:id/status', (req: Request, res: Response) => {
 // Update booking details
 router.put('/booking/:id', (req: Request, res: Response) => {
     const result = updateBookingDetails(parseInt(req.params.id), req.body);
-    res.json(result);
+    res.json(result.booking);
 });
 
 // Delete a booking

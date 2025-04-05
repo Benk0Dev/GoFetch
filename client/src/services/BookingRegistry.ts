@@ -73,3 +73,44 @@ export async function setBookingStatus(bookingId: number, status: BookingStatus)
     return null;
   }
 }
+
+export async function editBooking(bookingId: number, bookingData: Partial<IBooking>) {
+  try {
+    const response = await fetch(`${API_URL}/booking/${bookingId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(bookingData)
+    });
+    if (response.ok) {
+      const booking = await response.json();
+      return booking;
+    } else {
+      const text = await response.text();
+      console.error(text);
+      return null;
+    }
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+}
+
+export async function ownerCompleted(bookingId: number) {
+  const booking = await editBooking(bookingId, { ownerCompleted: true });
+  if (!booking) {
+    console.error("Failed to complete booking.");
+    return null;
+  }
+  return booking;
+}
+
+export async function minderCompleted(bookingId: number) {
+  const booking = await editBooking(bookingId, { minderCompleted: true });
+  if (!booking) {
+    console.error("Failed to complete booking.");
+    return null;
+  }
+  return booking;
+}
