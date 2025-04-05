@@ -16,6 +16,8 @@ import { addReviewForUser } from "@client/services/ReviewRegistry";
 import { IPet } from "@gofetch/models/IPet";
 import CreateReview from "@client/pages/DashboardPage/Bookings/CreateReview";
 import { IReview } from "@gofetch/models/IReview";
+import { updatePaymentStatus, getPaymentByBookingId } from "@client/services/PaymentRegistry";
+import { Status } from "@gofetch/models/IPayment";
 
 export interface Booking {
     id: number;
@@ -83,6 +85,8 @@ function Bookings() {
 
     const handleCancel = async (bookingId: number) => {
         const booking = await setBookingStatus(bookingId, BookingStatus.Cancelled);
+        const payment = await getPaymentByBookingId(bookingId);
+        await updatePaymentStatus(payment.id, Status.REFUNDED, "cancel");
         if (booking) {
             const updatedUser = await getUserByIdWithPictures(user.id);
             setUser(updatedUser);
@@ -103,6 +107,8 @@ function Bookings() {
 
     const handleDecline = async (bookingId: number) => {
         const booking = await setBookingStatus(bookingId, BookingStatus.Cancelled);
+        const payment = await getPaymentByBookingId(bookingId);
+        await updatePaymentStatus(payment.id, Status.REFUNDED, "decline");
         if (booking) {
             const updatedUser = await getUserByIdWithPictures(user.id);
             setUser(updatedUser);
@@ -123,6 +129,8 @@ function Bookings() {
 
     const handleComplete = async (bookingId: number) => {
         const booking = await setBookingStatus(bookingId, BookingStatus.Completed);
+        const payment = await getPaymentByBookingId(bookingId);
+        await updatePaymentStatus(payment.id, Status.PAID);
         if (booking) {
             const updatedUser = await getUserByIdWithPictures(user.id);
             setUser(updatedUser);

@@ -115,9 +115,9 @@
     "message": "Sup",
     "type": "message",
     "linkId": 120,
-    "read": false,
+    "read": true,
     "createdAt": "2025-03-28T21:17:10.889Z",
-    "updatedAt": "2025-03-28T21:17:10.889Z"
+    "updatedAt": "2025-04-04T14:14:34.266Z"
   },
   {
     "id": 13,
@@ -141,12 +141,243 @@
   },
   {
     "id": 15,
-    "userId": 8,
-    "message": "New message: hi",
-    "type": "message",
-    "linkId": 6,
+    "userId": 5,
+    "message": "Booking #7 has been accepted!",
+    "type": "system",
+    "linkId": 7,
+    "read": true,
+    "createdAt": "2025-04-04T17:57:01.652Z",
+    "updatedAt": "2025-04-04T21:35:46.189Z"
+  },
+  {
+    "id": 16,
+    "userId": 7,
+    "message": "Booking #7 has been accepted!",
+    "type": "system",
+    "linkId": 7,
+    "read": true,
+    "createdAt": "2025-04-04T17:57:01.653Z",
+    "updatedAt": "2025-04-04T21:21:23.108Z"
+  },
+  {
+    "id": 17,
+    "message": "Your booking #undefined has been refunded as the minder canceled it.",
+    "type": "system",
+    "link": "0",
     "read": false,
-    "createdAt": "2025-04-03T11:34:49.098Z",
-    "updatedAt": "2025-04-03T11:34:49.098Z"
+    "createdAt": "2025-04-04T20:54:59.835Z",
+    "updatedAt": "2025-04-04T20:54:59.835Z"
+  },
+  {
+    "id": 18,
+    "message": "Your booking #undefined has been refunded as the minder canceled it.",
+    "type": "system",
+    "link": "0",
+    "read": false,
+    "createdAt": "2025-04-04T20:54:59.838Z",
+    "updatedAt": "2025-04-04T20:54:59.838Z"
+  },
+  {
+    "id": 19,
+    "message": "Your booking #undefined has been refunded as the minder canceled it.",
+    "type": "system",
+    "link": "0",
+    "read": false,
+    "createdAt": "2025-04-04T21:00:43.476Z",
+    "updatedAt": "2025-04-04T21:00:43.476Z"
+  },
+  {
+    "id": 20,
+    "message": "Your booking #undefined has been refunded as the minder canceled it.",
+    "type": "system",
+    "link": "0",
+    "read": false,
+    "createdAt": "2025-04-04T21:12:24.635Z",
+    "updatedAt": "2025-04-04T21:12:24.635Z"
+  },
+  {
+    "id": 21,
+    "message": "Your booking #undefined has been refunded as the minder canceled it.",
+    "type": "system",
+    "link": "0",
+    "read": false,
+    "createdAt": "2025-04-04T21:20:46.938Z",
+    "updatedAt": "2025-04-04T21:20:46.938Z"
+  },
+  {
+    "id": 22,
+    "message": "Your booking #undefined has been refunded as the minder canceled it.",
+    "type": "system",
+    "link": "0",
+    "read": false,
+    "createdAt": "2025-04-04T21:31:55.884Z",
+    "updatedAt": "2025-04-04T21:31:55.884Z"
+  },
+  {
+    "id": 23,
+    "message": "Your booking #undefined has been refunded as the minder canceled it.",
+    "type": "system",
+    "link": "0",
+    "read": false,
+    "createdAt": "2025-04-04T21:36:42.056Z",
+    "updatedAt": "2025-04-04T21:36:42.056Z"
+  },
+  {
+    "id": 24,
+    "message": "Your booking #undefined has been refunded as the minder canceled it.",
+    "type": "system",
+    "link": "0",
+    "read": false,
+    "createdAt": "2025-04-04T21:50:00.167Z",
+    "updatedAt": "2025-04-04T21:50:00.167Z"
+  },
+  {
+    "id": 25,
+    "message": "Your booking #undefined has been refunded as the minder canceled it.",
+    "type": "system",
+    "link": "0",
+    "read": false,
+    "createdAt": "2025-04-04T21:58:14.305Z",
+    "updatedAt": "2025-04-04T21:58:14.305Z"
+  },
+  {
+    "id": 26,
+    "userId": 7,
+    "message": "Your booking #21 has been refunded as the minder canceled it.",
+    "type": "system",
+    "link": "0",
+    "read": true,
+    "createdAt": "2025-04-04T22:36:21.671Z",
+    "updatedAt": "2025-04-05T00:24:26.875Z"
+  },
+  {
+    "id": 27,
+    "userId": 5,
+    "message": "Booking #3 has been accepted!",
+    "type": "system",
+    "linkId": 3,
+    "read": false,
+    "createdAt": "2025-04-04T23:23:26.904Z",
+    "updatedAt": "2025-04-04T23:23:26.904Z"
+  },
+  {
+    "id": 28,
+    "userId": 3,
+    "message": "Booking #3 has been accepted!",
+    "type": "system",
+    "linkId": 3,
+    "read": true,
+    "createdAt": "2025-04-04T23:23:26.904Z",
+    "updatedAt": "2025-04-04T23:25:51.441Z"
+  },
+  {
+    "id": 29,
+    "userId": 7,
+    "message": "Booking #22 has been accepted!",
+    "type": "system",
+    "linkId": 22,
+    "read": true,
+    "createdAt": "2025-04-04T23:25:38.101Z",
+    "updatedAt": "2025-04-05T00:24:25.115Z"
+  },
+  {
+    "id": 30,
+    "userId": 3,
+    "message": "Booking #22 has been accepted!",
+    "type": "system",
+    "linkId": 22,
+    "read": true,
+    "createdAt": "2025-04-04T23:25:38.102Z",
+    "updatedAt": "2025-04-04T23:25:50.218Z"
+  },
+  {
+    "id": 31,
+    "userId": 3,
+    "message": "You've been paid $15 for Booking #22! 🎉",
+    "type": "system",
+    "link": "0",
+    "read": true,
+    "createdAt": "2025-04-04T23:25:39.552Z",
+    "updatedAt": "2025-04-04T23:25:48.233Z"
+  },
+  {
+    "id": 32,
+    "userId": 7,
+    "message": "The pet minder has declined your request. Your booking #23 has now been refunded.",
+    "type": "system",
+    "link": "0",
+    "read": true,
+    "createdAt": "2025-04-05T00:01:20.307Z",
+    "updatedAt": "2025-04-05T00:24:20.818Z"
+  },
+  {
+    "id": 33,
+    "userId": 7,
+    "message": "Booking #24 has been accepted!",
+    "type": "system",
+    "linkId": 24,
+    "read": true,
+    "createdAt": "2025-04-05T00:01:21.303Z",
+    "updatedAt": "2025-04-05T00:24:20.146Z"
+  },
+  {
+    "id": 34,
+    "userId": 4,
+    "message": "Booking #24 has been accepted!",
+    "type": "system",
+    "linkId": 24,
+    "read": false,
+    "createdAt": "2025-04-05T00:01:21.303Z",
+    "updatedAt": "2025-04-05T00:01:21.303Z"
+  },
+  {
+    "id": 35,
+    "userId": 7,
+    "message": "The pet minder has cancelled the booking. You have now been fully refunded.",
+    "type": "system",
+    "link": "0",
+    "read": true,
+    "createdAt": "2025-04-05T00:02:27.904Z",
+    "updatedAt": "2025-04-05T00:24:23.468Z"
+  },
+  {
+    "id": 36,
+    "userId": 1,
+    "message": "Booking #25 has been accepted!",
+    "type": "system",
+    "linkId": 25,
+    "read": false,
+    "createdAt": "2025-04-05T00:22:42.076Z",
+    "updatedAt": "2025-04-05T00:22:42.076Z"
+  },
+  {
+    "id": 37,
+    "userId": 3,
+    "message": "Booking #25 has been accepted!",
+    "type": "system",
+    "linkId": 25,
+    "read": false,
+    "createdAt": "2025-04-05T00:22:42.077Z",
+    "updatedAt": "2025-04-05T00:22:42.077Z"
+  },
+  {
+    "id": 38,
+    "userId": 3,
+    "message": "You've been paid $15 for Booking #25! 🎉",
+    "type": "system",
+    "link": "0",
+    "read": false,
+    "createdAt": "2025-04-05T00:22:46.864Z",
+    "updatedAt": "2025-04-05T00:22:46.864Z"
+  },
+  {
+    "id": 39,
+    "userId": 7,
+    "message": "The pet minder has declined your request. Your booking #26 has now been refunded.",
+    "type": "system",
+    "link": "0",
+    "read": false,
+    "createdAt": "2025-04-05T00:26:23.268Z",
+    "updatedAt": "2025-04-05T00:26:23.268Z"
   }
 ]

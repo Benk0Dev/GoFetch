@@ -70,9 +70,11 @@ const BookSubmit: React.FC<IBookSubmitProps> = ({
           cardName,
         };
 
+        console.log("response", response);
+
         const paymentDetails: Omit<IPayment, "id" | "status" | "createdAt" | "updatedAt"> = {
           amount: service.price,
-          bookingId: response.bookingId, // Ensure correct property from API response
+          bookingId: response.id, // Ensure correct property from API response
           cardDetails,
         };
 
