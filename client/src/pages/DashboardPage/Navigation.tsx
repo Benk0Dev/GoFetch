@@ -34,8 +34,8 @@ function Navigation() {
                         Services
                     </button>
                     <button
-                        className={currentPath === "/dashboard/bookings" ? styles.active : ""}
-                        onClick={() => navigate("/dashboard/bookings")}
+                        className={currentPath.startsWith("/dashboard/bookings") ? styles.active : ""}
+                        onClick={() => navigate("/dashboard/bookings/in-progress")}
                     >
                         Bookings
                     </button>
@@ -55,8 +55,8 @@ function Navigation() {
                         Pets
                     </button>
                     <button
-                        className={currentPath === "/dashboard/bookings" ? styles.active : ""}
-                        onClick={() => navigate("/dashboard/bookings")}
+                        className={currentPath.startsWith("/dashboard/bookings") ? styles.active : ""}
+                        onClick={() => navigate("/dashboard/bookings/in-progress")}
                     >
                         Bookings
                     </button>

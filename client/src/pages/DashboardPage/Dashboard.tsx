@@ -58,8 +58,12 @@ function DashboardPage() {
                         )}
                     />
                     <Route
-                        path="bookings"
+                        path="bookings/:status"
                         element={<Bookings />}
+                    />
+                    <Route
+                        path="bookings"
+                        element={<Navigate to="/dashboard/bookings/in-progress" replace />}
                     />
                     <Route
                         path="reviews"

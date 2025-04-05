@@ -18,6 +18,7 @@ export enum NotificationType {
     BookingCompleteRequest = "booking complete request",
     BookingCompleted = "booking completed",
     BookingExpired = "booking expired",
+    BookingInProgress = "booking in progress",
     Review = "review",
     PaymentRefunded = "payment refunded",
     PaymentReceived = "payment received",

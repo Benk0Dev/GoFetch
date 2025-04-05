@@ -5,7 +5,7 @@ import DropdownMenu from "@client/components/Dropdown/DropdownMenu";
 import DropdownItem from "@client/components/Dropdown/DropdownItem";
 import styles from "@client/components/Navbar/Navbar.module.css";
 import { getUserNotifications, markNotificationAsRead } from "@client/services/NotificationRegistry";
-import { INotification } from "@gofetch/models/INotification";
+import { INotification, NotificationType } from "@gofetch/models/INotification";
 import { useSocket } from "@client/context/SocketContext";
 import { useAuth } from "@client/context/AuthContext";
 import NotificationContainer from "@client/components/Notifications/NotificationContainer";
@@ -51,20 +51,44 @@ function NotificationIcon() {
         
         // Navigate based on notification type
         switch (notification.type) {
-            case "message":
-                navigate(`/chats/${notification.linkId}`);
-                break;
-            case "booking":
-                navigate(`/dashboard?booking=${notification.linkId}`);
-                break;
-            case "review":
-                navigate(`/profile#reviews`);
-                break;
-            case "payment":
-                navigate(`/dashboard?payment=${notification.linkId}`);
-                break;
+            case NotificationType.Message:
+            navigate(`/chats/${notification.linkId}`);
+            break;
+            case NotificationType.BookingRequest:
+            navigate(`/dashboard/bookings/pending`);
+            break;
+            case NotificationType.BookingAccepted:
+            navigate(`/dashboard/bookings/upcoming`);
+            break;
+            case NotificationType.BookingDeclined:
+            navigate(`/dashboard/bookings`);
+            break;
+            case NotificationType.BookingCancelled:
+            navigate(`/dashboard/bookings`);
+            break;
+            case NotificationType.BookingCompleteRequest:
+            navigate(`/dashboard/in-progress`);
+            break;
+            case NotificationType.BookingCompleted:
+            navigate(`/dashboard/bookings/past`);
+            break
+            case NotificationType.BookingExpired:
+            navigate(`/dashboard/bookings`);
+            break;
+            case NotificationType.BookingInProgress:
+            navigate(`/dashboard/bookings/in-progress`);
+            break;
+            case NotificationType.Review:
+            navigate(`/dashboard/reviews`);
+            break;
+            case NotificationType.PaymentRefunded:
+            navigate(`/dashboard`);
+            break;
+            case NotificationType.PaymentReceived:
+            navigate(`/dashboard`);
+            break;
             default:
-                navigate('/dashboard');
+            navigate('/dashboard');
         }
         
         // Close menu
