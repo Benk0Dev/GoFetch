@@ -118,7 +118,7 @@ export async function updatePaymentStatus(paymentId: number, status: Status, ref
             userId: booking.minderId, // Notify the pet minder
             message: messageContent,
             type: NotificationType.System,
-            link: "0"
+            linkId: 0
         };
     } else if (status === Status.REFUNDED) {
         if (refundType === "cancel") {
@@ -132,7 +132,7 @@ export async function updatePaymentStatus(paymentId: number, status: Status, ref
             userId: booking.ownerId, // Notify the pet owner
             message: messageContent,
             type: NotificationType.System,
-            link: "0"
+            linkId: 0
         };
     }
 

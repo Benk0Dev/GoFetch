@@ -9,11 +9,12 @@ import Switch from "react-switch";
 function SettingsPage() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
-  const [showChangePassswordError, setShowChangePasswordError] = useState(false);
+  const [newPassword, setNewPassword] = useState("");
+  const [newPassword2, setNewPassword2] = useState("");
+  const [changePasswordError, setChangePasswordError] = useState("");
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
-  // Temporary - will need to add settings to backend
   const [notificationsEnabled, setNotificationsEnabled] = useState(localStorage.getItem("notificationsEnabled") === "true" || localStorage.getItem("notificationsEnabled") === null);
   const [soundEnabled, setSoundEnabled] = useState(localStorage.getItem("soundEnabled") === "true" || localStorage.getItem("soundEnabled") === null);
 
@@ -37,60 +38,48 @@ function SettingsPage() {
     };
   }, [showDeleteModal]);
 
-  const handleChangePassword = () => {
-  // Logic to change password
-  if (!user) return;
-  const newPasswordInput = document.querySelector(`input[type="password"]`) as HTMLInputElement;
-  const confirmPasswordInput = document.querySelectorAll(`input[type="password"]`)[1] as HTMLInputElement;
+  const handleChangePassword = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!user) return;
+
+    if (newPassword.length < 8) {
+      setChangePasswordError("Password must be at least 8 characters long.");
+      return;
+    }
+    
+    if (newPassword !== newPassword2) {
+      setChangePasswordError("Passwords do not match.");
+      return;
+    }
   
-  if (!newPasswordInput || !confirmPasswordInput) {
-    console.error("Password inputs not found");
-    setShowChangePasswordError(true);
-    return;
-  }
-  
-  const newPassword = newPasswordInput.value;
-  const confirmPassword = confirmPasswordInput.value;
-  
-  if (!newPassword || !confirmPassword) {
-    console.error("Please fill in both password fields");
-    setShowChangePasswordError(true);
-    return;
-  }
-  
-  if (newPassword !== confirmPassword) {
-    console.error("Passwords do not match");
-    setShowChangePasswordError(true);
-    return;
-  }
-  
-  editUser(user.id, { loginDetails: { password: newPassword } })
-    .then(() => {
+    const updatedUser = await editUser(user.id, { loginDetails: { password: newPassword } })
+
+    if (updatedUser) {
+      console.log("Password changed successfully");
+      setChangePasswordError("");
       setShowChangePasswordModal(false);
-      setShowChangePasswordError(false);
-    })
-    .catch((error: unknown) => {
-      console.error("Error changing password:", error);
-      setShowChangePasswordError(true);
-    });
-  console.log("Password changed");
-  setShowChangePasswordModal(false);
-};
+      setNewPassword("");
+      setNewPassword2("");
+      alert("Password changed successfully");
+    } else {
+      setChangePasswordError("Failed to change password. Please try again.");
+      return;
+    }
+  }
 
   const handleNotificationToggle = () => {
     setNotificationsEnabled(prev => !prev);
-    console.log("Notifications toggled", !notificationsEnabled);
     localStorage.setItem("notificationsEnabled", JSON.stringify(!notificationsEnabled));
   }
 
   const handleSoundToggle = () => {
     setSoundEnabled(prev => !prev);
-    console.log("Sound toggled", !soundEnabled);
     localStorage.setItem("soundEnabled", JSON.stringify(!soundEnabled));
   }
 
-  const handleDeleteAccount = () => {
-    deleteUser(user.id);
+  const handleDeleteAccount = async () => {
+    await deleteUser(user.id);
     logout();
     setShowDeleteModal(false);
     navigate("/");
@@ -159,25 +148,41 @@ function SettingsPage() {
         <div className={styles.modalBackdrop}>
           <div className={styles.modal}>
             <h3>Change Password</h3>
-            <p>Enter your new password:</p>
-            <input type="password" placeholder="New Password" className={styles.input} />
-            <p>Confirm your new password:</p>
-            <input type="password" placeholder="Confirm Password" className={styles.input} />
-            {showChangePassswordError && <p className={styles.error}>Passwords do not match</p>}
-            <div className={styles.modalActions}>
-              <button 
-                className="btn btn-primary" 
-                onClick={handleChangePassword}
-              >
-                Save
-              </button>
-              <button 
-                className={"btn btn-secondary" + " " + styles.cancelBtn}
-                onClick={() => setShowChangePasswordModal(false)}
-              >
-                Cancel
-              </button>
-            </div>
+            <form onSubmit={handleChangePassword} onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                handleChangePassword(e);
+              }
+            }}>
+              <div className={styles.inputRow}>
+                <label>New Password</label>
+                <input type="password" className={styles.input} onChange={(e) => setNewPassword(e.target.value)} required />
+              </div>
+              <div className={styles.inputRow}>
+                <label>Confirm New Password</label>
+                <input type="password" className={styles.input} onChange={(e) => setNewPassword2(e.target.value)} required />
+              </div>
+              <p className={styles.error}>{changePasswordError}</p>
+              <div className={styles.modalActions}>
+                <button 
+                  className={"btn btn-secondary" + " " + styles.cancelBtn}
+                  onClick={() => {
+                    setShowChangePasswordModal(false);
+                    setChangePasswordError("");
+                    setNewPassword("");
+                    setNewPassword2("");
+                  }}
+                >
+                  Cancel
+                </button>
+                <button 
+                  className="btn btn-primary" 
+                  type="submit"
+                >
+                  Save
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}
