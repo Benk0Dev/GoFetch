@@ -117,13 +117,13 @@ export function updateBookingStatusWithTimeChange() {
             const minder = getUserByID(booking.minderId).user;
             addNotification({
                 userId: booking.ownerId,
-                message: `Your booking request with ${minder?.name.fname} ${minder?.name.sname} has expired.`,
+                message: `Your booking request with ${minder?.name.fname} ${minder?.name.sname} has expired`,
                 type: NotificationType.BookingExpired,
                 linkId: booking.id
             });
             addNotification({
                 userId: booking.minderId,
-                message: `Your booking request from ${owner?.name.fname} ${owner?.name.sname} has expired.`,
+                message: `Your booking request from ${owner?.name.fname} ${owner?.name.sname} has expired`,
                 type: NotificationType.BookingExpired,
                 linkId: booking.id
             });

@@ -27,7 +27,12 @@
       "petIds": [
         3
       ],
-      "bookingIds": []
+      "bookingIds": [
+        13,
+        9,
+        10,
+        12
+      ]
     },
     "minderRoleInfo": {
       "serviceIds": [],
@@ -206,6 +211,7 @@
         2
       ],
       "bookingIds": [
+        11,
         1,
         2,
         3,
@@ -227,8 +233,10 @@
       ],
       "availability": "Flexible",
       "bookingIds": [
+        10,
         6,
-        7
+        7,
+        9
       ],
       "reviewIds": [
         2,
@@ -250,7 +258,7 @@
       "petminder",
       "petowner"
     ],
-    "currentRole": "petowner",
+    "currentRole": "petminder",
     "primaryUserInfo": {
       "profilePic": "20",
       "dob": "2004-12-22T00:00:00.000Z",
@@ -277,7 +285,7 @@
         10,
         11
       ],
-      "rating": 0,
+      "rating": 5,
       "bio": "I love taking care of dogs. I have two dogs of my own and have the privilege to walk them everyday. I'm a student so I have quite a flexible schedule, so we can easily arrange a time for any of my services.",
       "pictures": [
         "15",
@@ -285,9 +293,14 @@
       ],
       "availability": "Flexible",
       "bookingIds": [
-        8
+        13,
+        8,
+        11,
+        12
       ],
-      "reviewIds": []
+      "reviewIds": [
+        4
+      ]
     }
   },
   {

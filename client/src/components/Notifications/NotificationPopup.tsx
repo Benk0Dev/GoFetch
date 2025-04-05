@@ -68,12 +68,6 @@ const NotificationPopup: React.FC<NotificationPopupProps> = ({ notification, onC
       case NotificationType.Review:
         navigate(`/dashboard/reviews`);
         break;
-      case NotificationType.PaymentRefunded:
-        navigate(`/dashboard`);
-        break;
-      case NotificationType.PaymentReceived:
-        navigate(`/dashboard`);
-        break;
       default:
         navigate('/dashboard');
     }

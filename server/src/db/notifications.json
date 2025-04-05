@@ -346,9 +346,9 @@
     "message": "Booking #25 has been accepted!",
     "type": "system",
     "linkId": 25,
-    "read": false,
+    "read": true,
     "createdAt": "2025-04-05T00:22:42.076Z",
-    "updatedAt": "2025-04-05T00:22:42.076Z"
+    "updatedAt": "2025-04-05T01:38:20.807Z"
   },
   {
     "id": 37,
@@ -379,5 +379,275 @@
     "read": false,
     "createdAt": "2025-04-05T00:26:23.268Z",
     "updatedAt": "2025-04-05T00:26:23.268Z"
+  },
+  {
+    "id": 40,
+    "userId": 1,
+    "message": "Your booking request with Eve White has expired.",
+    "type": "booking expired",
+    "linkId": 9,
+    "read": true,
+    "createdAt": "2025-04-05T01:37:00.575Z",
+    "updatedAt": "2025-04-05T01:38:17.596Z"
+  },
+  {
+    "id": 41,
+    "userId": 5,
+    "message": "Your booking request from Alice Smith has expired.",
+    "type": "booking expired",
+    "linkId": 9,
+    "read": false,
+    "createdAt": "2025-04-05T01:37:00.577Z",
+    "updatedAt": "2025-04-05T01:37:00.577Z"
+  },
+  {
+    "id": 42,
+    "userId": 1,
+    "message": "Booking #10 has been accepted!",
+    "type": "system",
+    "linkId": 10,
+    "read": false,
+    "createdAt": "2025-04-05T01:39:10.653Z",
+    "updatedAt": "2025-04-05T01:39:10.653Z"
+  },
+  {
+    "id": 43,
+    "userId": 5,
+    "message": "Booking #10 has been accepted!",
+    "type": "system",
+    "linkId": 10,
+    "read": false,
+    "createdAt": "2025-04-05T01:39:10.654Z",
+    "updatedAt": "2025-04-05T01:39:10.654Z"
+  },
+  {
+    "id": 44,
+    "userId": 1,
+    "message": "Eve White has accepted a booking",
+    "type": "booking accepted",
+    "linkId": 10,
+    "read": false,
+    "createdAt": "2025-04-05T01:39:10.672Z",
+    "updatedAt": "2025-04-05T01:39:10.672Z"
+  },
+  {
+    "id": 45,
+    "userId": 1,
+    "message": "Your booking with Eve White is now in progress.",
+    "type": "booking in progress",
+    "linkId": 10,
+    "read": false,
+    "createdAt": "2025-04-05T01:40:00.779Z",
+    "updatedAt": "2025-04-05T01:40:00.779Z"
+  },
+  {
+    "id": 46,
+    "userId": 5,
+    "message": "Your booking with Alice Smith is now in progress.",
+    "type": "booking in progress",
+    "linkId": 10,
+    "read": false,
+    "createdAt": "2025-04-05T01:40:00.781Z",
+    "updatedAt": "2025-04-05T01:40:00.781Z"
+  },
+  {
+    "id": 47,
+    "userId": 1,
+    "message": "Eve White has requested to set a booking to complete",
+    "type": "booking complete request",
+    "linkId": 10,
+    "read": false,
+    "createdAt": "2025-04-05T01:40:09.671Z",
+    "updatedAt": "2025-04-05T01:40:09.671Z"
+  },
+  {
+    "id": 48,
+    "userId": 5,
+    "message": "You've been paid $35 for Booking #10! 🎉",
+    "type": "system",
+    "linkId": 0,
+    "read": true,
+    "createdAt": "2025-04-05T01:41:25.038Z",
+    "updatedAt": "2025-04-05T01:46:02.072Z"
+  },
+  {
+    "id": 49,
+    "userId": 5,
+    "message": "A booking with Alice Smith has been confirmed completed",
+    "type": "booking completed",
+    "linkId": 10,
+    "read": false,
+    "createdAt": "2025-04-05T01:41:25.040Z",
+    "updatedAt": "2025-04-05T01:41:25.040Z"
+  },
+  {
+    "id": 50,
+    "userId": 5,
+    "message": "Booking #11 has been accepted!",
+    "type": "system",
+    "linkId": 11,
+    "read": false,
+    "createdAt": "2025-04-05T01:49:01.570Z",
+    "updatedAt": "2025-04-05T01:49:01.570Z"
+  },
+  {
+    "id": 51,
+    "userId": 7,
+    "message": "Booking #11 has been accepted!",
+    "type": "system",
+    "linkId": 11,
+    "read": false,
+    "createdAt": "2025-04-05T01:49:01.570Z",
+    "updatedAt": "2025-04-05T01:49:01.570Z"
+  },
+  {
+    "id": 52,
+    "userId": 5,
+    "message": "Ben Kodev has accepted a booking",
+    "type": "booking accepted",
+    "linkId": 11,
+    "read": false,
+    "createdAt": "2025-04-05T01:49:01.580Z",
+    "updatedAt": "2025-04-05T01:49:01.580Z"
+  },
+  {
+    "id": 53,
+    "userId": 5,
+    "message": "Your booking with Ben Kodev is now in progress",
+    "type": "booking in progress",
+    "linkId": 11,
+    "read": false,
+    "createdAt": "2025-04-05T01:50:00.719Z",
+    "updatedAt": "2025-04-05T01:50:00.719Z"
+  },
+  {
+    "id": 54,
+    "userId": 7,
+    "message": "Your booking with Eve White is now in progress",
+    "type": "booking in progress",
+    "linkId": 11,
+    "read": false,
+    "createdAt": "2025-04-05T01:50:00.725Z",
+    "updatedAt": "2025-04-05T01:50:00.725Z"
+  },
+  {
+    "id": 55,
+    "userId": 5,
+    "message": "Ben Kodev has requested to set a booking to complete",
+    "type": "booking complete request",
+    "linkId": 11,
+    "read": false,
+    "createdAt": "2025-04-05T01:50:05.032Z",
+    "updatedAt": "2025-04-05T01:50:05.032Z"
+  },
+  {
+    "id": 56,
+    "userId": 7,
+    "message": "You've been paid $15 for Booking #11! 🎉",
+    "type": "system",
+    "linkId": 0,
+    "read": false,
+    "createdAt": "2025-04-05T01:58:04.765Z",
+    "updatedAt": "2025-04-05T01:58:04.765Z"
+  },
+  {
+    "id": 57,
+    "userId": 7,
+    "message": "A booking with Eve White has been completed",
+    "type": "booking completed",
+    "linkId": 11,
+    "read": false,
+    "createdAt": "2025-04-05T01:58:04.768Z",
+    "updatedAt": "2025-04-05T01:58:04.768Z"
+  },
+  {
+    "id": 58,
+    "userId": 7,
+    "message": "Eve White has left a review",
+    "type": "review",
+    "linkId": 4,
+    "read": false,
+    "createdAt": "2025-04-05T01:59:01.023Z",
+    "updatedAt": "2025-04-05T01:59:01.023Z"
+  },
+  {
+    "id": 59,
+    "userId": 1,
+    "message": "Ben Kodev has declined a booking request. You have received a refund of £15.",
+    "type": "booking declined",
+    "linkId": 12,
+    "read": false,
+    "createdAt": "2025-04-05T02:27:18.578Z",
+    "updatedAt": "2025-04-05T02:27:18.578Z"
+  },
+  {
+    "id": 60,
+    "userId": 1,
+    "message": "Booking #13 has been accepted!",
+    "type": "system",
+    "linkId": 13,
+    "read": false,
+    "createdAt": "2025-04-05T02:28:32.763Z",
+    "updatedAt": "2025-04-05T02:28:32.763Z"
+  },
+  {
+    "id": 61,
+    "userId": 7,
+    "message": "Booking #13 has been accepted!",
+    "type": "system",
+    "linkId": 13,
+    "read": false,
+    "createdAt": "2025-04-05T02:28:32.764Z",
+    "updatedAt": "2025-04-05T02:28:32.764Z"
+  },
+  {
+    "id": 62,
+    "userId": 1,
+    "message": "Ben Kodev has accepted a booking",
+    "type": "booking accepted",
+    "linkId": 13,
+    "read": false,
+    "createdAt": "2025-04-05T02:28:32.778Z",
+    "updatedAt": "2025-04-05T02:28:32.778Z"
+  },
+  {
+    "id": 63,
+    "userId": 1,
+    "message": "Your booking with Ben Kodev is now in progress.",
+    "type": "booking in progress",
+    "linkId": 13,
+    "read": false,
+    "createdAt": "2025-04-05T02:29:00.064Z",
+    "updatedAt": "2025-04-05T02:29:00.064Z"
+  },
+  {
+    "id": 64,
+    "userId": 7,
+    "message": "Your booking with Alice Smith is now in progress.",
+    "type": "booking in progress",
+    "linkId": 13,
+    "read": false,
+    "createdAt": "2025-04-05T02:29:00.065Z",
+    "updatedAt": "2025-04-05T02:29:00.065Z"
+  },
+  {
+    "id": 65,
+    "userId": 1,
+    "message": "Ben Kodev has requested to set a booking to complete.",
+    "type": "booking complete request",
+    "linkId": 13,
+    "read": false,
+    "createdAt": "2025-04-05T02:29:05.826Z",
+    "updatedAt": "2025-04-05T02:29:05.826Z"
+  },
+  {
+    "id": 66,
+    "userId": 7,
+    "message": "A booking with Alice Smith has been completed. You have received a payment of £10.",
+    "type": "booking completed",
+    "linkId": 13,
+    "read": false,
+    "createdAt": "2025-04-05T02:29:28.266Z",
+    "updatedAt": "2025-04-05T02:29:28.266Z"
   }
 ]

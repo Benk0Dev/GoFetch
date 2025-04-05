@@ -93,15 +93,30 @@ function Bookings() {
     const handleCancel = async (booking: Booking) => {
         const updatedBooking = await setBookingStatus(booking.id, BookingStatus.Cancelled);
         if (updatedBooking) {
-            const payment = await getPaymentByBookingId(bookingId);
-            await updatePaymentStatus(payment.id, Status.REFUNDED, "cancel");
-          
-            await createNotification({
-                userId: user.id === booking.owner.id ? booking.minder.id : booking.owner.id,
-                message: `${user.name.fname} ${user.name.sname} has cancelled a booking`,
-                type: NotificationType.BookingCancelled,
-                linkId: booking.id
-            })
+            const payment = await getPaymentByBookingId(booking.id);
+            await updatePaymentStatus(payment.id, Status.REFUNDED);
+
+            if (user.currentRole === Role.OWNER) {
+                await createNotification({
+                    userId: booking.minder.id,
+                    message: `${user.name.fname} ${user.name.sname} has cancelled a booking.`,
+                    type: NotificationType.BookingCancelled,
+                    linkId: booking.id
+                })
+                await createNotification({
+                    userId: booking.owner.id,
+                    message: `You have cancelled a booking with ${booking.minder.name.fname} ${booking.minder.name.sname}. You have received a refund of £${payment.amount}.`,
+                    type: NotificationType.BookingCancelled,
+                    linkId: booking.id
+                })
+            } else {
+                await createNotification({
+                    userId: booking.owner.id,
+                    message: `${user.name.fname} ${user.name.sname} has cancelled a booking. You have received a refund of £${payment.amount}.`,
+                    type: NotificationType.BookingCancelled,
+                    linkId: booking.id
+                })
+            }
           
             const updatedUser = await getUserByIdWithPictures(user.id);
             setUser(updatedUser);
@@ -130,12 +145,12 @@ function Bookings() {
     const handleDecline = async (booking: Booking) => {
         const updatedBooking = await setBookingStatus(booking.id, BookingStatus.Cancelled);
         if (updatedBooking) {
-            const payment = await getPaymentByBookingId(bookingId);
-            await updatePaymentStatus(payment.id, Status.REFUNDED, "decline");
+            const payment = await getPaymentByBookingId(booking.id);
+            await updatePaymentStatus(payment.id, Status.REFUNDED);
           
             await createNotification({
                 userId: booking.owner.id,
-                message: `${user.name.fname} ${user.name.sname} has declined a booking`,
+                message: `${user.name.fname} ${user.name.sname} has declined a booking request. You have received a refund of £${payment.amount}.`,
                 type: NotificationType.BookingDeclined,
                 linkId: booking.id
             })
@@ -166,15 +181,30 @@ function Bookings() {
         }
 
         if (updatedBooking.ownerCompleted && updatedBooking.minderCompleted) {
-            const payment = await getPaymentByBookingId(bookingId);
+            const payment = await getPaymentByBookingId(booking.id);
             await updatePaymentStatus(payment.id, Status.PAID);
-          
-            await createNotification({
-                userId: user.id === booking.owner.id ? booking.minder.id : booking.owner.id,
-                message: `A booking with ${user.name.fname} ${user.name.sname} has been confirmed completed`,
-                type: NotificationType.BookingCompleted,
-                linkId: booking.id
-            });
+
+            if (user.currentRole === Role.OWNER) {
+                await createNotification({
+                    userId: booking.minder.id,
+                    message: `A booking with ${user.name.fname} ${user.name.sname} has been completed. You have received a payment of £${payment.amount}.`,
+                    type: NotificationType.BookingCompleted,
+                    linkId: booking.id
+                });
+            } else {
+                await createNotification({
+                    userId: booking.owner.id,
+                    message: `A booking with ${user.name.fname} ${user.name.sname} has been completed.`,
+                    type: NotificationType.BookingCompleted,
+                    linkId: booking.id
+                });
+                await createNotification({
+                    userId: booking.minder.id,
+                    message: `You have received a payment of £${payment.amount}.`,
+                    type: NotificationType.BookingCompleted,
+                    linkId: booking.id
+                });
+            }
 
             const completedBooking = await setBookingStatus(booking.id, BookingStatus.Completed);
             if (!completedBooking) {
@@ -184,7 +214,7 @@ function Bookings() {
         } else {
             await createNotification({
                 userId: user.id === booking.owner.id ? booking.minder.id : booking.owner.id,
-                message: `${user.name.fname} ${user.name.sname} has requested to set a booking to complete`,
+                message: `${user.name.fname} ${user.name.sname} has requested to set a booking to complete.`,
                 type: NotificationType.BookingCompleteRequest,
                 linkId: booking.id
             });
@@ -217,7 +247,7 @@ function Bookings() {
         if (reviewCreated) {
             await createNotification({
                 userId: revieweeId,
-                message: `${user.name.fname} ${user.name.sname} has left a review`,
+                message: `${user.name.fname} ${user.name.sname} has left a review.`,
                 type: NotificationType.Review,
                 linkId: reviewCreated.id
             });
