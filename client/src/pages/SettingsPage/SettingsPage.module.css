@@ -126,3 +126,10 @@
       opacity: 1;
   }
 }
+
+.error {
+  color: var(--error-color, #dc3545);
+  font-size: 1rem;
+  margin-top: 5px;
+  text-align: center;
+}

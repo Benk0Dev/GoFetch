@@ -27,9 +27,7 @@
       "petIds": [
         3
       ],
-      "bookingIds": [
-        7
-      ]
+      "bookingIds": []
     },
     "minderRoleInfo": {
       "serviceIds": [],
@@ -122,8 +120,8 @@
       ],
       "availability": "Weekdays",
       "bookingIds": [
-        3,
-        1
+        1,
+        3
       ],
       "reviewIds": [
         1
@@ -171,8 +169,8 @@
       ],
       "availability": "Weekends",
       "bookingIds": [
-        5,
-        2
+        2,
+        5
       ],
       "reviewIds": []
     }
@@ -208,11 +206,11 @@
         2
       ],
       "bookingIds": [
-        8,
         1,
         2,
         3,
-        7
+        7,
+        8
       ]
     },
     "minderRoleInfo": {
@@ -229,7 +227,6 @@
       ],
       "availability": "Flexible",
       "bookingIds": [
-        7,
         6,
         7
       ],
@@ -253,7 +250,7 @@
       "petminder",
       "petowner"
     ],
-    "currentRole": "petminder",
+    "currentRole": "petowner",
     "primaryUserInfo": {
       "profilePic": "20",
       "dob": "2004-12-22T00:00:00.000Z",
@@ -270,7 +267,6 @@
         6
       ],
       "bookingIds": [
-        8,
         5,
         6
       ]
@@ -289,8 +285,7 @@
       ],
       "availability": "Flexible",
       "bookingIds": [
-        8,
-        7
+        8
       ],
       "reviewIds": []
     }

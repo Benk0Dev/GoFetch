@@ -114,3 +114,26 @@ export async function minderCompleted(bookingId: number) {
   }
   return booking;
 }
+
+export async function getBooking(bookingId: number) {
+    try {
+        const response = await fetch(`${API_URL}/booking/${bookingId}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        if (response.ok) {
+            const booking = await response.json();
+            console.log(booking);
+            return booking;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return null;
+        }
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+}

@@ -18,6 +18,8 @@ import CreateReview from "@client/pages/DashboardPage/Bookings/CreateReview";
 import { IReview } from "@gofetch/models/IReview";
 import { createNotification } from "@client/services/NotificationRegistry";
 import { NotificationType } from "@gofetch/models/INotification";
+import { updatePaymentStatus, getPaymentByBookingId } from "@client/services/PaymentRegistry";
+import { Status } from "@gofetch/models/IPayment";
 
 export interface Booking {
     id: number;
@@ -91,13 +93,16 @@ function Bookings() {
     const handleCancel = async (booking: Booking) => {
         const updatedBooking = await setBookingStatus(booking.id, BookingStatus.Cancelled);
         if (updatedBooking) {
+            const payment = await getPaymentByBookingId(bookingId);
+            await updatePaymentStatus(payment.id, Status.REFUNDED, "cancel");
+          
             await createNotification({
                 userId: user.id === booking.owner.id ? booking.minder.id : booking.owner.id,
                 message: `${user.name.fname} ${user.name.sname} has cancelled a booking`,
                 type: NotificationType.BookingCancelled,
                 linkId: booking.id
             })
-
+          
             const updatedUser = await getUserByIdWithPictures(user.id);
             setUser(updatedUser);
         } else {
@@ -125,13 +130,15 @@ function Bookings() {
     const handleDecline = async (booking: Booking) => {
         const updatedBooking = await setBookingStatus(booking.id, BookingStatus.Cancelled);
         if (updatedBooking) {
+            const payment = await getPaymentByBookingId(bookingId);
+            await updatePaymentStatus(payment.id, Status.REFUNDED, "decline");
+          
             await createNotification({
                 userId: booking.owner.id,
                 message: `${user.name.fname} ${user.name.sname} has declined a booking`,
                 type: NotificationType.BookingDeclined,
                 linkId: booking.id
             })
-
             const updatedUser = await getUserByIdWithPictures(user.id);
             setUser(updatedUser);
         } else {
@@ -159,6 +166,9 @@ function Bookings() {
         }
 
         if (updatedBooking.ownerCompleted && updatedBooking.minderCompleted) {
+            const payment = await getPaymentByBookingId(bookingId);
+            await updatePaymentStatus(payment.id, Status.PAID);
+          
             await createNotification({
                 userId: user.id === booking.owner.id ? booking.minder.id : booking.owner.id,
                 message: `A booking with ${user.name.fname} ${user.name.sname} has been confirmed completed`,
