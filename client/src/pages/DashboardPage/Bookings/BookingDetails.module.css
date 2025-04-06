@@ -1,7 +1,7 @@
 .bookingDetails {
     display: flex;
-    width: 100%;
-    padding: 0;
+    width: 100% !important;
+    padding: 0 !important;
 }
 
 .bookingDetailsContainer {

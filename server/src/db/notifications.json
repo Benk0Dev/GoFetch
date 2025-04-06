@@ -406,9 +406,9 @@
     "message": "Booking #10 has been accepted!",
     "type": "system",
     "linkId": 10,
-    "read": false,
+    "read": true,
     "createdAt": "2025-04-05T01:39:10.653Z",
-    "updatedAt": "2025-04-05T01:39:10.653Z"
+    "updatedAt": "2025-04-06T15:58:15.435Z"
   },
   {
     "id": 43,
@@ -426,9 +426,9 @@
     "message": "Eve White has accepted a booking",
     "type": "booking accepted",
     "linkId": 10,
-    "read": false,
+    "read": true,
     "createdAt": "2025-04-05T01:39:10.672Z",
-    "updatedAt": "2025-04-05T01:39:10.672Z"
+    "updatedAt": "2025-04-06T15:58:12.647Z"
   },
   {
     "id": 45,
@@ -436,9 +436,9 @@
     "message": "Your booking with Eve White is now in progress.",
     "type": "booking in progress",
     "linkId": 10,
-    "read": false,
+    "read": true,
     "createdAt": "2025-04-05T01:40:00.779Z",
-    "updatedAt": "2025-04-05T01:40:00.779Z"
+    "updatedAt": "2025-04-06T15:58:10.484Z"
   },
   {
     "id": 46,
@@ -456,9 +456,9 @@
     "message": "Eve White has requested to set a booking to complete",
     "type": "booking complete request",
     "linkId": 10,
-    "read": false,
+    "read": true,
     "createdAt": "2025-04-05T01:40:09.671Z",
-    "updatedAt": "2025-04-05T01:40:09.671Z"
+    "updatedAt": "2025-04-06T15:58:08.235Z"
   },
   {
     "id": 48,
@@ -576,9 +576,9 @@
     "message": "Ben Kodev has declined a booking request. You have received a refund of £15.",
     "type": "booking declined",
     "linkId": 12,
-    "read": false,
+    "read": true,
     "createdAt": "2025-04-05T02:27:18.578Z",
-    "updatedAt": "2025-04-05T02:27:18.578Z"
+    "updatedAt": "2025-04-06T15:58:01.301Z"
   },
   {
     "id": 60,
@@ -586,9 +586,9 @@
     "message": "Booking #13 has been accepted!",
     "type": "system",
     "linkId": 13,
-    "read": false,
+    "read": true,
     "createdAt": "2025-04-05T02:28:32.763Z",
-    "updatedAt": "2025-04-05T02:28:32.763Z"
+    "updatedAt": "2025-04-06T15:57:51.351Z"
   },
   {
     "id": 61,
@@ -606,9 +606,9 @@
     "message": "Ben Kodev has accepted a booking",
     "type": "booking accepted",
     "linkId": 13,
-    "read": false,
+    "read": true,
     "createdAt": "2025-04-05T02:28:32.778Z",
-    "updatedAt": "2025-04-05T02:28:32.778Z"
+    "updatedAt": "2025-04-06T15:57:48.030Z"
   },
   {
     "id": 63,
@@ -616,9 +616,9 @@
     "message": "Your booking with Ben Kodev is now in progress.",
     "type": "booking in progress",
     "linkId": 13,
-    "read": false,
+    "read": true,
     "createdAt": "2025-04-05T02:29:00.064Z",
-    "updatedAt": "2025-04-05T02:29:00.064Z"
+    "updatedAt": "2025-04-06T15:57:42.730Z"
   },
   {
     "id": 64,
@@ -636,9 +636,9 @@
     "message": "Ben Kodev has requested to set a booking to complete.",
     "type": "booking complete request",
     "linkId": 13,
-    "read": false,
+    "read": true,
     "createdAt": "2025-04-05T02:29:05.826Z",
-    "updatedAt": "2025-04-05T02:29:05.826Z"
+    "updatedAt": "2025-04-06T15:57:40.844Z"
   },
   {
     "id": 66,
@@ -716,9 +716,9 @@
     "message": "A booking with Alice Smith has been completed. You have received a payment of £10.",
     "type": "booking",
     "linkId": 15,
-    "read": false,
+    "read": true,
     "createdAt": "2025-04-06T00:11:53.770Z",
-    "updatedAt": "2025-04-06T00:11:53.770Z"
+    "updatedAt": "2025-04-06T16:53:51.429Z"
   },
   {
     "id": 74,
@@ -726,9 +726,9 @@
     "message": "Alice Smith has left a review.",
     "type": "review",
     "linkId": 6,
-    "read": false,
+    "read": true,
     "createdAt": "2025-04-06T00:17:29.710Z",
-    "updatedAt": "2025-04-06T00:17:29.710Z"
+    "updatedAt": "2025-04-06T16:53:47.023Z"
   },
   {
     "id": 75,

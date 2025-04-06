@@ -1,92 +1,196 @@
-.container {
-    display: grid;
-    grid-template-columns: 2fr 1fr; /* Adjusted to ensure right container is on the right */
-    gap: 40px;
-    padding: 40px 60px;
-    background-color: #f9f9f9;
-    min-height: 100vh;
-    align-items: start; /* Ensures items align at the top */
-}
-
-.leftContent {
+.bookingPage {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    align-items: flex-start;
+    padding: 40px 20px !important;
 }
 
-.section {
-    background-color: #ffffff;
-    padding: 24px;
+.bookingPage > button {
+    margin-bottom: 20px;
+}
+
+.bookingPageContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+}
+
+.minderCard {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--primary-color);
+    padding: 20px;
     border-radius: var(--border-radius);
-    border: 1px solid black; /* Added thin black border */
+    border: 1px solid var(--text-color);
 }
 
-.section h2 {
-    font-size: 20px;
-    font-weight: 600;
-    margin-bottom: 12px;
+.profileInfo {
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
 
-.section label {
-    font-size: 17px;
-    font-weight: 500;
-    display: block;
-    margin-bottom: 6px;
+.profileInfo a {
+  display: flex;
 }
 
-.input,
-.select,
-.textarea {
+.profilePic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.minderInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+}
+
+.minderInfo p, .minderInfo svg {
+  margin: 0;
+  opacity: 0.6;
+}
+
+.metric {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.bookingForm {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     width: 100%;
-    padding: 10px;
-    font-size: 15px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    margin-top: 6px;
-    box-sizing: border-box;
+    background-color: var(--primary-color);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--text-color);
+    gap: 20px;
 }
 
-.textarea {
-    min-height: 80px;
-    resize: vertical;
+.bookingForm p, .bookingForm label {
+    margin: 0;
+    font-size: 16px;
 }
 
-.bookButton {
-    background-color: #c1126b;
-    color: white;
-    padding: 16px 32px;
-    border: none;
-    border-radius: 8px;
+.servicesContainer, .petsContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 5px;
+}
+
+.services {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.serviceCard, .petCard {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    background-color: var(--menu-card-background-color);
+    border-radius: 10px;
+    padding: 10px 20px;
     cursor: pointer;
-    font-weight: bold;
-    font-size: 18px;
+    border: 1px solid var(--menu-card-border-color);
+    transition: all 0.2s ease;
+}
+
+.serviceCard:hover, .petCard:hover {
+    border-color: var(--highlight-color);
+}
+
+.serviceHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
     width: 100%;
-    margin-top: 25px;
-    transition: background-color 0.3s ease;
 }
 
-.bookButton:hover {
-    background-color: #a00d59;
+.serviceDuration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
 }
 
-.rightContent {
-    background-color: #ffffff;
-    border-radius: 12px;
-    padding: 24px;
-    border: 1px solid black; /* Added thin black border */
-    box-shadow: none; /* Removed extra shadow */
-    height: fit-content;
+.serviceCard.selected, .petCard.selected {
+    background-color: #ff88002A;
+    border-color: var(--highlight-color);
 }
 
-.errorText {
-    color: red;
-    font-size: 12px;
-    margin-top: 5px;
-  }
+.petCard {
+    align-items: center;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.pets {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.petCard img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 100px;
+    margin: 5px 0;
+}
+
+.addPetCard {
+    border: 1px dashed var(--menu-card-border-color);
+    padding: 20px;
+}
+
+.addPetCard svg {
+    background-color: var(--menu-card-border-color);
+    border-radius: 100px;
+    padding: 6px;
+    box-sizing: content-box;
+    margin-bottom: 5px;
+}
 
 .timers {
-    display: flex; 
-    gap: 1rem; 
-    align-items: flex-start;
-    flex-wrap: wrap;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.timers > div {
+    width: 100%;
+}
+
+.specialInstructions {
+    width: 100%;
+}
+
+.specialInstructions textArea {
+    width: 100%;
+    height: 100px;
+    resize: none;
+    margin: 0;
+}
+
+.bookingForm button {
+    align-self: flex-end;
+}
+
+.error {
+    color: var(--error-color);
+    margin-top: 10px !important;
 }

@@ -1,9 +1,8 @@
 .settingsPage {
   display: flex;
   flex-direction: column;
-  margin-bottom: auto;
-  padding: 40px 20px;
-  width: fit-content;
+  margin: 0 auto auto;
+  width: fit-content !important;
 }
 
 .settingsPage > button {

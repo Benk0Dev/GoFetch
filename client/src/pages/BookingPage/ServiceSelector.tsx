@@ -1,7 +1,7 @@
 import React from "react";
 import { Clock } from "lucide-react";
 import { IService } from "@gofetch/models/IService";
-import styles from "@client/pages/BookingPage/ServiceSelector.module.css";
+import styles from "@client/pages/BookingPage/BookingPage.module.css";
 
 interface ServiceSelectorProps {
   services: IService[];
@@ -11,20 +11,25 @@ interface ServiceSelectorProps {
 
 const ServiceSelector: React.FC<ServiceSelectorProps> = ({ services, selectedService, setSelectedService }) => {
   return (
-    <div className={styles.container}>
-      <h2 className={styles.heading}>Select a Service</h2>
-      <div className={styles.serviceGrid}>
+    <div className={styles.servicesContainer}>
+      <label>Select a Service</label>
+      <div className={styles.services}>
         {services.map((service) => (
           <div
             key={service.id}
             onClick={() => setSelectedService(service)}
             className={`${styles.serviceCard} ${selectedService.id === service.id ? styles.selected : ""}`}
           >
-            <div className={styles.cardHeader}>
-              <h3 className={styles.serviceTitle}>{service.type}</h3>
-              <p className={styles.servicePrice}>£{service.price}</p>
+            <div className={styles.serviceHeader}>
+                <h6>{service.type.replace(/_/g, " ")}</h6>
+                <span className={styles.servicePrice}>
+                    £{service.price}
+                </span>
             </div>
-            <p className={styles.duration}><Clock className={styles.clockIcon} /> {service.duration}</p>
+            <p className={styles.serviceDuration}>
+                <Clock size={16} />
+                {service.duration}
+            </p>
           </div>
         ))}
       </div>

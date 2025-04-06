@@ -1,7 +1,6 @@
 import { useLocation, Link } from "react-router-dom";
 import { Mail } from "lucide-react";
 import styles from "@client/components/Navbar/Navbar.module.css";
-import "@client/global.css";
 import ProfileIcon from "@client/components/Navbar/ProfileIcon";
 import NotificationIcon from "@client/components/Navbar/NotificationIcon";
 import logo from "@client/assets/images/logo.svg";

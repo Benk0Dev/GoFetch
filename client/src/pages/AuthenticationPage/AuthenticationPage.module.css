@@ -1,7 +1,7 @@
 .authentication {
     display: flex;
     margin-bottom: auto;
-    padding: 40px 20px;
+    padding: 40px 20px !important;
     justify-content: center;
 }
 
@@ -246,28 +246,10 @@ span.stepText {
     background-color: #c91a1a;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .becomeRole {
     display: flex;
     margin-bottom: auto;
-    padding: 40px 20px;
+    padding: 40px 20px !important;
     justify-content: center;
 }
 

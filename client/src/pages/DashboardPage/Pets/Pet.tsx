@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import styles from "@client/pages/DashboardPage/Pets/Pets.module.css";
-import "@client/global.css";
 import { IPet } from "@gofetch/models/IPet";
 import { removePetForUser } from "@client/services/PetRegistry";
 import { useAuth } from "@client/context/AuthContext";
