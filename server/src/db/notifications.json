@@ -65,9 +65,9 @@
     "message": "New message: hello",
     "type": "message",
     "linkId": 5,
-    "read": false,
+    "read": true,
     "createdAt": "2025-03-27T21:57:24.008Z",
-    "updatedAt": "2025-03-27T21:57:24.008Z"
+    "updatedAt": "2025-04-03T11:23:15.890Z"
   },
   {
     "id": 8,

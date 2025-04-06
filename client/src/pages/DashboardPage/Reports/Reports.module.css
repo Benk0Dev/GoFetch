@@ -1,0 +1,148 @@
+.reportsList {
+    display: grid;
+    row-gap: 10px;
+    margin-top: 10px;
+}
+
+.reportsTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.reportsTable th, .reportsTable td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContent {
+  background: white;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 700px;
+  max-height: 90vh;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.modalScrollContent {
+  padding: 2rem;
+  overflow-y: auto;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.statusBadge {
+  padding: 4px 12px;
+  border-radius: 100px;
+  background: #f5f5f5;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.reportSection h4,
+.userInfoSection h4,
+.actionSection h4 {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: #555;
+}
+
+.reportSection p {
+  padding: 0.5rem;
+  background: #f9f9f9;
+  border-radius: 6px;
+}
+
+.userInfoSection {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.userColumn {
+  flex: 1;
+  padding: 1rem;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.userColumn p {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+.actionSection {
+  margin-top: 1rem;
+}
+
+.actionButtons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.actionButton {
+  padding: 12px 16px;
+  border-radius: 6px;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.dangerButton {
+  background-color: rgba(144, 144, 144, 0.632);
+  color: white;
+}
+
+.dangerButton:hover {
+  background-color: var(--highlight-color);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dangerButton:active {
+  transform: translateY(0);
+}
+
+.secondaryButton {
+  padding: 8px 16px;
+  border-radius: 6px;
+  background: #f0f0f0;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.secondaryButton:hover {
+  background: #e0e0e0;
+}

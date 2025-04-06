@@ -1,0 +1,53 @@
+.reporting {
+    display: flex;
+    margin-bottom: auto;
+    padding: 40px 20px;
+    justify-content: center;
+}
+
+.reportingContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.reportingBox {
+    background: var(--primary-color);
+    padding: calc(var(--padding) * 2) var(--padding);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--text-color);
+    width: max-content;
+    min-width: 500px;
+    max-width: 600px;
+    text-align: center;
+}
+
+.reportingContainer > button {
+    margin-bottom: 10px;
+}
+
+.reportingBox h2 {
+    margin-bottom: 20px;
+}
+
+.input {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.input label {
+    display: block;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.input textarea {
+    min-height: 120px; 
+    resize: vertical;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.reportingContainer p {
+    font-size: 14px;
+    margin: 10px 0 0;
+}

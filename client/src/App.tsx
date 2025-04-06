@@ -21,6 +21,8 @@ import { useAuth } from "@client/context/AuthContext";
 import { SocketProvider } from "@client/context/SocketContext";
 import { Role } from "@gofetch/models/IUser";
 import MinderPage from "@client/pages/MinderPage/MinderPage";
+import ReportPage from "./pages/UserPage/ReportPage";
+import BannedPage from "./pages/BannedPage/BannedPage";
 
 function App() {
   const { role, loading } = useAuth();
@@ -89,6 +91,14 @@ function App() {
           <Route
             path="/edit-profile"
             element={!isGuest ? <EditProfilePage /> : <Navigate to="/" replace />}
+          />
+          <Route
+            path="/banned"
+            element={!isGuest ? <BannedPage /> : <Navigate to="/" replace />}
+          />
+          <Route
+            path="/report"
+            element={!isGuest ? <ReportPage/> : <Navigate to="/" replace/>}
           />
           <Route
             path="/add-pet"

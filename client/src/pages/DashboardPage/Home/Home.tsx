@@ -5,6 +5,11 @@ import dashboardStyles from "@client/pages/DashboardPage/Dashboard.module.css";
 import { Role } from "@gofetch/models/IUser";
 import Statistic from "@client/pages/DashboardPage/Home/Statistic";
 import { BookingStatus, IBooking } from "@gofetch/models/IBooking";
+import { useEffect, useState } from "react";
+import { IReport } from "@gofetch/models/IReport";
+import { getAllReports } from "@client/services/ReportRegistry";
+import { getAllUsers } from "@client/services/UserRegistry";
+import { IUser } from "@gofetch/models/IUser";
 
 function Home() {
     const { user, role } = useAuth();
@@ -19,6 +24,31 @@ function Home() {
     const minderBookingRequests = user.minderRoleInfo.bookings.filter((booking: IBooking) => booking.status === BookingStatus.Pending).length;
     const serviceCount = user.minderRoleInfo?.services?.length;
     const rating = user.minderRoleInfo?.rating?.toFixed(1) || "N/A";
+
+    // Some of this code should be moved elsewhere
+    const [reports, setReports] = useState<IReport[]>([]);
+    const [users, setUsers] = useState<IUser[]>([]);
+    
+        useEffect(() => {
+            const loadReports = async () => {
+                try {
+                    const data = await getAllReports();
+                    setReports(data);
+                } catch (error) {
+                    console.error("Failed to load reports:", error);
+                } 
+            }
+            const loadUsers = async () => {
+                try {
+                    const data = await getAllUsers();
+                    setUsers(data);
+                } catch (error) {
+                    console.error("Failed to load users:", error);
+                } 
+            }
+            loadReports(), loadUsers();
+        }, []);
+    
 
     return (
         <div className={dashboardStyles.dashboardSection}>
@@ -70,12 +100,12 @@ function Home() {
                     <>
                         <Statistic 
                             title="Total Users" 
-                            value={"0"} 
+                            value={users.length.toString()} 
                             icon={<UserRound size={18} strokeWidth={2} />} 
                         />
                         <Statistic 
                             title="Reports" 
-                            value={"0"} 
+                            value={reports.length.toString()} 
                             icon={<Flag size={18} strokeWidth={2} />} 
                         />
                     </>
