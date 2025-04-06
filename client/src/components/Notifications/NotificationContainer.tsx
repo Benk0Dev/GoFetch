@@ -16,6 +16,10 @@ const NotificationContainer: React.FC<NotificationContainerProps> = ({ notificat
   
   // Keep track of notifications we've already shown
   const displayedNotificationsRef = useRef<Set<number>>(new Set());
+  
+  // Store initial notification IDs to avoid showing notifications from history
+  const initialNotificationIdsRef = useRef<Set<number>>(new Set());
+  const isInitializedRef = useRef(false);
 
   // Initialize audio element
   useEffect(() => {
@@ -34,13 +38,23 @@ const NotificationContainer: React.FC<NotificationContainerProps> = ({ notificat
     };
   }, []);
 
+  // Initialize with the current notifications to avoid showing old ones
+  useEffect(() => {
+    if (!isInitializedRef.current && notifications.length > 0) {
+      notifications.forEach(notification => {
+        initialNotificationIdsRef.current.add(notification.id);
+      });
+      isInitializedRef.current = true;
+    }
+  }, [notifications]);
+
   // Check if notifications and sounds are enabled
   const getNotificationSettings = useCallback(() => {
     const notificationsEnabled = localStorage.getItem("notificationsEnabled");
     const soundEnabled = localStorage.getItem("soundEnabled");
     
     return {
-      notifications: notificationsEnabled === "false" ? false : true,
+      notificationsSettings: notificationsEnabled === "false" ? false : true,
       sound: soundEnabled === "false" ? false : true,
     };
   }, []);
@@ -48,6 +62,7 @@ const NotificationContainer: React.FC<NotificationContainerProps> = ({ notificat
   // Play notification sound
   const playNotificationSound = useCallback(() => {
     const { sound } = getNotificationSettings();
+    console.log('Sound enabled:', sound);
     if (audioRef.current && sound) {
       // Reset the audio to the beginning
       audioRef.current.currentTime = 0;
@@ -68,12 +83,19 @@ const NotificationContainer: React.FC<NotificationContainerProps> = ({ notificat
 
   // Check for new notifications
   useEffect(() => {
+    const { notificationsSettings } = getNotificationSettings();
+
+    // Don't process notifications if notifications are disabled or not initialized yet
+    if (!notificationsSettings || !isInitializedRef.current) return;
+
     if (notifications.length > 0) {
       // Look for unread notifications we haven't shown yet
+      // AND that were not part of the initial notifications list
       const newNotifications = notifications.filter(notification => 
         !notification.read && 
         !displayedNotificationsRef.current.has(notification.id) &&
-        !activeNotifications.some(n => n.id === notification.id)
+        !activeNotifications.some(n => n.id === notification.id) &&
+        !initialNotificationIdsRef.current.has(notification.id)
       );
       
       if (newNotifications.length > 0) {

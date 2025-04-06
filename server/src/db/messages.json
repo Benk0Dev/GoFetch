@@ -44,17 +44,17 @@
         5,
         4
       ],
-      "lastMessage": "Hi there! I'm interested in your pet sitting services.",
-      "lastMessageDate": "2025-03-18T16:55:40.000Z",
-      "unreadCount": 0,
-      "isRead": true,
+      "lastMessage": "asd",
+      "lastMessageDate": "2025-04-06T01:28:23.361Z",
+      "unreadCount": 4,
+      "isRead": false,
       "unreadCounts": {
         "4": 0,
-        "5": 0
+        "5": 4
       },
       "userReadStatus": {
         "4": true,
-        "5": true
+        "5": false
       }
     },
     {
@@ -569,6 +569,38 @@
       "chatId": 7,
       "timestamp": "2025-04-06T00:09:20.076Z",
       "isRead": true
+    },
+    {
+      "id": 48,
+      "senderId": 4,
+      "message": "hi",
+      "chatId": 3,
+      "timestamp": "2025-04-06T01:28:01.081Z",
+      "isRead": false
+    },
+    {
+      "id": 49,
+      "senderId": 4,
+      "message": "hi",
+      "chatId": 3,
+      "timestamp": "2025-04-06T01:28:06.781Z",
+      "isRead": false
+    },
+    {
+      "id": 50,
+      "senderId": 4,
+      "message": "asd",
+      "chatId": 3,
+      "timestamp": "2025-04-06T01:28:09.595Z",
+      "isRead": false
+    },
+    {
+      "id": 51,
+      "senderId": 4,
+      "message": "asd",
+      "chatId": 3,
+      "timestamp": "2025-04-06T01:28:23.361Z",
+      "isRead": false
     }
   ]
 }
