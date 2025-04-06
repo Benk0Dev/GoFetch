@@ -149,20 +149,20 @@ function Bookings() {
             if (user.currentRole === Role.OWNER) {
                 await createNotification({
                     userId: booking.minder.id,
-                    message: `${user.name.fname} ${user.name.sname} has cancelled a booking.`,
+                    message: `${user.name.fname} ${user.name.sname} has cancelled booking #${booking.id}.`,
                     type: NotificationType.Booking,
                     linkId: booking.id
                 })
                 await createNotification({
                     userId: booking.owner.id,
-                    message: `You have cancelled a booking with ${booking.minder.name.fname} ${booking.minder.name.sname}. You have received a refund of £${payment.amount}.`,
+                    message: `You have received a refund of £${payment.amount}.`,
                     type: NotificationType.Booking,
                     linkId: booking.id
                 })
             } else {
                 await createNotification({
                     userId: booking.owner.id,
-                    message: `${user.name.fname} ${user.name.sname} has cancelled a booking. You have received a refund of £${payment.amount}.`,
+                    message: `${user.name.fname} ${user.name.sname} has cancelled booking #${booking.id}. You have received a refund of £${payment.amount}.`,
                     type: NotificationType.Booking,
                     linkId: booking.id
                 })
@@ -181,7 +181,7 @@ function Bookings() {
         if (updatedBooking) {
             await createNotification({
                 userId: booking.owner.id,
-                message: `${user.name.fname} ${user.name.sname} has accepted a booking`,
+                message: `${user.name.fname} ${user.name.sname} has accepted booking #${booking.id}.`,
                 type: NotificationType.Booking,
                 linkId: booking.id
             })
@@ -202,7 +202,7 @@ function Bookings() {
           
             await createNotification({
                 userId: booking.owner.id,
-                message: `${user.name.fname} ${user.name.sname} has declined a booking request. You have received a refund of £${payment.amount}.`,
+                message: `${user.name.fname} ${user.name.sname} has declined booking request #${booking.id}. You have received a refund of £${payment.amount}.`,
                 type: NotificationType.Booking,
                 linkId: booking.id
             })
@@ -242,14 +242,14 @@ function Bookings() {
             if (user.currentRole === Role.OWNER) {
                 await createNotification({
                     userId: booking.minder.id,
-                    message: `A booking with ${user.name.fname} ${user.name.sname} has been completed. You have received a payment of £${payment.amount}.`,
+                    message: `Booking #${booking.id} has been completed. You have received a payment of £${payment.amount}.`,
                     type: NotificationType.Booking,
                     linkId: booking.id
                 });
             } else {
                 await createNotification({
                     userId: booking.owner.id,
-                    message: `A booking with ${user.name.fname} ${user.name.sname} has been completed.`,
+                    message: `Booking #${booking.id} has been completed.`,
                     type: NotificationType.Booking,
                     linkId: booking.id
                 });
@@ -269,7 +269,7 @@ function Bookings() {
         } else {
             await createNotification({
                 userId: user.id === booking.owner.id ? booking.minder.id : booking.owner.id,
-                message: `${user.name.fname} ${user.name.sname} has requested to set a booking to complete.`,
+                message: `${user.name.fname} ${user.name.sname} has requested to set booking #${booking.id} to complete.`,
                 type: NotificationType.Booking,
                 linkId: booking.id
             });

@@ -65,15 +65,15 @@
       ],
       "lastMessage": "Booking #11 has been accepted!",
       "lastMessageDate": "2025-04-05T01:49:01.568Z",
-      "unreadCount": 1,
-      "isRead": false,
+      "unreadCount": 0,
+      "isRead": true,
       "unreadCounts": {
         "5": 0,
-        "7": 1
+        "7": 0
       },
       "userReadStatus": {
         "5": true,
-        "7": false
+        "7": true
       }
     },
     {
@@ -140,7 +140,9 @@
         3
       ],
       "lastMessage": "Booking #22 has been accepted!",
-      "lastMessageDate": "2025-04-04T23:25:38.094Z"
+      "lastMessageDate": "2025-04-04T23:25:38.094Z",
+      "unreadCount": 0,
+      "isRead": true
     },
     {
       "id": 9,
@@ -447,7 +449,7 @@
       "message": "I'm very excited to meet her",
       "chatId": 4,
       "timestamp": "2025-03-26T16:08:08.623Z",
-      "isRead": false
+      "isRead": true
     },
     {
       "id": 33,
@@ -502,7 +504,8 @@
       "senderId": -1,
       "message": "Booking #7 has been accepted!",
       "chatId": 4,
-      "timestamp": "2025-04-04T17:57:01.651Z"
+      "timestamp": "2025-04-04T17:57:01.651Z",
+      "isRead": true
     },
     {
       "id": 40,
@@ -516,7 +519,8 @@
       "senderId": -1,
       "message": "Booking #22 has been accepted!",
       "chatId": 8,
-      "timestamp": "2025-04-04T23:25:38.094Z"
+      "timestamp": "2025-04-04T23:25:38.094Z",
+      "isRead": true
     },
     {
       "id": 42,
@@ -548,7 +552,7 @@
       "message": "Booking #11 has been accepted!",
       "chatId": 4,
       "timestamp": "2025-04-05T01:49:01.568Z",
-      "isRead": false
+      "isRead": true
     },
     {
       "id": 46,
@@ -564,7 +568,7 @@
       "message": "Booking #15 has been accepted!",
       "chatId": 7,
       "timestamp": "2025-04-06T00:09:20.076Z",
-      "isRead": false
+      "isRead": true
     }
   ]
 }
