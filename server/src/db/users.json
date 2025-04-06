@@ -21,7 +21,8 @@
         "city": "Bristol",
         "postcode": "BS2 ORL",
         "country": "United Kingdom"
-      }
+      },
+      "suspensionId": 0
     },
     "ownerRoleInfo": {
       "petIds": [
@@ -67,7 +68,8 @@
         "city": "Leeds",
         "postcode": "LS6 2TU",
         "country": "United Kingdom"
-      }
+      },
+      "suspensionId": 0
     },
     "ownerRoleInfo": {
       "petIds": [
@@ -107,7 +109,8 @@
         "city": "Manchester",
         "postcode": "M9 4JD",
         "country": "United Kingdom"
-      }
+      },
+      "suspensionId": 0
     },
     "ownerRoleInfo": {
       "petIds": [],
@@ -156,7 +159,8 @@
         "city": "Brighton",
         "postcode": "BN1 7EF",
         "country": "United Kingdom"
-      }
+      },
+      "suspensionId": 0
     },
     "ownerRoleInfo": {
       "petIds": [],
@@ -204,7 +208,8 @@
         "city": "Nottingham",
         "postcode": "NG8 5EY",
         "country": "United Kingdom"
-      }
+      },
+      "suspensionId": 0
     },
     "ownerRoleInfo": {
       "petIds": [
@@ -261,7 +266,7 @@
       "petminder",
       "petowner"
     ],
-    "currentRole": "petowner",
+    "currentRole": "petminder",
     "primaryUserInfo": {
       "profilePic": "20",
       "dob": "2004-12-22T00:00:00.000Z",
@@ -270,7 +275,8 @@
         "city": "London",
         "postcode": "E1 4PU",
         "country": "United Kingdom"
-      }
+      },
+      "suspensionId": 0
     },
     "ownerRoleInfo": {
       "petIds": [
@@ -333,7 +339,8 @@
         "city": "London",
         "postcode": "HA1 1XP",
         "country": "United Kingdom"
-      }
+      },
+      "suspensionId": 0
     },
     "ownerRoleInfo": {
       "petIds": [],
@@ -371,7 +378,8 @@
         "city": "London",
         "postcode": "E7 8BU",
         "country": "United Kingdom"
-      }
+      },
+      "suspensionId": 0
     },
     "ownerRoleInfo": {
       "petIds": [],
@@ -409,7 +417,8 @@
         "city": "Feltham",
         "postcode": "TW13",
         "country": "United Kingdom"
-      }
+      },
+      "suspensionId": 0
     },
     "ownerRoleInfo": {
       "petIds": [],

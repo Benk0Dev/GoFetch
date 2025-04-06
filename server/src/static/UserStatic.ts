@@ -1,5 +1,7 @@
 import { getCachedUsersWithAllInfo, getUserWithoutPassword, RegisterUserCache, removeUserCache, editUserCache } from '@server/services/UserCached';
-import { IRegisterdUser, IUser, Role } from '@gofetch/models/IUser';
+import { IRegisterdUser, Role } from '@gofetch/models/IUser';
+import { INewSuspension } from '@gofetch/models/ISuspension';
+import { addSuspension } from './SuspensionStatic';
 
 export function AllUsersData() {
   const result = getCachedUsersWithAllInfo();
@@ -18,8 +20,15 @@ export function getUserByID(id: number) {
 }
 
 export function loginUser(credentials: string, password: string) {
-  const user = getCachedUsersWithAllInfo().find(user => (user.loginDetails.email === credentials) && user.loginDetails.password === password);
+  let user = getCachedUsersWithAllInfo().find(user => (user.loginDetails.email === credentials) && user.loginDetails.password === password);
   if (user) {
+    if (user.primaryUserInfo.suspension) {
+      if (user.primaryUserInfo.suspension.endDate && user.primaryUserInfo.suspension.endDate <= new Date()) {
+        // Remove suspension if it has expired
+        editUser(user.id, { suspensionId: 0 });
+        user = { ...user, primaryUserInfo: { ...user.primaryUserInfo, suspension: null } };
+      }
+    }
     return { success: true, user: getUserWithoutPassword(user) };
   }
   return {success: false, message: 'Email/Username or Password is incorrect'};
@@ -55,4 +64,18 @@ export function getUserImages(id: number) {
 
 export function editUser(id: number, user: any) {
   return editUserCache(id, user);
+}
+
+export function suspendUser(id: number, suspension: INewSuspension) {
+  const newSuspension = addSuspension(suspension);
+  if (newSuspension.success) {
+    const editedUser = editUser(id, { primaryUserInfo: { suspensionId: newSuspension.suspension.id } });
+    if (editedUser.success) {
+      return { success: true, message: 'User suspended successfully' };
+    } else {
+      return { success: false, message: 'Suspension not added' };
+    }
+  } else {
+    return { success: false, message: 'Suspension not added' };
+  }
 }

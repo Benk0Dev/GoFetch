@@ -6,6 +6,7 @@ import defaultPet from "@client/assets/images/default-pet-picture.svg";
 import defaultProfile from "@client/assets/images/default-profile-picture.svg";
 
 import { API_URL } from "@client/services/Registry";
+import { INewSuspension } from "@gofetch/models/ISuspension";
 
 export async function login(credentials: string, password: string) {
   try {
@@ -170,6 +171,28 @@ export async function deleteUser(id: number) {
   try {
     const response = await fetch(`${API_URL}/user/${id}`, {
       method: "DELETE",
+    });
+    if (response.ok) {
+      return true;
+    } else {
+      const text = await response.text();
+      console.error(text);
+      return false;
+    }
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+}
+
+export async function suspendUser(id: number, suspension: INewSuspension) {
+  try {
+    const response = await fetch(`${API_URL}/suspendUser/${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(suspension)
     });
     if (response.ok) {
       return true;

@@ -47,6 +47,15 @@ export function getCachedUsersWithAllInfo(): IUser[] {
       delete (userCopy.minderRoleInfo as any).reviewIds;
     }
 
+    // Add suspension
+    if (userCopy.primaryUserInfo) {
+      userCopy.primaryUserInfo = {
+        ...userCopy.primaryUserInfo,
+        suspension: cache.suspensions.find(suspension => suspension.id === userCopy.primaryUserInfo.suspensionId) || null,
+      };
+      delete (userCopy.primaryUserInfo as any).suspensionId;
+    }
+
     return userCopy;
   });
 }
@@ -103,6 +112,7 @@ export function RegisterUserCache(user: IRegisterdUser) {
         profilePic: user.profilePic || '',
         dob: user.dob,
         address: user.address,
+        suspensionId: 0,
       },
       ownerRoleInfo: {
         petIds: [],

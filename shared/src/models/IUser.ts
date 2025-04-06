@@ -2,6 +2,7 @@ import { IBooking } from './IBooking';
 import { IPet } from './IPet';
 import { IReview } from './IReview';
 import { IService } from './IService';
+import { ISuspension } from './ISuspension';
 
 export interface IUser {
   id: number;
@@ -28,6 +29,8 @@ export interface IPrimaryUserInfo {
   profilePic: string;
   dob: Date;
   address: IAddress;
+  suspensionId: number;
+  suspension?: ISuspension | null;
 }
 
 export interface IOwnerRoleInfo {

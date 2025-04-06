@@ -9,6 +9,7 @@ import { INotification } from '@gofetch/models/INotification';
 import { IReview } from '@gofetch/models/IReview';
 import { IReport } from '@gofetch/models/IReport';
 import { IPayment } from '@gofetch/models/IPayment';
+import { ISuspension } from '@gofetch/models/ISuspension';
 
 // DB path
 export const DB_PATH = path.join(__dirname, './../db');
@@ -25,6 +26,7 @@ export interface DbCache {
   reviews: IReview[];
   reports: IReport[];
   payments: IPayment[];
+  suspensions: ISuspension[];
 }
 
 // Initialize empty cache
@@ -39,6 +41,7 @@ export const cache: DbCache = {
   reviews: [],
   reports: [],
   payments: [],
+  suspensions: [],
 };
 
 // Initialize cache by loading data from files
@@ -54,6 +57,7 @@ export function initCache(): void {
     const reviewsData = fs.readFileSync(`${DB_PATH}/reviews.json`, 'utf8');
     const reportsData = fs.readFileSync(`${DB_PATH}/reports.json`, 'utf8');
     const paymentsData = fs.readFileSync(`${DB_PATH}/payments.json`, 'utf8');
+    const suspensionsData = fs.readFileSync(`${DB_PATH}/suspensions.json`, 'utf8');
 
     cache.users = JSON.parse(usersData);
     cache.pets = JSON.parse(petsData);
@@ -66,6 +70,7 @@ export function initCache(): void {
     cache.reviews = JSON.parse(reviewsData);
     cache.reports = JSON.parse(reportsData);
     cache.payments = JSON.parse(paymentsData);
+    cache.suspensions = JSON.parse(suspensionsData);
 
     console.log('Database cache initialized successfully');
   } catch (error) {
