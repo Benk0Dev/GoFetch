@@ -749,5 +749,45 @@
     "read": false,
     "createdAt": "2025-04-06T00:18:41.148Z",
     "updatedAt": "2025-04-06T00:18:41.148Z"
+  },
+  {
+    "id": 77,
+    "userId": 5,
+    "message": "New message: hi",
+    "type": "message",
+    "linkId": 3,
+    "read": false,
+    "createdAt": "2025-04-06T01:28:01.090Z",
+    "updatedAt": "2025-04-06T01:28:01.090Z"
+  },
+  {
+    "id": 78,
+    "userId": 5,
+    "message": "New message: hi",
+    "type": "message",
+    "linkId": 3,
+    "read": false,
+    "createdAt": "2025-04-06T01:28:06.782Z",
+    "updatedAt": "2025-04-06T01:28:06.782Z"
+  },
+  {
+    "id": 79,
+    "userId": 5,
+    "message": "New message: asd",
+    "type": "message",
+    "linkId": 3,
+    "read": false,
+    "createdAt": "2025-04-06T01:28:09.596Z",
+    "updatedAt": "2025-04-06T01:28:09.596Z"
+  },
+  {
+    "id": 80,
+    "userId": 5,
+    "message": "New message: asd",
+    "type": "message",
+    "linkId": 3,
+    "read": false,
+    "createdAt": "2025-04-06T01:28:23.362Z",
+    "updatedAt": "2025-04-06T01:28:23.362Z"
   }
 ]
