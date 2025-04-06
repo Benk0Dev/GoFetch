@@ -789,5 +789,25 @@
     "read": false,
     "createdAt": "2025-04-06T01:28:23.362Z",
     "updatedAt": "2025-04-06T01:28:23.362Z"
+  },
+  {
+    "id": 81,
+    "userId": 7,
+    "message": "Booking request #14 has expired",
+    "type": "booking",
+    "linkId": 14,
+    "read": false,
+    "createdAt": "2025-04-06T18:20:00.127Z",
+    "updatedAt": "2025-04-06T18:20:00.127Z"
+  },
+  {
+    "id": 82,
+    "userId": 5,
+    "message": "Booking request #14 has expired",
+    "type": "booking",
+    "linkId": 14,
+    "read": false,
+    "createdAt": "2025-04-06T18:20:00.133Z",
+    "updatedAt": "2025-04-06T18:20:00.133Z"
   }
 ]

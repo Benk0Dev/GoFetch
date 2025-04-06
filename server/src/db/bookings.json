@@ -175,11 +175,11 @@
     "serviceId": 5,
     "time": "2025-04-06T18:06:00.000Z",
     "notes": "Test0",
-    "status": "Pending",
+    "status": "Rejected",
     "ownerCompleted": false,
     "minderCompleted": false,
     "createdAt": "2025-04-05T18:06:46.522Z",
-    "updatedAt": "2025-04-05T18:06:46.522Z"
+    "updatedAt": "2025-04-06T18:20:00.124Z"
   },
   {
     "id": 15,
