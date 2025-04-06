@@ -40,8 +40,8 @@ const NotificationContainer: React.FC<NotificationContainerProps> = ({ notificat
     const soundEnabled = localStorage.getItem("soundEnabled");
     
     return {
-      notifications: notificationsEnabled === null ? true : JSON.parse(notificationsEnabled),
-      sound: soundEnabled === null ? true : JSON.parse(soundEnabled)
+      notifications: notificationsEnabled === "false" ? false : true,
+      sound: soundEnabled === "false" ? false : true,
     };
   }, []);
 
