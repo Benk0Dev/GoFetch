@@ -23,7 +23,7 @@ const BrowsePage: React.FC = () => {
 
         let filteredMinders = [...minders];
 
-        if (user?.currentRole === "petowner") {
+        if (user) {
           filteredMinders = filteredMinders.filter(
             (minder) => minder.id !== user.id
           );
@@ -144,7 +144,6 @@ const BrowsePage: React.FC = () => {
         <p>Loading minders...</p>
       ) : (
         <div className={styles["minders-grid"]}>
-          <p>Showing {filteredMinders.length} minders</p>
           {filteredMinders.length > 0 ? (
             filteredMinders.map((minder, index) => (
               <MinderCard key={index} minder={minder} />

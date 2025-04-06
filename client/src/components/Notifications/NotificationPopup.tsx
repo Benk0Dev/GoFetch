@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import styles from '@client/components/Notifications/NotificationPopup.module.css';
-import { INotification } from '@gofetch/models/INotification';
+import { INotification, NotificationType } from '@gofetch/models/INotification';
 import { markNotificationAsRead } from '@client/services/NotificationRegistry';
 
 interface NotificationPopupProps {
@@ -38,17 +38,14 @@ const NotificationPopup: React.FC<NotificationPopupProps> = ({ notification, onC
     
     // Navigate based on notification type
     switch (notification.type) {
-      case "message":
+      case NotificationType.Message:
         navigate(`/chats/${notification.linkId}`);
         break;
-      case "booking":
-        navigate(`/dashboard?booking=${notification.linkId}`);
+      case NotificationType.Booking:
+        navigate(`/dashboard/bookings/${notification.linkId}`);
         break;
-      case "review":
-        navigate(`/profile#reviews`);
-        break;
-      case "payment":
-        navigate(`/dashboard?payment=${notification.linkId}`);
+      case NotificationType.Review:
+        navigate(`/dashboard/reviews`);
         break;
       default:
         navigate('/dashboard');

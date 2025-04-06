@@ -16,8 +16,6 @@ function DashboardPage() {
     const navigate = useNavigate();
     const { user, role, loading } = useAuth();
 
-    console.log(user);
-
     useEffect(() => {
         if (!role) {
             navigate("/", { replace: true });
@@ -60,8 +58,12 @@ function DashboardPage() {
                         )}
                     />
                     <Route
-                        path="bookings"
+                        path="bookings/:extension"
                         element={<Bookings />}
+                    />
+                    <Route
+                        path="bookings"
+                        element={<Navigate to="/dashboard/bookings/in-progress" replace />}
                     />
                     <Route
                         path="reviews"

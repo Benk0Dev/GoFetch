@@ -1,6 +1,6 @@
 .browse-page {
     margin-bottom: auto;
-    padding: 40px 20px;
+    padding: 40px 20px !important;
 }
 
 .minders-grid {
@@ -184,7 +184,7 @@
 
 .advanced-filters-button {
     background-color: var(--menu-card-border-color);
-    border-color: transparent;
+    border-color: transparent !important; 
 }
 
 .advanced-filters-button:hover {

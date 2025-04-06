@@ -43,7 +43,7 @@ export async function markNotificationAsRead(notificationId: number) {
   }
 }
 
-export async function createNotification(notification: { userId: number, message: string, type: string, link: string }) {
+export async function createNotification(notification: { userId: number, message: string, type: string, linkId: number }) {
   try {
     const response = await fetch(`${API_URL}/notifications`, {
       method: "POST",

@@ -5,7 +5,7 @@ import DropdownMenu from "@client/components/Dropdown/DropdownMenu";
 import DropdownItem from "@client/components/Dropdown/DropdownItem";
 import styles from "@client/components/Navbar/Navbar.module.css";
 import { getUserNotifications, markNotificationAsRead } from "@client/services/NotificationRegistry";
-import { INotification } from "@gofetch/models/INotification";
+import { INotification, NotificationType } from "@gofetch/models/INotification";
 import { useSocket } from "@client/context/SocketContext";
 import { useAuth } from "@client/context/AuthContext";
 import NotificationContainer from "@client/components/Notifications/NotificationContainer";
@@ -51,21 +51,18 @@ function NotificationIcon() {
         
         // Navigate based on notification type
         switch (notification.type) {
-            case "message":
+            case NotificationType.Message:
                 navigate(`/chats/${notification.linkId}`);
                 break;
-            case "booking":
-                navigate(`/dashboard?booking=${notification.linkId}`);
+            case NotificationType.Booking:
+                navigate(`/dashboard/bookings/${notification.linkId}`);
                 break;
-            case "review":
-                navigate(`/profile#reviews`);
-                break;
-            case "payment":
-                navigate(`/dashboard?payment=${notification.linkId}`);
+            case NotificationType.Review:
+                navigate(`/dashboard/reviews`);
                 break;
             default:
                 navigate('/dashboard');
-        }
+          }
         
         // Close menu
         toggleMenu();
@@ -150,7 +147,7 @@ function NotificationIcon() {
                                 <span>Loading notifications...</span>
                             </DropdownItem>
                         ) : notifications.length > 0 ? (
-                            <>
+                            <div className={styles.container}>
                                 {notifications.map(notification => (
                                     <div 
                                         key={notification.id} 
@@ -167,7 +164,7 @@ function NotificationIcon() {
                                         </div>
                                     </div>
                                 ))}
-                            </>
+                            </div>
                         ) : (
                             <DropdownItem onClick={() => {}} button={false}>
                                 <span>No notifications</span>

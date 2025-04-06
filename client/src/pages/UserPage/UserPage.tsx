@@ -36,7 +36,7 @@ function ProfilePage() {
     }
 
     const handleEditProfile = () => {
-        navigate("/profile");
+        navigate("/edit-profile");
     };
 
     const handleMinderProfile = () => {
@@ -68,7 +68,11 @@ function ProfilePage() {
                 <div className={styles.userDetailsContent}>
                     <img src={userBeingDisplayed.primaryUserInfo.profilePic} alt={userBeingDisplayed.name.fname + " " + userBeingDisplayed.name.sname} />
                     <h3>{userBeingDisplayed.name.fname + " " + userBeingDisplayed.name.sname}</h3>
-                    <p><MapPin size={16} strokeWidth={2} />{userBeingDisplayed.primaryUserInfo.address.city}, {userBeingDisplayed.primaryUserInfo.address.country}</p>
+                    {user && user.id === userBeingDisplayed.id ? (
+                        <p><MapPin size={16} strokeWidth={2} />{userBeingDisplayed.primaryUserInfo.address.street}, {userBeingDisplayed.primaryUserInfo.address.city}</p>
+                    ) : (
+                        <p><MapPin size={16} strokeWidth={2} />{userBeingDisplayed.primaryUserInfo.address.city}, {userBeingDisplayed.primaryUserInfo.address.country}</p>
+                    )}
                     <div className={styles.roles}>
                         {userBeingDisplayed.roles.map((role, index) => (
                             <span key={index} className={styles.role}>{role === Role.OWNER ? "Pet Owner" : role === Role.MINDER ? "Pet Minder" : "Admin"}</span>

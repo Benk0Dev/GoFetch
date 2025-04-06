@@ -82,7 +82,7 @@ const MinderPage = () => {
       navigate("/login");
     } else {
       if (minder) {
-        navigate("/booking", { state: { minderId: minder.id, service } });
+        navigate("/booking", { state: {minder, service } });
       }
     }
   };

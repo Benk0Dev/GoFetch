@@ -13,6 +13,6 @@ export enum NotificationType {
     Message = "message",
     Booking = "booking",
     Review = "review",
-    Payment = "payment",
+    System = "system",
     Other = "other"
 }

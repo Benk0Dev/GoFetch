@@ -1,0 +1,145 @@
+.profileContainer {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    width: fit-content !important;
+    padding: 40px 20px !important;
+}
+
+.profileContainer > button {
+    margin-bottom: 10px;
+}
+
+.profilePage {
+    background-color: white;
+    border: 1px solid var(--text-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: fit-content;
+    padding: 40px 20px;
+    margin-bottom: auto;
+    border-radius: var(--border-radius);
+}
+.profilePage h2 {
+    margin-bottom: 10px;
+}
+
+.profilePicture {
+    display: flex;  
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.profilePictureCustomization {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 10px;
+    margin: 20px 0 10px;
+}
+
+.profilePictureCustomization input[type="file"] {
+    display: none;
+}
+
+.image {
+    width: 180px;
+    height: 180px;
+    position: relative;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.image img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.removePicture {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #e03f3f;
+    color: var(--primary-color);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.1s ease-in-out;
+}
+
+.removePicture:hover {
+    background-color: #c91a1a;
+}
+
+.inputContainer {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.inputSectionContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+    padding: 0 10px;
+}
+
+.inputSectionContainer span {
+    font-weight: 600;
+}
+
+.inputSectionContainer label {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.doubleRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    align-items: start;
+}
+
+
+
+
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    width: 100%;
+}
+
+.profilePage button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.profilePage hr {
+    width: 100%;
+    margin: 20px 0;
+    border: none;
+    border-top: 1px solid var(--text-color);
+}
+
+p.error {
+    color: var(--error-color);
+    font-weight: 500;
+    margin: 15px 0 0;
+    text-align: left;
+    font-size: 16px;
+}

@@ -14,6 +14,9 @@ import {
     updateBookingDetailsCached,
     deleteBookingCached
 } from '@server/services/BookingCached';
+import { addNotification } from './NotificationStatic';
+import { getUserByID } from './UserStatic';
+import { NotificationType } from '@gofetch/models/INotification';
 
 export function getAllBookings() {
     const bookings = getAllBookingsCached();
@@ -81,4 +84,49 @@ export function deleteBooking(bookingId: number) {
         return { success: false, message: `Booking with ID ${bookingId} not found` };
     }
     return { success: true, message: `Booking with ID ${bookingId} deleted successfully` };
+}
+
+export function updateBookingStatusWithTimeChange() {
+    const bookings = getAllBookingsCached();
+    const now = new Date();
+
+    bookings.forEach((booking) => {
+        if (booking.status === BookingStatus.Confirmed && new Date(booking.time) < now) {
+            updateBookingStatus(booking.id, BookingStatus.InProgress);
+            const owner = getUserByID(booking.ownerId).user;
+            const minder = getUserByID(booking.minderId).user;
+            addNotification({
+                userId: booking.ownerId,
+                message: `Booking #${booking.id} is now in progress.`,
+                type: NotificationType.Booking,
+                linkId: booking.id
+            })
+            addNotification({
+                userId: booking.minderId,
+                message: `Booking #${booking.id} is now in progress.`,
+                type: NotificationType.Booking,
+                linkId: booking.id
+            });
+        }
+    });
+
+    bookings.forEach((booking) => {
+        if (booking.status === BookingStatus.Pending && new Date(booking.time) < now) {
+            updateBookingStatus(booking.id, BookingStatus.Rejected);
+            const owner = getUserByID(booking.ownerId).user;
+            const minder = getUserByID(booking.minderId).user;
+            addNotification({
+                userId: booking.ownerId,
+                message: `Booking request #${booking.id} has expired`,
+                type: NotificationType.Booking,
+                linkId: booking.id
+            });
+            addNotification({
+                userId: booking.minderId,
+                message: `Booking request #${booking.id} has expired`,
+                type: NotificationType.Booking,
+                linkId: booking.id
+            });
+        }
+    });
 }

@@ -27,7 +27,13 @@
       "petIds": [
         3
       ],
-      "bookingIds": []
+      "bookingIds": [
+        15,
+        9,
+        10,
+        12,
+        13
+      ]
     },
     "minderRoleInfo": {
       "serviceIds": [],
@@ -90,8 +96,7 @@
       "password": "password"
     },
     "roles": [
-      "petminder",
-      "petowner"
+      "petminder"
     ],
     "currentRole": "petminder",
     "primaryUserInfo": {
@@ -121,11 +126,11 @@
       ],
       "availability": "Weekdays",
       "bookingIds": [
-        3,
-        1
+        1,
+        3
       ],
       "reviewIds": [
-        3
+        1
       ]
     }
   },
@@ -170,8 +175,8 @@
       ],
       "availability": "Weekends",
       "bookingIds": [
-        5,
-        2
+        2,
+        5
       ],
       "reviewIds": []
     }
@@ -192,7 +197,7 @@
     ],
     "currentRole": "petowner",
     "primaryUserInfo": {
-      "profilePic": "",
+      "profilePic": "19",
       "dob": "1995-08-25T00:00:00.000Z",
       "address": {
         "street": "3 Hayling Drive",
@@ -207,12 +212,12 @@
         2
       ],
       "bookingIds": [
-        9,
+        11,
         1,
         2,
         3,
-        4,
-        7
+        7,
+        8
       ]
     },
     "minderRoleInfo": {
@@ -229,15 +234,16 @@
       ],
       "availability": "Flexible",
       "bookingIds": [
-        9,
-        4,
+        14,
         6,
-        7
+        7,
+        9,
+        10
       ],
       "reviewIds": [
-        1,
-        5,
-        7
+        2,
+        4,
+        10
       ]
     }
   },
@@ -255,9 +261,9 @@
       "petminder",
       "petowner"
     ],
-    "currentRole": "petminder",
+    "currentRole": "petowner",
     "primaryUserInfo": {
-      "profilePic": "15",
+      "profilePic": "20",
       "dob": "2004-12-22T00:00:00.000Z",
       "address": {
         "street": "Pooley House",
@@ -269,10 +275,11 @@
     "ownerRoleInfo": {
       "petIds": [
         5,
-        6
+        6,
+        7
       ],
       "bookingIds": [
-        8,
+        14,
         5,
         6
       ]
@@ -283,7 +290,7 @@
         10,
         11
       ],
-      "rating": 5,
+      "rating": 4,
       "bio": "I love taking care of dogs. I have two dogs of my own and have the privilege to walk them everyday. I'm a student so I have quite a flexible schedule, so we can easily arrange a time for any of my services.",
       "pictures": [
         "15",
@@ -291,10 +298,16 @@
       ],
       "availability": "Flexible",
       "bookingIds": [
-        8
+        15,
+        8,
+        11,
+        12,
+        13
       ],
       "reviewIds": [
-        9
+        4,
+        6,
+        8
       ]
     }
   },
@@ -357,6 +370,44 @@
         "street": "2 Westbury Road",
         "city": "London",
         "postcode": "E7 8BU",
+        "country": "United Kingdom"
+      }
+    },
+    "ownerRoleInfo": {
+      "petIds": [],
+      "bookingIds": []
+    },
+    "minderRoleInfo": {
+      "serviceIds": [],
+      "rating": 0,
+      "bio": "",
+      "pictures": [],
+      "availability": "Flexible",
+      "bookingIds": [],
+      "reviewIds": []
+    }
+  },
+  {
+    "id": 10,
+    "name": {
+      "fname": "Test",
+      "sname": "Test"
+    },
+    "loginDetails": {
+      "email": "test@test.com",
+      "password": "password"
+    },
+    "roles": [
+      "petowner"
+    ],
+    "currentRole": "petowner",
+    "primaryUserInfo": {
+      "profilePic": "18",
+      "dob": "1995-06-15T00:00:00.000Z",
+      "address": {
+        "street": "123 Main Street",
+        "city": "Feltham",
+        "postcode": "TW13",
         "country": "United Kingdom"
       }
     },

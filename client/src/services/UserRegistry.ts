@@ -69,7 +69,7 @@ export async function registerUser(user: IRegisterdUser) {
   }
 }
 
-export async function editUser(id: number, user: IUser) {
+export async function editUser(id: number, user: any) {
   try {
     const response = await fetch(`${API_URL}/editUser/${id}`, {
       method: "POST",
@@ -159,6 +159,24 @@ export async function getAllUsers() {
       const text = await response.text();
       console.error(text);
       return null;
+    }
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+}
+
+export async function deleteUser(id: number) {
+  try {
+    const response = await fetch(`${API_URL}/user/${id}`, {
+      method: "DELETE",
+    });
+    if (response.ok) {
+      return true;
+    } else {
+      const text = await response.text();
+      console.error(text);
+      return false;
     }
   } catch (e) {
     console.error(e);

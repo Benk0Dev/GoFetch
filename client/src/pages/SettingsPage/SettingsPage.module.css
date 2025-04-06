@@ -1,0 +1,143 @@
+.settingsPage {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto auto;
+  width: fit-content !important;
+}
+
+.settingsPage > button {
+  margin-bottom: 10px;  
+}
+
+.settings {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: var(--primary-color);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--text-color);
+  padding: 20px;
+  width: fit-content;
+}
+
+.settingsContent {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.settingsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.notificationSetting {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.notificationSetting p {
+  margin: 0;
+}
+
+.dangerZone {
+  padding: 15px;
+  border: 1px solid var(--error-color, #dc3545);
+  border-radius: var(--border-radius);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dangerZone p {
+  margin-bottom: 10px;
+}
+
+.deleteBtn {
+  background-color: #dc3545;
+}
+
+.deleteBtn:hover {
+  background-color: #f04f5f;
+}
+
+.modalBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.1s ease-out;
+}
+
+.modal {
+  background-color: var(--primary-color);
+  padding: 20px;
+  border-radius: var(--border-radius);
+  max-width: 500px;
+  width: 100%;
+  border: 1px solid var(--text-color);
+  position: relative;
+  animation: fadeIn 0.1s ease-out;
+}
+
+.modal h3 {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.modal p {
+  text-align: center;
+}
+
+.modal p:first-of-type {
+  margin: 0;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.modalActions .cancelBtn {
+  background-color: #b5b5b5;
+}
+
+.modalActions .cancelBtn:hover {
+  background-color: #c2c2c2;
+}
+
+.inputRow {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 20px;
+  align-items: flex-start;
+}
+
+.error {
+  color: var(--error-color, #dc3545);
+  font-size: 16px;
+  justify-self: flex-start;
+  font-weight: 500;
+}
+
+
+/* Animation for modal fade-in */
+@keyframes fadeIn {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}

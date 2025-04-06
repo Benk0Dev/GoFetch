@@ -1,4 +1,4 @@
-import { BookingStatus, INewBooking } from "@gofetch/models/IBooking";
+import { BookingStatus, IBooking, INewBooking } from "@gofetch/models/IBooking";
 import { editUser, getUserById } from "@client/services/UserRegistry";
 
 import { API_URL } from "@client/services/Registry";
@@ -19,7 +19,7 @@ export const createBooking = async (bookingData: INewBooking) => {
 
       const editMinder = await editUser(booking.minderId, {
         minderRoleInfo: {
-          bookingIds: [booking.id, ...minder.minderRoleInfo.bookings.map((b: any) => b.id)],
+          bookingIds: [booking.id, ...minder.minderRoleInfo.bookings.map((b: IBooking) => b.id)],
         }
       });
 
@@ -31,7 +31,7 @@ export const createBooking = async (bookingData: INewBooking) => {
 
       const editOwner = await editUser(booking.ownerId, {
         ownerRoleInfo: {
-          bookingIds: [booking.id, ...petOwner.ownerRoleInfo.bookings.map((b: any) => b.id)],
+          bookingIds: [booking.id, ...petOwner.ownerRoleInfo.bookings.map((b: IBooking) => b.id)],
         }
       });
 
@@ -72,4 +72,68 @@ export async function setBookingStatus(bookingId: number, status: BookingStatus)
     console.error(e);
     return null;
   }
+}
+
+export async function editBooking(bookingId: number, bookingData: Partial<IBooking>) {
+  try {
+    const response = await fetch(`${API_URL}/booking/${bookingId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(bookingData)
+    });
+    if (response.ok) {
+      const booking = await response.json();
+      return booking;
+    } else {
+      const text = await response.text();
+      console.error(text);
+      return null;
+    }
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+}
+
+export async function ownerCompleted(bookingId: number) {
+  const booking = await editBooking(bookingId, { ownerCompleted: true });
+  if (!booking) {
+    console.error("Failed to complete booking.");
+    return null;
+  }
+  return booking;
+}
+
+export async function minderCompleted(bookingId: number) {
+  const booking = await editBooking(bookingId, { minderCompleted: true });
+  if (!booking) {
+    console.error("Failed to complete booking.");
+    return null;
+  }
+  return booking;
+}
+
+export async function getBooking(bookingId: number) {
+    try {
+        const response = await fetch(`${API_URL}/booking/${bookingId}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        if (response.ok) {
+            const booking = await response.json();
+            console.log(booking);
+            return booking;
+        } else {
+            const text = await response.text();
+            console.error(text);
+            return null;
+        }
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
 }

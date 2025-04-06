@@ -7,6 +7,8 @@ export interface IBooking {
     time: Date;
     status: BookingStatus;
     notes?: string;
+    ownerCompleted: boolean;
+    minderCompleted: boolean;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -14,6 +16,7 @@ export interface IBooking {
 export enum BookingStatus {
     Pending = "Pending",
     Confirmed = "Confirmed",
+    InProgress = "In Progress",
     Completed = "Completed",
     Cancelled = "Cancelled",
     Rejected = "Rejected"

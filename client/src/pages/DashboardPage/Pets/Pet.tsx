@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import styles from "@client/pages/DashboardPage/Pets/Pets.module.css";
-import "@client/global.css";
 import { IPet } from "@gofetch/models/IPet";
 import { removePetForUser } from "@client/services/PetRegistry";
 import { useAuth } from "@client/context/AuthContext";
@@ -39,7 +38,7 @@ function Pet({ pet }: { pet: IPet }) {
             <p>{pet.breed}, {getAge(pet.dob)} years</p>
             <img src={(pet.picture)} alt={pet.name} />
             <div className={styles.buttons}>
-                <button className="btn btn-primary" onClick={() => navigate(pet.id.toString())}>View Details</button>
+                <button className="btn btn-primary" onClick={() => navigate(`/pets/${pet.id.toString()}`)}>View Details</button>
                 <button className="btn btn-secondary" onClick={handleRemove}>Remove</button>
             </div>
         </div>

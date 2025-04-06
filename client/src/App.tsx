@@ -5,15 +5,18 @@ import LandingPage from "@client/pages/LandingPage/LandingPage";
 import LoginPage from "@client/pages/AuthenticationPage/LoginPage";
 import RegisterPage from "@client/pages/AuthenticationPage/RegisterPage";
 import BecomeRolePage from "@client/pages/AuthenticationPage/BecomeRolePage";
-import ProfilePage from "@client/pages/ProfilePage/ProfilePage";
+import EditProfilePage from "@client/pages/EditProfilePage/EditProfilePage";
 import BrowsePage from "@client/pages/BrowsePage/BrowsePage";
 import UserPage from "@client/pages/UserPage/UserPage";
 import DashboardPage from "@client/pages/DashboardPage/Dashboard";
 import MessagingPage from "@client/pages/MessagingPage/MessagingPage";
-import ChatPage from "@client/pages/MessagingPage/ChatPage";
+import Chat from "@client/pages/MessagingPage/Chat";
 import BookingPage from "@client/pages/BookingPage/BookingPage";
+import PaymentPage from "@client/pages/BookingPage/PaymentPage";
+import SuccessPage from "@client/pages/BookingPage/SuccessPage";
 import AddPetPage from "@client/pages/DashboardPage/Pets/AddPet";
 import PetDetailsPage from "@client/pages/DashboardPage/Pets/PetDetails";
+import SettingsPage from "@client/pages/SettingsPage/SettingsPage";
 import { useAuth } from "@client/context/AuthContext";
 import { SocketProvider } from "@client/context/SocketContext";
 import { Role } from "@gofetch/models/IUser";
@@ -79,13 +82,15 @@ function App() {
               )
             }
           />
+          <Route path="/booking/payment" element={<PaymentPage />} />
+          <Route path="/booking/success" element={<SuccessPage />} />
           <Route
             path="/dashboard/*"
             element={!isGuest ? <DashboardPage /> : <Navigate to="/" replace />}
           />
           <Route
-            path="/profile"
-            element={!isGuest ? <ProfilePage /> : <Navigate to="/" replace />}
+            path="/edit-profile"
+            element={!isGuest ? <EditProfilePage /> : <Navigate to="/" replace />}
           />
           <Route
             path="/banned"
@@ -103,13 +108,17 @@ function App() {
           />
           <Route
             path="/chats"
-            element={!isGuest ? <ChatPage /> : <Navigate to="/" replace />}
+            element={!isGuest ? <MessagingPage /> : <Navigate to="/" replace />}
           >
-            <Route path=":id" element={<MessagingPage />} />
+            <Route path=":id" element={<Chat />} />
           </Route>
           <Route path="/minders/:minderId" element={<MinderPage />} />
-          <Route path="/dashboard/pets/:id" element={role === Role.OWNER ? <PetDetailsPage /> : <Navigate to="/" replace />} />
+          <Route path="/pets/:id" element={!isGuest ? <PetDetailsPage /> : <Navigate to="/" replace />} />
           <Route path="/users/:id" element={<UserPage />} />
+          <Route
+            path="/settings"
+            element={!isGuest ? <SettingsPage /> : <Navigate to="/" replace />}
+          />
         </Routes>
         <Footer />
       </Router>

@@ -69,7 +69,7 @@ export function removeServiceCached(id: number) {
     }
 }
 
-function saveServicesToFile(services: IService[]) {
+export function saveServicesToFile(services: IService[]) {
     try {
         fs.writeFileSync(`${DB_PATH}/services.json`, JSON.stringify(services, null, 2), 'utf8');
     } catch (error) {

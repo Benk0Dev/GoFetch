@@ -129,6 +129,15 @@
     margin-right: auto;
 }
 
+.systemMessage {
+    background-color: #f0f0f0;
+    color: #888;
+    align-self: center;
+    font-style: italic;
+    text-align: center;
+    margin: 1rem 0;
+}
+
 .messageContent {
     margin: 0;
     word-break: break-word;
@@ -319,4 +328,45 @@
     height: 74px;
     display: flex;
     align-items: center;
+}
+
+/* Unread messages */
+
+/* Add or update these styles */
+
+.unreadBadge {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 20px;
+    height: 20px;
+    background-color: #ff4d4f;
+    color: white;
+    border-radius: 10px;
+    font-size: 12px;
+    margin-left: 8px;
+    padding: 0 6px;
+    font-weight: bold;
+}
+
+.unreadDot {
+    width: 8px;
+    height: 8px;
+    background-color: #1890ff;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 6px;
+    margin-bottom: 1px;
+}
+
+.previewMessage {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    color: #666;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

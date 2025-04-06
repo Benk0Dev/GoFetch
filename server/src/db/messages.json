@@ -6,7 +6,18 @@
         5,
         2
       ],
-      "lastMessage": "Hello"
+      "lastMessage": "Hello",
+      "lastMessageDate": "2025-03-23T00:12:05.529Z",
+      "unreadCount": 0,
+      "isRead": true,
+      "unreadCounts": {
+        "2": 0,
+        "5": 0
+      },
+      "userReadStatus": {
+        "2": true,
+        "5": true
+      }
     },
     {
       "id": 2,
@@ -14,7 +25,18 @@
         5,
         3
       ],
-      "lastMessage": "Your dog is so adorable! Is he good with other pets?"
+      "lastMessage": "Booking #3 has been accepted!",
+      "lastMessageDate": "2025-04-04T23:23:26.903Z",
+      "unreadCount": 0,
+      "isRead": true,
+      "unreadCounts": {
+        "3": 0,
+        "5": 0
+      },
+      "userReadStatus": {
+        "3": true,
+        "5": true
+      }
     },
     {
       "id": 3,
@@ -22,7 +44,18 @@
         5,
         4
       ],
-      "lastMessage": "Hi there! I'm interested in your pet sitting services."
+      "lastMessage": "asd",
+      "lastMessageDate": "2025-04-06T01:28:23.361Z",
+      "unreadCount": 4,
+      "isRead": false,
+      "unreadCounts": {
+        "4": 0,
+        "5": 4
+      },
+      "userReadStatus": {
+        "4": true,
+        "5": false
+      }
     },
     {
       "id": 4,
@@ -30,7 +63,18 @@
         5,
         7
       ],
-      "lastMessage": "I'm very excited to meet her"
+      "lastMessage": "Booking #11 has been accepted!",
+      "lastMessageDate": "2025-04-05T01:49:01.568Z",
+      "unreadCount": 0,
+      "isRead": true,
+      "unreadCounts": {
+        "5": 0,
+        "7": 0
+      },
+      "userReadStatus": {
+        "5": true,
+        "7": true
+      }
     },
     {
       "id": 5,
@@ -38,7 +82,18 @@
         8,
         7
       ],
-      "lastMessage": "hello"
+      "lastMessage": "hello",
+      "lastMessageDate": "2025-03-27T21:57:24.000Z",
+      "unreadCount": 1,
+      "isRead": false,
+      "unreadCounts": {
+        "7": 0,
+        "8": 1
+      },
+      "userReadStatus": {
+        "7": true,
+        "8": false
+      }
     },
     {
       "id": 6,
@@ -46,7 +101,18 @@
         8,
         5
       ],
-      "lastMessage": "That's it you are getting banned!"
+      "lastMessage": "hi",
+      "lastMessageDate": "2025-04-03T11:34:49.095Z",
+      "unreadCount": 1,
+      "isRead": false,
+      "unreadCounts": {
+        "5": 0,
+        "8": 1
+      },
+      "userReadStatus": {
+        "5": true,
+        "8": false
+      }
     },
     {
       "id": 7,
@@ -54,23 +120,78 @@
         1,
         7
       ],
-      "lastMessage": "Hi Ben!"
+      "lastMessage": "Booking #15 has been accepted!",
+      "lastMessageDate": "2025-04-06T00:09:20.076Z",
+      "unreadCount": 0,
+      "isRead": true,
+      "unreadCounts": {
+        "1": 0,
+        "7": 0
+      },
+      "userReadStatus": {
+        "1": true,
+        "7": true
+      }
     },
     {
       "id": 8,
       "users": [
-        8,
+        7,
         3
       ],
-      "lastMessage": ""
+      "lastMessage": "Booking #22 has been accepted!",
+      "lastMessageDate": "2025-04-04T23:25:38.094Z",
+      "unreadCount": 0,
+      "isRead": true
     },
     {
       "id": 9,
       "users": [
-        8,
+        7,
         4
       ],
-      "lastMessage": ""
+      "lastMessage": "Booking #24 has been accepted!",
+      "lastMessageDate": "2025-04-05T00:01:21.296Z",
+      "unreadCount": 0,
+      "isRead": true
+    },
+    {
+      "id": 10,
+      "users": [
+        1,
+        3
+      ],
+      "lastMessage": "Booking #25 has been accepted!",
+      "lastMessageDate": "2025-04-05T00:22:42.070Z",
+      "unreadCount": 0,
+      "isRead": false,
+      "unreadCounts": {
+        "1": 0,
+        "3": 0
+      },
+      "userReadStatus": {
+        "1": true,
+        "3": true
+      }
+    },
+    {
+      "id": 11,
+      "users": [
+        1,
+        5
+      ],
+      "lastMessage": "Booking #10 has been accepted!",
+      "lastMessageDate": "2025-04-05T01:39:10.652Z",
+      "unreadCount": 0,
+      "isRead": false,
+      "unreadCounts": {
+        "1": 0,
+        "5": 0
+      },
+      "userReadStatus": {
+        "1": true,
+        "5": true
+      }
     }
   ],
   "messages": [
@@ -79,266 +200,407 @@
       "chatId": 1,
       "senderId": 5,
       "message": "Hi! I'm looking for someone to walk my dog this weekend.",
-      "timestamp": "2025-03-20T14:30:20.000Z"
+      "timestamp": "2025-03-20T14:30:20.000Z",
+      "isRead": true
     },
     {
       "id": 2,
       "chatId": 1,
       "senderId": 2,
       "message": "Hello! I'd be happy to help. What breed is your dog?",
-      "timestamp": "2025-03-20T14:32:45.000Z"
+      "timestamp": "2025-03-20T14:32:45.000Z",
+      "isRead": true
     },
     {
       "id": 3,
       "chatId": 1,
       "senderId": 5,
       "message": "He's a golden retriever named Max. Very friendly!",
-      "timestamp": "2025-03-20T14:35:12.000Z"
+      "timestamp": "2025-03-20T14:35:12.000Z",
+      "isRead": true
     },
     {
       "id": 4,
       "chatId": 1,
       "senderId": 2,
       "message": "I love golden retrievers! When would you need the walk?",
-      "timestamp": "2025-03-20T14:37:30.000Z"
+      "timestamp": "2025-03-20T14:37:30.000Z",
+      "isRead": true
     },
     {
       "id": 5,
       "chatId": 1,
       "senderId": 5,
       "message": "Saturday around 2pm if possible?",
-      "timestamp": "2025-03-20T14:39:45.000Z"
+      "timestamp": "2025-03-20T14:39:45.000Z",
+      "isRead": true
     },
     {
       "id": 6,
       "chatId": 1,
       "senderId": 2,
       "message": "That works for me! How long would you like me to walk him?",
-      "timestamp": "2025-03-20T14:42:10.000Z"
+      "timestamp": "2025-03-20T14:42:10.000Z",
+      "isRead": true
     },
     {
       "id": 7,
       "chatId": 1,
       "senderId": 5,
       "message": "About 45 minutes would be great. He loves the park nearby.",
-      "timestamp": "2025-03-20T14:44:30.000Z"
+      "timestamp": "2025-03-20T14:44:30.000Z",
+      "isRead": true
     },
     {
       "id": 8,
       "chatId": 1,
       "senderId": 2,
       "message": "Perfect! I'll bring some treats if that's okay?",
-      "timestamp": "2025-03-20T14:47:15.000Z"
+      "timestamp": "2025-03-20T14:47:15.000Z",
+      "isRead": true
     },
     {
       "id": 9,
       "chatId": 1,
       "senderId": 5,
       "message": "That would be wonderful! Max loves treats.",
-      "timestamp": "2025-03-20T14:49:40.000Z"
+      "timestamp": "2025-03-20T14:49:40.000Z",
+      "isRead": true
     },
     {
       "id": 10,
       "chatId": 1,
       "senderId": 2,
       "message": "When can you come by to walk Max?",
-      "timestamp": "2025-03-21T09:15:22.000Z"
+      "timestamp": "2025-03-21T09:15:22.000Z",
+      "isRead": true
     },
     {
       "id": 11,
       "chatId": 2,
       "senderId": 3,
       "message": "Hello! I noticed you're looking for pet care services.",
-      "timestamp": "2025-03-19T11:20:30.000Z"
+      "timestamp": "2025-03-19T11:20:30.000Z",
+      "isRead": true
     },
     {
       "id": 12,
       "chatId": 2,
       "senderId": 5,
       "message": "Yes! I have a 2-year-old beagle who needs some company during the day.",
-      "timestamp": "2025-03-19T11:25:45.000Z"
+      "timestamp": "2025-03-19T11:25:45.000Z",
+      "isRead": true
     },
     {
       "id": 13,
       "chatId": 2,
       "senderId": 3,
       "message": "I specialize in daytime pet sitting. Does your dog get along with other dogs?",
-      "timestamp": "2025-03-19T11:28:15.000Z"
+      "timestamp": "2025-03-19T11:28:15.000Z",
+      "isRead": true
     },
     {
       "id": 14,
       "chatId": 2,
       "senderId": 5,
       "message": "He's very social and loves other dogs. Do you have pets of your own?",
-      "timestamp": "2025-03-19T11:32:40.000Z"
+      "timestamp": "2025-03-19T11:32:40.000Z",
+      "isRead": true
     },
     {
       "id": 15,
       "chatId": 2,
       "senderId": 3,
       "message": "I have a friendly labrador. They should get along great!",
-      "timestamp": "2025-03-19T11:36:20.000Z"
+      "timestamp": "2025-03-19T11:36:20.000Z",
+      "isRead": true
     },
     {
       "id": 16,
       "chatId": 2,
       "senderId": 5,
       "message": "That sounds perfect! Could we arrange a meet-and-greet first?",
-      "timestamp": "2025-03-19T11:39:10.000Z"
+      "timestamp": "2025-03-19T11:39:10.000Z",
+      "isRead": true
     },
     {
       "id": 17,
       "chatId": 2,
       "senderId": 3,
       "message": "Your dog is so adorable! Is he good with other pets?",
-      "timestamp": "2025-03-19T11:45:30.000Z"
+      "timestamp": "2025-03-19T11:45:30.000Z",
+      "isRead": true
     },
     {
       "id": 18,
       "chatId": 3,
       "senderId": 5,
       "message": "Hi there! I'm looking for someone to watch my cat for a week in April.",
-      "timestamp": "2025-03-18T16:10:15.000Z"
+      "timestamp": "2025-03-18T16:10:15.000Z",
+      "isRead": true
     },
     {
       "id": 19,
       "chatId": 3,
       "senderId": 4,
       "message": "Hello! I'd be happy to help with your cat. What's their name?",
-      "timestamp": "2025-03-18T16:15:30.000Z"
+      "timestamp": "2025-03-18T16:15:30.000Z",
+      "isRead": true
     },
     {
       "id": 20,
       "chatId": 3,
       "senderId": 5,
       "message": "Her name is Luna. She's very independent but needs someone to feed her and clean her litter.",
-      "timestamp": "2025-03-18T16:20:45.000Z"
+      "timestamp": "2025-03-18T16:20:45.000Z",
+      "isRead": true
     },
     {
       "id": 21,
       "chatId": 3,
       "senderId": 4,
       "message": "I've cared for many cats and understand their needs. What dates in April?",
-      "timestamp": "2025-03-18T16:25:10.000Z"
+      "timestamp": "2025-03-18T16:25:10.000Z",
+      "isRead": true
     },
     {
       "id": 22,
       "chatId": 3,
       "senderId": 5,
       "message": "April 10-17. Would you be able to visit twice daily or stay at my place?",
-      "timestamp": "2025-03-18T16:30:25.000Z"
+      "timestamp": "2025-03-18T16:30:25.000Z",
+      "isRead": true
     },
     {
       "id": 23,
       "chatId": 3,
       "senderId": 4,
       "message": "I could do either option. What would you prefer for Luna?",
-      "timestamp": "2025-03-18T16:35:40.000Z"
+      "timestamp": "2025-03-18T16:35:40.000Z",
+      "isRead": true
     },
     {
       "id": 24,
       "chatId": 3,
       "senderId": 5,
       "message": "Probably visits twice a day would be best. She gets anxious with new people staying over.",
-      "timestamp": "2025-03-18T16:40:55.000Z"
+      "timestamp": "2025-03-18T16:40:55.000Z",
+      "isRead": true
     },
     {
       "id": 25,
       "chatId": 3,
       "senderId": 4,
       "message": "That makes sense. I can definitely do morning and evening visits.",
-      "timestamp": "2025-03-18T16:45:10.000Z"
+      "timestamp": "2025-03-18T16:45:10.000Z",
+      "isRead": true
     },
     {
       "id": 26,
       "chatId": 3,
       "senderId": 5,
       "message": "Great! Would you like to meet Luna beforehand?",
-      "timestamp": "2025-03-18T16:50:25.000Z"
+      "timestamp": "2025-03-18T16:50:25.000Z",
+      "isRead": true
     },
     {
       "id": 27,
       "chatId": 3,
       "senderId": 4,
       "message": "Hi there! I'm interested in your pet sitting services.",
-      "timestamp": "2025-03-18T16:55:40.000Z"
+      "timestamp": "2025-03-18T16:55:40.000Z",
+      "isRead": true
     },
     {
       "id": 28,
       "senderId": 5,
       "message": "Hello",
       "chatId": 1,
-      "timestamp": "2025-03-23T00:12:05.529Z"
+      "timestamp": "2025-03-23T00:12:05.529Z",
+      "isRead": true
     },
     {
       "id": 29,
       "senderId": 5,
       "message": "Hello Ben!",
       "chatId": 4,
-      "timestamp": "2025-03-26T16:04:53.258Z"
+      "timestamp": "2025-03-26T16:04:53.258Z",
+      "isRead": true
     },
     {
       "id": 30,
       "senderId": 5,
       "message": "I am happy to train Pipa to do a barrel roll",
       "chatId": 4,
-      "timestamp": "2025-03-26T16:06:56.757Z"
+      "timestamp": "2025-03-26T16:06:56.757Z",
+      "isRead": true
     },
     {
       "id": 31,
       "senderId": 7,
       "message": "Hello, perfect!",
       "chatId": 4,
-      "timestamp": "2025-03-26T16:07:22.305Z"
+      "timestamp": "2025-03-26T16:07:22.305Z",
+      "isRead": true
     },
     {
       "id": 32,
       "senderId": 5,
       "message": "I'm very excited to meet her",
       "chatId": 4,
-      "timestamp": "2025-03-26T16:08:08.623Z"
+      "timestamp": "2025-03-26T16:08:08.623Z",
+      "isRead": true
     },
     {
       "id": 33,
       "senderId": 7,
       "message": "hello",
       "chatId": 5,
-      "timestamp": "2025-03-27T21:57:24.000Z"
+      "timestamp": "2025-03-27T21:57:24.000Z",
+      "isRead": false
     },
     {
       "id": 34,
       "senderId": 8,
       "message": "Hello Eve. You are in trouble for stealing someones dog!",
       "chatId": 6,
-      "timestamp": "2025-03-27T22:03:51.383Z"
+      "timestamp": "2025-03-27T22:03:51.383Z",
+      "isRead": true
     },
     {
       "id": 35,
       "senderId": 5,
       "message": "Oh no!",
       "chatId": 6,
-      "timestamp": "2025-03-27T22:04:01.326Z"
+      "timestamp": "2025-03-27T22:04:01.326Z",
+      "isRead": true
     },
     {
       "id": 36,
       "senderId": 5,
       "message": "womp womp",
       "chatId": 6,
-      "timestamp": "2025-03-27T22:04:03.444Z"
+      "timestamp": "2025-03-27T22:04:03.444Z",
+      "isRead": true
     },
     {
       "id": 37,
       "senderId": 8,
       "message": "That's it you are getting banned!",
       "chatId": 6,
-      "timestamp": "2025-03-27T22:11:45.657Z"
+      "timestamp": "2025-03-27T22:11:45.657Z",
+      "isRead": true
     },
     {
       "id": 38,
       "senderId": 1,
       "message": "Hi Ben!",
       "chatId": 7,
-      "timestamp": "2025-03-30T04:41:48.609Z"
+      "timestamp": "2025-03-30T04:41:48.609Z",
+      "isRead": true
+    },
+    {
+      "id": 39,
+      "senderId": -1,
+      "message": "Booking #7 has been accepted!",
+      "chatId": 4,
+      "timestamp": "2025-04-04T17:57:01.651Z",
+      "isRead": true
+    },
+    {
+      "id": 40,
+      "senderId": -1,
+      "message": "Booking #3 has been accepted!",
+      "chatId": 2,
+      "timestamp": "2025-04-04T23:23:26.903Z"
+    },
+    {
+      "id": 41,
+      "senderId": -1,
+      "message": "Booking #22 has been accepted!",
+      "chatId": 8,
+      "timestamp": "2025-04-04T23:25:38.094Z",
+      "isRead": true
+    },
+    {
+      "id": 42,
+      "senderId": -1,
+      "message": "Booking #24 has been accepted!",
+      "chatId": 9,
+      "timestamp": "2025-04-05T00:01:21.296Z",
+      "isRead": true
+    },
+    {
+      "id": 43,
+      "senderId": -1,
+      "message": "Booking #25 has been accepted!",
+      "chatId": 10,
+      "timestamp": "2025-04-05T00:22:42.070Z",
+      "isRead": false
+    },
+    {
+      "id": 44,
+      "senderId": -1,
+      "message": "Booking #10 has been accepted!",
+      "chatId": 11,
+      "timestamp": "2025-04-05T01:39:10.652Z",
+      "isRead": false
+    },
+    {
+      "id": 45,
+      "senderId": -1,
+      "message": "Booking #11 has been accepted!",
+      "chatId": 4,
+      "timestamp": "2025-04-05T01:49:01.568Z",
+      "isRead": true
+    },
+    {
+      "id": 46,
+      "senderId": -1,
+      "message": "Booking #13 has been accepted!",
+      "chatId": 7,
+      "timestamp": "2025-04-05T02:28:32.761Z",
+      "isRead": true
+    },
+    {
+      "id": 47,
+      "senderId": -1,
+      "message": "Booking #15 has been accepted!",
+      "chatId": 7,
+      "timestamp": "2025-04-06T00:09:20.076Z",
+      "isRead": true
+    },
+    {
+      "id": 48,
+      "senderId": 4,
+      "message": "hi",
+      "chatId": 3,
+      "timestamp": "2025-04-06T01:28:01.081Z",
+      "isRead": false
+    },
+    {
+      "id": 49,
+      "senderId": 4,
+      "message": "hi",
+      "chatId": 3,
+      "timestamp": "2025-04-06T01:28:06.781Z",
+      "isRead": false
+    },
+    {
+      "id": 50,
+      "senderId": 4,
+      "message": "asd",
+      "chatId": 3,
+      "timestamp": "2025-04-06T01:28:09.595Z",
+      "isRead": false
+    },
+    {
+      "id": 51,
+      "senderId": 4,
+      "message": "asd",
+      "chatId": 3,
+      "timestamp": "2025-04-06T01:28:23.361Z",
+      "isRead": false
     }
   ]
 }

@@ -48,7 +48,7 @@ function MinderCard({ minder }: { minder: IUser & { __distance?: number } }) {
     if (!user) {
       navigate("/login");
     } else {
-      navigate("/booking", { state: { minderId: minder.id } });
+      navigate("/booking", { state: { minder, service: (minder.minderRoleInfo.services ?? [])[0] } });
     }
   };
 

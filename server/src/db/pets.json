@@ -70,5 +70,17 @@
     "behaviour": "He is a very affectionate boy and nice to all people. He is very active and can run for hours. He can however get into fights with other male dogs but this is rare.",
     "allergies": "",
     "picture": "14"
+  },
+  {
+    "id": 7,
+    "name": "Fluffy",
+    "dob": "2025-03-20T00:00:00.000Z",
+    "gender": "female",
+    "breed": "Alien Dog",
+    "size": "Small (0-15kg)",
+    "neutered": false,
+    "behaviour": "Cute",
+    "allergies": "",
+    "picture": ""
   }
 ]

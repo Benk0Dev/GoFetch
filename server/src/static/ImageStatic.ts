@@ -51,8 +51,6 @@ export function saveUploadedImage(file: Express.Multer.File | undefined): ImageU
             imageId: imageId,
             filename: newFilename,
             path: `/images/${newFilename}`
-            // filename: file.filename,
-            // path: `/images/${file.filename}`
         }
     };
 }

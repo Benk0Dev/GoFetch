@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { PawPrint } from "lucide-react";
 import { IPet } from "@gofetch/models/IPet";
-import styles from "@client/pages/BookingPage/PetSelector.module.css";
+import styles from "@client/pages/BookingPage/BookingPage.module.css";
 import { useAuth } from "@client/context/AuthContext";
 
 interface PetSelectorProps {
@@ -15,9 +15,9 @@ const PetSelector: React.FC<PetSelectorProps> = ({ selectedPet, setSelectedPet }
   const navigate = useNavigate();
 
   return (
-    <div className={styles.container}>
-      <h2 className={styles.heading}>Select a Pet</h2>
-      <div className={styles.petGrid}>
+    <div className={styles.petsContainer}>
+      <label>Select a Pet</label>
+      <div className={styles.pets}>
         {user.ownerRoleInfo.pets.map((pet: IPet) => (
           <div
             key={pet.id}
@@ -25,12 +25,11 @@ const PetSelector: React.FC<PetSelectorProps> = ({ selectedPet, setSelectedPet }
             className={`${styles.petCard} ${selectedPet?.id === pet.id ? styles.selected : ""}`}
           >
             <img
-              src={pet.picture ? pet.picture : "/placeholder.svg"}
+              src={pet.picture}
               alt={pet.name}
-              className={styles.petImage}
             />
             <div className={styles.petDetails}>
-              <h3 className={styles.petName}>{pet.name}</h3>
+              <h6 className={styles.petName}>{pet.name}</h6>
               <p className={styles.petBreed}>{pet.breed}</p>
             </div>
           </div>
@@ -38,7 +37,7 @@ const PetSelector: React.FC<PetSelectorProps> = ({ selectedPet, setSelectedPet }
 
         <div onClick={() => navigate("/add-pet")} className={`${styles.petCard} ${styles.addPetCard}`}>
           <PawPrint className={styles.addPetIcon} />
-          <span className={styles.addPetText}>Add Pet</span>
+          <p className={styles.addPetText}>Add Pet</p>
         </div>
       </div>
     </div>

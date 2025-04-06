@@ -60,7 +60,7 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
         setConnectionError(null);
 
         // Register user after successful connection
-        if (user.id) {
+        if (user) {
           console.log(`Registering user ${user.id} with socket`);
           newSocket.emit("register-user", user.id);
         }

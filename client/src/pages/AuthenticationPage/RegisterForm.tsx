@@ -97,51 +97,51 @@ function RegisterForm({ step, onStepChange }: { step: number; onStepChange: (ste
         const address = `${street}, ${city}, ${postcode}, ${country}`;
 
         try {
-        const results = await geocodeAddress(address);
+            const results = await geocodeAddress(address);
 
-        if (!results || results.length === 0) {
-            setAddressError("Address is not valid. Please verify the address.");
-            return;
-        }
+            if (!results || results.length === 0) {
+                setAddressError("Address is not valid. Please verify the address.");
+                return;
+            }
 
-        // Validate the address components
-        const addressComponents = results[0].address_components;
+            // Validate the address components
+            const addressComponents = results[0].address_components;
 
-        // Check for essential components: street, city, postcode, country
-        const streetComponent = addressComponents.find((component) =>
-            component.types.includes("premise")
-        );
-        const streetNumberComponent = addressComponents.find((component) =>
-            component.types.includes("street_number")
-        );
-        const streetNameComponent = addressComponents.find((component) =>
-            component.types.includes("route")
-        );
-        const cityComponent = addressComponents.find((component) =>
-            component.types.includes("postal_town")
-        );
-        const postcodeComponent = addressComponents.find((component) =>
-            component.types.includes("postal_code")
-        );
-        const countryComponent = addressComponents.find((component) =>
-            component.types.includes("country")
-        );
+            // Check for essential components: street, city, postcode, country
+            const streetComponent = addressComponents.find((component) =>
+                component.types.includes("premise")
+            );
+            const streetNumberComponent = addressComponents.find((component) =>
+                component.types.includes("street_number")
+            );
+            const streetNameComponent = addressComponents.find((component) =>
+                component.types.includes("route")
+            );
+            const cityComponent = addressComponents.find((component) =>
+                component.types.includes("postal_town")
+            );
+            const postcodeComponent = addressComponents.find((component) =>
+                component.types.includes("postal_code")
+            );
+            const countryComponent = addressComponents.find((component) =>
+                component.types.includes("country")
+            );
 
-        if ((!streetComponent && !(streetNumberComponent && streetNameComponent)) || !cityComponent || !postcodeComponent || !countryComponent) {
-            setAddressError("Please enter a valid address with all necessary components.");
-            return;
-        }
+            if ((!streetComponent && !(streetNumberComponent && streetNameComponent)) || !cityComponent || !postcodeComponent || !countryComponent) {
+                setAddressError("Please enter a valid address with all necessary components.");
+                return;
+            }
 
-        // Autofill the form with the correct data
-        setStreet(streetNumberComponent && streetNameComponent ? streetNumberComponent.long_name + " " + streetNameComponent.long_name : streetComponent ? streetComponent.long_name : "");
-        setCity(cityComponent.long_name);
-        setPostcode(postcodeComponent.long_name);
-        setCountry(countryComponent.long_name);
+            // Autofill the form with the correct data
+            setStreet(streetNumberComponent && streetNameComponent ? streetNumberComponent.long_name + " " + streetNameComponent.long_name : streetComponent ? streetComponent.long_name : "");
+            setCity(cityComponent.long_name);
+            setPostcode(postcodeComponent.long_name);
+            setCountry(countryComponent.long_name);
 
-        onStepChange(2);
+            onStepChange(2);
 
         } catch (error) {
-        setAddressError("Failed to validate address. Please check your address.");
+            setAddressError("Failed to validate address. Please check your address.");
         }
     };
 
