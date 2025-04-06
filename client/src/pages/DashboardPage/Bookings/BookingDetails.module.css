@@ -1,0 +1,117 @@
+.bookingDetails {
+    display: flex;
+    width: 100%;
+    padding: 0;
+}
+
+.bookingDetailsContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.backButton {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.bookingDetailsContent {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--primary-color);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--text-color);
+}
+
+.bookingDetailsHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.bookingDetailsHeader h3 {
+    line-height: 1.2;
+}
+
+.bookingDetailsHeader span {
+    background-color: var(--highlight-color);
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 14px;
+    color: var(--primary-color);
+    font-weight: 300;
+    gap: 10px;
+}
+
+.detailsContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.serviceDetailsContainer, .userDetailsContainer, .specialInstructionsContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: 1px solid var(--text-color);
+    width: 100%;
+    padding: 10px;
+    border-radius: var(--border-radius);
+    margin-bottom: 20px;
+}
+
+.serviceDetailsContainer {
+    gap: 5px;
+}
+
+.bookingHeading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.serviceDetail {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.userDetailsContainer {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 10px;
+    align-items: center;
+}
+
+.userDetailsContainer img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 100px;
+    margin: 5px 0;
+}
+
+.userDetailsInfo {
+    line-height: 1.4;
+}
+
+.userDetailsContainer button {
+    height: fit-content;
+}
+
+.specialInstructionsContainer {
+    margin-bottom: 10px;
+}
+
+.specialInstructionsContainer p {
+    margin: 0;
+}
+

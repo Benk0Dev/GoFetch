@@ -98,13 +98,13 @@ export function updateBookingStatusWithTimeChange() {
             addNotification({
                 userId: booking.ownerId,
                 message: `Your booking with ${minder?.name.fname} ${minder?.name.sname} is now in progress.`,
-                type: NotificationType.BookingInProgress,
+                type: NotificationType.Booking,
                 linkId: booking.id
             })
             addNotification({
                 userId: booking.minderId,
                 message: `Your booking with ${owner?.name.fname} ${owner?.name.sname} is now in progress.`,
-                type: NotificationType.BookingInProgress,
+                type: NotificationType.Booking,
                 linkId: booking.id
             });
         }
@@ -118,13 +118,13 @@ export function updateBookingStatusWithTimeChange() {
             addNotification({
                 userId: booking.ownerId,
                 message: `Your booking request with ${minder?.name.fname} ${minder?.name.sname} has expired`,
-                type: NotificationType.BookingExpired,
+                type: NotificationType.Booking,
                 linkId: booking.id
             });
             addNotification({
                 userId: booking.minderId,
                 message: `Your booking request from ${owner?.name.fname} ${owner?.name.sname} has expired`,
-                type: NotificationType.BookingExpired,
+                type: NotificationType.Booking,
                 linkId: booking.id
             });
         }

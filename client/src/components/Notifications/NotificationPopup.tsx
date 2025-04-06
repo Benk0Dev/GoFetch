@@ -41,29 +41,8 @@ const NotificationPopup: React.FC<NotificationPopupProps> = ({ notification, onC
       case NotificationType.Message:
         navigate(`/chats/${notification.linkId}`);
         break;
-      case NotificationType.BookingRequest:
-        navigate(`/dashboard/bookings/pending`);
-        break;
-      case NotificationType.BookingAccepted:
-        navigate(`/dashboard/bookings/upcoming`);
-        break;
-      case NotificationType.BookingDeclined:
-        navigate(`/dashboard/bookings`);
-        break;
-      case NotificationType.BookingCancelled:
-        navigate(`/dashboard/bookings`);
-        break;
-      case NotificationType.BookingCompleteRequest:
-        navigate(`/dashboard/in-progress`);
-        break;
-      case NotificationType.BookingCompleted:
-        navigate(`/dashboard/bookings/past`);
-        break
-      case NotificationType.BookingExpired:
-        navigate(`/dashboard/bookings`);
-        break;
-      case NotificationType.BookingInProgress:
-        navigate(`/dashboard/bookings/in-progress`);
+      case NotificationType.Booking:
+        navigate(`/dashboard/bookings/${notification.linkId}`);
         break;
       case NotificationType.Review:
         navigate(`/dashboard/reviews`);

@@ -71,12 +71,10 @@
 .notificationBadge {
     position: absolute;
     top: 3px;
-    right: 5px;
+    left: 17px;
     background-color: var(--error-color);
     color: white;
-    border-radius: 50%;
-    width: 12px;
-    height: 12px;
+    border-radius: 100px;
     font-size: 9px;
     display: flex;
     justify-content: center;
@@ -85,6 +83,7 @@
     border: 2px solid white;
     box-sizing: content-box;
     transition: border 0.2s ease-in-out;
+    padding: 1px 4px;
 }
 
 .navbar button:hover .notificationBadge {

@@ -58,7 +58,7 @@ function DashboardPage() {
                         )}
                     />
                     <Route
-                        path="bookings/:status"
+                        path="bookings/:extension"
                         element={<Bookings />}
                     />
                     <Route

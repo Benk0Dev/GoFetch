@@ -17,8 +17,17 @@
     display: flex;
     flex-direction: column;
     padding: 10px;
-    background-color: var(--menu-card-background-color);
+    border: 1px solid var(--text-color);
     border-radius: 5px;
+    cursor: pointer;
+}
+
+.arrow {
+    transition: transform 0.2s ease;
+}
+
+.booking:hover .arrow {
+    transform: rotate(-45deg);
 }
 
 .bookingHeading {
@@ -44,6 +53,7 @@
     column-gap: 10px;
     align-items: flex-end;
     justify-content: flex-end;
+    width: 100%;
 }
 
 .bookingActions button {

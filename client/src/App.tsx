@@ -103,7 +103,7 @@ function App() {
             <Route path=":id" element={<Chat />} />
           </Route>
           <Route path="/minders/:minderId" element={<MinderPage />} />
-          <Route path="/dashboard/pets/:id" element={role === Role.OWNER ? <PetDetailsPage /> : <Navigate to="/" replace />} />
+          <Route path="/pets/:id" element={!isGuest ? <PetDetailsPage /> : <Navigate to="/" replace />} />
           <Route path="/users/:id" element={<UserPage />} />
           <Route
             path="/settings"

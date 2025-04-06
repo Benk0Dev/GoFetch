@@ -24,8 +24,8 @@
 }
 
 .servicesTableRow {
-    background-color: var(--menu-card-background-color);
     padding: 6px 16px;
+    border: 1px solid var(--text-color);
 }
 
 .columnData, .actions {

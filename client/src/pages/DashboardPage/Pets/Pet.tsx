@@ -39,7 +39,7 @@ function Pet({ pet }: { pet: IPet }) {
             <p>{pet.breed}, {getAge(pet.dob)} years</p>
             <img src={(pet.picture)} alt={pet.name} />
             <div className={styles.buttons}>
-                <button className="btn btn-primary" onClick={() => navigate(pet.id.toString())}>View Details</button>
+                <button className="btn btn-primary" onClick={() => navigate(`/pets/${pet.id.toString()}`)}>View Details</button>
                 <button className="btn btn-secondary" onClick={handleRemove}>Remove</button>
             </div>
         </div>
