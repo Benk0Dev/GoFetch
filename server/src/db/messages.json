@@ -84,15 +84,15 @@
       ],
       "lastMessage": "hello",
       "lastMessageDate": "2025-03-27T21:57:24.000Z",
-      "unreadCount": 1,
-      "isRead": false,
+      "unreadCount": 0,
+      "isRead": true,
       "unreadCounts": {
         "7": 0,
-        "8": 1
+        "8": 0
       },
       "userReadStatus": {
         "7": true,
-        "8": false
+        "8": true
       }
     },
     {
@@ -457,7 +457,7 @@
       "message": "hello",
       "chatId": 5,
       "timestamp": "2025-03-27T21:57:24.000Z",
-      "isRead": false
+      "isRead": true
     },
     {
       "id": 34,

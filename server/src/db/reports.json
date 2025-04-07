@@ -45,9 +45,10 @@
     "reporteeId": 7,
     "title": "Final Check",
     "description": "This is the final check for the report system",
-    "status": "Pending",
+    "status": "Resolved",
     "createdAt": "2025-04-01T10:16:10.334Z",
-    "updatedAt": "2025-04-01T10:16:10.334Z"
+    "updatedAt": "2025-04-07T03:04:42.132Z",
+    "result": "Warning"
   },
   {
     "id": 11,
@@ -55,9 +56,10 @@
     "reporteeId": 4,
     "title": "New test report",
     "description": "Terrible",
-    "status": "Pending",
+    "status": "Resolved",
     "createdAt": "2025-04-02T11:55:09.232Z",
-    "updatedAt": "2025-04-02T11:55:09.232Z"
+    "updatedAt": "2025-04-07T02:20:19.936Z",
+    "result": "Suspended"
   },
   {
     "id": 13,
@@ -65,8 +67,9 @@
     "reporteeId": 7,
     "title": "testingb3",
     "description": "hbhbybuybuyi",
-    "status": "Pending",
+    "status": "Resolved",
     "createdAt": "2025-04-03T11:24:42.696Z",
-    "updatedAt": "2025-04-03T11:24:42.696Z"
+    "updatedAt": "2025-04-07T02:25:14.058Z",
+    "result": "Suspended"
   }
 ]

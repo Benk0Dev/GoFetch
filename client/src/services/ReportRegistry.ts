@@ -28,6 +28,23 @@ export const addReport = async (reportData: IReport) => {
       }
 };
 
+export const setReportResult = async (reportId: number, result: string) => {
+    try {
+        const response = await fetch(`${API_URL}/report/${reportId}/result`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ result })
+        });
+        if (!response.ok) throw new Error("Failed to update report result");
+        return await response.text();
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+};  
+
 export const getAllReports = async () => {
     try {
         const response = await fetch(`${API_URL}/reports`);

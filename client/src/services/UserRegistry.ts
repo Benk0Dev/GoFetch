@@ -206,3 +206,21 @@ export async function suspendUser(id: number, suspension: INewSuspension) {
     return null;
   }
 }
+
+export async function removeSuspension(id: number) {
+  try {
+    const response = await fetch(`${API_URL}/removeSuspension/${id}`, {
+      method: "POST",
+    });
+    if (response.ok) {
+      return true;
+    } else {
+      const text = await response.text();
+      console.error(text);
+      return false;
+    }
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+}

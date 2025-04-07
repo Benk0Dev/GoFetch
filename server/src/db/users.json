@@ -160,7 +160,8 @@
         "postcode": "BN1 7EF",
         "country": "United Kingdom"
       },
-      "suspensionId": 0
+      "suspensionId": 2,
+      "suspension": null
     },
     "ownerRoleInfo": {
       "petIds": [],
@@ -183,7 +184,8 @@
         5
       ],
       "reviewIds": []
-    }
+    },
+    "suspensionId": 0
   },
   {
     "id": 5,
@@ -283,7 +285,8 @@
         "postcode": "E1 4PU",
         "country": "United Kingdom"
       },
-      "suspensionId": 0
+      "suspensionId": 3,
+      "suspension": null
     },
     "ownerRoleInfo": {
       "petIds": [
@@ -328,7 +331,8 @@
         6,
         8
       ]
-    }
+    },
+    "suspensionId": 0
   },
   {
     "id": 8,

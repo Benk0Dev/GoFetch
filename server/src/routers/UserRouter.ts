@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { AllUsersData, getUserByID, RegisterUser, loginUser, removeUser, getMinders, editUser, suspendUser } from '@server/static/UserStatic';
+import { AllUsersData, getUserByID, RegisterUser, loginUser, removeUser, getMinders, editUser, suspendUser, removeSuspension } from '@server/static/UserStatic';
 
 const router = Router();
 
@@ -49,6 +49,12 @@ router.post('/editUser/:id', (req: Request, res: Response) => {
 // Suspend user
 router.post('/suspendUser/:id', (req: Request, res: Response) => {
     const result = suspendUser(parseInt(req.params.id), req.body);
+    res.status(result.success ? 200 : 404).send(result.message);
+});
+
+// Remove suspension    
+router.post('/removeSuspension/:id', (req: Request, res: Response) => {
+    const result = removeSuspension(parseInt(req.params.id));
     res.status(result.success ? 200 : 404).send(result.message);
 });
 
