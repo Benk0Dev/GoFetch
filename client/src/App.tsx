@@ -22,21 +22,21 @@ import { SocketProvider } from "@client/context/SocketContext";
 import { Role } from "@gofetch/models/IUser";
 import MinderPage from "@client/pages/MinderPage/MinderPage";
 import ReportPage from "./pages/UserPage/ReportPage";
-import BannedPage from "./pages/BannedPage/BannedPage";
-import { AuthRedirect } from "./context/AuthRedirect";
+import SuspendedPage from "./pages/SuspendedPage/SuspendedPage";
 
 function App() {
-  const { role, loading } = useAuth();
+  const { role, loading, user } = useAuth();
   const isGuest = role === null;
+  const isSuspended = user?.primaryUserInfo.suspension;
 
   if (loading) return <div>Loading...</div>;
 
   return (
     <SocketProvider>
       <Router>
-        <AuthRedirect/>
         <Navbar />
         <Routes>
+          {/* Public Routes */}
           <Route
             path="/"
             element={isGuest || role === Role.ADMIN ? <LandingPage /> : <Navigate to="/dashboard" replace />}
@@ -53,73 +53,83 @@ function App() {
               isGuest ? <RegisterPage /> : <Navigate to="/dashboard" replace />
             }
           />
+          {/* Protected Routes for non-suspended users */}
+          {!isSuspended ? (
+            <>
+              <Route
+                path="/become-minder"
+                element={
+                  role === Role.OWNER ? (
+                    <BecomeRolePage role={Role.MINDER} />
+                  ) : (
+                    <Navigate to="/" replace />
+                  )
+                }
+              />
+              <Route
+                path="/become-owner"
+                element={
+                  role === Role.MINDER ? (
+                    <BecomeRolePage role={Role.OWNER} />
+                  ) : (
+                    <Navigate to="/" replace />
+                  )
+                }
+              />
+              <Route path="/browse" element={<BrowsePage />} />
+              <Route
+                path="/booking"
+                element={
+                  role === Role.OWNER ? (
+                    <BookingPage />
+                  ) : (
+                    <Navigate to="/" replace />
+                  )
+                }
+              />
+              <Route path="/booking/payment" element={<PaymentPage />} />
+              <Route path="/booking/success" element={<SuccessPage />} />
+              <Route
+                path="/dashboard/*"
+                element={!isGuest ? <DashboardPage /> : <Navigate to="/" replace />}
+              />
+              <Route
+                path="/edit-profile"
+                element={!isGuest ? <EditProfilePage /> : <Navigate to="/" replace />}
+              />
+              <Route
+                path="/report"
+                element={!isGuest ? <ReportPage/> : <Navigate to="/" replace/>}
+              />
+              <Route
+                path="/add-pet"
+                element={
+                  role === Role.OWNER ? <AddPetPage /> : <Navigate to="/" replace />
+                }
+              />
+              <Route
+                path="/chats"
+                element={!isGuest ? <MessagingPage /> : <Navigate to="/" replace />}
+              >
+                <Route path=":id" element={<Chat />} />
+              </Route>
+              <Route path="/minders/:minderId" element={<MinderPage />} />
+              <Route path="/pets/:id" element={!isGuest ? <PetDetailsPage /> : <Navigate to="/" replace />} />
+              <Route path="/users/:id" element={<UserPage />} />
+              <Route
+                path="/settings"
+                element={!isGuest ? <SettingsPage /> : <Navigate to="/" replace />}
+              />
+            </>
+          ) : (
+            // Redirect to /suspended if user is suspended
+            <Route path="*" element={<Navigate to="/suspended" replace />} />
+          )}
+
+          {/* Suspended Route */}
           <Route
-            path="/become-minder"
-            element={
-              role === Role.OWNER ? (
-                <BecomeRolePage role={Role.MINDER} />
-              ) : (
-                <Navigate to="/" replace />
-              )
-            }
-          />
-          <Route
-            path="/become-owner"
-            element={
-              role === Role.MINDER ? (
-                <BecomeRolePage role={Role.OWNER} />
-              ) : (
-                <Navigate to="/" replace />
-              )
-            }
-          />
-          <Route path="/browse" element={<BrowsePage />} />
-          <Route
-            path="/booking"
-            element={
-              role === Role.OWNER ? (
-                <BookingPage />
-              ) : (
-                <Navigate to="/" replace />
-              )
-            }
-          />
-          <Route path="/booking/payment" element={<PaymentPage />} />
-          <Route path="/booking/success" element={<SuccessPage />} />
-          <Route
-            path="/dashboard/*"
-            element={!isGuest ? <DashboardPage /> : <Navigate to="/" replace />}
-          />
-          <Route
-            path="/edit-profile"
-            element={!isGuest ? <EditProfilePage /> : <Navigate to="/" replace />}
-          />
-          <Route
-            path="/banned"
-            element={!isGuest ? <BannedPage /> : <Navigate to="/" replace />}
-          />
-          <Route
-            path="/report"
-            element={!isGuest ? <ReportPage/> : <Navigate to="/" replace/>}
-          />
-          <Route
-            path="/add-pet"
-            element={
-              role === Role.OWNER ? <AddPetPage /> : <Navigate to="/" replace />
-            }
-          />
-          <Route
-            path="/chats"
-            element={!isGuest ? <MessagingPage /> : <Navigate to="/" replace />}
-          >
-            <Route path=":id" element={<Chat />} />
-          </Route>
-          <Route path="/minders/:minderId" element={<MinderPage />} />
-          <Route path="/pets/:id" element={!isGuest ? <PetDetailsPage /> : <Navigate to="/" replace />} />
-          <Route path="/users/:id" element={<UserPage />} />
-          <Route
-            path="/settings"
-            element={!isGuest ? <SettingsPage /> : <Navigate to="/" replace />}
+            path="/suspended"
+            element={!isGuest && isSuspended ? <SuspendedPage /> : <Navigate to="/" replace />}
           />
         </Routes>
         <Footer />

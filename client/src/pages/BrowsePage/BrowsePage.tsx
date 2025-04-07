@@ -28,9 +28,9 @@ const BrowsePage: React.FC = () => {
             (minder) => minder.id !== user.id
           );
         }
-
+        
         filteredMinders = filteredMinders.filter(
-          (minder) => minder.minderRoleInfo.services.length > 0
+          (minder) => minder.minderRoleInfo.services.length > 0 && !minder.primaryUserInfo.suspension
         );
         setAllMinders(filteredMinders);
         filteredMinders.sort(
@@ -95,7 +95,6 @@ const BrowsePage: React.FC = () => {
           (s: any) => s.type === filters.service
         );
 
-      // ✅ Always apply distance filter based on __distance
       const distanceMatch = minder.__distance <= filters.distance;
 
       return (

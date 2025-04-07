@@ -6,12 +6,14 @@ import NotificationIcon from "@client/components/Navbar/NotificationIcon";
 import logo from "@client/assets/images/logo.svg";
 import { useAuth } from "@client/context/AuthContext";
 import { Role } from "@gofetch/models/IUser";
+import { LogOut } from "lucide-react";
 
 function Navbar() {
-  const { role, loading } = useAuth();
+  const { role, loading, user, logout } = useAuth();
   const location = useLocation();
+  const isSuspended = user?.primaryUserInfo.suspension;
 
-  const homeLink = role === Role.OWNER || role === Role.MINDER ? "/dashboard" : "/";
+  const homeLink = isSuspended ? "/" : role === Role.OWNER || role === Role.MINDER ? "/dashboard" : "/";
 
   return (
     <nav className={styles.navbar} id="navbar">
@@ -24,6 +26,12 @@ function Navbar() {
         <div className={styles.navLinks}>
           {loading ? (
             <div className={styles.loading}>Loading...</div>
+          ) : isSuspended ? (
+            <>
+              <button className="btn btn-transparent" onClick={logout} style={{ padding: "10px 16px", lineHeight: "1.6" }}>
+                <LogOut size={16} style={{color: "inherit"}} />Logout
+              </button>
+            </>
           ) : role ? (
             <>
               <Link to="/browse" className="btn-link" style={{ marginRight: "10px" }}>Explore Minders</Link>

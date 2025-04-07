@@ -15,7 +15,7 @@ function LandingPage() {
           <div className={styles.textContainer}>
             <h1>Find Trusted Pet Minders Near You</h1>
             <p>Book a reliable pet minder or earn money by caring for pets.</p>
-            <Link to="/browse" className="btn2 btn-primary">Explore Minders</Link>
+            <Link to="/browse" className="btn2 btn-primary" style={{width: "fit-content"}}>Explore Minders</Link>
           </div>
           <div className={styles.imageContainer}>
             <img src={hero} alt="Hero" />
