@@ -1,7 +1,7 @@
 .userDetails {
     display: flex;
     margin-bottom: auto;
-    padding: 40px 0;
+    padding: 40px 0 !important;
     justify-content: center;
 }
 
