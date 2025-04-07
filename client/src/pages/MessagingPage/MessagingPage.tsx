@@ -244,9 +244,6 @@ function MessagingPage() {
                                         </h3>
                                         <p className={styles.previewMessage}>
                                             {chat.lastMessage || "No messages yet"}
-                                            {!chat.isRead && chat.lastMessage && (
-                                                <span className={styles.unreadDot}></span>
-                                            )}
                                         </p>
                                     </div>
                                 </Link>

@@ -349,16 +349,6 @@
     font-weight: bold;
 }
 
-.unreadDot {
-    width: 8px;
-    height: 8px;
-    background-color: #1890ff;
-    border-radius: 50%;
-    display: inline-block;
-    margin-left: 6px;
-    margin-bottom: 1px;
-}
-
 .previewMessage {
     display: flex;
     align-items: center;
