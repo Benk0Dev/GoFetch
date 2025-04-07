@@ -809,5 +809,145 @@
     "read": false,
     "createdAt": "2025-04-06T18:20:00.133Z",
     "updatedAt": "2025-04-06T18:20:00.133Z"
+  },
+  {
+    "id": 83,
+    "userId": 5,
+    "message": "Ben Kodev has cancelled booking #19.",
+    "type": "booking",
+    "linkId": 19,
+    "read": false,
+    "createdAt": "2025-04-07T03:03:29.386Z",
+    "updatedAt": "2025-04-07T03:03:29.386Z"
+  },
+  {
+    "id": 84,
+    "userId": 7,
+    "message": "You have received a refund of £30.",
+    "type": "booking",
+    "linkId": 19,
+    "read": false,
+    "createdAt": "2025-04-07T03:03:29.389Z",
+    "updatedAt": "2025-04-07T03:03:29.389Z"
+  },
+  {
+    "id": 85,
+    "userId": 5,
+    "message": "You have a new booking request.",
+    "type": "booking",
+    "linkId": 20,
+    "read": false,
+    "createdAt": "2025-04-07T03:03:55.744Z",
+    "updatedAt": "2025-04-07T03:03:55.744Z"
+  },
+  {
+    "id": 86,
+    "userId": 5,
+    "message": "Ben Kodev has cancelled booking #20.",
+    "type": "booking",
+    "linkId": 20,
+    "read": false,
+    "createdAt": "2025-04-07T03:04:04.602Z",
+    "updatedAt": "2025-04-07T03:04:04.602Z"
+  },
+  {
+    "id": 87,
+    "userId": 7,
+    "message": "You have received a refund of £10.",
+    "type": "booking",
+    "linkId": 20,
+    "read": false,
+    "createdAt": "2025-04-07T03:04:04.605Z",
+    "updatedAt": "2025-04-07T03:04:04.605Z"
+  },
+  {
+    "id": 88,
+    "userId": 5,
+    "message": "You have a new booking request.",
+    "type": "booking",
+    "linkId": 21,
+    "read": true,
+    "createdAt": "2025-04-07T03:04:27.591Z",
+    "updatedAt": "2025-04-07T03:11:54.617Z"
+  },
+  {
+    "id": 89,
+    "userId": 7,
+    "message": "Booking #21 has been accepted!",
+    "type": "system",
+    "linkId": 21,
+    "read": false,
+    "createdAt": "2025-04-07T03:11:59.903Z",
+    "updatedAt": "2025-04-07T03:11:59.903Z"
+  },
+  {
+    "id": 90,
+    "userId": 5,
+    "message": "Booking #21 has been accepted!",
+    "type": "system",
+    "linkId": 21,
+    "read": false,
+    "createdAt": "2025-04-07T03:11:59.904Z",
+    "updatedAt": "2025-04-07T03:11:59.904Z"
+  },
+  {
+    "id": 91,
+    "userId": 7,
+    "message": "Eve White has accepted booking #21.",
+    "type": "booking",
+    "linkId": 21,
+    "read": true,
+    "createdAt": "2025-04-07T03:11:59.916Z",
+    "updatedAt": "2025-04-07T03:12:19.798Z"
+  },
+  {
+    "id": 92,
+    "userId": 5,
+    "message": "Ben Kodev has cancelled booking #21.",
+    "type": "booking",
+    "linkId": 21,
+    "read": false,
+    "createdAt": "2025-04-07T03:12:25.445Z",
+    "updatedAt": "2025-04-07T03:12:25.445Z"
+  },
+  {
+    "id": 93,
+    "userId": 7,
+    "message": "You have received a refund of £10.",
+    "type": "booking",
+    "linkId": 21,
+    "read": false,
+    "createdAt": "2025-04-07T03:12:25.448Z",
+    "updatedAt": "2025-04-07T03:12:25.448Z"
+  },
+  {
+    "id": 94,
+    "userId": 5,
+    "message": "You have a new booking request.",
+    "type": "booking",
+    "linkId": 22,
+    "read": true,
+    "createdAt": "2025-04-07T03:12:57.955Z",
+    "updatedAt": "2025-04-07T03:13:09.069Z"
+  },
+  {
+    "id": 95,
+    "userId": 7,
+    "message": "Booking request #22 has expired",
+    "type": "booking",
+    "linkId": 22,
+    "read": false,
+    "createdAt": "2025-04-07T03:14:00.034Z",
+    "updatedAt": "2025-04-07T03:14:00.034Z"
+  },
+  {
+    "id": 96,
+    "userId": 5,
+    "message": "Booking request #22 has expired",
+    "type": "booking",
+    "linkId": 22,
+    "read": false,
+    "createdAt": "2025-04-07T03:14:00.036Z",
+    "updatedAt": "2025-04-07T03:14:00.036Z"
   }
 ]

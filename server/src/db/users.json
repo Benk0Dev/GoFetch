@@ -239,11 +239,18 @@
       ],
       "availability": "Flexible",
       "bookingIds": [
-        14,
+        22,
         6,
         7,
         9,
-        10
+        10,
+        14,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
       ],
       "reviewIds": [
         2,
@@ -266,7 +273,7 @@
       "petminder",
       "petowner"
     ],
-    "currentRole": "petminder",
+    "currentRole": "petowner",
     "primaryUserInfo": {
       "profilePic": "20",
       "dob": "2004-12-22T00:00:00.000Z",
@@ -281,13 +288,19 @@
     "ownerRoleInfo": {
       "petIds": [
         5,
-        6,
-        7
+        6
       ],
       "bookingIds": [
-        14,
+        22,
         5,
-        6
+        6,
+        14,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
       ]
     },
     "minderRoleInfo": {

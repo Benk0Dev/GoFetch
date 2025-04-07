@@ -16,12 +16,16 @@ const BookingPage: React.FC = () => {
   const navigate = useNavigate();
   const minder = location.state?.minder;
   const service = location.state?.service;
+  const pet = location.state?.pet;
+  const date = location.state?.date;
+  const time = location.state?.time;
+  const notes = location.state?.notes;
 
   const [selectedService, setSelectedService] = useState<IService>(service);
-  const [selectedPet, setSelectedPet] = useState<IPet | null>(user.ownerRoleInfo.pets.length > 0 ? user.ownerRoleInfo.pets[0] : null);
-  const [selectedDate, setSelectedDate] = useState("");
-  const [selectedTime, setSelectedTime] = useState("");
-  const [specialInstructions, setSpecialInstructions] = useState("");
+  const [selectedPet, setSelectedPet] = useState<IPet | null>(pet ? pet : user.ownerRoleInfo.pets.length > 0 ? user.ownerRoleInfo.pets[0] : null);
+  const [selectedDate, setSelectedDate] = useState(date ? date : "");
+  const [selectedTime, setSelectedTime] = useState(time ? time : "");
+  const [specialInstructions, setSpecialInstructions] = useState(notes ? notes : "");
   const [error, setError] = useState("");
 
   const handleBooking = () => {
@@ -64,7 +68,7 @@ const BookingPage: React.FC = () => {
         selectedTime,
         pet: selectedPet,
         specialInstructions,
-      },
+      }, replace: true
     });
   };
 

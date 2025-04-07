@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import BookSubmit from "./BookSubmit.tsx";
-import { IUser } from "@gofetch/models/IUser";
-import { IService } from "@gofetch/models/IService";
-import styles from "./PaymentPage.module.css";
+import styles from "./BookingPage.module.css";
+import { INewBooking } from "@gofetch/models/IBooking.ts";
+import { createBooking } from "@client/services/BookingRegistry.ts";
+import { ICardDetails, IPayment } from "@gofetch/models/IPayment.ts";
+import { createPayment } from "@client/services/PaymentRegistry.ts";
+import { createNotification } from "@client/services/NotificationRegistry";
+import { NotificationType } from "@gofetch/models/INotification";
+import { useAuth } from "@client/context/AuthContext";
 
 const CheckoutPage: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { refreshUser } = useAuth();
 
   const owner = location.state?.owner || {};
   const minder = location.state?.minder || {};
@@ -23,125 +28,232 @@ const CheckoutPage: React.FC = () => {
     expirationDate: "",
     cvv: "",
   });
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [submitted, setSubmitted] = useState(false);
 
-  const labelMap: { [key: string]: string } = {
-    name: "Cardholder Name",
-    cardNumber: "Card Number",
-    expirationDate: "Expiration Date",
-    cvv: "Security Code",
-  };
+  const [error, setError] = useState("");
+  useEffect(() => {
+    if (!owner || !minder || !service || !selectedDate || !selectedTime) {
+      navigate("/browse", { replace: true });
+    }
+  }, [owner, minder, service, selectedDate, selectedTime, navigate]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    
-    if (name === "cardNumber" && value.length > 16) return;
-    if (name === "cvv" && value.length > 3) return;
+  const handleExpirationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+  
+    if (/^\d{0,2}\/?\d{0,2}$/.test(value)) {
+      let formattedValue = value;
+      if (!value.includes("/")) {
+        formattedValue = value.replace(/(\d{2})(\d{0,2})/, "$1/$2");
+      }
+      
+      if (formattedValue.length > 5) {
+        formattedValue = formattedValue.slice(0, 5);
+      }
 
-    if (name === "expirationMonth" || name === "expirationYear") {
-      const month = (document.querySelector('select[name="expirationMonth"]') as HTMLSelectElement)?.value;
-      const year = (document.querySelector('select[name="expirationYear"]') as HTMLSelectElement)?.value;
-      const expirationDate = `${year}-${month.padStart(2, "0")}-01`;
-      setCardDetails({ ...cardDetails, expirationDate });
-    } else {
-      setCardDetails({ ...cardDetails, [name]: value });
+      setCardDetails({ ...cardDetails, expirationDate: formattedValue });
     }
   };
 
   const validateCardDetails = () => {
-    const newErrors: { [key: string]: string } = {};
-
-    if (!cardDetails.name) newErrors.name = "Cardholder name is required";
-    if (!/^[0-9]{16}$/.test(cardDetails.cardNumber)) newErrors.cardNumber = "Card number must be 16 digits";
-    const expirationDate = new Date(cardDetails.expirationDate + "-01");
+    setError("");
+    if (!cardDetails.cardNumber || !cardDetails.expirationDate || !cardDetails.cvv || !cardDetails.name) {
+      setError("Please fill out all fields.");
+      return false;
+    }
+    if (!/^[0-9]{16}$/.test(cardDetails.cardNumber)) {
+      setError("Card number must be 16 digits.");
+      return false;
+    }
+    const expirationDateParts = cardDetails.expirationDate.split("/");
+    if (expirationDateParts.length !== 2) {
+      setError("Invalid expiration date format.");
+      return false;
+    }
+    if (expirationDateParts.some(part => part.length !== 2)) {
+      setError("Invalid expiration date format.");
+      return false;
+    }
+    const month = parseInt(expirationDateParts[0], 10);
+    const year = parseInt(expirationDateParts[1], 10);
+    if ((month < 1 || month > 12) || (year < 0 || year > 99)) {
+      setError("Invalid expiration date.");
+      return false;
+    }
     const currentDate = new Date();
     const maxFutureDate = new Date();
-    maxFutureDate.setFullYear(maxFutureDate.getFullYear() + 20);
-    if (expirationDate <= currentDate) newErrors.expirationDate = "Expiration date must be in the future";
-    if (expirationDate > maxFutureDate) newErrors.expirationDate = "Expiration date cannot be more than 20 years in the future";
-    if (!/^[0-9]{3}$/.test(cardDetails.cvv)) newErrors.cvv = "Security code must be 3 digits";
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    maxFutureDate.setFullYear(currentDate.getFullYear() + 20);
+    const fullYear = year + (year < 50 ? 2000 : 1900);
+    const expirationDate = new Date(fullYear, month - 1, 1);
+    if (expirationDate <= currentDate) {
+      setError("Expiration date must be in the future.");
+      return false;
+    }
+    if (expirationDate > maxFutureDate) {
+      setError("Expiration date cannot be more than 20 years in the future.");
+      return false;
+    }
+    if (cardDetails.cvv.length !== 3) {
+      setError("Security code must be 3 digits.");
+      return false;
+    }
+    if (!/^[a-zA-Z\s]+$/.test(cardDetails.name)) {
+      setError("Cardholder name must contain only letters and spaces.");
+      return false;
+    }
+    if (cardDetails.name.length < 3) {
+      setError("Cardholder name must be at least 3 characters long.");
+      return false;
+    }
+    if (cardDetails.name.length > 50) {
+      setError("Cardholder name must be less than 50 characters long.");
+      return false;
+    }
+    return true;
   };
 
-  const handleSubmit = () => {
-    if (validateCardDetails()) {
-      console.log("Payment successful, proceeding with booking...");
-      setSubmitted(true);
+  const handleSubmit = async () => {
+    if (!validateCardDetails()) {
+      return;
     }
+
+    const bookingData: INewBooking = {
+      petId: pet.id,
+      minderId: minder.id,
+      ownerId: owner.id,
+      serviceId: service.id,
+      time: new Date(`${selectedDate}T${selectedTime}`),
+      notes: specialInstructions,
+    };
+
+    const newBooking = await createBooking(bookingData);
+
+    if (!newBooking) {
+      setError("An error occurred while creating your booking.");
+      return;
+    }
+
+    const newCardDetails: ICardDetails = {
+      cardNumber: cardDetails.cardNumber,
+      expiryDate: cardDetails.expirationDate,
+      cvv: cardDetails.cvv,
+      cardName: cardDetails.name,
+    };
+
+    const paymentDetails: Omit<IPayment, "id" | "status" | "createdAt" | "updatedAt"> = {
+      amount: service.price,
+      bookingId: newBooking.id,
+      cardDetails: newCardDetails,
+    };
+
+    const newPayment = await createPayment(paymentDetails);
+
+    if (!newPayment) {
+      setError("An error occurred while processing your payment.");
+      return;
+    }
+
+    await createNotification({
+      userId: minder.id,
+      message: `You have a new booking request.`,
+      type: NotificationType.Booking,
+      linkId: newBooking.id,
+    });
+
+    refreshUser();
+
+    navigate("/booking/success", { state: { minderName: minder.name.fname, bookingId: newBooking.id }, replace: true });
   };
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.heading}>Checkout</h1>
-      <div className={styles.detailsBox}>
-        <p><strong>Service:</strong> {service?.type} ({service?.duration} min, ${service?.price})</p>
-        <p><strong>Date:</strong> {selectedDate}</p>
-        <p><strong>Time:</strong> {selectedTime}</p>
-        <p><strong>Pet:</strong> {pet?.name}</p>
-        <p><strong>Instructions:</strong> {specialInstructions}</p>
-      </div>
-      <button
-        className={styles.editButton}
-        onClick={() => navigate("/booking", { state: { minderId: minder.id, service: (minder.minderRoleInfo.services ?? [])[0] } })}
-      >
-        Edit Booking Details
-      </button>
-
-      <h2 className={styles.subHeading}>Payment Details</h2>
-      <div className={styles.paymentForm}>
-        {Object.entries(cardDetails).map(([key, value]) => (
-          <div key={key} className={styles.inputGroup}>
-            <label>{labelMap[key]}:</label>
-            {key === "expirationDate" ? (
-              <div className={styles.dateContainer}>
-                <select name="expirationMonth" value={cardDetails.expirationDate.slice(5, 7)} onChange={handleInputChange}>
-                  <option value="">Month</option>
-                  {Array.from({ length: 12 }, (_, i) => (
-                    <option key={i + 1} value={(i + 1).toString().padStart(2, "0")}>
-                      {new Date(0, i).toLocaleString("en-US", { month: "long" })}
-                    </option>
-                  ))}
-                </select>
-                <select name="expirationYear" value={cardDetails.expirationDate.slice(0, 4)} onChange={handleInputChange}>
-                  <option value="">Year</option>
-                  {Array.from({ length: 20 }, (_, i) => {
-                    const year = new Date().getFullYear() + i;
-                    return <option key={year} value={year}>{year}</option>;
-                  })}
-                </select>
-              </div>
-            ) : (
-              <input
-                type={key === "cardNumber" ? "text" : "text"}
-                name={key}
-                value={value}
-                onChange={handleInputChange}
-                placeholder={key === "Cardholder Name" ? "Enter the name exactly as it is on your card" : key === "cardNumber" ? "Please do not add spaces" : key === "cvv" ? "The CVV on the back of your card" : ""}
-              />
-            )}
-            {errors[key] && <p className={styles.errorText}>{errors[key]}</p>}
+    <div className={"container " + styles.paymentPage}>
+      <div className={styles.paymentPageContainer}>
+        <div>
+          <h2>Payment</h2>
+          <p>Complete your payment to confirm your booking.</p>
+        </div>
+        <div className={styles.paymentSectionContainer}>
+          <h4 style={{marginBottom: "10px"}}>Booking Summary</h4>
+          <p><strong>Service Type:</strong> {service.type}</p>
+          <p><strong>Duration:</strong> {service.duration}</p>
+          <p><strong>Price:</strong> £{service?.price}</p>
+          <p><strong>Pet:</strong> {pet.name} ({pet.breed})</p>
+          <p><strong>Date:</strong> {new Date(selectedDate).toLocaleDateString("en-GB")}</p>
+          <p><strong>Time:</strong> {selectedTime}</p>
+          <p><strong>Special Instructions:</strong> {specialInstructions}</p>
+          <button 
+            className="btn btn-secondary" 
+            style={{marginTop: "20px"}} 
+            onClick={() => navigate("/booking", { state: {
+              minder,
+              service,
+              pet,
+              date: selectedDate,
+              time: selectedTime,
+              notes: specialInstructions,
+            }, replace: true })}
+          >
+            Edit Booking
+          </button>
+        </div>
+        <div className={styles.paymentSectionContainer}>
+        <h4>Payment Details</h4>
+        <p style={{marginBottom: "20px"}}>Enter your card information to complete the payment.</p>
+        <form className={styles.paymentForm}>
+          <div className={styles.formInput}>
+            <label>Cardholder Name</label>
+            <input
+              type="text"
+              name="name"
+              value={cardDetails.name}
+              onChange={(e) => setCardDetails({ ...cardDetails, name: e.target.value })}
+              placeholder="John Doe"
+              required
+            />
           </div>
-        ))}
+          <div className={styles.formInput}>
+            <label>Card Number</label>
+            <input
+              type="text"
+              name="cardNumber"
+              value={cardDetails.cardNumber}
+              onChange={(e) => setCardDetails({ ...cardDetails, cardNumber: e.target.value.replace(/\s+/g, "") })}
+              placeholder="1234 5678 9012 3456"
+              maxLength={16}
+              required
+            />
+          </div>
+          <div className={styles.doubleRow}>
+            <div className={styles.formInput}>
+              <label>Expiration Date</label>
+              <input
+                  type="text"
+                  name="expirationDate"
+                  value={cardDetails.expirationDate}
+                  onChange={handleExpirationChange}
+                  placeholder="MM/YY"
+                  maxLength={5}
+                  required
+                />
+            </div>
+            <div className={styles.formInput}>
+              <label>Security Code</label>
+              <input
+                type="text"
+                name="cvv"
+                value={cardDetails.cvv}
+                onChange={(e) => setCardDetails({ ...cardDetails, cvv: e.target.value })}
+                placeholder="123"
+                maxLength={3}
+                required
+              />
+            </div>
+          </div>
+          {error && <p className={styles.error}>{error}</p>}
+          <button type="button" className="btn btn-primary" onClick={handleSubmit} style={{width: "100%"}}>
+            Pay £{service.price}
+          </button>
+        </form>
+        </div>
       </div>
-      <button className={styles.bookButton} onClick={handleSubmit}>Confirm Payment</button>
-
-      {submitted && (
-        <BookSubmit
-          pet={pet}
-          minder={minder as IUser}
-          owner={owner as IUser}
-          service={service as IService}
-          time={new Date(`${selectedDate}T${selectedTime}`)}
-          notes={specialInstructions}
-          cardNumber={cardDetails.cardNumber}
-          expiryDate={cardDetails.expirationDate}
-          cvv={cardDetails.cvv}
-          cardName={cardDetails.name}
-        />
-      )}
     </div>
   );
 };

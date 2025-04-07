@@ -109,6 +109,7 @@
 
 .serviceCard:hover, .petCard:hover {
     border-color: var(--highlight-color);
+    background-color: transparent;
 }
 
 .serviceHeader {
@@ -162,6 +163,11 @@
     padding: 6px;
     box-sizing: content-box;
     margin-bottom: 5px;
+    transition: all 0.2s ease;
+}
+
+.addPetCard:hover svg {
+    background-color: var(--highlight-color);
 }
 
 .timers {
@@ -193,4 +199,91 @@
 .error {
     color: var(--error-color);
     margin-top: 10px !important;
+}
+
+.paymentPage {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 40px 20px !important;
+    gap: 20px;
+}
+
+.paymentPageContainer {
+    background-color: var(--primary-color);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--text-color);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.paymentPageContainer p {
+    margin: 0;
+}
+
+.paymentSectionContainer {
+    padding: 20px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--text-color);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.paymentForm {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 20px;
+}
+
+.formInput {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.doubleRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+}
+
+.successPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--primary-color);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--text-color);
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.successPage h2 {
+    margin-bottom: 10px;
+}
+
+.successPage p {
+    margin: 0;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.buttons > button {
+    width: 100%;
 }
