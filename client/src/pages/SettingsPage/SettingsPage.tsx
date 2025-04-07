@@ -126,6 +126,7 @@ function SettingsPage() {
                 width={40}
                 activeBoxShadow="none"
                 className={styles.toggleSwitch}
+                disabled={!notificationsEnabled}
               />
             </div>
           </div>
