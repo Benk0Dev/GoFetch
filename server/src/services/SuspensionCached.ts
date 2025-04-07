@@ -35,11 +35,6 @@ export function removeSuspensionCached(id: number) {
         const userId = cache.suspensions[index].userId;
         cache.suspensions.splice(index, 1);
         saveSuspensionsToFile(cache.suspensions);
-
-        // Reset the user's suspensionId to 0
-        editUser(userId, { suspensionId: 0 });
-        editUser(userId, { primaryUserInfo: { suspension: null } });
-
         return { success: true, message: 'Suspension removed successfully!' };
     } else {
         return { success: false, message: 'Suspension not found!' };

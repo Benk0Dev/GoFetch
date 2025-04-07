@@ -1,4 +1,4 @@
-import { getCachedUsersWithAllInfo, getUserWithoutPassword, RegisterUserCache, removeUserCache, editUserCache } from '@server/services/UserCached';
+import { getCachedUsersWithAllInfo, getUserWithoutPassword, RegisterUserCache, removeUserCache, editUserCache, getCachedUsers } from '@server/services/UserCached';
 import { IRegisterdUser, Role } from '@gofetch/models/IUser';
 import { INewSuspension } from '@gofetch/models/ISuspension';
 import { addSuspension } from './SuspensionStatic';
@@ -86,14 +86,11 @@ export function removeSuspension(id: number) {
   
   if (suspension.success) {
     // Force refresh user data
-    const user = getCachedUsersWithAllInfo().find(u => 
-      u.primaryUserInfo.suspension?.id === id
-    );
+    const user = getCachedUsers().find(u => u.primaryUserInfo.suspensionId === id);
     if (user) {
       editUser(user.id, {
         primaryUserInfo: {
           suspensionId: 0,
-          suspension: null
         }
       });
     }}
