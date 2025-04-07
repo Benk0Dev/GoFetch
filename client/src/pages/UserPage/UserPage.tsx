@@ -1,12 +1,13 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "@client/context/AuthContext";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import styles from "./UserPage.module.css";
 import BackButton from "@client/components/BackButton";
 import { IUser, Role } from "@gofetch/models/IUser";
 import { startChat } from "@client/services/ChatRegistry";
 import { getUserByIdWithPictures} from "@client/services/UserRegistry";
 import { MapPin, Settings, UserRound, MessageSquare, Flag, Ban } from "lucide-react";
+import { removeSuspension } from "@client/services/UserRegistry";
 
 function ProfilePage() {
     const { id } = useParams<{ id: string }>();
@@ -57,8 +58,18 @@ function ProfilePage() {
         });
     };
 
-    const handleSuspend = () => {
-        // TODO: Implement suspension
+    const handleRemoveSuspension = async () => {
+        if (userBeingDisplayed.primaryUserInfo.suspension) {
+            const success = await removeSuspension(userBeingDisplayed.primaryUserInfo.suspension.id);
+            if (success) {
+                // Update the user in the state
+                const updatedUser = await getUserByIdWithPictures(userBeingDisplayed.id);
+                setUserBeingDisplayed(updatedUser);
+    
+                // Full reload
+                navigate(`/users/${userBeingDisplayed.id}`, { replace: true });
+            }
+        }
     };
 
     return (
@@ -96,7 +107,9 @@ function ProfilePage() {
                                     <button className="btn2 btn-primary" onClick={handleMinderProfile}><UserRound size={18} strokeWidth={2} />Minder Profile</button>
                                 )}
                                 <button className="btn2 btn-secondary" onClick={handleMessage}><MessageSquare size={18} strokeWidth={2} />Message</button>
-                                <button className="btn2 btn-transparent black-hover" onClick={handleSuspend}><Ban size={18} strokeWidth={2} />Suspend</button>
+                                {userBeingDisplayed.primaryUserInfo.suspension && (
+                                    <button className="btn2 btn-transparent black-hover" onClick={handleRemoveSuspension}><Ban size={18} strokeWidth={2} />Remove Suspension</button>
+                                )}
                             </>
                         ) : (
                             <>

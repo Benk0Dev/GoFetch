@@ -23,6 +23,7 @@ import { Role } from "@gofetch/models/IUser";
 import MinderPage from "@client/pages/MinderPage/MinderPage";
 import ReportPage from "./pages/UserPage/ReportPage";
 import BannedPage from "./pages/BannedPage/BannedPage";
+import { AuthRedirect } from "./context/AuthRedirect";
 
 function App() {
   const { role, loading } = useAuth();
@@ -33,6 +34,7 @@ function App() {
   return (
     <SocketProvider>
       <Router>
+        <AuthRedirect/>
         <Navbar />
         <Routes>
           <Route

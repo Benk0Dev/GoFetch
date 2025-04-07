@@ -2,6 +2,7 @@ import { getCachedUsersWithAllInfo, getUserWithoutPassword, RegisterUserCache, r
 import { IRegisterdUser, Role } from '@gofetch/models/IUser';
 import { INewSuspension } from '@gofetch/models/ISuspension';
 import { addSuspension } from './SuspensionStatic';
+import { removeSuspensionCached } from '@server/services/SuspensionCached';
 
 export function AllUsersData() {
   const result = getCachedUsersWithAllInfo();
@@ -77,5 +78,28 @@ export function suspendUser(id: number, suspension: INewSuspension) {
     }
   } else {
     return { success: false, message: 'Suspension not added' };
+  }
+}
+
+export function removeSuspension(id: number) {
+  const suspension = removeSuspensionCached(id);
+  
+  if (suspension.success) {
+    // Force refresh user data
+    const user = getCachedUsersWithAllInfo().find(u => 
+      u.primaryUserInfo.suspension?.id === id
+    );
+    if (user) {
+      editUser(user.id, {
+        primaryUserInfo: {
+          suspensionId: 0,
+          suspension: null
+        }
+      });
+    }}
+  if (suspension.success) {
+    return { success: true, message: 'Suspension removed successfully' };
+  } else {
+    return { success: false, message: 'Suspension not found' };
   }
 }

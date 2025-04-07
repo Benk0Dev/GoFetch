@@ -1,6 +1,7 @@
 import fs from 'fs';
 import { INewSuspension, ISuspension } from '@gofetch/models/ISuspension';
 import { cache, DB_PATH } from '@server/utils/Cache';
+import { editUser } from '@server/static/UserStatic';
 
 export function getCachedSuspensions(): ISuspension[] {
     try {
@@ -28,6 +29,22 @@ export function addSuspensionCached(suspension: INewSuspension) {
     return { success: true, message: 'Suspensions added successfully!', suspension: newSuspension };
 }
 
+export function removeSuspensionCached(id: number) {
+    const index = cache.suspensions.findIndex(suspension => suspension.id === id);
+    if (index !== -1) {
+        const userId = cache.suspensions[index].userId;
+        cache.suspensions.splice(index, 1);
+        saveSuspensionsToFile(cache.suspensions);
+
+        // Reset the user's suspensionId to 0
+        editUser(userId, { suspensionId: 0 });
+        editUser(userId, { primaryUserInfo: { suspension: null } });
+
+        return { success: true, message: 'Suspension removed successfully!' };
+    } else {
+        return { success: false, message: 'Suspension not found!' };
+    }
+}
 export function saveSuspensionsToFile(suspensions: ISuspension[]) {
     fs.writeFileSync(`${DB_PATH}/suspensions.json`, JSON.stringify(suspensions, null, 2), 'utf8');
 }
