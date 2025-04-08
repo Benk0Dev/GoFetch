@@ -1,8 +1,8 @@
-import { IService } from "@gofetch/models/IService";
+import { INewService, IService } from "@gofetch/models/IService";
 
 import { API_URL } from "@client/services/Registry";
 
-export async function addService(userId: number, service: IService) {
+export async function addService(userId: number, service: INewService) {
   try {
     const response = await fetch(`${API_URL}/newservice/${userId}`, {
       method: "POST",

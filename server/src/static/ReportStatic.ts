@@ -23,22 +23,6 @@ export function addReport(report: IReport) {
     return addReportCached(report);
 }
 
-export function setReportInProgress(reportId: number) {
-    const reportIndex = cache.reports.findIndex(report => report.id === reportId);
-    if (reportIndex !== -1) {
-        cache.reports[reportIndex].status = Status.IN_PROGRESS;
-        cache.reports[reportIndex].updatedAt = new Date();
-        try {
-            fs.writeFileSync(`${DB_PATH}/reports.json`, JSON.stringify(cache.reports, null, 2), 'utf8');
-            return { success: true, message: 'Report status was updated successfully' };
-        } catch (error) {
-            console.error('Error updating report status:', error);
-            return { success: false, message: 'Error updating report status' };
-        }
-    }
-    return { success: false, message: 'Report not found' };
-}
-
 export function setReportResult(reportId: number, result: Result) {
     const reportIndex = cache.reports.findIndex(report => report.id === reportId);
     if (reportIndex !== -1) {

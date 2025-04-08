@@ -17,8 +17,8 @@ import CreateReview from "@client/pages/DashboardPage/Bookings/CreateReview";
 import { IReview } from "@gofetch/models/IReview";
 import { createNotification } from "@client/services/NotificationRegistry";
 import { NotificationType } from "@gofetch/models/INotification";
-import { updatePaymentStatus, getPaymentByBookingId } from "@client/services/PaymentRegistry";
-import { Status } from "@gofetch/models/IPayment";
+import { getPayment, updatePaymentStatus } from "@client/services/PaymentRegistry";
+import { IPayment, Status } from "@gofetch/models/IPayment";
 import { ArrowLeft, Calendar, Clock, MapPin } from "lucide-react";
 import BookingInfo from "./BookingInfo";
 import BookingActions from "./ BookingActions";
@@ -31,6 +31,7 @@ export interface Booking {
     minder: any;
     pet: any;
     service: any;
+    payment: IPayment;
     notes: string;
     reviewed: boolean;
     ownerCompleted: boolean;
@@ -85,10 +86,11 @@ function Bookings() {
     
             const detailedBookings = await Promise.all(
                 rawBookings.map(async (booking: IBooking) => {
-                    const [owner, minder, service] = await Promise.all([
+                    const [owner, minder, service, payment] = await Promise.all([
                         getUserByIdWithPictures(booking.ownerId),
                         getUserByIdWithPictures(booking.minderId),
-                        getServiceById(booking.serviceId)
+                        getServiceById(booking.serviceId),
+                        getPayment(booking.paymentId),
                     ]);
     
                     const pet = owner.ownerRoleInfo.pets.find((pet: IPet) => pet.id === booking.petId);
@@ -103,6 +105,7 @@ function Bookings() {
                         minder,
                         pet,
                         service,
+                        payment,
                         notes: booking.notes || "",
                         reviewed,
                         ownerCompleted: booking.ownerCompleted,
@@ -143,8 +146,7 @@ function Bookings() {
         e.stopPropagation();
         const updatedBooking = await setBookingStatus(booking.id, BookingStatus.Cancelled);
         if (updatedBooking) {
-            const payment = await getPaymentByBookingId(booking.id);
-            await updatePaymentStatus(payment.id, Status.REFUNDED);
+            await updatePaymentStatus(booking.payment.id, Status.REFUNDED);
 
             if (user.currentRole === Role.OWNER) {
                 await createNotification({
@@ -155,14 +157,14 @@ function Bookings() {
                 })
                 await createNotification({
                     userId: booking.owner.id,
-                    message: `You have received a refund of £${payment.amount}.`,
+                    message: `You have received a refund of £${booking.payment.amount}.`,
                     type: NotificationType.Booking,
                     linkId: booking.id
                 })
             } else {
                 await createNotification({
                     userId: booking.owner.id,
-                    message: `${user.name.fname} ${user.name.sname} has cancelled booking #${booking.id}. You have received a refund of £${payment.amount}.`,
+                    message: `${user.name.fname} ${user.name.sname} has cancelled booking #${booking.id}. You have received a refund of £${booking.payment.amount}.`,
                     type: NotificationType.Booking,
                     linkId: booking.id
                 })
@@ -197,12 +199,11 @@ function Bookings() {
         e.stopPropagation();
         const updatedBooking = await setBookingStatus(booking.id, BookingStatus.Cancelled);
         if (updatedBooking) {
-            const payment = await getPaymentByBookingId(booking.id);
-            await updatePaymentStatus(payment.id, Status.REFUNDED);
+            await updatePaymentStatus(booking.payment.id, Status.REFUNDED);
           
             await createNotification({
                 userId: booking.owner.id,
-                message: `${user.name.fname} ${user.name.sname} has declined booking request #${booking.id}. You have received a refund of £${payment.amount}.`,
+                message: `${user.name.fname} ${user.name.sname} has declined booking request #${booking.id}. You have received a refund of £${booking.payment.amount}.`,
                 type: NotificationType.Booking,
                 linkId: booking.id
             })
@@ -236,13 +237,12 @@ function Bookings() {
         }
 
         if (updatedBooking.ownerCompleted && updatedBooking.minderCompleted) {
-            const payment = await getPaymentByBookingId(booking.id);
-            await updatePaymentStatus(payment.id, Status.PAID);
+            await updatePaymentStatus(booking.payment.id, Status.PAID);
 
             if (user.currentRole === Role.OWNER) {
                 await createNotification({
                     userId: booking.minder.id,
-                    message: `Booking #${booking.id} has been completed. You have received a payment of £${payment.amount}.`,
+                    message: `Booking #${booking.id} has been completed. You have received a payment of £${booking.payment.amount}.`,
                     type: NotificationType.Booking,
                     linkId: booking.id
                 });
@@ -255,7 +255,7 @@ function Bookings() {
                 });
                 await createNotification({
                     userId: booking.minder.id,
-                    message: `You have received a payment of £${payment.amount}.`,
+                    message: `You have received a payment of £${booking.payment.amount}.`,
                     type: NotificationType.Booking,
                     linkId: booking.id
                 });

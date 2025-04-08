@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from '@client/components/Notifications/NotificationPopup.module.css';
 import { INotification, NotificationType } from '@gofetch/models/INotification';
 import { markNotificationAsRead } from '@client/services/NotificationRegistry';
+import { useAuth } from '@client/context/AuthContext';
 
 interface NotificationPopupProps {
   notification: INotification;
@@ -11,6 +12,7 @@ interface NotificationPopupProps {
 }
 
 const NotificationPopup: React.FC<NotificationPopupProps> = ({ notification, onClose }) => {
+  const { user, refreshUser } = useAuth();
   const navigate = useNavigate();
   const [isExiting, setIsExiting] = useState(false);
   const animationDuration = 5000; // 5 seconds
@@ -42,9 +44,11 @@ const NotificationPopup: React.FC<NotificationPopupProps> = ({ notification, onC
         navigate(`/chats/${notification.linkId}`);
         break;
       case NotificationType.Booking:
+        refreshUser();
         navigate(`/dashboard/bookings/${notification.linkId}`);
         break;
       case NotificationType.Review:
+        refreshUser();
         navigate(`/dashboard/reviews`);
         break;
       default:

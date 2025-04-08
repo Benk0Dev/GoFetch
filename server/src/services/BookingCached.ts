@@ -63,65 +63,65 @@ export function updateBookingStatusCached(bookingId: number, status: BookingStat
     // Save to file
     saveBookingsToFile();
 
-    if (BookingStatus.Confirmed === status) {
-      console.log('Booking confirmed:', booking);
-      let chatId = chatWith2UsersCached(booking.ownerId, booking.minderId)?.chatId;
-      if (!chatId) {
-        console.log('Chat not found between users, creating a new one');
-        // Create a new chat between owner and minder
-        try {
-          // Create new chat with the two users
-          const newChat = createChatCached({
-            users: [booking.ownerId, booking.minderId],
-            lastMessage: '',
-            lastMessageDate: new Date(),
-            unreadCount: 0,
-            isRead: false,
-          });
-          chatId = newChat.id;
-        }
-        catch (error) {
-          console.error('Error creating chat:', error);
-        }
-      }
+    // if (BookingStatus.Confirmed === status) {
+    //   console.log('Booking confirmed:', booking);
+    //   let chatId = chatWith2UsersCached(booking.ownerId, booking.minderId)?.chatId;
+    //   if (!chatId) {
+    //     console.log('Chat not found between users, creating a new one');
+    //     // Create a new chat between owner and minder
+    //     try {
+    //       // Create new chat with the two users
+    //       const newChat = createChatCached({
+    //         users: [booking.ownerId, booking.minderId],
+    //         lastMessage: '',
+    //         lastMessageDate: new Date(),
+    //         unreadCount: 0,
+    //         isRead: false,
+    //       });
+    //       chatId = newChat.id;
+    //     }
+    //     catch (error) {
+    //       console.error('Error creating chat:', error);
+    //     }
+    //   }
 
-      const messageContent = `Booking #${booking.id} has been accepted!`;
+    //   const messageContent = `Booking #${booking.id} has been accepted!`;
 
-      if (!chatId) {
-        console.error('Chat ID is undefined. Cannot send message.');
-        return booking;
-      }
+    //   if (!chatId) {
+    //     console.error('Chat ID is undefined. Cannot send message.');
+    //     return booking;
+    //   }
 
-      // Create message object with consistent structure
-      const messageObj = {
-        senderId: -1, // System message (not from a user)
-        message: messageContent,
-        chatId: chatId,
-        timestamp: new Date(),
-        isRead: false
-      };
+    //   // Create message object with consistent structure
+    //   const messageObj = {
+    //     senderId: -1, // System message (not from a user)
+    //     message: messageContent,
+    //     chatId: chatId,
+    //     timestamp: new Date(),
+    //     isRead: false
+    //   };
 
-      // Add message to database
-      const result = addMessage(chatId, messageObj);
+    //   // Add message to database
+    //   const result = addMessage(chatId, messageObj);
 
-      if (result.success) {
-        const io = getIO();
-        if (io) {
-          [booking.ownerId, booking.minderId].forEach(userId => {
-            const notificationData = {
-              userId: userId,
-              message: messageContent,
-              type: NotificationType.System,
-              linkId: booking.id
-            };
+    //   if (result.success) {
+    //     const io = getIO();
+    //     if (io) {
+    //       [booking.ownerId, booking.minderId].forEach(userId => {
+    //         const notificationData = {
+    //           userId: userId,
+    //           message: messageContent,
+    //           type: NotificationType.System,
+    //           linkId: booking.id
+    //         };
 
-            addNotification(notificationData);
+    //         addNotification(notificationData);
 
-            io.to(`user-${userId}`).emit('notification', notificationData);
-          });
-        }
-      }
-    }
+    //         io.to(`user-${userId}`).emit('notification', notificationData);
+    //       });
+    //     }
+    //   }
+    // }
     return booking;
   }
   return undefined; // No booking found with that ID

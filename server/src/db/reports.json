@@ -2,74 +2,12 @@
   {
     "id": 1,
     "reporterId": 5,
-    "reporteeId": 7,
-    "title": "Bad Minder!",
-    "description": "Ben was a terrible minder",
-    "status": "Pending",
-    "createdAt": "2025-04-01T09:16:33.292Z",
-    "updatedAt": "2025-04-01T09:16:33.292Z"
-  },
-  {
-    "id": 3,
-    "reporterId": 5,
-    "reporteeId": 7,
-    "title": "Bad Minder!",
-    "description": "Ben was a terrible minder!",
-    "status": "Pending",
-    "createdAt": "2025-04-01T09:34:33.154Z",
-    "updatedAt": "2025-04-01T09:34:33.154Z"
-  },
-  {
-    "id": 5,
-    "reporterId": 5,
-    "reporteeId": 4,
-    "title": "Test",
-    "description": "This is a test report",
-    "status": "Pending",
-    "createdAt": "2025-04-01T09:37:58.901Z",
-    "updatedAt": "2025-04-01T09:37:58.901Z"
-  },
-  {
-    "id": 7,
-    "reporterId": 5,
-    "reporteeId": 7,
-    "title": "test2",
-    "description": "This is another test",
-    "status": "Pending",
-    "createdAt": "2025-04-01T09:42:52.151Z",
-    "updatedAt": "2025-04-01T09:42:52.151Z"
-  },
-  {
-    "id": 9,
-    "reporterId": 5,
-    "reporteeId": 7,
-    "title": "Final Check",
-    "description": "This is the final check for the report system",
+    "reporteeId": 8,
+    "title": "Was rude to me on messages",
+    "description": "He sent me inappropriate messages.",
     "status": "Resolved",
-    "createdAt": "2025-04-01T10:16:10.334Z",
-    "updatedAt": "2025-04-07T03:04:42.132Z",
-    "result": "Warning"
-  },
-  {
-    "id": 11,
-    "reporterId": 5,
-    "reporteeId": 4,
-    "title": "New test report",
-    "description": "Terrible",
-    "status": "Resolved",
-    "createdAt": "2025-04-02T11:55:09.232Z",
-    "updatedAt": "2025-04-07T02:20:19.936Z",
-    "result": "Suspended"
-  },
-  {
-    "id": 13,
-    "reporterId": 5,
-    "reporteeId": 7,
-    "title": "testingb3",
-    "description": "hbhbybuybuyi",
-    "status": "Resolved",
-    "createdAt": "2025-04-03T11:24:42.696Z",
-    "updatedAt": "2025-04-07T02:25:14.058Z",
+    "createdAt": "2025-04-08T20:42:14.037Z",
+    "updatedAt": "2025-04-08T20:43:07.399Z",
     "result": "Suspended"
   }
 ]

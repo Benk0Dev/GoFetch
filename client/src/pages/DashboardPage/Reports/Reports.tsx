@@ -2,9 +2,9 @@ import styles from './Reports.module.css';
 import dashboardStyles from '@client/pages/DashboardPage/Dashboard.module.css';
 import { useEffect, useState } from 'react';
 import { getAllReports } from '@client/services/ReportRegistry';
-import { IReport } from '@gofetch/models/IReport';
-import '@client/global.css';
+import { IReport, Status } from '@gofetch/models/IReport';
 import ReportsModal from './ReportsModal';
+import { Eye } from "lucide-react";
 
 function Reports() {
     const [reports, setReports] = useState<IReport[]>([]);
@@ -25,47 +25,35 @@ function Reports() {
     return (
         <div className={dashboardStyles.dashboardSection}>
             <h2>Reports</h2>
-            <p>View reports created by users.</p>
-            <div className='container'>
-                <div className={styles.reportsList}>
-                    {reports.length === 0 ? (
-                        <p>No reports found</p>
-                    ) : (
-                        <table className={styles.reportsTable}>
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Title</th>
-                                    <th>Reported User ID</th>
-                                    <th>Status</th>
-                                    <th>Created</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {reports.map(report => (
-                                    <tr key={report.id}>
-                                        <td>{report.id}</td>
-                                        <td>{report.title}</td>
-                                        <td>{report.reporteeId}</td>
-                                        <td>{report.status}</td>
-                                        <td>{new Date(report.createdAt).toLocaleDateString()}</td>
-                                        <td>
-                                            <button className="btn2 btn-primary" onClick={() => setSelectedReport(report)}>More</button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    )}
+            <p>View unresolved reports created by users.</p>
+            <div className={styles.reportsTable}>
+                <div className={styles.reportsTableHeader}>
+                    <div>ID</div>
+                    <div>Reportee ID</div>
+                    <div>Title</div>
+                    <div>Date</div>
+                    <div>Actions</div>
                 </div>
-                {selectedReport && (
-                    <ReportsModal
-                    report={selectedReport}
-                    onClose={() => setSelectedReport(null)}
-                    />
-                )}
+                {reports
+                    .filter(report => report.status === Status.PENDING)
+                    .map(report => (
+                        <div key={report.id} className={styles.reportsTableRow}>
+                            <div className={styles.columnData}>#{report.id}</div>
+                            <div className={styles.columnData}>{report.reporteeId}</div>
+                            <div className={styles.columnData}>{report.title}</div>
+                            <div className={styles.columnData}>{new Date(report.createdAt).toLocaleDateString()}</div>
+                            <button className={`btn-link ${styles.action}`} onClick={() => setSelectedReport(report)} style={{display: "flex", alignItems: "center", gap: "5px"}}>
+                                <Eye size={16} />View
+                            </button>
+                        </div>
+                    ))}
             </div>
+            {selectedReport && (
+                <ReportsModal
+                report={selectedReport}
+                onClose={() => setSelectedReport(null)}
+                />
+            )}
         </div>
     );
 }

@@ -1,973 +1,192 @@
 [
   {
     "id": 1,
-    "userId": 5,
-    "message": "Sarah accepted your booking request for dog walking",
-    "read": true,
+    "userId": 3,
+    "message": "You have a new booking request.",
     "type": "booking",
-    "linkId": 101,
-    "createdAt": "2025-03-21T08:15:00.000Z",
-    "updatedAt": "2025-03-26T22:25:24.688Z"
+    "linkId": 1,
+    "read": false,
+    "createdAt": "2025-04-08T20:47:26.073Z",
+    "updatedAt": "2025-04-08T20:47:26.073Z"
   },
   {
     "id": 2,
-    "userId": 5,
-    "message": "Alex sent you a new message",
-    "read": true,
-    "type": "message",
-    "linkId": 2,
-    "createdAt": "2025-03-21T10:20:00.000Z",
-    "updatedAt": "2025-03-25T17:21:35.810Z"
+    "userId": 1,
+    "message": "Alfie Lee has accepted booking #1.",
+    "type": "booking",
+    "linkId": 1,
+    "read": false,
+    "createdAt": "2025-04-08T20:47:53.930Z",
+    "updatedAt": "2025-04-08T20:47:53.930Z"
   },
   {
     "id": 3,
-    "userId": 5,
-    "message": "Your booking with Lisa has been confirmed",
-    "read": true,
+    "userId": 1,
+    "message": "Booking #1 is now in progress.",
     "type": "booking",
-    "linkId": 102,
-    "createdAt": "2025-03-20T14:45:00.000Z",
-    "updatedAt": "2025-03-25T04:59:10.635Z"
+    "linkId": 1,
+    "read": true,
+    "createdAt": "2025-04-08T20:50:00.698Z",
+    "updatedAt": "2025-04-08T20:50:29.743Z"
   },
   {
     "id": 4,
-    "userId": 5,
-    "message": "John rated your service 5 stars!",
-    "read": true,
-    "type": "review",
-    "linkId": 201,
-    "createdAt": "2025-03-19T09:10:00.000Z",
-    "updatedAt": "2025-03-26T23:52:05.897Z"
+    "userId": 3,
+    "message": "Booking #1 is now in progress.",
+    "type": "booking",
+    "linkId": 1,
+    "read": false,
+    "createdAt": "2025-04-08T20:50:00.700Z",
+    "updatedAt": "2025-04-08T20:50:00.700Z"
   },
   {
     "id": 5,
-    "userId": 5,
-    "message": "Payment received for your pet sitting service",
+    "userId": 3,
+    "message": "Alice Smith has requested to set booking #1 to complete.",
+    "type": "booking",
+    "linkId": 1,
     "read": true,
-    "type": "payment",
-    "linkId": 301,
-    "createdAt": "2025-03-18T11:25:00.000Z",
-    "updatedAt": "2025-03-18T12:00:00.000Z"
+    "createdAt": "2025-04-08T20:50:34.218Z",
+    "updatedAt": "2025-04-08T20:50:36.985Z"
   },
   {
     "id": 6,
-    "userId": 5,
-    "message": "Sup",
-    "type": "message",
-    "linkId": 120,
-    "read": true,
-    "createdAt": "2025-03-26T16:06:08.667Z",
-    "updatedAt": "2025-03-26T22:49:18.481Z"
+    "userId": 1,
+    "message": "Booking #1 has been completed.",
+    "type": "booking",
+    "linkId": 1,
+    "read": false,
+    "createdAt": "2025-04-08T20:50:38.473Z",
+    "updatedAt": "2025-04-08T20:50:38.473Z"
   },
   {
     "id": 7,
-    "userId": 8,
-    "message": "New message: hello",
-    "type": "message",
-    "linkId": 5,
-    "read": true,
-    "createdAt": "2025-03-27T21:57:24.008Z",
-    "updatedAt": "2025-04-03T11:23:15.890Z"
+    "userId": 3,
+    "message": "You have received a payment of £20.",
+    "type": "booking",
+    "linkId": 1,
+    "read": false,
+    "createdAt": "2025-04-08T20:50:38.479Z",
+    "updatedAt": "2025-04-08T20:50:38.479Z"
   },
   {
     "id": 8,
-    "userId": 5,
-    "message": "New message: Hello Eve. You are in trouble ...",
-    "type": "message",
-    "linkId": 6,
+    "userId": 3,
+    "message": "Alice Smith has left a review.",
+    "type": "review",
+    "linkId": 1,
     "read": true,
-    "createdAt": "2025-03-27T22:03:51.386Z",
-    "updatedAt": "2025-03-27T22:03:54.940Z"
+    "createdAt": "2025-04-08T20:51:16.722Z",
+    "updatedAt": "2025-04-08T20:51:21.242Z"
   },
   {
     "id": 9,
-    "userId": 8,
-    "message": "New message: Oh no!",
-    "type": "message",
-    "linkId": 6,
+    "userId": 4,
+    "message": "You have a new booking request.",
+    "type": "booking",
+    "linkId": 2,
     "read": true,
-    "createdAt": "2025-03-27T22:04:01.327Z",
-    "updatedAt": "2025-03-27T22:16:31.413Z"
+    "createdAt": "2025-04-08T20:53:49.545Z",
+    "updatedAt": "2025-04-08T20:54:22.106Z"
   },
   {
     "id": 10,
-    "userId": 8,
-    "message": "New message: womp womp",
-    "type": "message",
-    "linkId": 6,
-    "read": true,
-    "createdAt": "2025-03-27T22:04:03.447Z",
-    "updatedAt": "2025-03-27T22:16:26.572Z"
+    "userId": 2,
+    "message": "Diana Evans has accepted booking #2.",
+    "type": "booking",
+    "linkId": 2,
+    "read": false,
+    "createdAt": "2025-04-08T20:54:25.104Z",
+    "updatedAt": "2025-04-08T20:54:25.104Z"
   },
   {
     "id": 11,
-    "userId": 5,
-    "message": "New message: That's it you are getting bann...",
+    "userId": 2,
+    "message": "New message: Hello bob!",
     "type": "message",
-    "linkId": 6,
-    "read": true,
-    "createdAt": "2025-03-27T22:11:45.663Z",
-    "updatedAt": "2025-03-31T00:59:59.830Z"
+    "linkId": 2,
+    "read": false,
+    "createdAt": "2025-04-08T20:54:32.578Z",
+    "updatedAt": "2025-04-08T20:54:32.578Z"
   },
   {
     "id": 12,
-    "userId": 5,
-    "message": "Sup",
+    "userId": 2,
+    "message": "New message: I look forward to giving Rusty...",
     "type": "message",
-    "linkId": 120,
-    "read": true,
-    "createdAt": "2025-03-28T21:17:10.889Z",
-    "updatedAt": "2025-04-04T14:14:34.266Z"
+    "linkId": 2,
+    "read": false,
+    "createdAt": "2025-04-08T20:54:46.721Z",
+    "updatedAt": "2025-04-08T20:54:46.721Z"
   },
   {
     "id": 13,
-    "userId": 5,
-    "message": "Sup",
-    "type": "message",
-    "linkId": 120,
-    "read": true,
-    "createdAt": "2025-03-28T21:32:43.883Z",
-    "updatedAt": "2025-03-31T00:59:58.690Z"
+    "userId": 2,
+    "message": "Booking #2 is now in progress.",
+    "type": "booking",
+    "linkId": 2,
+    "read": false,
+    "createdAt": "2025-04-08T20:55:00.037Z",
+    "updatedAt": "2025-04-08T20:55:00.037Z"
   },
   {
     "id": 14,
-    "userId": 7,
-    "message": "New message: Hi Ben!",
-    "type": "message",
-    "linkId": 7,
-    "read": true,
-    "createdAt": "2025-03-30T04:41:48.613Z",
-    "updatedAt": "2025-03-30T04:48:17.868Z"
+    "userId": 4,
+    "message": "Booking #2 is now in progress.",
+    "type": "booking",
+    "linkId": 2,
+    "read": false,
+    "createdAt": "2025-04-08T20:55:00.037Z",
+    "updatedAt": "2025-04-08T20:55:00.037Z"
   },
   {
     "id": 15,
-    "userId": 5,
-    "message": "Booking #7 has been accepted!",
-    "type": "system",
-    "linkId": 7,
+    "userId": 2,
+    "message": "New message: Will you be able to drop him o...",
+    "type": "message",
+    "linkId": 2,
     "read": true,
-    "createdAt": "2025-04-04T17:57:01.652Z",
-    "updatedAt": "2025-04-04T21:35:46.189Z"
+    "createdAt": "2025-04-08T20:55:00.566Z",
+    "updatedAt": "2025-04-08T20:55:02.632Z"
   },
   {
     "id": 16,
-    "userId": 7,
-    "message": "Booking #7 has been accepted!",
-    "type": "system",
-    "linkId": 7,
+    "userId": 4,
+    "message": "Bob Johnson has requested to set booking #2 to complete.",
+    "type": "booking",
+    "linkId": 2,
     "read": true,
-    "createdAt": "2025-04-04T17:57:01.653Z",
-    "updatedAt": "2025-04-04T21:21:23.108Z"
+    "createdAt": "2025-04-08T20:55:54.661Z",
+    "updatedAt": "2025-04-08T20:55:55.982Z"
   },
   {
     "id": 17,
-    "message": "Your booking #undefined has been refunded as the minder canceled it.",
-    "type": "system",
-    "link": "0",
+    "userId": 2,
+    "message": "Booking #2 has been completed.",
+    "type": "booking",
+    "linkId": 2,
     "read": false,
-    "createdAt": "2025-04-04T20:54:59.835Z",
-    "updatedAt": "2025-04-04T20:54:59.835Z"
+    "createdAt": "2025-04-08T20:55:57.192Z",
+    "updatedAt": "2025-04-08T20:55:57.192Z"
   },
   {
     "id": 18,
-    "message": "Your booking #undefined has been refunded as the minder canceled it.",
-    "type": "system",
-    "link": "0",
+    "userId": 4,
+    "message": "You have received a payment of £50.",
+    "type": "booking",
+    "linkId": 2,
     "read": false,
-    "createdAt": "2025-04-04T20:54:59.838Z",
-    "updatedAt": "2025-04-04T20:54:59.838Z"
+    "createdAt": "2025-04-08T20:55:57.195Z",
+    "updatedAt": "2025-04-08T20:55:57.195Z"
   },
   {
     "id": 19,
-    "message": "Your booking #undefined has been refunded as the minder canceled it.",
-    "type": "system",
-    "link": "0",
-    "read": false,
-    "createdAt": "2025-04-04T21:00:43.476Z",
-    "updatedAt": "2025-04-04T21:00:43.476Z"
-  },
-  {
-    "id": 20,
-    "message": "Your booking #undefined has been refunded as the minder canceled it.",
-    "type": "system",
-    "link": "0",
-    "read": false,
-    "createdAt": "2025-04-04T21:12:24.635Z",
-    "updatedAt": "2025-04-04T21:12:24.635Z"
-  },
-  {
-    "id": 21,
-    "message": "Your booking #undefined has been refunded as the minder canceled it.",
-    "type": "system",
-    "link": "0",
-    "read": false,
-    "createdAt": "2025-04-04T21:20:46.938Z",
-    "updatedAt": "2025-04-04T21:20:46.938Z"
-  },
-  {
-    "id": 22,
-    "message": "Your booking #undefined has been refunded as the minder canceled it.",
-    "type": "system",
-    "link": "0",
-    "read": false,
-    "createdAt": "2025-04-04T21:31:55.884Z",
-    "updatedAt": "2025-04-04T21:31:55.884Z"
-  },
-  {
-    "id": 23,
-    "message": "Your booking #undefined has been refunded as the minder canceled it.",
-    "type": "system",
-    "link": "0",
-    "read": false,
-    "createdAt": "2025-04-04T21:36:42.056Z",
-    "updatedAt": "2025-04-04T21:36:42.056Z"
-  },
-  {
-    "id": 24,
-    "message": "Your booking #undefined has been refunded as the minder canceled it.",
-    "type": "system",
-    "link": "0",
-    "read": false,
-    "createdAt": "2025-04-04T21:50:00.167Z",
-    "updatedAt": "2025-04-04T21:50:00.167Z"
-  },
-  {
-    "id": 25,
-    "message": "Your booking #undefined has been refunded as the minder canceled it.",
-    "type": "system",
-    "link": "0",
-    "read": false,
-    "createdAt": "2025-04-04T21:58:14.305Z",
-    "updatedAt": "2025-04-04T21:58:14.305Z"
-  },
-  {
-    "id": 26,
-    "userId": 7,
-    "message": "Your booking #21 has been refunded as the minder canceled it.",
-    "type": "system",
-    "link": "0",
-    "read": true,
-    "createdAt": "2025-04-04T22:36:21.671Z",
-    "updatedAt": "2025-04-05T00:24:26.875Z"
-  },
-  {
-    "id": 27,
-    "userId": 5,
-    "message": "Booking #3 has been accepted!",
-    "type": "system",
-    "linkId": 3,
-    "read": true,
-    "createdAt": "2025-04-04T23:23:26.904Z",
-    "updatedAt": "2025-04-06T00:07:39.219Z"
-  },
-  {
-    "id": 28,
-    "userId": 3,
-    "message": "Booking #3 has been accepted!",
-    "type": "system",
-    "linkId": 3,
-    "read": true,
-    "createdAt": "2025-04-04T23:23:26.904Z",
-    "updatedAt": "2025-04-04T23:25:51.441Z"
-  },
-  {
-    "id": 29,
-    "userId": 7,
-    "message": "Booking #22 has been accepted!",
-    "type": "system",
-    "linkId": 22,
-    "read": true,
-    "createdAt": "2025-04-04T23:25:38.101Z",
-    "updatedAt": "2025-04-05T00:24:25.115Z"
-  },
-  {
-    "id": 30,
-    "userId": 3,
-    "message": "Booking #22 has been accepted!",
-    "type": "system",
-    "linkId": 22,
-    "read": true,
-    "createdAt": "2025-04-04T23:25:38.102Z",
-    "updatedAt": "2025-04-04T23:25:50.218Z"
-  },
-  {
-    "id": 31,
-    "userId": 3,
-    "message": "You've been paid $15 for Booking #22! 🎉",
-    "type": "system",
-    "link": "0",
-    "read": true,
-    "createdAt": "2025-04-04T23:25:39.552Z",
-    "updatedAt": "2025-04-04T23:25:48.233Z"
-  },
-  {
-    "id": 32,
-    "userId": 7,
-    "message": "The pet minder has declined your request. Your booking #23 has now been refunded.",
-    "type": "system",
-    "link": "0",
-    "read": true,
-    "createdAt": "2025-04-05T00:01:20.307Z",
-    "updatedAt": "2025-04-05T00:24:20.818Z"
-  },
-  {
-    "id": 33,
-    "userId": 7,
-    "message": "Booking #24 has been accepted!",
-    "type": "system",
-    "linkId": 24,
-    "read": true,
-    "createdAt": "2025-04-05T00:01:21.303Z",
-    "updatedAt": "2025-04-05T00:24:20.146Z"
-  },
-  {
-    "id": 34,
     "userId": 4,
-    "message": "Booking #24 has been accepted!",
-    "type": "system",
-    "linkId": 24,
-    "read": false,
-    "createdAt": "2025-04-05T00:01:21.303Z",
-    "updatedAt": "2025-04-05T00:01:21.303Z"
-  },
-  {
-    "id": 35,
-    "userId": 7,
-    "message": "The pet minder has cancelled the booking. You have now been fully refunded.",
-    "type": "system",
-    "link": "0",
-    "read": true,
-    "createdAt": "2025-04-05T00:02:27.904Z",
-    "updatedAt": "2025-04-05T00:24:23.468Z"
-  },
-  {
-    "id": 36,
-    "userId": 1,
-    "message": "Booking #25 has been accepted!",
-    "type": "system",
-    "linkId": 25,
-    "read": true,
-    "createdAt": "2025-04-05T00:22:42.076Z",
-    "updatedAt": "2025-04-05T01:38:20.807Z"
-  },
-  {
-    "id": 37,
-    "userId": 3,
-    "message": "Booking #25 has been accepted!",
-    "type": "system",
-    "linkId": 25,
-    "read": false,
-    "createdAt": "2025-04-05T00:22:42.077Z",
-    "updatedAt": "2025-04-05T00:22:42.077Z"
-  },
-  {
-    "id": 38,
-    "userId": 3,
-    "message": "You've been paid $15 for Booking #25! 🎉",
-    "type": "system",
-    "link": "0",
-    "read": false,
-    "createdAt": "2025-04-05T00:22:46.864Z",
-    "updatedAt": "2025-04-05T00:22:46.864Z"
-  },
-  {
-    "id": 39,
-    "userId": 7,
-    "message": "The pet minder has declined your request. Your booking #26 has now been refunded.",
-    "type": "system",
-    "link": "0",
-    "read": true,
-    "createdAt": "2025-04-05T00:26:23.268Z",
-    "updatedAt": "2025-04-05T20:14:53.791Z"
-  },
-  {
-    "id": 40,
-    "userId": 1,
-    "message": "Your booking request with Eve White has expired.",
-    "type": "booking expired",
-    "linkId": 9,
-    "read": true,
-    "createdAt": "2025-04-05T01:37:00.575Z",
-    "updatedAt": "2025-04-05T01:38:17.596Z"
-  },
-  {
-    "id": 41,
-    "userId": 5,
-    "message": "Your booking request from Alice Smith has expired.",
-    "type": "booking expired",
-    "linkId": 9,
-    "read": true,
-    "createdAt": "2025-04-05T01:37:00.577Z",
-    "updatedAt": "2025-04-06T00:07:41.239Z"
-  },
-  {
-    "id": 42,
-    "userId": 1,
-    "message": "Booking #10 has been accepted!",
-    "type": "system",
-    "linkId": 10,
-    "read": true,
-    "createdAt": "2025-04-05T01:39:10.653Z",
-    "updatedAt": "2025-04-06T15:58:15.435Z"
-  },
-  {
-    "id": 43,
-    "userId": 5,
-    "message": "Booking #10 has been accepted!",
-    "type": "system",
-    "linkId": 10,
-    "read": true,
-    "createdAt": "2025-04-05T01:39:10.654Z",
-    "updatedAt": "2025-04-06T00:07:35.714Z"
-  },
-  {
-    "id": 44,
-    "userId": 1,
-    "message": "Eve White has accepted a booking",
-    "type": "booking accepted",
-    "linkId": 10,
-    "read": true,
-    "createdAt": "2025-04-05T01:39:10.672Z",
-    "updatedAt": "2025-04-06T15:58:12.647Z"
-  },
-  {
-    "id": 45,
-    "userId": 1,
-    "message": "Your booking with Eve White is now in progress.",
-    "type": "booking in progress",
-    "linkId": 10,
-    "read": true,
-    "createdAt": "2025-04-05T01:40:00.779Z",
-    "updatedAt": "2025-04-06T15:58:10.484Z"
-  },
-  {
-    "id": 46,
-    "userId": 5,
-    "message": "Your booking with Alice Smith is now in progress.",
-    "type": "booking in progress",
-    "linkId": 10,
-    "read": true,
-    "createdAt": "2025-04-05T01:40:00.781Z",
-    "updatedAt": "2025-04-06T00:07:32.388Z"
-  },
-  {
-    "id": 47,
-    "userId": 1,
-    "message": "Eve White has requested to set a booking to complete",
-    "type": "booking complete request",
-    "linkId": 10,
-    "read": true,
-    "createdAt": "2025-04-05T01:40:09.671Z",
-    "updatedAt": "2025-04-06T15:58:08.235Z"
-  },
-  {
-    "id": 48,
-    "userId": 5,
-    "message": "You've been paid $35 for Booking #10! 🎉",
-    "type": "system",
-    "linkId": 0,
-    "read": true,
-    "createdAt": "2025-04-05T01:41:25.038Z",
-    "updatedAt": "2025-04-05T01:46:02.072Z"
-  },
-  {
-    "id": 49,
-    "userId": 5,
-    "message": "A booking with Alice Smith has been confirmed completed",
-    "type": "booking completed",
-    "linkId": 10,
-    "read": true,
-    "createdAt": "2025-04-05T01:41:25.040Z",
-    "updatedAt": "2025-04-06T00:07:28.938Z"
-  },
-  {
-    "id": 50,
-    "userId": 5,
-    "message": "Booking #11 has been accepted!",
-    "type": "system",
-    "linkId": 11,
-    "read": true,
-    "createdAt": "2025-04-05T01:49:01.570Z",
-    "updatedAt": "2025-04-06T00:07:27.596Z"
-  },
-  {
-    "id": 51,
-    "userId": 7,
-    "message": "Booking #11 has been accepted!",
-    "type": "system",
-    "linkId": 11,
-    "read": true,
-    "createdAt": "2025-04-05T01:49:01.570Z",
-    "updatedAt": "2025-04-05T20:14:55.611Z"
-  },
-  {
-    "id": 52,
-    "userId": 5,
-    "message": "Ben Kodev has accepted a booking",
-    "type": "booking accepted",
-    "linkId": 11,
-    "read": true,
-    "createdAt": "2025-04-05T01:49:01.580Z",
-    "updatedAt": "2025-04-06T00:07:26.230Z"
-  },
-  {
-    "id": 53,
-    "userId": 5,
-    "message": "Your booking with Ben Kodev is now in progress",
-    "type": "booking in progress",
-    "linkId": 11,
-    "read": true,
-    "createdAt": "2025-04-05T01:50:00.719Z",
-    "updatedAt": "2025-04-06T00:07:24.190Z"
-  },
-  {
-    "id": 54,
-    "userId": 7,
-    "message": "Your booking with Eve White is now in progress",
-    "type": "booking in progress",
-    "linkId": 11,
-    "read": true,
-    "createdAt": "2025-04-05T01:50:00.725Z",
-    "updatedAt": "2025-04-05T20:14:47.530Z"
-  },
-  {
-    "id": 55,
-    "userId": 5,
-    "message": "Ben Kodev has requested to set a booking to complete",
-    "type": "booking complete request",
-    "linkId": 11,
-    "read": true,
-    "createdAt": "2025-04-05T01:50:05.032Z",
-    "updatedAt": "2025-04-06T00:07:18.540Z"
-  },
-  {
-    "id": 56,
-    "userId": 7,
-    "message": "You've been paid $15 for Booking #11! 🎉",
-    "type": "system",
-    "linkId": 0,
-    "read": true,
-    "createdAt": "2025-04-05T01:58:04.765Z",
-    "updatedAt": "2025-04-05T20:14:45.138Z"
-  },
-  {
-    "id": 57,
-    "userId": 7,
-    "message": "A booking with Eve White has been completed",
-    "type": "booking completed",
-    "linkId": 11,
-    "read": true,
-    "createdAt": "2025-04-05T01:58:04.768Z",
-    "updatedAt": "2025-04-05T13:53:12.295Z"
-  },
-  {
-    "id": 58,
-    "userId": 7,
-    "message": "Eve White has left a review",
+    "message": "Bob Johnson has left a review.",
     "type": "review",
-    "linkId": 4,
-    "read": true,
-    "createdAt": "2025-04-05T01:59:01.023Z",
-    "updatedAt": "2025-04-05T20:14:41.938Z"
-  },
-  {
-    "id": 59,
-    "userId": 1,
-    "message": "Ben Kodev has declined a booking request. You have received a refund of £15.",
-    "type": "booking declined",
-    "linkId": 12,
-    "read": true,
-    "createdAt": "2025-04-05T02:27:18.578Z",
-    "updatedAt": "2025-04-06T15:58:01.301Z"
-  },
-  {
-    "id": 60,
-    "userId": 1,
-    "message": "Booking #13 has been accepted!",
-    "type": "system",
-    "linkId": 13,
-    "read": true,
-    "createdAt": "2025-04-05T02:28:32.763Z",
-    "updatedAt": "2025-04-06T15:57:51.351Z"
-  },
-  {
-    "id": 61,
-    "userId": 7,
-    "message": "Booking #13 has been accepted!",
-    "type": "system",
-    "linkId": 13,
-    "read": true,
-    "createdAt": "2025-04-05T02:28:32.764Z",
-    "updatedAt": "2025-04-05T19:57:56.976Z"
-  },
-  {
-    "id": 62,
-    "userId": 1,
-    "message": "Ben Kodev has accepted a booking",
-    "type": "booking accepted",
-    "linkId": 13,
-    "read": true,
-    "createdAt": "2025-04-05T02:28:32.778Z",
-    "updatedAt": "2025-04-06T15:57:48.030Z"
-  },
-  {
-    "id": 63,
-    "userId": 1,
-    "message": "Your booking with Ben Kodev is now in progress.",
-    "type": "booking in progress",
-    "linkId": 13,
-    "read": true,
-    "createdAt": "2025-04-05T02:29:00.064Z",
-    "updatedAt": "2025-04-06T15:57:42.730Z"
-  },
-  {
-    "id": 64,
-    "userId": 7,
-    "message": "Your booking with Alice Smith is now in progress.",
-    "type": "booking in progress",
-    "linkId": 13,
-    "read": true,
-    "createdAt": "2025-04-05T02:29:00.065Z",
-    "updatedAt": "2025-04-05T02:34:42.349Z"
-  },
-  {
-    "id": 65,
-    "userId": 1,
-    "message": "Ben Kodev has requested to set a booking to complete.",
-    "type": "booking complete request",
-    "linkId": 13,
-    "read": true,
-    "createdAt": "2025-04-05T02:29:05.826Z",
-    "updatedAt": "2025-04-06T15:57:40.844Z"
-  },
-  {
-    "id": 66,
-    "userId": 7,
-    "message": "A booking with Alice Smith has been completed. You have received a payment of £10.",
-    "type": "booking completed",
-    "linkId": 13,
-    "read": true,
-    "createdAt": "2025-04-05T02:29:28.266Z",
-    "updatedAt": "2025-04-05T13:53:01.746Z"
-  },
-  {
-    "id": 67,
-    "userId": 1,
-    "message": "Booking #15 has been accepted!",
-    "type": "system",
-    "linkId": 15,
-    "read": true,
-    "createdAt": "2025-04-06T00:09:20.078Z",
-    "updatedAt": "2025-04-06T00:14:11.049Z"
-  },
-  {
-    "id": 68,
-    "userId": 7,
-    "message": "Booking #15 has been accepted!",
-    "type": "system",
-    "linkId": 15,
-    "read": true,
-    "createdAt": "2025-04-06T00:09:20.079Z",
-    "updatedAt": "2025-04-06T00:09:22.712Z"
-  },
-  {
-    "id": 69,
-    "userId": 1,
-    "message": "Ben Kodev has accepted a booking",
-    "type": "booking",
-    "linkId": 15,
-    "read": true,
-    "createdAt": "2025-04-06T00:09:20.120Z",
-    "updatedAt": "2025-04-06T00:14:09.455Z"
-  },
-  {
-    "id": 70,
-    "userId": 1,
-    "message": "Your booking with Ben Kodev is now in progress.",
-    "type": "booking",
-    "linkId": 15,
-    "read": true,
-    "createdAt": "2025-04-06T00:10:00.091Z",
-    "updatedAt": "2025-04-06T00:14:07.261Z"
-  },
-  {
-    "id": 71,
-    "userId": 7,
-    "message": "Your booking with Alice Smith is now in progress.",
-    "type": "booking",
-    "linkId": 15,
-    "read": true,
-    "createdAt": "2025-04-06T00:10:00.092Z",
-    "updatedAt": "2025-04-06T00:10:02.612Z"
-  },
-  {
-    "id": 72,
-    "userId": 1,
-    "message": "Ben Kodev has requested to set a booking to complete.",
-    "type": "booking",
-    "linkId": 15,
-    "read": true,
-    "createdAt": "2025-04-06T00:10:20.982Z",
-    "updatedAt": "2025-04-06T00:11:48.399Z"
-  },
-  {
-    "id": 73,
-    "userId": 7,
-    "message": "A booking with Alice Smith has been completed. You have received a payment of £10.",
-    "type": "booking",
-    "linkId": 15,
-    "read": true,
-    "createdAt": "2025-04-06T00:11:53.770Z",
-    "updatedAt": "2025-04-06T16:53:51.429Z"
-  },
-  {
-    "id": 74,
-    "userId": 7,
-    "message": "Alice Smith has left a review.",
-    "type": "review",
-    "linkId": 6,
-    "read": true,
-    "createdAt": "2025-04-06T00:17:29.710Z",
-    "updatedAt": "2025-04-06T16:53:47.023Z"
-  },
-  {
-    "id": 75,
-    "userId": 7,
-    "message": "Alice Smith has left a review.",
-    "type": "review",
-    "linkId": 8,
-    "read": true,
-    "createdAt": "2025-04-06T00:17:40.490Z",
-    "updatedAt": "2025-04-06T00:17:56.765Z"
-  },
-  {
-    "id": 76,
-    "userId": 5,
-    "message": "Alice Smith has left a review.",
-    "type": "review",
-    "linkId": 10,
-    "read": false,
-    "createdAt": "2025-04-06T00:18:41.148Z",
-    "updatedAt": "2025-04-06T00:18:41.148Z"
-  },
-  {
-    "id": 77,
-    "userId": 5,
-    "message": "New message: hi",
-    "type": "message",
     "linkId": 3,
-    "read": false,
-    "createdAt": "2025-04-06T01:28:01.090Z",
-    "updatedAt": "2025-04-06T01:28:01.090Z"
-  },
-  {
-    "id": 78,
-    "userId": 5,
-    "message": "New message: hi",
-    "type": "message",
-    "linkId": 3,
-    "read": false,
-    "createdAt": "2025-04-06T01:28:06.782Z",
-    "updatedAt": "2025-04-06T01:28:06.782Z"
-  },
-  {
-    "id": 79,
-    "userId": 5,
-    "message": "New message: asd",
-    "type": "message",
-    "linkId": 3,
-    "read": false,
-    "createdAt": "2025-04-06T01:28:09.596Z",
-    "updatedAt": "2025-04-06T01:28:09.596Z"
-  },
-  {
-    "id": 80,
-    "userId": 5,
-    "message": "New message: asd",
-    "type": "message",
-    "linkId": 3,
-    "read": false,
-    "createdAt": "2025-04-06T01:28:23.362Z",
-    "updatedAt": "2025-04-06T01:28:23.362Z"
-  },
-  {
-    "id": 81,
-    "userId": 7,
-    "message": "Booking request #14 has expired",
-    "type": "booking",
-    "linkId": 14,
-    "read": false,
-    "createdAt": "2025-04-06T18:20:00.127Z",
-    "updatedAt": "2025-04-06T18:20:00.127Z"
-  },
-  {
-    "id": 82,
-    "userId": 5,
-    "message": "Booking request #14 has expired",
-    "type": "booking",
-    "linkId": 14,
-    "read": false,
-    "createdAt": "2025-04-06T18:20:00.133Z",
-    "updatedAt": "2025-04-06T18:20:00.133Z"
-  },
-  {
-    "id": 83,
-    "userId": 5,
-    "message": "Ben Kodev has cancelled booking #19.",
-    "type": "booking",
-    "linkId": 19,
-    "read": false,
-    "createdAt": "2025-04-07T03:03:29.386Z",
-    "updatedAt": "2025-04-07T03:03:29.386Z"
-  },
-  {
-    "id": 84,
-    "userId": 7,
-    "message": "You have received a refund of £30.",
-    "type": "booking",
-    "linkId": 19,
-    "read": false,
-    "createdAt": "2025-04-07T03:03:29.389Z",
-    "updatedAt": "2025-04-07T03:03:29.389Z"
-  },
-  {
-    "id": 85,
-    "userId": 5,
-    "message": "You have a new booking request.",
-    "type": "booking",
-    "linkId": 20,
-    "read": false,
-    "createdAt": "2025-04-07T03:03:55.744Z",
-    "updatedAt": "2025-04-07T03:03:55.744Z"
-  },
-  {
-    "id": 86,
-    "userId": 5,
-    "message": "Ben Kodev has cancelled booking #20.",
-    "type": "booking",
-    "linkId": 20,
-    "read": false,
-    "createdAt": "2025-04-07T03:04:04.602Z",
-    "updatedAt": "2025-04-07T03:04:04.602Z"
-  },
-  {
-    "id": 87,
-    "userId": 7,
-    "message": "You have received a refund of £10.",
-    "type": "booking",
-    "linkId": 20,
-    "read": false,
-    "createdAt": "2025-04-07T03:04:04.605Z",
-    "updatedAt": "2025-04-07T03:04:04.605Z"
-  },
-  {
-    "id": 88,
-    "userId": 5,
-    "message": "You have a new booking request.",
-    "type": "booking",
-    "linkId": 21,
     "read": true,
-    "createdAt": "2025-04-07T03:04:27.591Z",
-    "updatedAt": "2025-04-07T03:11:54.617Z"
-  },
-  {
-    "id": 89,
-    "userId": 7,
-    "message": "Booking #21 has been accepted!",
-    "type": "system",
-    "linkId": 21,
-    "read": false,
-    "createdAt": "2025-04-07T03:11:59.903Z",
-    "updatedAt": "2025-04-07T03:11:59.903Z"
-  },
-  {
-    "id": 90,
-    "userId": 5,
-    "message": "Booking #21 has been accepted!",
-    "type": "system",
-    "linkId": 21,
-    "read": false,
-    "createdAt": "2025-04-07T03:11:59.904Z",
-    "updatedAt": "2025-04-07T03:11:59.904Z"
-  },
-  {
-    "id": 91,
-    "userId": 7,
-    "message": "Eve White has accepted booking #21.",
-    "type": "booking",
-    "linkId": 21,
-    "read": true,
-    "createdAt": "2025-04-07T03:11:59.916Z",
-    "updatedAt": "2025-04-07T03:12:19.798Z"
-  },
-  {
-    "id": 92,
-    "userId": 5,
-    "message": "Ben Kodev has cancelled booking #21.",
-    "type": "booking",
-    "linkId": 21,
-    "read": false,
-    "createdAt": "2025-04-07T03:12:25.445Z",
-    "updatedAt": "2025-04-07T03:12:25.445Z"
-  },
-  {
-    "id": 93,
-    "userId": 7,
-    "message": "You have received a refund of £10.",
-    "type": "booking",
-    "linkId": 21,
-    "read": false,
-    "createdAt": "2025-04-07T03:12:25.448Z",
-    "updatedAt": "2025-04-07T03:12:25.448Z"
-  },
-  {
-    "id": 94,
-    "userId": 5,
-    "message": "You have a new booking request.",
-    "type": "booking",
-    "linkId": 22,
-    "read": true,
-    "createdAt": "2025-04-07T03:12:57.955Z",
-    "updatedAt": "2025-04-07T03:13:09.069Z"
-  },
-  {
-    "id": 95,
-    "userId": 7,
-    "message": "Booking request #22 has expired",
-    "type": "booking",
-    "linkId": 22,
-    "read": false,
-    "createdAt": "2025-04-07T03:14:00.034Z",
-    "updatedAt": "2025-04-07T03:14:00.034Z"
-  },
-  {
-    "id": 96,
-    "userId": 5,
-    "message": "Booking request #22 has expired",
-    "type": "booking",
-    "linkId": 22,
-    "read": false,
-    "createdAt": "2025-04-07T03:14:00.036Z",
-    "updatedAt": "2025-04-07T03:14:00.036Z"
-  },
-  {
-    "id": 97,
-    "userId": 7,
-    "message": "Booking request #17 has expired",
-    "type": "booking",
-    "linkId": 17,
-    "read": false,
-    "createdAt": "2025-04-07T16:01:00.383Z",
-    "updatedAt": "2025-04-07T16:01:00.383Z"
-  },
-  {
-    "id": 98,
-    "userId": 5,
-    "message": "Booking request #17 has expired",
-    "type": "booking",
-    "linkId": 17,
-    "read": false,
-    "createdAt": "2025-04-07T16:01:00.385Z",
-    "updatedAt": "2025-04-07T16:01:00.385Z"
+    "createdAt": "2025-04-08T20:56:53.736Z",
+    "updatedAt": "2025-04-08T20:56:56.318Z"
   }
 ]

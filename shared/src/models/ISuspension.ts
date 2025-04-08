@@ -9,5 +9,5 @@ export interface ISuspension {
 export interface INewSuspension {
     userId: number;
     reason: string;
-    duration: number; // Duration in days
+    duration: number | null; // Duration in days
 }

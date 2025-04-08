@@ -19,42 +19,6 @@ export function getAllPayments() {
     return { success: true, payments: result };
 }
 
-export function getPaymentByBookingId(bookingId: number) {
-    const payment = cache.payments.find(payment => payment.bookingId === bookingId);
-    if (payment) {
-        return { success: true, payment };
-    }
-    return { success: false, message: 'Payment not found' };
-}
-
-export function getPaymentsForPayer(userId: number) {
-    const userBookingIds = cache.bookings
-        .filter(booking => booking.ownerId === userId)
-        .map(booking => booking.id);
-
-    const payments = cache.payments.filter(payment => 
-        userBookingIds.includes(payment.bookingId)
-    );
-
-    if (payments.length > 0) {
-        return { success: true, payments };
-    }
-    return { success: false, message: 'No payments found for the given user' };
-}
-
-export function getPaymentsForPayee(userId: number) {
-    const userBookingIds = cache.bookings
-        .filter(booking => booking.minderId === userId)
-        .map(booking => booking.id);
-    const payments = cache.payments.filter(payment =>
-        userBookingIds.includes(payment.bookingId)
-    );
-    if (payments.length > 0) {
-        return { success: true, payments };
-    }
-    return { success: false, message: 'No payments found for the given user' };
-}
-
 export function addPayment(payment: IPayment) {
     return addPaymentCached(payment);
 }

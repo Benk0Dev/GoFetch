@@ -115,22 +115,6 @@ const CheckoutPage: React.FC = () => {
       return;
     }
 
-    const bookingData: INewBooking = {
-      petId: pet.id,
-      minderId: minder.id,
-      ownerId: owner.id,
-      serviceId: service.id,
-      time: new Date(`${selectedDate}T${selectedTime}`),
-      notes: specialInstructions,
-    };
-
-    const newBooking = await createBooking(bookingData);
-
-    if (!newBooking) {
-      setError("An error occurred while creating your booking.");
-      return;
-    }
-
     const newCardDetails: ICardDetails = {
       cardNumber: cardDetails.cardNumber,
       expiryDate: cardDetails.expirationDate,
@@ -140,7 +124,6 @@ const CheckoutPage: React.FC = () => {
 
     const paymentDetails: Omit<IPayment, "id" | "status" | "createdAt" | "updatedAt"> = {
       amount: service.price,
-      bookingId: newBooking.id,
       cardDetails: newCardDetails,
     };
 
@@ -148,6 +131,23 @@ const CheckoutPage: React.FC = () => {
 
     if (!newPayment) {
       setError("An error occurred while processing your payment.");
+      return;
+    }
+
+    const bookingData: INewBooking = {
+      petId: pet.id,
+      minderId: minder.id,
+      ownerId: owner.id,
+      serviceId: service.id,
+      paymentId: newPayment.id,
+      time: new Date(`${selectedDate}T${selectedTime}`),
+      notes: specialInstructions,
+    };
+
+    const newBooking = await createBooking(bookingData);
+
+    if (!newBooking) {
+      setError("An error occurred while creating your booking.");
       return;
     }
 

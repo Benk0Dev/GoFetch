@@ -17,7 +17,6 @@ export function addPaymentCached(report: Omit<IPayment, "id" | "status" | "creat
         const newPayment: IPayment = {
             id: newId,
             amount: report.amount,
-            bookingId: report.bookingId,
             cardDetails: {
                 cardNumber: report.cardDetails.cardNumber,
                 expiryDate: report.cardDetails.expiryDate,

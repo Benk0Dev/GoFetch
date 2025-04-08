@@ -18,7 +18,7 @@ function NotificationIcon() {
     const iconRef = useRef<HTMLButtonElement>(null);
     const navigate = useNavigate();
     const { socket, isConnected } = useSocket();
-    const { user } = useAuth();
+    const { user, refreshUser } = useAuth();
 
     useEffect(() => {
         if (user) {
@@ -55,9 +55,11 @@ function NotificationIcon() {
                 navigate(`/chats/${notification.linkId}`);
                 break;
             case NotificationType.Booking:
+                refreshUser();
                 navigate(`/dashboard/bookings/${notification.linkId}`);
                 break;
             case NotificationType.Review:
+                refreshUser();
                 navigate(`/dashboard/reviews`);
                 break;
             default:

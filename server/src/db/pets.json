@@ -1,74 +1,49 @@
 [
   {
     "id": 1,
-    "name": "Rex",
-    "dob": "2019-06-30T00:00:00.000Z",
-    "gender": "male",
-    "breed": "German Shepherd",
-    "size": "Large (30kg+)",
-    "neutered": true,
-    "behaviour": "He is very well-behaved, protective and intelligent.",
-    "allergies": "None",
-    "picture": "4"
-  },
-  {
-    "id": 2,
-    "name": "Luna",
-    "dob": "2021-02-14T00:00:00.000Z",
-    "gender": "female",
-    "breed": "Siberian Husky",
-    "size": "Medium (15-30kg)",
-    "neutered": true,
-    "behaviour": "She is very energetic and vocal.",
-    "allergies": "Dairy",
-    "picture": "5"
-  },
-  {
-    "id": 3,
-    "name": "Buddy",
-    "dob": "2020-03-10T00:00:00.000Z",
-    "gender": "female",
-    "breed": "Golden Retriever",
-    "size": "Medium (15-30kg)",
-    "neutered": false,
-    "behaviour": "She is very friendly and playful.",
-    "allergies": "",
-    "picture": "6"
-  },
-  {
-    "id": 4,
-    "name": "Bella",
-    "dob": "2018-07-21T00:00:00.000Z",
-    "gender": "female",
-    "breed": "Labrador Retriever",
-    "size": "Medium (15-30kg)",
-    "neutered": false,
-    "behaviour": "Loyal and energetic.",
-    "allergies": "",
-    "picture": "7"
-  },
-  {
-    "id": 5,
     "name": "Pipa",
-    "dob": "2020-12-22T00:00:00.000Z",
+    "dob": "2020-01-31T00:00:00.000Z",
     "gender": "female",
     "breed": "Cocker Spaniel",
     "size": "Small (0-15kg)",
     "neutered": false,
-    "behaviour": "She is very friendly to everyone and loves to chase squirrels and catch frisbees. Sometimes she doesn't listen though.",
+    "behaviour": "She is very friendly to everyone. She is ok with being alone but can be a bit stubborn sometimes. She loves frisbees and squirrels.",
     "allergies": "",
-    "picture": "13"
+    "picture": "2"
   },
   {
-    "id": 6,
+    "id": 2,
     "name": "Rusty",
-    "dob": "2020-03-25T00:00:00.000Z",
+    "dob": "2019-02-14T00:00:00.000Z",
     "gender": "male",
     "breed": "Cocker Spaniel",
     "size": "Medium (15-30kg)",
     "neutered": false,
-    "behaviour": "He is a very affectionate boy and nice to all people. He is very active and can run for hours. He can however get into fights with other male dogs but this is rare.",
+    "behaviour": "He is a very loving boy and always needs to be accompanied by someone. He can be a bit forceful on the lead when he is extra excited.",
     "allergies": "",
+    "picture": "3"
+  },
+  {
+    "id": 3,
+    "name": "Zeus",
+    "dob": "2015-06-08T00:00:00.000Z",
+    "gender": "male",
+    "breed": "German Shepherd",
+    "size": "Large (30kg+)",
+    "neutered": true,
+    "behaviour": "He is a well-behaved boy. He loves tennis balls more than he loves me.",
+    "allergies": "Cheese",
     "picture": "14"
+  },
+  {
+    "id": 4,
+    "name": "Bella",
+    "dob": "2014-11-13T00:00:00.000Z",
+    "gender": "female",
+    "breed": "Golden Retriever",
+    "size": "Medium (15-30kg)",
+    "neutered": true,
+    "allergies": "",
+    "picture": "19"
   }
 ]

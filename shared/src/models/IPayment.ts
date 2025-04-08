@@ -1,7 +1,6 @@
 export interface IPayment {
     id: number;
     amount: number;
-    bookingId: number;
     cardDetails: ICardDetails;
     status: Status;
     createdAt: Date;

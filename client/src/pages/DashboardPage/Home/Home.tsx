@@ -6,7 +6,7 @@ import { Role } from "@gofetch/models/IUser";
 import Statistic from "@client/pages/DashboardPage/Home/Statistic";
 import { BookingStatus, IBooking } from "@gofetch/models/IBooking";
 import { useEffect, useState } from "react";
-import { IReport } from "@gofetch/models/IReport";
+import { IReport, Status } from "@gofetch/models/IReport";
 import { getAllReports } from "@client/services/ReportRegistry";
 import { getAllUsers } from "@client/services/UserRegistry";
 import { IUser } from "@gofetch/models/IUser";
@@ -25,7 +25,6 @@ function Home() {
     const serviceCount = user.minderRoleInfo?.services?.length;
     const rating = user.minderRoleInfo?.rating?.toFixed(1) || "N/A";
 
-    // Some of this code should be moved elsewhere
     const [reports, setReports] = useState<IReport[]>([]);
     const [users, setUsers] = useState<IUser[]>([]);
     
@@ -104,8 +103,8 @@ function Home() {
                             icon={<UserRound size={18} strokeWidth={2} />} 
                         />
                         <Statistic 
-                            title="Reports" 
-                            value={reports.length.toString()} 
+                            title="Unresolved Reports" 
+                            value={reports.filter((report) => report.status ===Status.PENDING).length.toString()} 
                             icon={<Flag size={18} strokeWidth={2} />} 
                         />
                     </>

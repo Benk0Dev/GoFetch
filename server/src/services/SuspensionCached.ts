@@ -19,7 +19,7 @@ export function addSuspensionCached(suspension: INewSuspension) {
         userId: suspension.userId,
         reason: suspension.reason,
         startDate: new Date(),
-        endDate: new Date(new Date().getTime() + suspension.duration * 24 * 60 * 60 * 1000),
+        endDate: suspension.duration ? new Date(new Date().getTime() + suspension.duration * 24 * 60 * 60 * 1000) : null,
     };
 
     cache.suspensions.push(newSuspension);

@@ -12,7 +12,6 @@ export interface IReport {
 
 export enum Status {
     PENDING = "Pending",
-    IN_PROGRESS = "In Progress",
     RESOLVED = "Resolved",
 }
 

@@ -258,11 +258,9 @@ function Chat() {
                         <div 
                             key={index}
                             className={`${styles.message} ${
-                                message.senderId === -1 ? 
-                                styles.systemMessage :
-                                    message.senderId === user.id
-                                        ? styles.sentMessage 
-                                        : styles.receivedMessage
+                                message.senderId === user.id
+                                    ? styles.sentMessage 
+                                    : styles.receivedMessage
                             }`}
                         >
                             <p className={styles.messageContent}>{message.message}</p>

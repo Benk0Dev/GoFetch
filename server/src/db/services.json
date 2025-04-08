@@ -1,29 +1,5 @@
 [
   {
-    "id": 1,
-    "type": "Dog Walking",
-    "duration": "1 hour",
-    "price": 15
-  },
-  {
-    "id": 2,
-    "type": "Pet Sitting",
-    "duration": "2 hours",
-    "price": 25
-  },
-  {
-    "id": 3,
-    "type": "Overnight Boarding",
-    "duration": "24 hours (Overnight)",
-    "price": 50
-  },
-  {
-    "id": 4,
-    "type": "Grooming",
-    "duration": "1 hour 30 minutes",
-    "price": 40
-  },
-  {
     "id": 5,
     "type": "Training",
     "duration": "45 minutes",
@@ -64,5 +40,29 @@
     "type": "Training",
     "duration": "1 hour",
     "price": 30
+  },
+  {
+    "id": 12,
+    "type": "Dog Walking",
+    "duration": "1 hour",
+    "price": 20
+  },
+  {
+    "id": 13,
+    "type": "Home Visit",
+    "duration": "30 minutes",
+    "price": 15
+  },
+  {
+    "id": 14,
+    "type": "Training",
+    "duration": "2 hours",
+    "price": 50
+  },
+  {
+    "id": 15,
+    "type": "Day Care",
+    "duration": "8 hours (Full Day)",
+    "price": 100
   }
 ]

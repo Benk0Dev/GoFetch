@@ -52,7 +52,7 @@ function BookingActions({ booking, status, onMessage, onAccept, onDecline, onCan
                     {status === BookingStatus.Confirmed && (
                         <>
                             <button className="btn btn-secondary" onClick={(e) => onMessage(e, booking.owner.id)} style={{display: "flex", alignContent: "center", columnGap: "5px", justifyContent: "center"}}><MessageSquare size={18} strokeWidth={2} />Message</button>
-                            <button className="btn btn-primary" onClick={(e) => onCancel(e, booking)} style={{display: "flex", alignContent: "center", columnGap: "5px", justifyContent: "center"}}>Cancel</button>
+                            <button className="btn btn-secondary" onClick={(e) => onCancel(e, booking)} style={{display: "flex", alignContent: "center", columnGap: "5px", justifyContent: "center"}}>Cancel</button>
                         </>
                     )}
                     {status === BookingStatus.Pending && (

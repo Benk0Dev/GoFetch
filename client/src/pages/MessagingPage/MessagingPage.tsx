@@ -100,6 +100,7 @@ function MessagingPage() {
     // Initial fetch
     useEffect(() => {
         fetchChats();
+        
     }, [fetchChats]);
 
     // Setup socket event listeners
@@ -235,7 +236,7 @@ function MessagingPage() {
                                     className={`${styles.chatListItem} ${id === chat.id?.toString() ? styles.activeChatItem : ''}`}
                                 >
                                     <div className={styles.chatPreview}>
-                                        <h3>
+                                        <h3 style={{ display: 'flex', alignItems: 'center', justifyContent: "space-between", width: '100%' }}>
                                             {chatUserNames[chat.id.toString()] || 
                                                 <span className={styles.loadingName}>Loading...</span>}
                                             {chat.unreadCount > 0 && (

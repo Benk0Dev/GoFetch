@@ -17,6 +17,7 @@ import {
 import { addNotification } from './NotificationStatic';
 import { getUserByID } from './UserStatic';
 import { NotificationType } from '@gofetch/models/INotification';
+import { getCachedPayments } from '@server/services/PaymentCached';
 
 export function getAllBookings() {
     const bookings = getAllBookingsCached();
@@ -93,8 +94,6 @@ export function updateBookingStatusWithTimeChange() {
     bookings.forEach((booking) => {
         if (booking.status === BookingStatus.Confirmed && new Date(booking.time) < now) {
             updateBookingStatus(booking.id, BookingStatus.InProgress);
-            const owner = getUserByID(booking.ownerId).user;
-            const minder = getUserByID(booking.minderId).user;
             addNotification({
                 userId: booking.ownerId,
                 message: `Booking #${booking.id} is now in progress.`,
@@ -113,11 +112,10 @@ export function updateBookingStatusWithTimeChange() {
     bookings.forEach((booking) => {
         if (booking.status === BookingStatus.Pending && new Date(booking.time) < now) {
             updateBookingStatus(booking.id, BookingStatus.Rejected);
-            const owner = getUserByID(booking.ownerId).user;
-            const minder = getUserByID(booking.minderId).user;
+            const payment = getCachedPayments().find((p) => p.id === booking.paymentId);
             addNotification({
                 userId: booking.ownerId,
-                message: `Booking request #${booking.id} has expired`,
+                message: `Booking request #${booking.id} has expired. You have received a refund${payment ? payment.amount : ""}.`,
                 type: NotificationType.Booking,
                 linkId: booking.id
             });

@@ -6,6 +6,7 @@ import styles from './Reports.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { startChat } from '@client/services/ChatRegistry';
 import { setReportResult } from '@client/services/ReportRegistry';
+import { Ban, MessageSquareWarning, Check, Clock } from "lucide-react";
 
 interface ReportModalProps {
   report: IReport;
@@ -44,10 +45,14 @@ function ReportsModal({ report, onClose }: ReportModalProps) {
   // Function to handle the warning action
   const handleWarning = async () => {
       try {
-          const chat = await startChat(Number(report.reporteeId));
-          navigate(`/chats/${chat.id}`);
-          if (chat) {
-            setReportResult(report.id, 'Warning');
+          if (confirm('By issuing a warning, you are notifying the user about their behavior. Continuing will immediately set this report as handled.\n\nDo you want to proceed?')) {
+            const chat = await startChat(Number(report.reporteeId));
+            navigate(`/chats/${chat.id}`);
+            if (chat) {
+              setReportResult(report.id, 'Warning');
+            }
+          } else {
+            return;
           }
         } catch (error) {
           console.error('Error issuing warning:', error);
@@ -99,7 +104,7 @@ function ReportsModal({ report, onClose }: ReportModalProps) {
     try {
       const banData = {
         userId: report.reporteeId,
-        duration: 1000000, // Indefinite ban
+        duration: null, // Indefinite ban
         reason: banReason,
       };
   
@@ -127,79 +132,72 @@ function ReportsModal({ report, onClose }: ReportModalProps) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className={styles.modalScrollContent}>
-          <div className={styles.modalHeader}>
-            <h3>Report Details</h3>
-            <span className={styles.statusBadge}>
-              {report.status}
-            </span>
-          </div>
-
-          <div className={styles.reportSection}>
-            <h4>Title:</h4>
+          <h3>Report Details</h3>
+          <div className={styles.reportInfoSection}>
+            <h6>Title</h6>
             <p>{report.title}</p>
           </div>
-          
-          <div className={styles.reportSection}>
-            <h4>Description:</h4>
+          <div className={styles.reportInfoSection}>
+            <h6>Description</h6>
             <p>{report.description}</p>
           </div>
-          
           <div className={styles.userInfoSection}>
-            <div className={styles.userColumn}>
-              <h4>Reporting User</h4>
-              <Link to={`/users/${report.reporterId}`} className={styles.userLink}>
-                <p><strong>{reportingUser?.name.fname} {reportingUser?.name.sname}</strong></p>
+            <h6>Reported User</h6>
+            <div>
+              <Link to={`/users/${report.reporteeId}`} className="btn-link">
+                <h5>{reportedUser?.name.fname} {reportedUser?.name.sname}</h5>
               </Link>
-              <p>User ID: {report.reporterId}</p>
-              <p>Report Created: {new Date(report.createdAt).toLocaleDateString()}</p>
-            </div>
-            
-            <div className={styles.userColumn}>
-              <h4>Reported User</h4>
-              <Link to={`/users/${report.reporteeId}`} className={styles.userLink}>
-                <p><strong>{reportedUser?.name.fname} {reportedUser?.name.sname}</strong></p>
-              </Link>
-              <p>Email: {reportedUser?.loginDetails.email}</p> 
-              <p>Rating: {reportedUser?.minderRoleInfo.rating}</p>
+              <p><strong>Email:</strong> {reportedUser?.loginDetails.email}</p>
             </div>
           </div>
-          
+          <div className={styles.userInfoSection}>
+            <h6>Reporting User</h6>
+            <div> 
+              <Link to={`/users/${report.reporterId}`} className="btn-link">
+                <h5>{reportingUser?.name.fname} {reportingUser?.name.sname}</h5>
+              </Link>
+              <p><strong>Email:</strong> {reportingUser?.loginDetails.email}</p>
+            </div>
+          </div>
           <div className={styles.actionSection}>
-            <h4>Take Action</h4>
+            <h6>Actions</h6>
             <div className={styles.actionButtons}>
-              <button className={`${styles.actionButton} ${styles.dangerButton}`}
-                onClick={() => setShowBanPrompt(!showBanPrompt)}
+              <button className={`btn btn-primary ${styles.dangerButton}`}
+                onClick={() => {setShowBanPrompt(!showBanPrompt);
+                  setShowSuspendPrompt(false);
+                } }
                 >
-                Ban User
+                <Ban size={16} />Ban User
               </button>
               <button 
-                className={`${styles.actionButton} ${styles.dangerButton}`}
-                onClick={() => setShowSuspendPrompt(!showSuspendPrompt)}
+                className={`btn btn-primary ${styles.dangerButton}`}
+                onClick={() => {
+                  setShowSuspendPrompt(!showSuspendPrompt);
+                  setShowBanPrompt(false);
+                } }
               >
-                Suspend User
+                <Clock size={16} />Suspend User
               </button>
-              <button className={`${styles.actionButton} ${styles.dangerButton}`} onClick={handleWarning}>
-                Issue Warning
+              <button className={`btn btn-secondary ${styles.dangerButton}`} onClick={handleWarning}>
+              <MessageSquareWarning size={16} />Issue Warning
               </button>
-              <button className={`${styles.actionButton} ${styles.dangerButton}`} onClick={handleNoAction}>
-                No Action
+              <button className={`btn btn-secondary ${styles.dangerButton}`} onClick={handleNoAction}>
+                <Check size={16} />No Action
               </button>
             </div>
           </div>
           {showSuspendPrompt && (
             <div className={styles.suspendPrompt}>
-              <h4>Enter Suspension Details</h4>
+              <h4>Suspension Details</h4>
+              <p>This will temporarily suspend the user's account.</p>
               <div className={styles.suspendForm}>
                 <label>
                   Duration (days):
                   <input
-                  type="text"
+                  type="number"
                   value={suspendDays}
-                  onChange={(e) => {
-                    // Only allow numbers
-                    const numValue = e.target.value.replace(/[^0-9]/g, '');
-                    setSuspendDays(numValue ? parseInt(numValue) : 0);
-                  }}
+                  onChange={(e) => setSuspendDays(Number(e.target.value))}
+                  min="1"
                   className={styles.suspendInput}
                 />
                 </label>
@@ -209,7 +207,7 @@ function ReportsModal({ report, onClose }: ReportModalProps) {
                     value={suspendReason} 
                     onChange={(e) => setSuspendReason(e.target.value)}
                     className={styles.suspendTextarea}
-                    placeholder="Enter suspension reason..."
+                    placeholder="Add a note explaning your decision..."
                   />
                 </label>
                 <button 
@@ -224,7 +222,8 @@ function ReportsModal({ report, onClose }: ReportModalProps) {
           )}
           {showBanPrompt && (
             <div className={styles.suspendPrompt}>
-              <h4>Enter Ban Details</h4>
+              <h4>Ban Details</h4>
+              <p>This will permanently ban the user from the platform.</p>
               <div className={styles.suspendForm}>
                 <label>
                   Reason:
@@ -232,7 +231,7 @@ function ReportsModal({ report, onClose }: ReportModalProps) {
                     value={banReason} 
                     onChange={(e) => setBanReason(e.target.value)}
                     className={styles.suspendTextarea}
-                    placeholder="Enter ban reason..."
+                    placeholder="Add a note explaning your decision..."
                   />
                 </label>
                 <button 

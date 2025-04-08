@@ -73,25 +73,3 @@ export async function getPayment(paymentId: number) {
         return null;
     }
 }
-
-export async function getPaymentByBookingId(bookingId: number) {
-    try {
-        const response = await fetch(`${API_URL}/payment/booking/${bookingId}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-
-        if (response.ok) {
-            const payment = await response.json();
-            return payment;
-        } else {
-            console.error('Failed to fetch payment by booking ID:', await response.text());
-            return null;
-        }
-    } catch (error) {
-        console.error('Error fetching payment by booking ID:', error);
-        return null;
-    }
-}

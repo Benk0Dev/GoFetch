@@ -1,9 +1,9 @@
 [
   {
     "id": 1,
-    "userId": 4,
-    "reason": "",
-    "startDate": "2025-04-07T01:52:58.990Z",
-    "endDate": "2025-04-08T01:52:58.990Z"
+    "userId": 8,
+    "reason": "Inappropriate interactions with another user.",
+    "startDate": "2025-04-08T20:43:07.318Z",
+    "endDate": "2025-05-08T20:43:07.318Z"
   }
 ]

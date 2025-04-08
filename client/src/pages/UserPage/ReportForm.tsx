@@ -45,15 +45,12 @@ function ReportForm () {
         setTimeout(() => {
             setIsSubmitted(true);
             setTimeout(() => {
-                navigate("/dashboard");
+                navigate(-1);
             });
             setIsProcessing(false);
         }, 2000);
 
     };
-
-    // character limit for reason
-    // error handling?
 
     return (
         <form onSubmit={handleSubmit}>
@@ -62,7 +59,7 @@ function ReportForm () {
                 <input 
                     type="title" 
                     value={title} 
-                    placeholder="Enter a title/subject for your report"
+                    placeholder="Enter a title or subject for your report"
                     onChange={(e) => setTitle(e.target.value)} 
                     required 
                 />
@@ -74,8 +71,7 @@ function ReportForm () {
                     value={reason} 
                     placeholder={`Up to ${wordLimit} words`}
                     onChange={(e) => setReason(e.target.value)} 
-                    required 
-                    rows={5} 
+                    required
                     className={styles.reasonTextarea}
                 />
                 {error && <div className={styles.error}>{error}</div>}

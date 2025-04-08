@@ -53,7 +53,7 @@ function ProfilePage() {
         navigate("/report", {
             state: {
                 reporteeId: userBeingDisplayed.id,
-                reporteeName: userBeingDisplayed.name.fname
+                reporteeName: userBeingDisplayed.name.fname + " " + userBeingDisplayed.name.sname,
             }
         });
     };

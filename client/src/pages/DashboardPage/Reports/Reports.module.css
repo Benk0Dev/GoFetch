@@ -1,19 +1,45 @@
-.reportsList {
-    display: grid;
-    row-gap: 10px;
-    margin-top: 10px;
-}
-
 .reportsTable {
-    width: 100%;
+  width: 100%;
     border-collapse: collapse;
-    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
-.reportsTable th, .reportsTable td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+.reportsTableHeader,
+.reportsTableRow {
+    display: grid;
+    grid-template-columns: 0.35fr 0.75fr 1fr 0.75fr 0.5fr;
+    align-items: center;
+    padding: 0 16px;
+    border-radius: var(--border-radius);
+    background-color: var(--background-light);
+}
+
+.reportsTableHeader {
+  font-weight: 500;
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  padding: 8px 16px;
+}
+
+.reportsTableRow {
+  padding: 6px 16px;
+  border: 1px solid var(--text-color);
+}
+
+.columnData {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.action {
+  color: var(--highlight-color);
+}
+
+.action:hover {
+  color: var(--highlight-color-hover) !important;
 }
 
 .modalOverlay {
@@ -30,124 +56,62 @@
 }
 
 .modalContent {
-  background: white;
-  border-radius: 12px;
+  background: var(--primary-color);
+  border-radius: var(--border-radius);
   width: 90%;
   max-width: 700px;
   max-height: 90vh;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--text-color);
   overflow: hidden;
 }
 
 .modalScrollContent {
-  padding: 2rem;
+  padding: 20px;
   overflow-y: auto;
   max-height: 90vh;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 20px;
 }
 
-.modalHeader {
+.reportInfoSection, .userInfoSection, .actionSection {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.5rem;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
 }
 
-.statusBadge {
-  padding: 4px 12px;
-  border-radius: 100px;
-  background: #f5f5f5;
-  font-size: 0.85rem;
-  font-weight: 500;
+.reportInfoSection p {
+  margin: 0;
 }
 
-.reportSection h4,
-.userInfoSection h4,
-.actionSection h4 {
-  margin-bottom: 0.5rem;
-  font-size: 1rem;
-  color: #555;
+.userInfoSection > div {
+  padding: 5px 10px;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--text-color);
+  width: 100%;
 }
 
-.reportSection p {
-  padding: 0.5rem;
-  background: #f9f9f9;
-  border-radius: 6px;
+.userInfoSection a {
+  color: var(--highlight-color);
+  display: inline-block;
+  width: fit-content;
 }
 
-.userInfoSection {
-  display: flex;
-  gap: 2rem;
-  margin-top: 1rem;
+.userInfoSection a:hover {
+  color: var(--highlight-color-hover);
 }
 
-.userColumn {
-  flex: 1;
-  padding: 1rem;
-  background: #f9f9f9;
-  border-radius: 8px;
-}
-
-.userColumn p {
-  margin: 0.5rem 0;
+.userInfoSection p {
+  margin: 0;
   font-size: 0.9rem;
-}
-
-.actionSection {
-  margin-top: 1rem;
 }
 
 .actionButtons {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  margin-top: 1rem;
+  gap: 10px;
 }
-
-.actionButton {
-  padding: 12px 16px;
-  border-radius: 6px;
-  border: none;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 0.9rem;
-}
-
-.dangerButton {
-  background-color: rgba(144, 144, 144, 0.632);
-  color: white;
-}
-
-.dangerButton:hover {
-  background-color: var(--highlight-color);
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.dangerButton:active {
-  transform: translateY(0);
-}
-
-.secondaryButton {
-  padding: 8px 16px;
-  border-radius: 6px;
-  background: #f0f0f0;
-  border: none;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.secondaryButton:hover {
-  background: #e0e0e0;
-}
-
-
 
 /* Suspension Prompt Styles */
 .suspendPrompt {
