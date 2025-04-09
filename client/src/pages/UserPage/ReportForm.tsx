@@ -34,13 +34,19 @@ function ReportForm () {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        if (title.length === 0 || reason.length === 0) {
+            setError("Please fill in all fields.");
+            return;
+        }
+
         const wordCount = reason.trim() === "" ? 0 : reason.trim().split(/\s+/).length;
         if (wordCount > wordLimit) {
-            setError(`You have exceeded the maximum ${wordLimit} words`);
+            setError(`You have exceeded the maximum ${wordLimit} words.`);
             return;
         }
 
         setError("");
+        setIsProcessing(true);
 
         setTimeout(() => {
             setIsSubmitted(true);
@@ -84,7 +90,7 @@ function ReportForm () {
                 className="btn btn-primary"
                 style={{width: "100%"}}
             >
-                {isProcessing ? "Processing ..." : "Submit Report"}
+                {isProcessing ? "Processing..." : "Submit Report"}
             </button>
             {isSubmitted && (
                 <ReportSubmit

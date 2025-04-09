@@ -48,3 +48,7 @@
 .reportingContainer p {
     margin: 10px 0 0;
 }
+
+.error {
+    color: var(--error-color);
+}

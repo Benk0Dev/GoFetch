@@ -64,7 +64,7 @@
 
 /* Notifications */
 .container {
-    height: 30em;
+    max-height: 30em;
     overflow-y: scroll;
 }
 
