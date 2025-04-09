@@ -4,8 +4,23 @@ import { Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import defaultProfile from "@client/assets/images/default-profile-picture.svg";
 import { IReview } from "@gofetch/models/IReview";
+import { useEffect, useState } from "react";
 
 function Reviews({ minder, sortedReviews, reviewers }: { minder: any, sortedReviews: any[], reviewers: any[] }) {
+     const maxMobileWidth = 768;
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= maxMobileWidth);
+    
+    useEffect(() => {
+    const handleResize = () => {
+        setIsMobile(window.innerWidth <= maxMobileWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+        window.removeEventListener("resize", handleResize);
+    };
+    }
+    , []);
 
     const percentages = [5, 4, 3, 2, 1].map((rating) => {
         return Math.round(
@@ -46,7 +61,7 @@ function Reviews({ minder, sortedReviews, reviewers }: { minder: any, sortedRevi
                             {minder.minderRoleInfo.reviews.length === 1 ? "" : "s"}
                         </p>
                     </div>
-                    {minder.minderRoleInfo.reviews.length > 0 && (
+                    {!isMobile && minder.minderRoleInfo.reviews.length > 0 && (
                         <div className={styles.percentageBreakdown}>
                             <p>Rating Breakdown</p>
                             {[5, 4, 3, 2, 1].map((rating, index) => {

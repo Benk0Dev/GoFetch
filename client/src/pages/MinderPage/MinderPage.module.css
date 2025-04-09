@@ -264,4 +264,17 @@ span.servicePrice {
   .actions button {
     width: 100%;
   }
+
+  .reviewsBreakdown {
+    gap: 0;
+  }
+
+  .reviewScore {
+      margin-right: 20px;
+  }
+
+  .navigation button {
+    padding: 6px 4px !important;
+    font-size: 12px !important;
+  }
 }
