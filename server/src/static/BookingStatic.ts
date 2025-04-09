@@ -115,7 +115,7 @@ export function updateBookingStatusWithTimeChange() {
             const payment = getCachedPayments().find((p) => p.id === booking.paymentId);
             addNotification({
                 userId: booking.ownerId,
-                message: `Booking request #${booking.id} has expired. You have received a refund${payment ? payment.amount : ""}.`,
+                message: `Booking request #${booking.id} has expired. You have received a refund £${payment ? payment.amount : ""}.`,
                 type: NotificationType.Booking,
                 linkId: booking.id
             });
