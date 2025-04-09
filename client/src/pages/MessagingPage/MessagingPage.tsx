@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useMemo } from "react";
+import { useEffect, useState, useCallback, useMemo, use } from "react";
 import { Link, Outlet, useParams, useNavigate } from "react-router-dom";
 import { IChat, IMessage } from "@gofetch/models/IMessage";
 import { Role } from "@gofetch/models/IUser";
@@ -17,6 +17,19 @@ function MessagingPage() {
     const navigate = useNavigate();
     const { user } = useAuth();
     const { socket, isConnected, connectionError } = useSocket();
+
+    const maxMobileWidth = 768; // Define a constant for mobile width
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= maxMobileWidth);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= maxMobileWidth);
+        };
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     // Memoize the current user ID to prevent unnecessary effect triggers
     const currentUserId = useMemo(() => user.id, [user.id]);
@@ -93,9 +106,9 @@ function MessagingPage() {
                 namesMap[chat.id.toString()] = "Unknown User";
             }
         }
-        
+
         setChatUserNames(namesMap);
-    }, [chats, chatUserNames, currentUserId]);
+    }, [chats, chatUserNames, currentUserId, isMobile]);
 
     // Initial fetch
     useEffect(() => {
@@ -237,8 +250,11 @@ function MessagingPage() {
                                 >
                                     <div className={styles.chatPreview}>
                                         <h3 style={{ display: 'flex', alignItems: 'center', justifyContent: "space-between", width: '100%' }}>
-                                            {chatUserNames[chat.id.toString()] || 
-                                                <span className={styles.loadingName}>Loading...</span>}
+                                            {isMobile ? (
+                                                chatUserNames[chat.id.toString()] ? chatUserNames[chat.id.toString()].split(' ').slice(0, 2).map(part => part.charAt(0)).join('') : <span className={styles.loadingName}>Loading...</span>
+                                            ) : (
+                                                chatUserNames[chat.id.toString()] || <span className={styles.loadingName}>Loading...</span>
+                                            )}
                                             {chat.unreadCount > 0 && (
                                                 <span className={styles.unreadBadge}>{chat.unreadCount}</span>
                                             )}
@@ -252,7 +268,7 @@ function MessagingPage() {
                         </div>
                     ) : (
                         <div className={styles.noChats}>
-                            <p>No conversations yet</p>
+                            <p>{isMobile ? "..." : "No conversations yet"}</p>
                             {user.currentRole === Role.OWNER && (
                                 <Link to="/browse" className="btn btn-primary">
                                 Browse Pet Minders

@@ -14,6 +14,21 @@ function Reviews() {
   const [reviewers, setReviewers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const maxMobileWidth = 768;
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= maxMobileWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= maxMobileWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }
+  , []);
+
   useEffect(() => {
     const fetchReviewers = async () => {
       const reviewersData = await Promise.all(
@@ -75,7 +90,7 @@ function Reviews() {
             {user.minderRoleInfo.reviews.length === 1 ? "" : "s"}
           </p>
         </div>
-        {user.minderRoleInfo.reviews.length > 0 && (
+        {!isMobile && user.minderRoleInfo.reviews.length > 0 && (
           <div className={styles.percentageBreakdown}>
             <p>Rating Breakdown</p>
             {[5, 4, 3, 2, 1].map((rating, index) => {

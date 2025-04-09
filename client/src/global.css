@@ -255,3 +255,45 @@ input:focus, textarea:focus, select:focus {
     align-items: center;
     justify-content: center;
 }
+
+/* Response design */
+@media (max-width: 768px) {
+    .container {
+        width: 100%;
+        padding: 10px;
+        margin: 0 auto;
+        margin-bottom: auto;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.75rem;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+    }
+
+    h4 {
+        font-size: 1.25rem;
+    }
+
+    h5 {
+        font-size: 1rem;
+    }
+
+    h6 {
+        font-size: 0.875rem;
+    }
+
+    html {
+        font-size: 14px;
+    }
+
+    .btn, .btn2, .btn-round, .btn-link {
+        font-size: 16px;
+    }
+}

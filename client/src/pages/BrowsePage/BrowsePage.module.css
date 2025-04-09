@@ -231,15 +231,15 @@
     position: absolute;
     top: 5px;
     right: 5px;
-    padding: 0;
+    padding: 0 !important;
     background-color: transparent;
-    border: none;
+    border: none !important;
     transition: color 0.1s ease-in-out;
 }
 
 .close-button:hover {
     background-color: transparent;
-    color: var(--highlight-color)
+    color: var(--highlight-color);;
 }
 
 .close-button svg {
@@ -266,4 +266,12 @@
 .overlay.open {
     visibility: visible;
     opacity: 1;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .inputs {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
 }

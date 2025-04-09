@@ -9,7 +9,7 @@
 .reportsTableHeader,
 .reportsTableRow {
     display: grid;
-    grid-template-columns: 0.35fr 0.75fr 1fr 0.75fr 0.5fr;
+    grid-template-columns: 0.25fr 1fr 0.7fr 1fr 0.55fr;
     align-items: center;
     padding: 0 16px;
     border-radius: var(--border-radius);
@@ -166,4 +166,12 @@
 .suspendContent p {
   margin: 0;
   font-size: 16px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .modalContent {
+    width: 90%;
+    min-width: unset;
+  }
 }

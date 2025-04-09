@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   margin: 0 auto auto;
-  padding: 40px 20px;
+  padding: 40px 20px !important;
   width: fit-content !important;
 }
 
@@ -46,7 +46,7 @@
 
 .dangerZone {
   padding: 15px;
-  border: 1px solid var(--error-color, #dc3545);
+  border: 1px solid var(--error-color, #dc3545) !important;
   border-radius: var(--border-radius);
   display: flex;
   flex-direction: column;
@@ -58,11 +58,11 @@
 }
 
 .deleteBtn {
-  background-color: #dc3545;
+  background-color: #dc3545 !important;
 }
 
 .deleteBtn:hover {
-  background-color: #f04f5f;
+  background-color: #f04f5f !important;
 }
 
 .modalBackdrop {
@@ -140,5 +140,16 @@
   }
   100% {
       opacity: 1;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .settingsPage {
+    padding: 40px 10px !important;
+  }
+
+  .modal {
+    width: 90%;
   }
 }

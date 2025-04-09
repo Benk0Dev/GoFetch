@@ -1,7 +1,7 @@
 .petDetails {
     display: flex;
     margin-bottom: auto;
-    padding: 40px 0;
+    padding: 40px 0 !important;
     justify-content: center;
 }
 
@@ -70,4 +70,15 @@
     object-fit: cover;
     border-radius: 50%;
     margin: 10px 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .petDetails {
+        padding: 40px 10px !important;
+    }
+
+    .petDetailsGrid {
+        grid-template-columns: 1fr;
+    }
 }

@@ -6,7 +6,8 @@ import NotificationIcon from "@client/components/Navbar/NotificationIcon";
 import logo from "@client/assets/images/logo.svg";
 import { useAuth } from "@client/context/AuthContext";
 import { Role } from "@gofetch/models/IUser";
-import { LogOut } from "lucide-react";
+import { LogOut, Search } from "lucide-react";
+import { useEffect, useState } from "react";
 
 function Navbar() {
   const { role, loading, user, logout } = useAuth();
@@ -15,12 +16,27 @@ function Navbar() {
 
   const homeLink = isSuspended ? "/" : role === Role.OWNER || role === Role.MINDER ? "/dashboard" : "/";
 
+  const maxMobileWidth = 768;
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= maxMobileWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= maxMobileWidth);
+    };
+    
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
-    <nav className={styles.navbar} id="navbar">
+    <nav className={styles.navbar}>
       <div className="container flex" style={{ padding: "10px 20px" }}>
         <Link className={styles.logo} to={homeLink}>
           <img src={logo} alt="GoFetch Logo" />
-          <h2>GoFetch</h2>
+          {!isMobile && <h2>GoFetch</h2>}
         </Link>
 
         <div className={styles.navLinks}>
@@ -34,7 +50,7 @@ function Navbar() {
             </>
           ) : role ? (
             <>
-              <Link to="/browse" className="btn-link" style={{ marginRight: "10px" }}>Explore Minders</Link>
+              <Link to="/browse" className={isMobile ? "btn-round btn-transparent" : "btn-link"} style={{ marginRight: isMobile ? "" : "10px", padding: isMobile ? "10px" : "" }}>{isMobile ? <Search strokeWidth={2.25} /> : "Explore Minders"}</Link>
               <NotificationIcon />
               <Link to="/chats" className="btn-round btn-transparent" style={{padding: "10px"}}>
                 <Mail strokeWidth={2.25} />

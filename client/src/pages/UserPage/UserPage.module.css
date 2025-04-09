@@ -101,3 +101,10 @@
     align-items: center;
     column-gap: 5px;
 }
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .userDetails {
+        padding: 40px 10px !important;
+    }
+}

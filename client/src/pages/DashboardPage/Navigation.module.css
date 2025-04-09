@@ -33,3 +33,11 @@
 .navigation .active:hover {
     background: var(--highlight-color-hover);
 }
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .navigation button {
+        padding: 6px 4px !important;
+        font-size: 12px !important;
+    }
+}

@@ -8,6 +8,9 @@
 .reportingContainer {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    min-width: 500px;
+    max-width: 600px;
 }
 
 .reportingBox {
@@ -15,9 +18,7 @@
     padding: calc(var(--padding) * 2) var(--padding);
     border-radius: var(--border-radius);
     border: 1px solid var(--text-color);
-    width: max-content;
-    min-width: 500px;
-    max-width: 600px;
+    width: 100%;
     text-align: center;
 }
 
@@ -51,4 +52,11 @@
 
 .error {
     color: var(--error-color);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .reportingContainer {
+        min-width: 0;
+    }
 }

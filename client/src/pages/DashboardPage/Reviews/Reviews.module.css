@@ -131,3 +131,14 @@ p.date {
     font-size: 14px;
     opacity: 0.5;
 }
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .reviewsBreakdown {
+        gap: 0;
+    }
+
+    .reviewScore {
+        margin-right: 20px;
+    }
+}

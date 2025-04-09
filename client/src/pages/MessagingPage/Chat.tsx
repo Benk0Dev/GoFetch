@@ -7,6 +7,7 @@ import { useAuth } from '@client/context/AuthContext';
 import { useSocket } from '@client/context/SocketContext';
 import styles from '@client/pages/MessagingPage/MessagingPage.module.css';
 import { Role } from '@gofetch/models/IUser';
+import defaultUser from "@client/assets/images/default-profile-picture.svg";
 
 function Chat() {
     const { id } = useParams<{ id: string }>();
@@ -245,7 +246,7 @@ function Chat() {
             <div className={styles.chatHeader}>
                 <Link to={`/users/${chat.users.find(userId => userId !== user.id)}`}>
                     <img 
-                        src={userPicture} 
+                        src={userPicture ? userPicture : defaultUser} 
                         alt="User" 
                     />
                     <h2>{chatName}</h2>

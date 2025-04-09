@@ -57,8 +57,8 @@ function LandingPage() {
     
       <div className="container">
         <div className={styles.loginRegister}>
-        <h2>Ready to Get Started?</h2>
-        <p>Join GoFetch today and connect with trusted pet minders in your area.</p>
+        <h2 style={{textAlign: "center"}}>Ready to Get Started?</h2>
+        <p style={{textAlign: "center"}}>Join GoFetch today and connect with trusted pet minders in your area.</p>
         <div className={styles.buttons}>
           {role === Role.ADMIN ? (
             <>

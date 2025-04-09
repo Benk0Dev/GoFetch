@@ -111,10 +111,6 @@
     align-items: start;
 }
 
-
-
-
-
 .buttons {
     display: flex;
     justify-content: space-between;
@@ -142,4 +138,12 @@ p.error {
     margin: 15px 0 0;
     text-align: left;
     font-size: 16px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .doubleRow {
+        grid-template-columns: 1fr;
+        gap: 5px;
+    }
 }

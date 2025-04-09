@@ -411,10 +411,12 @@ function Bookings() {
                                 <>
                                     <h5>Owner Details</h5>
                                     <div className={detailsStyles.userDetailsContainer}>
-                                        <img src={bookings[0].owner.primaryUserInfo.profilePic} alt={bookings[0].owner.name.fname + " " + bookings[0].owner.name.sname} />
-                                        <div className={detailsStyles.userDetailsInfo}>
-                                            <h6>{bookings[0].owner.name.fname} {bookings[0].owner.name.sname}</h6>
-                                            <span style={{display: "flex", alignItems: "center", gap: "5px"}}><MapPin size={16} />{bookings[0].owner.primaryUserInfo.address.street}, {bookings[0].owner.primaryUserInfo.address.city}</span>
+                                        <div className={detailsStyles.userDetailsInfoContainer}>
+                                            <img src={bookings[0].owner.primaryUserInfo.profilePic} alt={bookings[0].owner.name.fname + " " + bookings[0].owner.name.sname} />
+                                            <div className={detailsStyles.userDetailsInfo}>
+                                                <h6>{bookings[0].owner.name.fname} {bookings[0].owner.name.sname}</h6>
+                                                <span style={{display: "flex", alignItems: "center", gap: "5px"}}><MapPin size={16} />{bookings[0].owner.primaryUserInfo.address.street}, {bookings[0].owner.primaryUserInfo.address.city}</span>
+                                            </div>
                                         </div>
                                         <button className="btn btn-secondary" onClick={() => navigate(`/users/${bookings[0].owner.id}`)}>
                                             View Profile
@@ -425,10 +427,12 @@ function Bookings() {
                                 <>
                                     <h5>Minder Details</h5>
                                     <div className={detailsStyles.userDetailsContainer}>
-                                        <img src={bookings[0].minder.primaryUserInfo.profilePic} alt={bookings[0].minder.name.fname + " " + bookings[0].minder.name.sname} />
-                                        <div className={detailsStyles.userDetailsInfo}>
-                                            <h6>{bookings[0].minder.name.fname} {bookings[0].minder.name.sname}</h6>
-                                            <span style={{display: "flex", alignItems: "center", gap: "5px"}}><MapPin size={16} />{bookings[0].minder.primaryUserInfo.address.street}, {bookings[0].minder.primaryUserInfo.address.city}</span>
+                                        <div className={detailsStyles.userDetailsInfoContainer}>
+                                            <img src={bookings[0].minder.primaryUserInfo.profilePic} alt={bookings[0].minder.name.fname + " " + bookings[0].minder.name.sname} />
+                                            <div className={detailsStyles.userDetailsInfo}>
+                                                <h6>{bookings[0].minder.name.fname} {bookings[0].minder.name.sname}</h6>
+                                                <span style={{display: "flex", alignItems: "center", gap: "5px"}}><MapPin size={16} />{bookings[0].minder.primaryUserInfo.address.street}, {bookings[0].minder.primaryUserInfo.address.city}</span>
+                                            </div>
                                         </div>
                                         <button className="btn btn-secondary" onClick={() => navigate(`/users/${bookings[0].minder.id}`)}>
                                             View Profile
@@ -440,10 +444,12 @@ function Bookings() {
                         <div className={detailsStyles.detailsContainer}>
                             <h5>Pet Details</h5>
                             <div className={detailsStyles.userDetailsContainer}>
-                                <img src={bookings[0].pet.picture} alt={bookings[0].pet.name} />
-                                <div className={detailsStyles.userDetailsInfo}>
-                                    <h6>{bookings[0].pet.name}</h6>
-                                    <span>{bookings[0].pet.breed}</span>
+                                <div className={detailsStyles.userDetailsInfoContainer}>
+                                    <img src={bookings[0].pet.picture} alt={bookings[0].pet.name} />
+                                    <div className={detailsStyles.userDetailsInfo}>
+                                        <h6>{bookings[0].pet.name}</h6>
+                                        <span>{bookings[0].pet.breed}</span>
+                                    </div>
                                 </div>
                                 <button className="btn btn-secondary" onClick={() => navigate(`/pets/${bookings[0].pet.id}`)}>
                                     View Pet Profile

@@ -1,5 +1,5 @@
 .messagingPage {
-    padding: 40px 0;
+    padding: 40px 20px !important;
     display: flex;
     justify-content: center;
 }
@@ -203,11 +203,9 @@
 .messagingContainer {
     display: flex;
     height: 85vh;
-    width: 80vw;
-    max-width: 75rem;
-    margin: 1.25rem auto;
+    width: 100%;
     border: 1px solid var(--text-color);
-    border-radius: 0.5rem;
+    border-radius: var(--border-radius);
     overflow: hidden;
 }
 
@@ -356,4 +354,17 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .chatsSidebar {
+        max-width: 90px;
+        width: 100%;
+        min-width: 90px;
+    }
+
+    .chatWindowContainer {
+        width: 100%;
+    }
 }

@@ -304,3 +304,21 @@ span.stepText {
         opacity: 1;
     }
 }
+
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .authenticationBox {
+        max-width: fit-content;
+        width: 100%;
+        padding: 20px;
+    }
+
+    .doubleRow {
+        grid-template-columns: 1fr;
+    }
+
+    .profilePictureCustomization {
+        margin: 10px 0;
+    }
+}

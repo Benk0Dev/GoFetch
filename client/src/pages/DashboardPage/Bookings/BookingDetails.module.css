@@ -86,12 +86,19 @@
 
 .userDetailsContainer {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: 1fr auto;
     gap: 10px;
     align-items: center;
 }
 
-.userDetailsContainer img {
+.userDetailsInfoContainer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.userDetailsInfoContainer img {
     width: 100px;
     height: 100px;
     object-fit: cover;
@@ -99,8 +106,12 @@
     margin: 5px 0;
 }
 
-.userDetailsInfo {
+.userDetailsInfoContainer {
     line-height: 1.4;
+}
+
+.userDetailsInfoContainer h6, .userDetailsInfoContainer span {
+    width: fit-content;
 }
 
 .userDetailsContainer button {
@@ -115,3 +126,10 @@
     margin: 0;
 }
 
+/* Responsive design */
+@media (max-width: 768px) {
+    .userDetailsContainer {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+}
