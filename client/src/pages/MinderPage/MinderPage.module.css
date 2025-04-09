@@ -183,6 +183,12 @@
   width: 100%;
   aspect-ratio: 1 / 1;
   border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.gallery img:hover {
+  transform: scale(1.015);
 }
 
 .servicesContainer {

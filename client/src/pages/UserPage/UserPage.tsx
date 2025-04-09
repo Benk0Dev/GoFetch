@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "@client/context/AuthContext";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./UserPage.module.css";
 import BackButton from "@client/components/BackButton";
 import { IUser, Role } from "@gofetch/models/IUser";

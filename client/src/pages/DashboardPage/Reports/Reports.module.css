@@ -58,17 +58,10 @@
 .modalContent {
   background: var(--primary-color);
   border-radius: var(--border-radius);
-  width: 90%;
-  max-width: 700px;
-  max-height: 90vh;
+  width: fit-content;
+  min-width: 500px;
   border: 1px solid var(--text-color);
-  overflow: hidden;
-}
-
-.modalScrollContent {
   padding: 20px;
-  overflow-y: auto;
-  max-height: 90vh;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -128,10 +121,13 @@
   gap: 15px;
 }
 
-.suspendForm label {
+.formInput {
   display: flex;
   flex-direction: column;
   gap: 5px;
+}
+
+.suspendForm label {
   font-weight: 500;
 }
 
@@ -139,7 +135,6 @@
   padding: 8px 12px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  width: 80px;
 }
 
 .suspendTextarea {
@@ -147,7 +142,7 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   min-height: 80px;
-  resize: vertical;
+  resize: none;
 }
 
 .suspendConfirmButton {
@@ -162,4 +157,13 @@
 
 .suspendConfirmButton:hover {
   background-color: #e0352b;
+}
+
+.suspendContent {
+  min-width: fit-content;
+}
+
+.suspendContent p {
+  margin: 0;
+  font-size: 16px;
 }

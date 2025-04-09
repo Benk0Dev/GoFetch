@@ -243,7 +243,11 @@ function Profile() {
                     </button>
                 </div>
                 <hr />
-                <form onSubmit={handleSave}>
+                <form onSubmit={handleSave} onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                    }
+                }}>
                     <div className={styles.inputSectionContainer}>
                         <span>Personal Information</span>
                         <div className={styles.doubleRow}>
@@ -315,7 +319,7 @@ function Profile() {
                     </div>
                     <hr />
                     <div className={styles.buttons}>
-                        <button disabled={!hasUnsavedChanges} onClick={handleCancel} className={`btn btn-secondary ${!hasUnsavedChanges ? "disabled" : ""}`}>
+                        <button type="button" disabled={!hasUnsavedChanges} onClick={handleCancel} className={`btn btn-secondary ${!hasUnsavedChanges ? "disabled" : ""}`}>
                             Cancel
                         </button>
                         <button type="submit" disabled={!hasUnsavedChanges} className={`btn btn-primary ${!hasUnsavedChanges ? "disabled" : ""}`}>

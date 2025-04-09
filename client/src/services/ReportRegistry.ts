@@ -13,9 +13,6 @@ export const addReport = async (reportData: IReport) => {
         });
         if (response.ok) {
             const report = await response.json();
-
-            // get user or something?
-
             return report;
         } else {
             const text = await response.text();

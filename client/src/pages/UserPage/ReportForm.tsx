@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import styles from "@client/pages/UserPage/Reporting.module.css"
+import styles from "@client/pages/UserPage/ReportPage.module.css"
 import "@client/global.css";
-import ReportSubmit from "./ReportSubmit";
 import { useAuth } from "@client/context/AuthContext";
-import { Status } from "@gofetch/models/IReport";
+import { IReport, Status } from "@gofetch/models/IReport";
+import { addReport } from "@client/services/ReportRegistry";
 
 function ReportForm () {
     const {user} = useAuth();
@@ -14,9 +14,6 @@ function ReportForm () {
 
     const location = useLocation();
     const { reporteeId } = location.state || {};
-
-    const [isProcessing, setIsProcessing] = useState(false);
-    const [isSubmitted, setIsSubmitted] = useState(false);
     const navigate = useNavigate();
     const wordLimit = 250;
 
@@ -45,17 +42,26 @@ function ReportForm () {
             return;
         }
 
-        setError("");
-        setIsProcessing(true);
+        const reportData: IReport = {
+            id: 0, // This will be set by the server
+            reporterId: user.id,
+            reporteeId: reporteeId,
+            title,
+            description: reason,
+            status: Status.PENDING,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+        };
 
-        setTimeout(() => {
-            setIsSubmitted(true);
-            setTimeout(() => {
-                navigate(-1);
-            });
-            setIsProcessing(false);
-        }, 2000);
+        const newReport = await addReport(reportData);
 
+        if (newReport) {
+            alert("Thank you for your report.");
+            navigate(-1);
+        } else {
+            setError("An error occurred while sending your report. Please try again.");
+            return;
+        }
     };
 
     return (
@@ -85,26 +91,12 @@ function ReportForm () {
 
             <button 
                 onClick={handleSubmit}
-                disabled={isProcessing}
                 type="submit"
                 className="btn btn-primary"
                 style={{width: "100%"}}
             >
-                {isProcessing ? "Processing..." : "Submit Report"}
+                Submit Report
             </button>
-            {isSubmitted && (
-                <ReportSubmit
-                    id={0} // This is just a placeholder essentially
-                    reporterId={user.id}
-                    reporteeId={reporteeId}
-                    title={title}
-                    description={reason}
-                    status={Status.PENDING}
-                    result={undefined}
-                    createdAt={new Date()}
-                    updatedAt={new Date()}
-                />
-            )}
         </form>
     );
 

@@ -1,6 +1,10 @@
+import ImageViewer from "@client/components/ImageViewer";
 import styles from "./MinderPage.module.css";
+import { useState } from "react";
 
 function About({ minder }: { minder: any }) {
+    const [showImageViewer, setShowImageViewer] = useState<string | null>(null);
+
     return (
         <div className={styles.sectionContainer}>
             <div className={styles.subSectionContainer}>
@@ -23,6 +27,7 @@ function About({ minder }: { minder: any }) {
                                 src={image}
                                 alt={`Gallery image ${index + 1}`}
                                 className={styles.galleryImage}
+                                onClick={() => setShowImageViewer(image)}
                             />
                         ))}
                     </div>
@@ -31,6 +36,8 @@ function About({ minder }: { minder: any }) {
                 )}
                 
             </div>
+            
+            {showImageViewer && <ImageViewer imageSrc={showImageViewer} onClose={() => setShowImageViewer(null)} />}
         </div>
     );
 

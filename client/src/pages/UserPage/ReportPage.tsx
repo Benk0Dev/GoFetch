@@ -1,5 +1,5 @@
 import ReportForm from "@client/pages/UserPage/ReportForm";
-import styles from "@client/pages/UserPage/Reporting.module.css"
+import styles from "@client/pages/UserPage/ReportPage.module.css"
 import BackButton from "@client/components/BackButton";
 import { useLocation } from "react-router-dom";
 
