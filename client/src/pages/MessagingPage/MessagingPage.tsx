@@ -113,23 +113,31 @@ function MessagingPage() {
                 // Find and update the specific chat
                 const chatIndex = prevChats.findIndex(chat => chat.id === updatedChat.id);
                 console.log("Chat updated:", updatedChat, chatIndex);
+                let newChats;
+                
                 if (chatIndex !== -1) {
-                    const newChats = [...prevChats];
+                    newChats = [...prevChats];
                     // Only update the unread count for the current user
                     newChats[chatIndex] = {
                         ...updatedChat,
                         unreadCount: updatedChat.unreadCounts?.[currentUserId] || 0,
                         isRead: updatedChat.userReadStatus?.[currentUserId] || false
                     };
-                    return newChats;
+                } else {
+                    // If it's a new chat, add it with the correct unread count
+                    newChats = [...prevChats, {
+                        ...updatedChat,
+                        unreadCount: updatedChat.unreadCounts?.[currentUserId] || 0,
+                        isRead: updatedChat.userReadStatus?.[currentUserId] || false
+                    }];
                 }
-                
-                // If it's a new chat, add it with the correct unread count
-                return [...prevChats, {
-                    ...updatedChat,
-                    unreadCount: updatedChat.unreadCounts?.[currentUserId] || 0,
-                    isRead: updatedChat.userReadStatus?.[currentUserId] || false
-                }];
+                console.log("Updated chats:", newChats);
+                // Sort chats with most recent activity at the top
+                return newChats.sort((a, b) => {
+                    const aDate = a.lastMessageDate ? new Date(a.lastMessageDate).getTime() : 0;
+                    const bDate = b.lastMessageDate ? new Date(b.lastMessageDate).getTime() : 0;
+                    return aDate - bDate; // Most recent first
+                });
             });
         };
 
@@ -138,11 +146,18 @@ function MessagingPage() {
             setChats(prevChats => {
                 // Check if this chat already exists
                 if (!prevChats.some(chat => chat.id === newChat.id)) {
-                    return [...prevChats, {
+                    const updatedChats = [...prevChats, {
                         ...newChat,
                         unreadCount: newChat.unreadCounts?.[currentUserId] || 0,
                         isRead: newChat.userReadStatus?.[currentUserId] || false
                     }];
+                    
+                    // Sort chats with most recent activity at the top
+                    return updatedChats.sort((a, b) => {
+                        const aDate = a.lastMessageDate ? new Date(a.lastMessageDate).getTime() : 0;
+                        const bDate = b.lastMessageDate ? new Date(b.lastMessageDate).getTime() : 0;
+                        return aDate - bDate; // Most recent first
+                    });
                 }
                 return prevChats;
             });
@@ -217,6 +232,28 @@ function MessagingPage() {
             fetchChatUserNames();
         }
     }, [chats, fetchChatUserNames]);
+
+    // Clear unread messages when selecting a chat
+    useEffect(() => {
+        if (id && socket && isConnected) {
+            // Find the selected chat
+            const selectedChat = chats.find(chat => chat.id.toString() === id);
+            
+            // If chat exists and has unread messages, mark them as read
+            if (selectedChat && selectedChat.unreadCount > 0) {
+                // Update the UI immediately
+                setChats(prevChats => prevChats.map(chat => 
+                    chat.id.toString() === id ? {...chat, unreadCount: 0, isRead: true} : chat
+                ));
+                
+                // Notify the server that messages have been read
+                socket.emit('mark-chat-read', {
+                    chatId: parseInt(id),
+                    userId: currentUserId
+                });
+            }
+        }
+    }, [id, socket, isConnected, chats, currentUserId]);
 
     if (loading && chats.length === 0) {
         return null;
