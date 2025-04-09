@@ -112,7 +112,7 @@ function MessagingPage() {
             setChats(prevChats => {
                 // Find and update the specific chat
                 const chatIndex = prevChats.findIndex(chat => chat.id === updatedChat.id);
-                
+                console.log("Chat updated:", updatedChat, chatIndex);
                 if (chatIndex !== -1) {
                     const newChats = [...prevChats];
                     // Only update the unread count for the current user
@@ -198,13 +198,13 @@ function MessagingPage() {
             }
         };
 
-        socket.on('chat-updated', handleChatUpdated);
+        socket.on('chat-update', handleChatUpdated);
         socket.on('new-chat', handleNewChat);
         socket.on('new-message', handleNewMessage);
         socket.on('message-read', handleMessageRead);
 
         return () => {
-            socket.off('chat-updated', handleChatUpdated);
+            socket.off('chat-update', handleChatUpdated);
             socket.off('new-chat', handleNewChat);
             socket.off('new-message', handleNewMessage);
             socket.off('message-read', handleMessageRead);

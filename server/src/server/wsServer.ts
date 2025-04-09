@@ -4,6 +4,7 @@ import { addMessage, messageRead, markChatAsRead } from '@server/static/MessageS
 import { addNotification } from '@server/static/NotificationStatic';
 import { NotificationType } from '@gofetch/models/INotification';
 import { getChatByIdCached, incrementUnreadCount } from '@server/services/MessagesCached';
+import { IChat } from '@gofetch/models/IMessage';
 
 // Add a variable to store the IO instance
 let io: Server;
@@ -90,6 +91,20 @@ export function setupWebSocketServer(httpServer: http.Server) {
                             
                             // Update unread count in the chat for this specific user only
                             incrementUnreadCount(messageData.chatId, recipientId);
+
+                            const chatUpdate: IChat = {
+                                id: messageData.chatId,
+                                users: chatDetails.users,
+                                messages: chatDetails.messages,
+                                lastMessage: messageData.message.message,
+                                lastMessageDate: messageData.message.timestamp,
+                                unreadCount: chatDetails.unreadCount,
+                                unreadCounts: chatDetails.unreadCounts,
+                                isRead: chatDetails.isRead,
+                                userReadStatus: chatDetails.userReadStatus
+                            }
+
+                            io.to(userRoom).emit('chat-update', chatUpdate);
                             
                             // Create a notification for the message
                             addNotification({
