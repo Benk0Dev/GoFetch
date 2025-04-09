@@ -103,7 +103,7 @@ const NotificationContainer: React.FC<NotificationContainerProps> = ({ notificat
         playNotificationSound();
         
         // Add to active notifications and mark as displayed
-        setActiveNotifications(prev => [...prev, ...newNotifications]);
+        setActiveNotifications(prev => [...newNotifications, ...prev]);
         
         // Track these as displayed
         newNotifications.forEach(notification => {

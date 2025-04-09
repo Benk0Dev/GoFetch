@@ -6,6 +6,8 @@ import { NotificationType } from '@gofetch/models/INotification';
 import { getChatByIdCached, incrementUnreadCount } from '@server/services/MessagesCached';
 import { IChat } from '@gofetch/models/IMessage';
 
+const messageLenghtLimit = 100; // Limit for message length
+
 // Add a variable to store the IO instance
 let io: Server;
 
@@ -109,7 +111,7 @@ export function setupWebSocketServer(httpServer: http.Server) {
                             // Create a notification for the message
                             addNotification({
                                 userId: recipientId,
-                                message: `New message: ${messageData.message.message.substring(0, 30)}${messageData.message.message.length > 30 ? '...' : ''}`,
+                                message: `New message: ${messageData.message.message.substring(0, messageLenghtLimit)}${messageData.message.message.length > messageLenghtLimit ? '...' : ''}`,
                                 type: NotificationType.Message,
                                 linkId: messageData.chatId
                             });
