@@ -21,7 +21,7 @@ import { getPayment, updatePaymentStatus } from "@client/services/PaymentRegistr
 import { IPayment, Status } from "@gofetch/models/IPayment";
 import { ArrowLeft, Calendar, Clock, MapPin } from "lucide-react";
 import BookingInfo from "./BookingInfo";
-import BookingActions from "./ BookingActions";
+import BookingActions from "./BookingActions";
 
 export interface Booking {
     id: number;
